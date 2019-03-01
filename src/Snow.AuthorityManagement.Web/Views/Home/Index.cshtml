@@ -1,0 +1,151 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>养卡后台管理系统</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <environment include="Development">
+        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/lib/Ionicons/css/ionicons.css" rel="stylesheet" />
+        <!-- Theme style -->
+        <link href="~/lib/AdminLTE/css/AdminLTE.css" rel="stylesheet" />
+        @*<link href="~/lib/AdminLTE/css/skins/skin-blue-light.css" rel="stylesheet" />*@
+        <link href="~/lib/AdminLTE/css/skins/_all-skins.min.css" rel="stylesheet" />
+        <link href="~/css/home/index.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/home.min.css" rel="stylesheet" />
+    </environment>
+</head>
+
+<body class="sidebar-mini skin-blue-light">
+    <div class="wrapper" style="height: auto; min-height: 100%;">
+
+        <!-- Main Header -->
+        <header class="main-header">
+
+            <!-- Logo -->
+            <a href="/" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>A</b>LT</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Admin</b>LTE Docs</span>
+            </a>
+
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    @*<ul class="nav navbar-nav">
+                            <li><a href="/">AdminLTE.IO</a></li>
+                            <li><a href="/premium">Premium Templates</a></li>
+                        </ul>*@
+                </div>
+            </nav>
+        </header><!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- search form -->
+                <form method="get" class="sidebar-form" id="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search..." id="search-input">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu tree" data-widget="tree">
+                    <li class="treeview ">
+                        <a href="#">
+                            <i class="fa fa-th"></i> <span>系统管理</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a class="deepNav" href="/User/Index" data-id="2" data-name="用户管理" target="tab_2"><i class="fa fa-circle-o"></i> 用户管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/docs/2.4/installation"><i class="fa fa-microchip"></i> <span>Installation</span></a>
+                    </li>
+                </ul>
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: 534px;">
+            <article>
+                <nav id="breadcrumbs" style="background-color: #F5F5F5;">
+                    <ul class="nav nav-tabs con-tabs pull-left nav-bar" id="tabHeader">
+                        <li role="presentation" id="tab_tab_0" data-id="tab_0" class="active">
+                            <a href="#tab_0" style="padding-right: 0px;" aria-controls="#tab_0" role="tab" data-toggle="tab">
+                                首页
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="dropdown pull-right nav-dropdown">
+                        <i class="glyphicon glyphicon-triangle-bottom" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="cursor: pointer;"></i>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                            <li class="remove-cache"><a href="javascript:void(0);"><i class="glyphicon glyphicon-minus"></i> 删除缓存</a></li>
+                            <li class="reload-page"><a href="javascript:void(0);"><i class="glyphicon glyphicon-refresh"></i> 刷新当前</a></li>
+                            <li class="close-other"><a href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i> 关闭其它</a></li>
+                            <li class="close-all"><a href="javascript:void(0);"><i class="glyphicon glyphicon-off"></i> 关闭所有</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="tab-content" style="border: 0px;padding: 0px;position: static;">
+                    <div role="tabpanel" class="tab-pane active" style="margin:0px;padding:0px;" id="tab_0">
+                        <iframe src="/Home/Welcome" class="contentFrame" width="100%" name="tab_0" title="欢迎" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="yes"></iframe>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="pull-right hidden-xs"><b>Version</b> 2.4.7</div>
+            <!-- Default to the left -->
+            <strong>Copyright © 2017 <a href="/">AdminLTE.IO</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+
+    <environment include="Development">
+        <script src="~/lib/jquery/jquery-3.3.1.min.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/lib/fastclick/lib/fastclick.js"></script>
+        <script src="~/lib/AdminLTE/js/adminlte.min.js"></script>
+        <script src="~/lib/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="~/js/bootstrap-tab.js"></script>
+        <script src="~/lib/toastr/js/toastr.min.js"></script>
+        <script src="~/js/common.js"></script>
+        <script src="~/js/home/index.js"></script>
+    </environment>
+    <environment exclude="Development">
+        @*<script src="~/js/home.min.js"></script>*@
+    </environment>
+</body>
+</html>

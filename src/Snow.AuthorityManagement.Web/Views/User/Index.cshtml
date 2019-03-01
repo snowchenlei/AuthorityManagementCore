@@ -1,0 +1,41 @@
+﻿@{
+
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_LayoutPageTable.cshtml";
+}
+
+<!--搜索-->
+<div class="panel-group" id="accordion">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <span style="font-size:16px;">查询条件</span>
+            <span class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#searchPanel" style="float: right;">
+                    <i id="searchTitle" class="glyphicon glyphicon-menu-up"></i>
+                </a>
+            </span>
+        </div>
+        <div id="searchPanel" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <form id="formSearch" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-1" for="txt_search_userName">用户名</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="txt_search_userName">
+                        </div>
+                        <label class="col-md-1 control-label" for="addTime" style="float: left;">添加时间</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="txt_search_addTime">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script src="~/js/timeBucket.js"></script>
+    <script src="~/js/user/index.js"></script>
+}

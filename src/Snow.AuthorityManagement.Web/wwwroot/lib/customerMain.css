@@ -1,0 +1,15 @@
+﻿body {
+    padding: 0px;
+    margin: 0px;
+    background-color: #fff;
+    font-family: "Helvetica Neue"
+}
+
+.btnOperation {
+    float: right;
+    margin-right: 30px;
+}
+
+    .btnOperation button {
+        margin-right: 10px;
+    }

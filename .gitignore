@@ -3,3 +3,22 @@
 ################################################################################
 
 /src/.vs
+/src/Snow.AuthorityManagement.Api/obj
+/src/Snow.AuthorityManagement.Api/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.Common/obj
+/src/Snow.AuthorityManagement.Common/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.Core/obj
+/src/Snow.AuthorityManagement.Core/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.Data/obj
+/src/Snow.AuthorityManagement.Data/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.IRepository/obj
+/src/Snow.AuthorityManagement.IRepository/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.IServices/obj
+/src/Snow.AuthorityManagement.Repository/obj
+/src/Snow.AuthorityManagement.Repository/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.RepositoryFactory/obj
+/src/Snow.AuthorityManagement.RepositoryFactory/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.Services/obj
+/src/Snow.AuthorityManagement.Services/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.Web/obj
+/src/Snow.AuthorityManagement.Web/bin/Debug/netcoreapp2.1

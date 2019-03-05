@@ -13,20 +13,19 @@ using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Dto.User;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Library;
+using Microsoft.Extensions.Logging;
+using Snow.AuthorityManagement.Core.Exception;
 
 namespace Snow.AuthorityManagement.Web.Controllers
 {
     //[RBACAuthorize(PermissionNames.Pages_Users)]
     public class UserController : BaseController
     {
-        private readonly IMapper _mapper = null;
         private readonly IUserServices _userServices = null;
 
         public UserController(
-            IMapper mapper,
             IUserServices userServices)
         {
-            _mapper = mapper;
             _userServices = userServices;
         }
 
@@ -80,6 +79,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
         }
 
         [HttpPost]
+        [AjaxOnly]
         //[RBACAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(CreateOrUpdateUser input)
         {
@@ -116,6 +116,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
         //[RBACAuthorize(PermissionNames.Pages_Users_Create)]
         public Task<UserListDto> Create(UserEditDto input, List<int> roleIds)
         {
+            throw new UserFriendlyException("异常了");
             return _userServices.AddAsync(input, roleIds);
         }
 

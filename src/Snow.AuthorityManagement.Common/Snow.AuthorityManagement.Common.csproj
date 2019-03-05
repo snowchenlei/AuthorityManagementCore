@@ -6,23 +6,28 @@
 
   <ItemGroup>
     <Compile Remove="Caching\**" />
+    <Compile Remove="Castle\**" />
     <Compile Remove="Http\Cookie\**" />
+    <Compile Remove="Logger\**" />
     <Compile Remove="UAParser\**" />
     <EmbeddedResource Remove="Caching\**" />
+    <EmbeddedResource Remove="Castle\**" />
     <EmbeddedResource Remove="Http\Cookie\**" />
+    <EmbeddedResource Remove="Logger\**" />
     <EmbeddedResource Remove="UAParser\**" />
     <None Remove="Caching\**" />
+    <None Remove="Castle\**" />
     <None Remove="Http\Cookie\**" />
+    <None Remove="Logger\**" />
     <None Remove="UAParser\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Conversion\JilFormatter.cs" />
-    <Compile Remove="Logger\LoggerHelper.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1" />

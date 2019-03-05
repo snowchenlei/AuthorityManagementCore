@@ -22,3 +22,12 @@
 /src/Snow.AuthorityManagement.Services/bin/Debug/netcoreapp2.1
 /src/Snow.AuthorityManagement.Web/obj
 /src/Snow.AuthorityManagement.Web/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.Common/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.Core/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.Data/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.IRepository/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.IServices/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.Repository/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.Services/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.Web/App_Data
+/src/Snow.AuthorityManagement.Web/bin/Release/netcoreapp2.1

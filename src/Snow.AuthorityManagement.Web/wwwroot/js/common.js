@@ -1,19 +1,19 @@
-﻿//格式化日期 DateFormat('yyyy_MM_dd hh:mm:ss:SS 星期w 第q季度')  
+﻿//格式化日期 DateFormat('yyyy_MM_dd hh:mm:ss:SS 星期w 第q季度')
 function DateFormat(format, date) {
     if (!date) {
         date = new Date();
     }
     var Week = ['日', '一', '二', '三', '四', '五', '六'];
     var o = {
-        "y+": date.getYear(), //year  
-        "M+": date.getMonth() + 1, //month   
-        "d+": date.getDate(), //day   
-        "h+": date.getHours(), //hour   
-        "H+": date.getHours(), //hour  
-        "m+": date.getMinutes(), //minute   
-        "s+": date.getSeconds(), //second   
-        "q+": Math.floor((date.getMonth() + 3) / 3), //quarter   
-        "S": date.getMilliseconds(), //millisecond   
+        "y+": date.getYear(), //year
+        "M+": date.getMonth() + 1, //month
+        "d+": date.getDate(), //day
+        "h+": date.getHours(), //hour
+        "H+": date.getHours(), //hour
+        "m+": date.getMinutes(), //minute
+        "s+": date.getSeconds(), //second
+        "q+": Math.floor((date.getMonth() + 3) / 3), //quarter
+        "S": date.getMilliseconds(), //millisecond
         "w": Week[date.getDay()]
     }
     if (/(y+)/.test(format)) {
@@ -58,29 +58,32 @@ function DateAdd(type, value) {
 var ipRegex = /^((25[0-5]|2[0-4]\d|[1]{1}\d{1}\d{1}|[1-9]{1}\d{1}|\d{1})($|(?!\.$)\.)){4}$/;
 
 // #region Cookie
-//获取cookie值  
+//获取cookie值
 function getCookie(name) {
     var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
     if (arr != null) return unescape(arr[2]);
     return null;
-} 
+}
 // #endregion
 
-
-// 设置jQuery Ajax全局的参数  
+// 设置jQuery Ajax全局的参数
 $.ajaxSetup({
     error: function (jqXHR, textStatus, errorThrown) {
+        debugger
         switch (jqXHR.status) {
-            case (500):
+            case 500:
                 toastr.error("服务器系统内部错误");
                 break;
-            case (401):
+            case 400:
+                toastr.error(jqXHR.responseText);
+                break;
+            case 401:
                 toastr.error("未登录");
                 break;
-            case (403):
+            case 403:
                 toastr.error("无权限执行此操作");
                 break;
-            case (408):
+            case 408:
                 toastr.error("请求超时");
                 break;
             default:

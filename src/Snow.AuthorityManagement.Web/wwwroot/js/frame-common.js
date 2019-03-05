@@ -1,11 +1,11 @@
 ﻿function loadPanel() {
     $('#searchPanel').on('show.bs.collapse', function () {
-        var $search = document.getElementById('searchTitle')
+        var $search = document.getElementById('searchTitle');
         //$search.setAttribute('class', 'glyphicon glyphicon-menu-up');
         $search.style.transform = 'rotatez(' + 0 + 'deg)';
     })
     $('#searchPanel').on('hide.bs.collapse', function () {
-        var $search = document.getElementById('searchTitle')
+        var $search = document.getElementById('searchTitle');
         //$search.setAttribute('class', 'glyphicon glyphicon-menu-down');
         $search.style.transform = 'rotatez(' + 180 + 'deg)';
     });

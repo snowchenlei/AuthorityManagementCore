@@ -1,10 +1,13 @@
-﻿using log4net.Core;
-using log4net.Layout.Pattern;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using log4net.Core;
+using log4net.Layout.Pattern;
 
-namespace Snow.AuthorityManagement.Common.Logger
+namespace Snow.AuthorityManagement.Web.Library
 {
     public class CustomerPatternConvert : PatternLayoutConverter
     {

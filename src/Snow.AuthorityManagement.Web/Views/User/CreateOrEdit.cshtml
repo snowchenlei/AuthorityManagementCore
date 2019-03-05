@@ -10,7 +10,7 @@
             <h4 class="modal-title" id="modelTitle">修改用户: @Model.User.Name</h4>
         }
     </div>*@
-<form action="/User/CreateOrEdit" id="modelForm" method="post" enctype="multipart/form-data"
+<form asp-controller="User" asp-action="CreateOrEdit" id="modelForm" method="post" enctype="multipart/form-data"
       data-ajax="true" data-ajax-success="saveSuccess" data-ajax-failure="saveFailure">
     @Html.AntiForgeryToken()
 

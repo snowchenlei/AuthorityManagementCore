@@ -1,11 +1,10 @@
-﻿using log4net.Layout;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using log4net.Layout;
 
-namespace Snow.AuthorityManagement.Common.Logger
+namespace Snow.AuthorityManagement.Web.Library
 {
     public class CustomerPatternLayout : PatternLayout
     {

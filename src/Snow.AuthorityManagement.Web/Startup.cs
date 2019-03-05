@@ -17,16 +17,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using Snow.AuthorityManagement.Web.Configuration;
 using Snow.AuthorityManagement.Web.Library;
+using Microsoft.Extensions.Logging;
+using Snow.AuthorityManagement.Core.Exception;
+using Snow.AuthorityManagement.Web.Library.Middleware;
 
 namespace Snow.AuthorityManagement.Web
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        private ILogger<Startup> _logger;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration
+            , ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -54,7 +60,7 @@ namespace Snow.AuthorityManagement.Web
 
             services.AddMvc(options =>
             {
-                options.Filters.Add(typeof(CustomerExceptionAttribute));
+                //options.Filters.Add(typeof(CustomerExceptionAttribute));
                 //options.Filters.Add(typeof(CustomerResultAttribute));
 
                 #region 输出缓存配置
@@ -107,7 +113,7 @@ namespace Snow.AuthorityManagement.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -115,17 +121,57 @@ namespace Snow.AuthorityManagement.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler();
+                //app.UseExceptionHandler(build =>
+                //    build.Run(async context =>
+                //    {
+                //var ex = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()?.Error;
+                //if (ex != null)
+                //{
+                //    string innerException = String.Empty;
+                //    while (ex.InnerException != null)
+                //    {
+                //        ex = ex.InnerException;
+                //        innerException += ex.InnerException?.Message + "\r\n" + ex.InnerException?.StackTrace + "\r\n";
+                //    }
+                //    string message = $@"【{ex.Message}】内部错误【{ex.InnerException?.Message}】";
+                //    _logger.LogError(ex, message);
+                //    if (ex is UserFriendlyException)
+                //    {
+                //        context.Response.StatusCode = 400;
+                //        context.Response.ContentType = "text/plain;charset=utf-8";
+                //        await context.Response.WriteAsync(ex.Message);
+                //    }
+                //    else
+                //    {
+                //        context.Response.StatusCode = 500;
+                //        context.Response.ContentType = "text/plain;charset=utf-8";
+                //        await context.Response.WriteAsync("服务器正忙，请稍后重试");
+                //    }
+                //}
+                //else
+                //{
+                //    context.Response.StatusCode = 500;
+                //    if (context.Request.Headers["X-Requested-With"] != "XMLHttpRequest")
+                //    {
+                //        context.Response.ContentType = "text/html";
+                //        await context.Response.SendFileAsync($@"{env.WebRootPath}/errors/500.html");
+                //    }
+                //}
+                //}));
                 app.UseHsts();
             }
 
+            app.UseCustomerExceptionHandler();
             //使用静态文件
             app.UseStaticFiles();
             //Session
             app.UseSession();
             //app.UseCookiePolicy();//添加后会导致Session失效
             app.UseHttpsRedirection();
+            loggerFactory.AddLog4Net();
 
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

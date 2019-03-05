@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Castle.Core.Logging;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {

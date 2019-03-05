@@ -3,13 +3,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
+using Snow.AuthorityManagement.Core;
+using Snow.AuthorityManagement.Core.Exception;
 
 namespace Snow.AuthorityManagement.Web.Library
 {
     /// <summary>
     /// Mvc异常处理
     /// </summary>
-    public class CustomerExceptionAttribute : IExceptionFilter
+    public class CustomerExceptionAttribute : ExceptionFilterAttribute
     {
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IModelMetadataProvider _modelMetadataProvider;
@@ -22,7 +25,7 @@ namespace Snow.AuthorityManagement.Web.Library
             _modelMetadataProvider = modelMetadataProvider;
         }
 
-        public void OnException(ExceptionContext filterContext)
+        public override void OnException(ExceptionContext filterContext)
         {
             if (!_hostingEnvironment.IsDevelopment())
             {
@@ -35,7 +38,12 @@ namespace Snow.AuthorityManagement.Web.Library
             {
                 return;
             }
-
+            if (exception is UserFriendlyException)
+            {
+                //filterContext.Result = new ApplicationErrorResult
+                filterContext.HttpContext.Response.StatusCode = 400;
+                filterContext.HttpContext.Response.WriteAsync(exception.Message);
+            }
             //MonitorLog MonLog = null;
             //if (request.HttpContext.Items.ContainsKey("_thisWebApiOnActionMonitorLog_"))
             //{

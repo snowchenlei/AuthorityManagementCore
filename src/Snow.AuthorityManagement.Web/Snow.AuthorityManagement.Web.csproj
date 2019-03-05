@@ -34,6 +34,8 @@
 
   <ItemGroup>
     <None Include="wwwroot\css\home\index.css" />
+    <None Include="wwwroot\errors\404.html" />
+    <None Include="wwwroot\errors\500.html" />
     <None Include="wwwroot\js\home\index.js" />
     <None Include="wwwroot\js\user\index.js" />
     <None Include="wwwroot\lib\AdminLTE\css\adminlte.css.map" />
@@ -908,7 +910,9 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="BundlerMinifier.Core" Version="2.8.391" />
+    <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="2.2.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
@@ -922,6 +926,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="Views\Shared\Error.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

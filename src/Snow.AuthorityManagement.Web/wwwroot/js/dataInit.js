@@ -104,7 +104,7 @@ function createOrEdit(title, id) {
                         return false;
                     }
                     var s = $e.serializeArray();
-                    $.post(absoluteUrl + '/CreateOrEdit',
+                    $.post('/User/CreateOrEdit',
                         s,
                         function (result) {
                             l.stop();

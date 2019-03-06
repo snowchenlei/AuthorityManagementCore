@@ -157,6 +157,9 @@
     </environment>
     @RenderSection("scripts", false)
     <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='/lib/ace/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script type="text/javascript">
          absoluteUrl = '@ViewBag.AbsoluteUrl';
          title = '@ViewBag.Title';
     </script>

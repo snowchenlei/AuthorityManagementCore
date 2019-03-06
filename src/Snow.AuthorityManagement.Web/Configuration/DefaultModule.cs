@@ -10,13 +10,13 @@ namespace Snow.AuthorityManagement.Web.Configuration
     {
         protected override void Load(ContainerBuilder builder)
         {
-            var iService = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.IService"));
-            var service = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Service"));
+            var iServices = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.IServices"));
+            var services = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Services"));
             var iRepository = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.IRepository"));
             var repository = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Repository"));
 
-            builder.RegisterAssemblyTypes(iService, service)
-                .Where(t => t.Name.EndsWith("Service"))
+            builder.RegisterAssemblyTypes(iServices, services)
+                .Where(t => t.Name.EndsWith("Services"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(iRepository, repository)

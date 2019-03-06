@@ -1,9 +1,0 @@
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.IServices.csproj.CoreCompileInputs.cache
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.IServices.AssemblyInfoInputs.cache
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.IServices.AssemblyInfo.cs
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.IServices.csproj.CopyComplete
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.IServices.dll
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.IServices.pdb
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.IServices.deps.json
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.Core.dll
-D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.IServices\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.Core.pdb

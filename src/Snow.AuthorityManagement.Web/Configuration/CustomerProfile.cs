@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Snow.AuthorityManagement.Core.Dto.Role;
 using Snow.AuthorityManagement.Core.Dto.User;
-using Snow.AuthorityManagement.Core.Entities.Authorization;
+using Snow.AuthorityManagement.Core.Entities.Authorization.User;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -11,8 +10,6 @@ namespace Snow.AuthorityManagement.Web.Configuration
         {
             CreateMap<UserEditDto, User>();
             CreateMap<User, UserListDto>();
-            CreateMap<Role, RoleListDto>();
-            CreateMap<RoleEditDto, Role>();
             //Mapper.Initialize(x =>
             //{
             //    x.CreateMap<UserEdit, User>();

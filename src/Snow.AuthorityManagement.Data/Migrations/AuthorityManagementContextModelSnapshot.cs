@@ -19,26 +19,7 @@ namespace Snow.AuthorityManagement.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.Role", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("AddTime");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<int>("Sort");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Role");
-                });
-
-            modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.User", b =>
+            modelBuilder.Entity("Snow.AuthorityManagement.Entity.User", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()

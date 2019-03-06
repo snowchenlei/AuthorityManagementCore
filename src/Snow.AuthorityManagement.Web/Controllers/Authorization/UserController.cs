@@ -3,7 +3,7 @@ using Snow.AuthorityManagement.Common;
 using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Common.Encryption;
 using Snow.AuthorityManagement.Enum;
-using Snow.AuthorityManagement.IService;
+using Snow.AuthorityManagement.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,19 +15,18 @@ using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Library;
 using Microsoft.Extensions.Logging;
 using Snow.AuthorityManagement.Core.Exception;
-using Snow.AuthorityManagement.IService.Authorization;
 
 namespace Snow.AuthorityManagement.Web.Controllers
 {
     //[RBACAuthorize(PermissionNames.Pages_Users)]
     public class UserController : BaseController
     {
-        private readonly IUserService _userService = null;
+        private readonly IUserServices _userServices = null;
 
         public UserController(
-            IUserService userService)
+            IUserServices userServices)
         {
-            _userService = userService;
+            _userServices = userServices;
         }
 
         //[RBACAuthorize(PermissionNames.Pages_Users)]
@@ -40,7 +39,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
         //[RBACAuthorize(PermissionNames.Pages_Users_Query)]
         public async Task<JsonResult> Load(GetUserInput input)
         {
-            var result = await _userService.GetPagedAsync(input);
+            var result = await _userServices.GetPagedAsync(input);
             return Json(new
             {
                 total = result.TotalCount,
@@ -76,7 +75,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
         //[RBACAuthorize(PermissionNames.Pages_Users_Edit)]
         private async Task<GetUserForEditOutput> Edit(int userId)
         {
-            return await _userService.GetForEditAsync(userId);
+            return await _userServices.GetForEditAsync(userId);
         }
 
         [HttpPost]
@@ -117,19 +116,20 @@ namespace Snow.AuthorityManagement.Web.Controllers
         //[RBACAuthorize(PermissionNames.Pages_Users_Create)]
         public Task<UserListDto> Create(UserEditDto input, List<int> roleIds)
         {
-            return _userService.AddAsync(input, roleIds);
+            throw new UserFriendlyException("异常了");
+            return _userServices.AddAsync(input, roleIds);
         }
 
         //[RBACAuthorize(PermissionNames.Pages_Users_Edit)]
         public Task<UserListDto> Edit(UserEditDto input, List<int> roleIds)
         {
-            return _userService.EditAsync(input, roleIds);
+            return _userServices.EditAsync(input, roleIds);
         }
 
         //[RBACAuthorize(PermissionNames.Pages_Users_Delete)]
         public async Task<JsonResult> Delete(int id)
         {
-            if (await _userService.DeleteAsync(id))
+            if (await _userServices.DeleteAsync(id))
             {
                 return Json(new Result()
                 {

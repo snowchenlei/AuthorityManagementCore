@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Common.Extension;
-using Snow.AuthorityManagement.IServices;
+using Snow.AuthorityManagement.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

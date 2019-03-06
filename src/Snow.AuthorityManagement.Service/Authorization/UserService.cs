@@ -1,31 +1,32 @@
-﻿using Snow.AuthorityManagement.Data;
-using Snow.AuthorityManagement.IRepository;
-using Snow.AuthorityManagement.IServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Snow.AuthorityManagement.Core.Dto;
 using Snow.AuthorityManagement.Core.Dto.User;
-using Snow.AuthorityManagement.Core.Entities.Authorization.User;
+using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Core.Enum;
 using Snow.AuthorityManagement.Core.Exception;
+using Snow.AuthorityManagement.Data;
+using Snow.AuthorityManagement.IRepository;
+using Snow.AuthorityManagement.IRepository.Authorization;
+using Snow.AuthorityManagement.IService.Authorization;
 
-namespace Snow.AuthorityManagement.Services
+namespace Snow.AuthorityManagement.Service.Authorization
 {
-    public partial class UserServices : BaseServices<User>, IUserServices
+    public partial class UserService : BaseService<User>, IUserService
     {
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository = null;
 
-        public UserServices(
+        public UserService(
             IMapper mapper
             , AuthorityManagementContext context
-            , IBaseRepository<User> baseRepository
+            , IBaseRepository<User> currentRepository
             , IUserRepository userRepository
-            , IConfiguration configuration) : base(context, baseRepository)
+            , IConfiguration configuration) : base(context, currentRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
@@ -57,9 +58,9 @@ namespace Snow.AuthorityManagement.Services
                 parameters.Add(date[0]);
                 parameters.Add(date[1]);
             }
-            if (!String.IsNullOrEmpty(input.Sort))
+            if (!String.IsNullOrEmpty(input.Sorting))
             {
-                input.Sorting = input.Sort + (input.Order == OrderType.ASC ? " ASC" : " DESC");
+                input.Sorting = input.Sorting + (input.Order == OrderType.ASC ? " ASC" : " DESC");
             }
             var result = await _userRepository
                 .GetPagedAsync(input.PageIndex, input.PageSize,
@@ -86,11 +87,11 @@ namespace Snow.AuthorityManagement.Services
         }
 
         /// <summary>
-        /// 添加用户
+        /// 添加
         /// </summary>
-        /// <param name="input">用户信息</param>
+        /// <param name="input">信息</param>
         /// <param name="roleIds">角色Id</param>
-        /// <returns>用户信息</returns>
+        /// <returns>信息</returns>
         public async Task<UserListDto> AddAsync(UserEditDto input, List<int> roleIds)
         {
             if (await _userRepository.IsExistsAsync(u => u.UserName == input.UserName))

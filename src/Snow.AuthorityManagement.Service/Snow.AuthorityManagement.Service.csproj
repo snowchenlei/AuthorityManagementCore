@@ -16,7 +16,7 @@
     <ProjectReference Include="..\Snow.AuthorityManagement.Core\Snow.AuthorityManagement.Core.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Data\Snow.AuthorityManagement.Data.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.IRepository\Snow.AuthorityManagement.IRepository.csproj" />
-    <ProjectReference Include="..\Snow.AuthorityManagement.IServices\Snow.AuthorityManagement.IServices.csproj" />
+    <ProjectReference Include="..\Snow.AuthorityManagement.IService\Snow.AuthorityManagement.IService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

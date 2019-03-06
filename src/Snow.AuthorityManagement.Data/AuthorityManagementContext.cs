@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Snow.AuthorityManagement.Core.Entities.Authorization.User;
+using Snow.AuthorityManagement.Core.Entities.Authorization;
 
 namespace Snow.AuthorityManagement.Data
 {
@@ -11,6 +11,8 @@ namespace Snow.AuthorityManagement.Data
 
         //权限管理
         public virtual DbSet<User> User { get; set; }
+
+        public virtual DbSet<Role> Role { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

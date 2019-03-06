@@ -14,6 +14,9 @@ function setDate(eles, dobubble, secondNot) {
         //"showDropdowns": true,
         "autoUpdateInput": false,   //是否初始化空值
         //"autoApply": true,
+        "timePicker24Hour": true,   //24小时
+        "timePickerSeconds": true,  //显示S
+        "timePicker": true,         //显示时间
         "opens": "left",
         "locale": {
             "format": formatDate,

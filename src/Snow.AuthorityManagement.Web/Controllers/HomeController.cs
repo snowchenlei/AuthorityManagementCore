@@ -1,6 +1,6 @@
 ﻿using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Common.Http;
-using Snow.AuthorityManagement.IServices;
+using Snow.AuthorityManagement.IService;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;

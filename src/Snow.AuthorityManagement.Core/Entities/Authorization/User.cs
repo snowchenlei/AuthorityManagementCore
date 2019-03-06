@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Snow.AuthorityManagement.Core.Entities.Authorization.User
+namespace Snow.AuthorityManagement.Core.Entities.Authorization
 {
     /// <summary>
     /// 用户

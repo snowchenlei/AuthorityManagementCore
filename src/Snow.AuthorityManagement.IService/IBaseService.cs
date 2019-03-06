@@ -3,9 +3,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Snow.AuthorityManagement.IServices
+namespace Snow.AuthorityManagement.IService
 {
-    public interface IBaseServices<T> where T : class, new()
+    public interface IBaseService<T> where T : class, new()
     {
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> whereLamada);
 

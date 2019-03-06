@@ -4,9 +4,8 @@ var columns = [
     { checkbox: true },
     { title: '操作', formatter: actionFormater },
     { field: 'id', title: 'Id', visible: false },
-    { field: 'phoneNumber', title: '手机号' },
     { field: 'name', title: '名称' },
-    { field: 'userName', title: '用户名' }
+    { field: 'sort', title: '排序', sortable: true }
 ];
 function actionFormater(value, row, index) {
     var htmlArr = [];
@@ -26,10 +25,8 @@ function actionFormater(value, row, index) {
     htmlArr.push('</div>');
     return htmlArr.join('');
 }
-
 $(function () {
-    absoluteUrl = "/User/";
-    //$('#modifyModal').modal('show');
+    absoluteUrl = "/Role/";
     //1、初始化表格
     table.init(columns);
     //3、pannel初始化
@@ -45,7 +42,7 @@ function queryParams(params) {
         pageIndex: params.offset / params.limit + 1,  //页码
         sort: params.sort,
         order: params.order,
-        userName: $('#txt_search_userName').val(),
+        name: $('#txt_search_name').val(),
         date: $('#txt_search_addTime').val()
     };
 }

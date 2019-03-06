@@ -6,18 +6,18 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Snow.AuthorityManagement.Services
+namespace Snow.AuthorityManagement.Service
 {
-    public class BaseServices<T> where T : class, new()
+    public class BaseService<T> where T : class, new()
     {
         #region 获取具体的操作类的实例
 
         protected readonly DbContext CurrentContext = null;
         protected readonly IBaseRepository<T> CurrentRepository = null;
 
-        public BaseServices(AuthorityManagementContext context, IBaseRepository<T> baseRepository)
+        public BaseService(AuthorityManagementContext context, IBaseRepository<T> currentRepository)
         {
-            CurrentRepository = baseRepository;
+            CurrentRepository = currentRepository;
             CurrentContext = context;
         }
 

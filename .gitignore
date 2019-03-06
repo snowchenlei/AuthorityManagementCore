@@ -31,3 +31,7 @@
 /src/Snow.AuthorityManagement.Services/bin/Release/netcoreapp2.1
 /src/Snow.AuthorityManagement.Web/App_Data
 /src/Snow.AuthorityManagement.Web/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.IService/bin/Release/netcoreapp2.1
+/src/Snow.AuthorityManagement.IService/obj
+/src/Snow.AuthorityManagement.Service/bin
+/src/Snow.AuthorityManagement.Service/obj

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Snow.AuthorityManagement.Core.Dto;
 using Snow.AuthorityManagement.Core.Dto.User;
-using Snow.AuthorityManagement.Core.Entities.Authorization.User;
+using Snow.AuthorityManagement.Core.Entities.Authorization;
 
-namespace Snow.AuthorityManagement.IServices
+namespace Snow.AuthorityManagement.IService.Authorization
 {
-    public partial interface IUserServices : IBaseServices<User>
+    public partial interface IUserService : IBaseService<User>
     {
         /// <summary>
         /// 分页

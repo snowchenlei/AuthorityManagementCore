@@ -6,8 +6,7 @@ var columns = [
     { field: 'id', title: 'Id', visible: false },
     { field: 'phoneNumber', title: '手机号' },
     { field: 'name', title: '名称' },
-    { field: 'userName', title: '用户名' },
-    { field: 'addTime', title: '添加时间', sortable: true }
+    { field: 'userName', title: '用户名' }
 ];
 function actionFormater(value, row, index) {
     var htmlArr = [];
@@ -36,7 +35,7 @@ $(function () {
     //3、pannel初始化
     loadPanel();
     //4、时间初始化
-    setDate($('#txt_search_addTime'), true, false);
+    setDate($('#txt_search_addTime'), true, true);
 });
 // #region bootstrap-table
 //搜索

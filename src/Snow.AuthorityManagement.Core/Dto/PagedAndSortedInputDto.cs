@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snow.AuthorityManagement.Core.Enum;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Snow.AuthorityManagement.Core.Dto
@@ -14,6 +15,7 @@ namespace Snow.AuthorityManagement.Core.Dto
         }
 
         public string Sorting { get; set; }
+        public OrderType Order { get; set; }
 
         /// <summary>
         /// 跳过多少条

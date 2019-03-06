@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "Snow.AuthorityManagement.IService/1.0.0": {
+        "dependencies": {
+          "Snow.AuthorityManagement.Core": "1.0.0"
+        },
+        "runtime": {
+          "Snow.AuthorityManagement.IService.dll": {}
+        }
+      },
+      "Snow.AuthorityManagement.Core/1.0.0": {
+        "runtime": {
+          "Snow.AuthorityManagement.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Snow.AuthorityManagement.IService/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Snow.AuthorityManagement.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

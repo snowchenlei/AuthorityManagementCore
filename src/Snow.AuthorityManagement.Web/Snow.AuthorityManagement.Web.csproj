@@ -76,6 +76,8 @@
     <None Include="wwwroot\lib\fastclick\LICENSE" />
     <None Include="wwwroot\lib\fastclick\README.md" />
     <None Include="wwwroot\lib\fullscreen\jquery.fullscreen.js" />
+    <None Include="wwwroot\lib\iCheck\icheck.js" />
+    <None Include="wwwroot\lib\iCheck\icheck.min.js" />
     <None Include="wwwroot\lib\Ionicons\fonts\ionicons.svg" />
     <None Include="wwwroot\lib\Ionicons\less\ionicons.less" />
     <None Include="wwwroot\lib\Ionicons\less\_ionicons-font.less" />

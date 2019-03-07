@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Snow.AuthorityManagement.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -58,6 +59,20 @@ namespace Snow.AuthorityManagement.Web
 
             services.AddAutoMapper();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                // 在这里可以根据需要添加一些Cookie认证相关的配置。
+                options.AccessDeniedPath = "/Account/Login";//未通过授权
+                options.LoginPath = "/Account/Login";//未登录时
+                options.LogoutPath = "/Account/Logout";//退出
+                //options.EventsType = typeof(CustomCookieAuthenticationEvents);//影响性能
+            });
+            //services.AddScoped<CustomCookieAuthenticationEvents>();
+
             services.AddMvc(options =>
             {
                 //options.Filters.Add(typeof(CustomerExceptionAttribute));
@@ -73,7 +88,12 @@ namespace Snow.AuthorityManagement.Web
                 options.CacheProfiles.Add("Header",
                     new CacheProfile()
                     {
+#if DEBUG
+                        Duration = 0,
+#else
                         Duration = 120,
+#endif
+
                         VaryByHeader = "User-Agent"
                     });
                 options.CacheProfiles.Add("Never",
@@ -163,6 +183,7 @@ namespace Snow.AuthorityManagement.Web
             }
 
             app.UseCustomerExceptionHandler();
+            app.UseAuthentication();
             //使用静态文件
             app.UseStaticFiles();
             //Session

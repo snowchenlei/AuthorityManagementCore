@@ -6,17 +6,20 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Snow.AuthorityManagement.Web.Controllers
 {
+    [Authorize]
     public class HomeController : BaseController
     {
         // GET: Home
         public ActionResult Index()
         {
-            ViewBag.Name = "至尊";
+            ViewBag.Name = HttpContext.User.Claims.SingleOrDefault(t => t.Type == ClaimTypes.Name)?.Value;
             return View();
         }
 

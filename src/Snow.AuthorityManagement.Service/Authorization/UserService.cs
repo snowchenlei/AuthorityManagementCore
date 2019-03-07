@@ -87,6 +87,29 @@ namespace Snow.AuthorityManagement.Service.Authorization
         }
 
         /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<UserLoginOutput> LoginAsync(UserLoginInput input)
+        {
+            User user = await CurrentRepository
+                .FirstOrDefaultAsync(u => u.UserName == input.UserName)??
+                        throw new UserFriendlyException("用户名和密码不匹配");
+
+            if (user.Password != input.Password)
+            {
+                throw new UserFriendlyException("用户名和密码不匹配");
+            }
+
+            if (!user.CanUse)
+            {
+                throw new UserFriendlyException("当前账号不可用，请联系管理员");
+            }
+            return _mapper.Map<UserLoginOutput>(user);
+        }
+
+        /// <summary>
         /// 添加
         /// </summary>
         /// <param name="input">信息</param>

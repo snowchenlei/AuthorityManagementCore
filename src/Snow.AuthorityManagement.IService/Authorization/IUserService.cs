@@ -23,6 +23,13 @@ namespace Snow.AuthorityManagement.IService.Authorization
         Task<GetUserForEditOutput> GetForEditAsync(int userId);
 
         /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<UserLoginOutput> LoginAsync(UserLoginInput input);
+
+        /// <summary>
         /// 添加用户
         /// </summary>
         /// <param name="input">用户信息</param>

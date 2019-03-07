@@ -12,6 +12,7 @@ using Snow.AuthorityManagement.Web.Library;
 
 namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {
+    [RBACAuthorize(PermissionNames.Pages_Roles)]
     public class RoleController : BaseController
     {
         private readonly IRoleService _roleService = null;
@@ -22,12 +23,14 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             _roleService = roleService;
         }
 
-        //[ResponseCache(CacheProfileName = "Header")]
+        [RBACAuthorize(PermissionNames.Pages_Roles)]
+        [ResponseCache(CacheProfileName = "Header")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [RBACAuthorize(PermissionNames.Pages_Roles_Query)]
         public async Task<JsonResult> Load(GetRoleInput input)
         {
             var result = await _roleService.GetPagedAsync(input);
@@ -40,6 +43,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 
         [HttpGet]
         [AjaxOnly]
+        [RBACAuthorize(PermissionNames.Pages_Roles_Create, PermissionNames.Pages_Roles_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
             if (id.HasValue)
@@ -52,6 +56,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             }
         }
 
+        [RBACAuthorize(PermissionNames.Pages_Roles_Create)]
         private GetRoleForEditOutput Create()
         {
             return new GetRoleForEditOutput()
@@ -60,6 +65,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             };
         }
 
+        [RBACAuthorize(PermissionNames.Pages_Roles_Edit)]
         private async Task<GetRoleForEditOutput> Edit(int roleId)
         {
             return await _roleService.GetForEditAsync(roleId);
@@ -67,6 +73,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 
         [HttpPost]
         [AjaxOnly]
+        [RBACAuthorize(PermissionNames.Pages_Roles_Create, PermissionNames.Pages_Roles_Edit)]
         public async Task<ActionResult> CreateOrEdit(CreateOrUpdateRole input)
         {
             if (ModelState.IsValid)
@@ -99,16 +106,19 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             }
         }
 
+        [RBACAuthorize(PermissionNames.Pages_Roles_Create)]
         public Task<RoleListDto> Create(RoleEditDto input)
         {
             return _roleService.AddAsync(input);
         }
 
+        [RBACAuthorize(PermissionNames.Pages_Roles_Edit)]
         public Task<RoleListDto> Edit(RoleEditDto input)
         {
             return _roleService.EditAsync(input);
         }
 
+        [RBACAuthorize(PermissionNames.Pages_Roles_Delete)]
         public async Task<JsonResult> Delete(int id)
         {
             if (await _roleService.DeleteAsync(id))

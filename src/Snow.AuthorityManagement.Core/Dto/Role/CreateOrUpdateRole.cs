@@ -9,5 +9,7 @@ namespace Snow.AuthorityManagement.Core.Dto.Role
     {
         [Required]
         public RoleEditDto Role { get; set; }
+
+        public string Permission { get; set; }
     }
 }

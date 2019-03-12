@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Snow.AuthorityManagement.Core.Dto.Role;
 
 namespace Snow.AuthorityManagement.Core.Dto.User
 {
@@ -8,6 +9,6 @@ namespace Snow.AuthorityManagement.Core.Dto.User
         [Required]
         public UserEditDto User { get; set; }
 
-        public Dictionary<int, string> Roles { get; set; }
+        public IEnumerable<RoleSelectDto> Roles { get; set; }
     }
 }

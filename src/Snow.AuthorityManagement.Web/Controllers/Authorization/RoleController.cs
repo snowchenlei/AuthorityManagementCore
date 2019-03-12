@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Core;
+using Snow.AuthorityManagement.Core.Dto.Permission;
 using Snow.AuthorityManagement.Core.Dto.Role;
+using Snow.AuthorityManagement.Core.Entities.Authorization;
+using Snow.AuthorityManagement.Core.Model;
 using Snow.AuthorityManagement.IService.Authorization;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Library;
@@ -15,12 +21,20 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
     [RBACAuthorize(PermissionNames.Pages_Roles)]
     public class RoleController : BaseController
     {
-        private readonly IRoleService _roleService = null;
+        private readonly IMapper _mapper;
+        private readonly IRoleService _roleService;
+        private readonly IPermissionService _permissionService;
+        private readonly PermissionDefinitionContextBase _context;
 
         public RoleController(
-            IRoleService roleService)
+            IRoleService roleService, IPermissionService permissionService
+            //, PermissionDefinitionContextBase context
+            , IMapper mapper)
         {
             _roleService = roleService;
+            _permissionService = permissionService;
+            _context = PermissionDefinitionContextBase.Context;//context;
+            _mapper = mapper;
         }
 
         [RBACAuthorize(PermissionNames.Pages_Roles)]
@@ -59,16 +73,59 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [RBACAuthorize(PermissionNames.Pages_Roles_Create)]
         private GetRoleForEditOutput Create()
         {
+            IReadOnlyList<AncPermission> permissions = _context
+                .Permissions.Values.ToImmutableList();
+            ICollection<FlatPermissionDto> result = new List<FlatPermissionDto>();
+            foreach (AncPermission permission in permissions.Where(p => p.Parent == null))
+            {
+                result.Add(AddPermission(permission, null));
+            }
             return new GetRoleForEditOutput()
             {
-                Role = null
+                Role = null,
+                Permission = Serialization.SerializeObjectCamel(result)
             };
         }
 
         [RBACAuthorize(PermissionNames.Pages_Roles_Edit)]
         private async Task<GetRoleForEditOutput> Edit(int roleId)
         {
-            return await _roleService.GetForEditAsync(roleId);
+            var roleDto = await _roleService.GetForEditAsync(roleId);
+            IReadOnlyList<AncPermission> permissions = _context
+                .Permissions.Values.ToImmutableList();
+            ICollection<FlatPermissionDto> result = new List<FlatPermissionDto>();
+            List<Permission> olPermissions = await _permissionService.GetPermissionsByRoleIdAsync(roleId);
+            foreach (AncPermission permission in permissions.Where(p => p.Parent == null))
+            {
+                result.Add(AddPermission(permission, olPermissions));
+            }
+
+            return new GetRoleForEditOutput()
+            {
+                Role = roleDto,
+                Permission = Serialization.SerializeObjectCamel(result)
+            };
+        }
+
+        private FlatPermissionDto AddPermission(AncPermission permission
+            , IList<Permission> oldPermissions)
+        {
+            var flatPermission = _mapper.Map<FlatPermissionDto>(permission);
+            if (oldPermissions != null && oldPermissions.Any(op => op.Name == permission.Name))
+            {
+                flatPermission.IsGranted = true;
+            }
+            foreach (AncPermission child in permission.Children)
+            {
+                if (flatPermission.Children == null)
+                {
+                    flatPermission.Children = new List<FlatPermissionDto>();
+                }
+
+                flatPermission.Children.Add(AddPermission(child, oldPermissions));
+            }
+
+            return flatPermission;
         }
 
         [HttpPost]
@@ -81,11 +138,11 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
                 RoleListDto roleListDto;
                 if (input.Role.ID.HasValue)
                 {
-                    roleListDto = await Edit(input.Role);
+                    roleListDto = await Edit(input.Role, input.Permission);
                 }
                 else
                 {
-                    roleListDto = await Create(input.Role);
+                    roleListDto = await Create(input.Role, input.Permission);
                 }
 
                 return Json(new Result<RoleListDto>()
@@ -107,15 +164,15 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         }
 
         [RBACAuthorize(PermissionNames.Pages_Roles_Create)]
-        public Task<RoleListDto> Create(RoleEditDto input)
+        public Task<RoleListDto> Create(RoleEditDto input, string permission)
         {
-            return _roleService.AddAsync(input);
+            return _roleService.AddAsync(input, permission);
         }
 
         [RBACAuthorize(PermissionNames.Pages_Roles_Edit)]
-        public Task<RoleListDto> Edit(RoleEditDto input)
+        public Task<RoleListDto> Edit(RoleEditDto input, string permission)
         {
-            return _roleService.EditAsync(input);
+            return _roleService.EditAsync(input, permission);
         }
 
         [RBACAuthorize(PermissionNames.Pages_Roles_Delete)]

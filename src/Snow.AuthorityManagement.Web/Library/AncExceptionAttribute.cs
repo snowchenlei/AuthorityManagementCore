@@ -12,12 +12,12 @@ namespace Snow.AuthorityManagement.Web.Library
     /// <summary>
     /// Mvc异常处理
     /// </summary>
-    public class CustomerExceptionAttribute : ExceptionFilterAttribute
+    public class AncExceptionAttribute : ExceptionFilterAttribute
     {
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IModelMetadataProvider _modelMetadataProvider;
 
-        public CustomerExceptionAttribute(
+        public AncExceptionAttribute(
             IHostingEnvironment hostingEnvironment,
             IModelMetadataProvider modelMetadataProvider)
         {

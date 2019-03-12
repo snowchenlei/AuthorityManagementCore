@@ -13,6 +13,7 @@ namespace Snow.AuthorityManagement.Data
         public virtual DbSet<User> User { get; set; }
 
         public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<Permission> Permission { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,21 +24,19 @@ namespace Snow.AuthorityManagement.Data
             ////多对多启用级联删除约定，不想级联删除可以在删除前判断关联的数据进行拦截
             //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            //配置联合主键
-            //modelBuilder.Entity<UserInfoModuleElement>()
-            //  .HasKey(r => new { r.UserInfoID, r.ModuleID, r.ModuleElementID });
-            //modelBuilder.Entity<RoleModuleElement>()
-            //  .HasKey(r => new { r.RoleID, r.ModuleID, r.ModuleElementID });
+            //https://docs.microsoft.com/zh-cn/ef/core/modeling/relationships#other-relationship-patterns
+            modelBuilder.Entity<UserRole>()
+                .HasKey(t => new { t.UserID, t.RoleID });
 
-            //modelBuilder.Entity<RoleUserInfo>()
-            //    .HasKey(r => new { r.RoleID, r.UserInfoID });
-            //modelBuilder.Entity<RoleModule>()
-            //    .HasKey(r => new { r.RoleID, r.ModuleID });
-            //modelBuilder.Entity<ModuleUserInfo>()
-            //    .HasKey(r => new { r.ModuleID, r.UserInfoID });
-            //modelBuilder.Entity<ModuleElementModule>()
-            //   .HasKey(r => new { r.ModuleID, r.ModuleElementID });
+            modelBuilder.Entity<UserRole>()
+                .HasOne(pt => pt.User)
+                .WithMany(p => p.UserRoles)
+                .HasForeignKey(pt => pt.UserID);
 
+            modelBuilder.Entity<UserRole>()
+                .HasOne(pt => pt.Role)
+                .WithMany(t => t.UserRoles)
+                .HasForeignKey(pt => pt.RoleID);
             base.OnModelCreating(modelBuilder);
         }
     }

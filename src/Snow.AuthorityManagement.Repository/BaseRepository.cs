@@ -6,10 +6,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
+using Snow.AuthorityManagement.IRepository;
 
 namespace Snow.AuthorityManagement.Repository
 {
-    public class BaseRepository<T> where T : class, new()
+    public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     {
         protected readonly AuthorityManagementContext CurrentContext = null;
 
@@ -57,7 +58,20 @@ namespace Snow.AuthorityManagement.Repository
         public async Task<T> AddAsync(T entity)
         {
             await CurrentContext.Set<T>().AddAsync(entity);
+
             return entity;
+        }
+
+        /// <summary>
+        /// 批量添加
+        /// </summary>
+        /// <param name="entities">实体集合</param>
+        /// <returns>添加的实体</returns>
+        public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
+        {
+            await CurrentContext.Set<T>().AddRangeAsync(entities);
+
+            return entities;
         }
 
         /// <summary>
@@ -67,7 +81,18 @@ namespace Snow.AuthorityManagement.Repository
         /// <returns></returns>
         public bool Delete(T entity)
         {
-            CurrentContext.Entry(entity).State = EntityState.Deleted;
+            CurrentContext.Set<T>().Remove(entity);
+            return true;
+        }
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="entities">实体集合</param>
+        /// <returns></returns>
+        public bool DeleteRange(IEnumerable<T> entities)
+        {
+            CurrentContext.Set<T>().RemoveRange(entities);
             return true;
         }
 
@@ -155,6 +180,18 @@ namespace Snow.AuthorityManagement.Repository
             else
             {
                 return CurrentContext.Set<T>().Where(whereLamada);
+            }
+        }
+
+        public Task<List<T>> LoadListAsync(Expression<Func<T, bool>> whereLamada, bool isAsNoTracking = false)
+        {
+            if (isAsNoTracking)
+            {
+                return CurrentContext.Set<T>().AsNoTracking().Where(whereLamada).ToListAsync();
+            }
+            else
+            {
+                return CurrentContext.Set<T>().Where(whereLamada).ToListAsync();
             }
         }
 

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Snow.AuthorityManagement.Core.Dto.Permission;
 using Snow.AuthorityManagement.Core.Dto.Role;
 using Snow.AuthorityManagement.Core.Dto.User;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
+using Snow.AuthorityManagement.Core.Model;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -13,6 +15,9 @@ namespace Snow.AuthorityManagement.Web.Configuration
             CreateMap<User, UserListDto>();
             CreateMap<Role, RoleListDto>();
             CreateMap<RoleEditDto, Role>();
+            CreateMap<AncPermission, FlatPermissionDto>()
+                .ForMember(p => p.Children, opt => opt.MapFrom(src => src.Children.Count > 0 ? src.Children : null))
+                .ForMember(p => p.Children, opt => opt.Ignore());
             //Mapper.Initialize(x =>
             //{
             //    x.CreateMap<UserEdit, User>();

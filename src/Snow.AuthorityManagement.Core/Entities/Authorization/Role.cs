@@ -21,5 +21,8 @@ namespace Snow.AuthorityManagement.Core.Entities.Authorization
         /// 排序
         /// </summary>
         public int Sort { get; set; }
+
+        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Permission> Permissions { get; set; }
     }
 }

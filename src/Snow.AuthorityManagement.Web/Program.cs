@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Snow.AuthorityManagement.Web.Authorization;
 
 namespace Snow.AuthorityManagement.Web
 {
@@ -31,6 +32,7 @@ namespace Snow.AuthorityManagement.Web
             //        logger.LogError(ex, "An error occurred while seeding the database.");
             //    }
             //}
+            AuthorizationProvider.SetPermissions();
             host.Run();
         }
 

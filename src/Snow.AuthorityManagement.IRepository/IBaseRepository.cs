@@ -38,11 +38,25 @@ namespace Snow.AuthorityManagement.IRepository
         Task<T> AddAsync(T entity);
 
         /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="entities">要添加的实体</param>
+        /// <returns>添加的实体</returns>
+        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
+
+        /// <summary>
         /// 删除
         /// </summary>
         /// <param name="entity">要删除的实体</param>
         /// <returns></returns>
         bool Delete(T entity);
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="entities">实体集合</param>
+        /// <returns></returns>
+        bool DeleteRange(IEnumerable<T> entities);
 
         /// <summary>
         /// 修改
@@ -90,6 +104,8 @@ namespace Snow.AuthorityManagement.IRepository
         /// <param name="isAsNoTracking">是否追踪查询结果(如果有select则忽略)</param>
         /// <returns></returns>
         IQueryable<T> LoadEntities(Expression<Func<T, bool>> whereLamada, bool isAsNoTracking = false);
+
+        Task<List<T>> LoadListAsync(Expression<Func<T, bool>> whereLamada, bool isAsNoTracking = false);
 
         Task<Tuple<List<T>, int>> GetPagedAsync(int pageIndex, int pageSize
             , string wheres, object[] parameters, string orders);

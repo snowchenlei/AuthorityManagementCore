@@ -22,12 +22,14 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
     [RBACAuthorize(PermissionNames.Pages_Users)]
     public class UserController : BaseController
     {
-        private readonly IUserService _userService = null;
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
         public UserController(
-            IUserService userService)
+            IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
 
         [RBACAuthorize(PermissionNames.Pages_Users)]
@@ -59,18 +61,14 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             }
             else
             {
-                return PartialView(Create());
+                return PartialView(await Create());
             }
         }
 
         [RBACAuthorize(PermissionNames.Pages_Users_Create)]
-        private GetUserForEditOutput Create()
+        private async Task<GetUserForEditOutput> Create()
         {
-            return new GetUserForEditOutput()
-            {
-                User = null,
-                //Roles =
-            };
+            return await _userService.GetForEditAsync(null);
         }
 
         [RBACAuthorize(PermissionNames.Pages_Users_Edit)]

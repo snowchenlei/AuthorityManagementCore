@@ -21,6 +21,19 @@ namespace Snow.AuthorityManagement.Common.Conversion
         }
 
         /// <summary>
+        /// 序列化转小写
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>小写key的Json数据</returns>
+        public static string SerializeObjectCamel(Object obj)
+        {
+            return JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings
+            {
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+            });
+        }
+
+        /// <summary>
         /// 反序列化
         /// </summary>
         /// <typeparam name="T">模型类</typeparam>
@@ -40,6 +53,6 @@ namespace Snow.AuthorityManagement.Common.Conversion
         public static T DeserializeObject<T>(string value)
         {
             return JsonConvert.DeserializeObject<T>(value);
-        }        
+        }
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Snow.AuthorityManagement.Core.Dto;
+using Snow.AuthorityManagement.Core.Dto.Role;
 using Snow.AuthorityManagement.Core.Dto.User;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Core.Enum;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.IRepository;
-using Snow.AuthorityManagement.IRepository.Authorization;
 using Snow.AuthorityManagement.IService.Authorization;
 
 namespace Snow.AuthorityManagement.Service.Authorization
@@ -19,18 +20,19 @@ namespace Snow.AuthorityManagement.Service.Authorization
     {
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        private readonly IUserRepository _userRepository = null;
+        private readonly IBaseRepository<Role> _roleRepository;
+        private readonly IBaseRepository<UserRole> _userRoleRepository;
 
         public UserService(
             IMapper mapper
             , AuthorityManagementContext context
             , IBaseRepository<User> currentRepository
-            , IUserRepository userRepository
-            , IConfiguration configuration) : base(context, currentRepository)
+            , IConfiguration configuration, IBaseRepository<Role> roleRepository, IBaseRepository<UserRole> userRoleRepository) : base(context, currentRepository)
         {
             _mapper = mapper;
-            _userRepository = userRepository;
             _configuration = configuration;
+            _roleRepository = roleRepository;
+            _userRoleRepository = userRoleRepository;
         }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace Snow.AuthorityManagement.Service.Authorization
             {
                 input.Sorting = input.Sorting + (input.Order == OrderType.ASC ? " ASC" : " DESC");
             }
-            var result = await _userRepository
+            var result = await CurrentRepository
                 .GetPagedAsync(input.PageIndex, input.PageSize,
                     String.Join(" AND ", wheres), parameters.ToArray(), input.Sorting);
             return new PagedResultDto<UserListDto>()
@@ -77,12 +79,30 @@ namespace Snow.AuthorityManagement.Service.Authorization
         /// </summary>
         /// <param name="userId">用户编号</param>
         /// <returns></returns>
-        public async Task<GetUserForEditOutput> GetForEditAsync(int userId)
+        public async Task<GetUserForEditOutput> GetForEditAsync(int? userId)
         {
-            User user = await _userRepository.FirstOrDefaultAsync(u => u.ID == userId);
+            UserEditDto userEditDto = null;
+            List<Role> roles = await _roleRepository.LoadListAsync(r => true);
+            List<Role> haveRoles = new List<Role>();
+            if (userId.HasValue)
+            {
+                User user = await CurrentRepository
+                    .FirstOrDefaultAsync(u => u.ID == userId.Value);
+                userEditDto = _mapper.Map<UserEditDto>(user);
+                List<UserRole> userRoles = await _userRoleRepository
+                    .LoadListAsync(ur => ur.UserID == userId.Value);
+                haveRoles = userRoles.Select(ur => ur.Role).ToList();
+            }
+
             return new GetUserForEditOutput()
             {
-                User = _mapper.Map<UserEditDto>(user)
+                User = userEditDto,
+                Roles = roles.Select(r => new RoleSelectDto
+                {
+                    Key = r.ID,
+                    Value = r.Name,
+                    Selected = haveRoles.Any(a => a.ID == r.ID)
+                })
             };
         }
 
@@ -94,7 +114,7 @@ namespace Snow.AuthorityManagement.Service.Authorization
         public async Task<UserLoginOutput> LoginAsync(UserLoginInput input)
         {
             User user = await CurrentRepository
-                .FirstOrDefaultAsync(u => u.UserName == input.UserName)??
+                .FirstOrDefaultAsync(u => u.UserName == input.UserName) ??
                         throw new UserFriendlyException("用户名和密码不匹配");
 
             if (user.Password != input.Password)
@@ -117,30 +137,34 @@ namespace Snow.AuthorityManagement.Service.Authorization
         /// <returns>信息</returns>
         public async Task<UserListDto> AddAsync(UserEditDto input, List<int> roleIds)
         {
-            if (await _userRepository.IsExistsAsync(u => u.UserName == input.UserName))
+            #region 用户
+
+            if (await CurrentRepository.IsExistsAsync(u => u.UserName == input.UserName))
             {
                 throw new UserFriendlyException("用户名已存在");
             }
             User user = Mapper.Map<User>(input);
             user.CanUse = true;
             user.Password = _configuration["AppSetting:DefaultPassword"];
-            user = await _userRepository.AddAsync(user);
+            user = await CurrentRepository.AddAsync(user);
+
+            #endregion 用户
+
+            #region 角色
+
+            if (roleIds != null && roleIds.Any())
+            {
+                await _userRoleRepository.AddRangeAsync(roleIds
+                    .Select(r => new UserRole()
+                    {
+                        UserID = user.ID,
+                        RoleID = r
+                    }));
+            }
+
+            #endregion 角色
+
             await CurrentContext.SaveChangesAsync();
-            //TODO:角色操作
-            //if (roleIds != null && roleIds.Any())
-            //{
-            //    List<AncUserRoles> userRoles = new List<AncUserRoles>();
-            //    foreach (int roleId in roleIds)
-            //    {
-            //        userRoles.Add(new AncUserRoles()
-            //        {
-            //            UserId = user.Id,
-            //            RoleId = roleId,
-            //            CreationTime = DateTime.Now
-            //        });
-            //    }
-            //    _ancUserRolesController.BetchAddEntity(userRoles);
-            //}
             return _mapper.Map<UserListDto>(user);
         }
 
@@ -152,19 +176,37 @@ namespace Snow.AuthorityManagement.Service.Authorization
         /// <returns>用户信息</returns>
         public async Task<UserListDto> EditAsync(UserEditDto input, List<int> roleIds)
         {
-            User oldUser = await _userRepository
-                .FirstOrDefaultAsync(u => u.ID == input.ID.Value);
+            #region 用户
+
+            User oldUser = await CurrentRepository
+                    .FirstOrDefaultAsync(u => u.ID == input.ID.Value);
             if (oldUser == null)
             {
                 throw new UserFriendlyException("用户不存在");
             }
             User user = _mapper.Map(input, oldUser);
-            _userRepository.Edit(user);
+            CurrentRepository.Edit(user);
+
+            #endregion 用户
+
+            #region 角色
+
+            List<UserRole> userRoles = await _userRoleRepository
+                    .LoadListAsync(ur => ur.UserID == input.ID);
+            _userRoleRepository.DeleteRange(userRoles);
+            await _userRoleRepository.AddRangeAsync(roleIds
+                .Select(r => new UserRole
+                {
+                    UserID = user.ID,
+                    RoleID = r
+                }));
+
+            #endregion 角色
+
             if (await CurrentContext.SaveChangesAsync() <= 0)
             {
                 throw new UserFriendlyException("修改失败");
             }
-            //TODO:角色操作
             return _mapper.Map<UserListDto>(user);
         }
 
@@ -175,10 +217,10 @@ namespace Snow.AuthorityManagement.Service.Authorization
         /// <returns></returns>
         public async Task<bool> DeleteAsync(int id)
         {
-            User user = await _userRepository.FirstOrDefaultAsync(a => a.ID == id)
+            User user = await CurrentRepository.FirstOrDefaultAsync(a => a.ID == id)
                 ?? throw new UserFriendlyException("用户不存在");
 
-            _userRepository.Delete(user);
+            CurrentRepository.Delete(user);
             return await CurrentContext.SaveChangesAsync() > 0;
         }
     }

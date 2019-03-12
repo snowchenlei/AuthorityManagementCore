@@ -28,7 +28,7 @@ function actionFormater(value, row, index) {
 }
 
 $(function () {
-    absoluteUrl = "/User/";
+    absoluteUrl = "/User";
     //$('#modifyModal').modal('show');
     //1、初始化表格
     table.init(columns);

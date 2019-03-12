@@ -20,7 +20,7 @@ namespace Snow.AuthorityManagement.IService.Authorization
         /// </summary>
         /// <param name="userId">用户编号</param>
         /// <returns></returns>
-        Task<GetUserForEditOutput> GetForEditAsync(int userId);
+        Task<GetUserForEditOutput> GetForEditAsync(int? userId);
 
         /// <summary>
         /// 登陆

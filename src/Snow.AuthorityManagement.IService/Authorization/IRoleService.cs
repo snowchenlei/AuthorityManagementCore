@@ -18,21 +18,23 @@ namespace Snow.AuthorityManagement.IService.Authorization
         /// </summary>
         /// <param name="roleId">角色编号</param>
         /// <returns></returns>
-        Task<GetRoleForEditOutput> GetForEditAsync(int roleId);
+        Task<RoleEditDto> GetForEditAsync(int roleId);
 
         /// <summary>
         /// 添加
         /// </summary>
         /// <param name="input">信息</param>
+        /// <param name="permission">权限</param>
         /// <returns>信息</returns>
-        Task<RoleListDto> AddAsync(RoleEditDto input);
+        Task<RoleListDto> AddAsync(RoleEditDto input, string permission);
 
         /// <summary>
         /// 修改
         /// </summary>
         /// <param name="input">信息</param>
+        /// <param name="permission">权限</param>
         /// <returns>信息</returns>
-        Task<RoleListDto> EditAsync(RoleEditDto input);
+        Task<RoleListDto> EditAsync(RoleEditDto input, string permission);
 
         /// <summary>
         /// 删除

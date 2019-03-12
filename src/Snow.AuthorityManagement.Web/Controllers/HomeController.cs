@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Web;
@@ -19,6 +20,13 @@ namespace Snow.AuthorityManagement.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            //string path =
+            //    @"D:\Cl\git\AuthorityManagementCore\src\Snow.AuthorityManagement.Data/bin/Debug/netcoreapp2.1/Snow.AuthorityManagement.Data.dll";
+            //byte[] fileData = System.IO.File.ReadAllBytes(path);
+            //Assembly assembly = Assembly.Load(fileData);
+            //Type type = assembly.GetType("Snow.AuthorityManagement.Data.AuthorityManagementContext");
+            //PropertyInfo[] modelTypes = type.GetProperties().Where(p => p.GetMethod.IsVirtual).ToArray();
+
             ViewBag.Name = HttpContext.User.Claims.SingleOrDefault(t => t.Type == ClaimTypes.Name)?.Value;
             return View();
         }

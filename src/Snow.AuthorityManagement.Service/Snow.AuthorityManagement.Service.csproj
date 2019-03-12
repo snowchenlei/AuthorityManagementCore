@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Services.tt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
   </ItemGroup>
 

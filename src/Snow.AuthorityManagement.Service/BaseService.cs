@@ -15,6 +15,10 @@ namespace Snow.AuthorityManagement.Service
         protected readonly DbContext CurrentContext = null;
         protected readonly IBaseRepository<T> CurrentRepository = null;
 
+        public BaseService()
+        {
+        }
+
         public BaseService(AuthorityManagementContext context, IBaseRepository<T> currentRepository)
         {
             CurrentRepository = currentRepository;

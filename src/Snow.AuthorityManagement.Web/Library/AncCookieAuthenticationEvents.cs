@@ -5,19 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
-using Snow.AuthorityManagement.IRepository.Authorization;
 
 namespace Snow.AuthorityManagement.Web.Library
 {
-    public class CustomCookieAuthenticationEvents : CookieAuthenticationEvents
+    public class AncCookieAuthenticationEvents : CookieAuthenticationEvents
     {
-        private readonly IUserRepository _userRepository;
+        //private readonly IUserRepository _userRepository;
 
-        public CustomCookieAuthenticationEvents(IUserRepository userRepository)
-        {
-            // Get the database from registered DI services.
-            _userRepository = userRepository;
-        }
+        //public AncCookieAuthenticationEvents(IUserRepository userRepository)
+        //{
+        //    // Get the database from registered DI services.
+        //    _userRepository = userRepository;
+        //}
 
         public override async Task ValidatePrincipal(CookieValidatePrincipalContext context)
         {

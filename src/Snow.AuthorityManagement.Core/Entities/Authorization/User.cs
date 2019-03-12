@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Snow.AuthorityManagement.Core.Entities.Authorization
@@ -35,5 +36,8 @@ namespace Snow.AuthorityManagement.Core.Entities.Authorization
         public string PhoneNumber { get; set; }
 
         public bool CanUse { get; set; }
+
+        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Permission> Permissions { get; set; }
     }
 }

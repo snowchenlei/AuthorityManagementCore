@@ -1,28 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Snow.AuthorityManagement.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Serialization;
-using Snow.AuthorityManagement.Web.Configuration;
-using Snow.AuthorityManagement.Web.Library;
 using Microsoft.Extensions.Logging;
-using Snow.AuthorityManagement.Core.Exception;
+using Newtonsoft.Json.Serialization;
+using Snow.AuthorityManagement.Data;
+using Snow.AuthorityManagement.Web.Authorization;
+using Snow.AuthorityManagement.Web.Configuration;
 using Snow.AuthorityManagement.Web.Library.Middleware;
 
-namespace Snow.AuthorityManagement.Web
+namespace Snow.AuthorityManagement.Web.Startup
 {
     public class Startup
     {
@@ -66,17 +61,16 @@ namespace Snow.AuthorityManagement.Web
             .AddCookie(options =>
             {
                 // 在这里可以根据需要添加一些Cookie认证相关的配置。
-                options.AccessDeniedPath = "/Account/Login";//未通过授权
+                options.AccessDeniedPath = "/Home/Welcome";//未通过授权
                 options.LoginPath = "/Account/Login";//未登录时
                 options.LogoutPath = "/Account/Logout";//退出
                 //options.EventsType = typeof(CustomCookieAuthenticationEvents);//影响性能
             });
             //services.AddScoped<CustomCookieAuthenticationEvents>();
-
             services.AddMvc(options =>
             {
                 //options.Filters.Add(typeof(CustomerExceptionAttribute));
-                //options.Filters.Add(typeof(CustomerResultAttribute));
+                options.Filters.Add(typeof(AncAuthorizeFilter));
 
                 #region 输出缓存配置
 
@@ -117,7 +111,7 @@ namespace Snow.AuthorityManagement.Web
             services.AddSession(options =>
             {
                 // 设置超时时间
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
             });
 

@@ -2,15 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Snow.AuthorityManagement.Common.Conversion;
+using Snow.AuthorityManagement.Core.Dto.User;
 using Snow.AuthorityManagement.Core.Model;
 
 namespace Snow.AuthorityManagement.Web.Authorization
 {
     public class AuthorizationFactory
     {
-        public LoginUserInfo GetLoginUserInfo()
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
+
+        public AuthorizationFactory(IHttpContextAccessor httpContextAccessor)
         {
-            return new LoginUserInfo();
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public UserLoginOutput GetLoginUserInfo()
+        {
+            return Serialization.DeserializeObject<UserLoginOutput>(_session.Get("LoginUser"));
+            //return new UserLoginOutput();
             //if (HttpContext.User.Identity.IsAuthenticated)
             //{
             //    //这里通过 HttpContext.User.Claims 可以将我们在Login这个Action中存储到cookie中的所有

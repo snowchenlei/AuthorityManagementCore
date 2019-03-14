@@ -1,0 +1,42 @@
+﻿@using Snow.AuthorityManagement.Common.Extensions
+@model Snow.AuthorityManagement.Web.Views.Shared.Components.SideBarNav.SideBarNavViewModel
+@{
+    int index = 1;
+}
+<ul class="sidebar-menu tree" data-widget="tree">
+    @foreach (var menuItem in Model.MainMenu.Items)
+    {
+        <li class="treeview">
+            @if (menuItem.Items.IsNullOrEmpty())
+            {
+                <a href="@menuItem.Url" data-id="@index" data-name="@menuItem.DisplayName" target="tab_@index">
+                    <i class="fa fa-th"></i> <span>@menuItem.DisplayName</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                index++;
+            }
+            else
+            {
+                <a href="javascript:void(0);">
+                    <i class="fa fa-th"></i> <span>@menuItem.DisplayName</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    @foreach (var subMenuItem in menuItem.Items)
+                    {
+                        <li>
+                            <a class="deepNav" href="@subMenuItem.Url" data-id="@index" data-name="@subMenuItem.DisplayName" target="tab_@index">
+                                <i class="fa fa-circle-o"></i> @subMenuItem.DisplayName
+                            </a>
+                        </li>
+                        index++;
+                    }
+                </ul>
+            }
+        </li>
+    }
+</ul>

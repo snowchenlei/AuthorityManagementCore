@@ -19,7 +19,7 @@ using Snow.AuthorityManagement.IService.Authorization;
 
 namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {
-    [RBACAuthorize(PermissionNames.Pages_Users)]
+    [AncAuthorize(PermissionNames.Pages_Users)]
     public class UserController : BaseController
     {
         private readonly IUserService _userService;
@@ -32,14 +32,14 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             _roleService = roleService;
         }
 
-        [RBACAuthorize(PermissionNames.Pages_Users)]
+        [AncAuthorize(PermissionNames.Pages_Users)]
         [ResponseCache(CacheProfileName = "Header")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [RBACAuthorize(PermissionNames.Pages_Users_Query)]
+        [AncAuthorize(PermissionNames.Pages_Users_Query)]
         public async Task<JsonResult> Load(GetUserInput input)
         {
             var result = await _userService.GetPagedAsync(input);
@@ -52,9 +52,10 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 
         [HttpGet]
         [AjaxOnly]
-        [RBACAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
+        [AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
+            throw new UserFriendlyException("沙发");
             if (id.HasValue)
             {
                 return PartialView(await Edit(id.Value));
@@ -65,13 +66,13 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             }
         }
 
-        [RBACAuthorize(PermissionNames.Pages_Users_Create)]
+        [AncAuthorize(PermissionNames.Pages_Users_Create)]
         private async Task<GetUserForEditOutput> Create()
         {
             return await _userService.GetForEditAsync(null);
         }
 
-        [RBACAuthorize(PermissionNames.Pages_Users_Edit)]
+        [AncAuthorize(PermissionNames.Pages_Users_Edit)]
         private async Task<GetUserForEditOutput> Edit(int userId)
         {
             return await _userService.GetForEditAsync(userId);
@@ -79,7 +80,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 
         [HttpPost]
         [AjaxOnly]
-        [RBACAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
+        [AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(CreateOrUpdateUser input)
         {
             if (ModelState.IsValid)
@@ -112,19 +113,19 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             }
         }
 
-        [RBACAuthorize(PermissionNames.Pages_Users_Create)]
+        [AncAuthorize(PermissionNames.Pages_Users_Create)]
         public Task<UserListDto> Create(UserEditDto input, List<int> roleIds)
         {
             return _userService.AddAsync(input, roleIds);
         }
 
-        [RBACAuthorize(PermissionNames.Pages_Users_Edit)]
+        [AncAuthorize(PermissionNames.Pages_Users_Edit)]
         public Task<UserListDto> Edit(UserEditDto input, List<int> roleIds)
         {
             return _userService.EditAsync(input, roleIds);
         }
 
-        [RBACAuthorize(PermissionNames.Pages_Users_Delete)]
+        [AncAuthorize(PermissionNames.Pages_Users_Delete)]
         public async Task<JsonResult> Delete(int id)
         {
             if (await _userService.DeleteAsync(id))

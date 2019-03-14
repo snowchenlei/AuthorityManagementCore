@@ -33,13 +33,13 @@ namespace Snow.AuthorityManagement.Data.Migrations
 
                     b.Property<int?>("RoleID");
 
-                    b.Property<int?>("UserID");
+                    b.Property<int?>("ID");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("ID");
 
                     b.ToTable("Permission");
                 });
@@ -94,11 +94,11 @@ namespace Snow.AuthorityManagement.Data.Migrations
 
             modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.UserRole", b =>
                 {
-                    b.Property<int>("UserID");
+                    b.Property<int>("ID");
 
                     b.Property<int>("RoleID");
 
-                    b.HasKey("UserID", "RoleID");
+                    b.HasKey("ID", "RoleID");
 
                     b.HasIndex("RoleID");
 
@@ -113,7 +113,7 @@ namespace Snow.AuthorityManagement.Data.Migrations
 
                     b.HasOne("Snow.AuthorityManagement.Core.Entities.Authorization.User", "User")
                         .WithMany("Permissions")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("ID");
                 });
 
             modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.UserRole", b =>
@@ -125,7 +125,7 @@ namespace Snow.AuthorityManagement.Data.Migrations
 
                     b.HasOne("Snow.AuthorityManagement.Core.Entities.Authorization.User", "User")
                         .WithMany("UserRoles")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("ID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

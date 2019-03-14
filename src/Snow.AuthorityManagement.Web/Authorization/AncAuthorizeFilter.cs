@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Web.Extensions;
 using Snow.AuthorityManagement.Web.Results;
@@ -16,9 +17,9 @@ namespace Snow.AuthorityManagement.Web.Authorization
     public class AncAuthorizeFilter : IAsyncAuthorizationFilter
     {
         private readonly ILogger<AncAuthorizeFilter> _logger;
-        private readonly AuthorizationHelper _authorizationHelper;
+        private readonly IAuthorizationHelper _authorizationHelper;
 
-        public AncAuthorizeFilter(ILogger<AncAuthorizeFilter> logger, AuthorizationHelper authorizationHelper)
+        public AncAuthorizeFilter(ILogger<AncAuthorizeFilter> logger, IAuthorizationHelper authorizationHelper)
         {
             _logger = logger;
             _authorizationHelper = authorizationHelper;
@@ -51,11 +52,10 @@ namespace Snow.AuthorityManagement.Web.Authorization
 
                 if (ActionResultHelper.IsObjectResult(context.ActionDescriptor.GetMethodInfo().ReturnType))
                 {
-                    context.Result = new ObjectResult(new
+                    context.Result = new ObjectResult(new Result()
                     {
-                        Error = ex,
-                        UnAuthorizedRequest = true,
-                        Success = false,
+                        Status = Status.Failure,
+                        Message = ex.Message
                     })
                     {
                         StatusCode = context.HttpContext.User.Identity.IsAuthenticated

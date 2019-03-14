@@ -38,7 +38,7 @@ namespace Snow.AuthorityManagement.Web
 
         public static IWebHost CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+                .UseStartup<Startup.Startup>()
                 .Build();
     }
 }

@@ -5,8 +5,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Snow.AuthorityManagement.Common.Extensions;
 using Snow.AuthorityManagement.Core.Dto.User;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.IService.Authorization;
@@ -22,12 +24,14 @@ namespace Snow.AuthorityManagement.Web.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(UserLoginInput input)
         {
             if (!ModelState.IsValid)
@@ -64,6 +68,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
                 authProperties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
             }
 
+            HttpContext.Session.Set<UserLoginOutput>("LoginUser", output);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity), authProperties);
             return Redirect("/Home");
@@ -72,6 +77,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("LoginUser");
             return Redirect("/Account/Login");
         }
     }

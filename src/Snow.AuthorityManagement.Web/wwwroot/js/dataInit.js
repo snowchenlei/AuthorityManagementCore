@@ -69,7 +69,7 @@ var operate = {
             message: '确定要删除"' + name + '"吗？',
             callback: function (result) {
                 if (result) {
-                    $.post(absoluteUrl + 'Delete',
+                    $.post(absoluteUrl + '/Delete',
                         { id: id },
                         function (result) {
                             requestCallBack(result,

@@ -33,11 +33,11 @@ namespace Snow.AuthorityManagement.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("UserID");
+                    b.Property<int?>("ID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("ID");
 
                     b.ToTable("Permission");
                 });
@@ -94,7 +94,7 @@ namespace Snow.AuthorityManagement.Data.Migrations
                 {
                     b.HasOne("Snow.AuthorityManagement.Core.Entities.Authorization.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("ID");
                 });
 #pragma warning restore 612, 618
         }

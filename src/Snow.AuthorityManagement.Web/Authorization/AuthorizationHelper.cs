@@ -4,7 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Snow.AuthorityManagement.Common;
+using Snow.AuthorityManagement.Common.Conversion;
+using Snow.AuthorityManagement.Core.Dto.User;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Core.Model;
@@ -12,13 +15,15 @@ using Snow.AuthorityManagement.IService.Authorization;
 
 namespace Snow.AuthorityManagement.Web.Authorization
 {
-    public class AuthorizationHelper
+    public class AuthorizationHelper : IAuthorizationHelper
     {
         private readonly IPermissionService _permissionService;
+        private readonly ISession _session;
 
-        public AuthorizationHelper(IPermissionService permissionService)
+        public AuthorizationHelper(IPermissionService permissionService, IHttpContextAccessor httpContextAccessor)
         {
             _permissionService = permissionService;
+            _session = httpContextAccessor.HttpContext.Session;
         }
 
         public async Task CheckPermissionsAsync(MethodInfo methodInfo, Type type)
@@ -27,16 +32,20 @@ namespace Snow.AuthorityManagement.Web.Authorization
             {
                 return;
             }
-            AuthorizationFactory auth = new AuthorizationFactory();
-            LoginUserInfo user = auth.GetLoginUserInfo();
+            string session = _session.GetString("LoginUser");
+            if (String.IsNullOrEmpty(session))
+            {
+                throw new AncAuthorizationException("请登陆");
+            }
+            UserLoginOutput user = Serialization.DeserializeObject<UserLoginOutput>(session);
             if (user == null)
             {
                 throw new AncAuthorizationException("请登陆");
             }
-            RBACAuthorizeAttribute[] authorizeAttributes =
+            AncAuthorizeAttribute[] authorizeAttributes =
                 ReflectionHelper
                     .GetAttributesOfMemberAndType(methodInfo, type)
-                    .OfType<RBACAuthorizeAttribute>()
+                    .OfType<AncAuthorizeAttribute>()
                     .ToArray();
             if (!authorizeAttributes.Any())
             {
@@ -46,14 +55,14 @@ namespace Snow.AuthorityManagement.Web.Authorization
             await AuthorizeAsync(authorizeAttributes, user);
         }
 
-        public virtual async Task AuthorizeAsync(IEnumerable<RBACAuthorizeAttribute> authorizeAttributes, LoginUserInfo user)
+        public virtual async Task AuthorizeAsync(IEnumerable<AncAuthorizeAttribute> authorizeAttributes, UserLoginOutput user)
         {
             if ("admin".Equals(user.UserName, StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
 
-            List<Permission> permissions = await _permissionService.GetAllPermissionsAsync(user.UserId);
+            List<Permission> permissions = await _permissionService.GetAllPermissionsAsync(user.ID);
 
             foreach (var authorizeAttribute in authorizeAttributes)
             {
@@ -71,14 +80,14 @@ namespace Snow.AuthorityManagement.Web.Authorization
             {
                 if (!permissions.All(p => permissionNames.Contains(p.Name)))
                 {
-                    throw new AncAuthenticationException("用户必须具有" + string.Join(", ", permissionNames) + "所有权限");
+                    throw new AncAuthorizationException("用户必须具有" + string.Join(", ", permissionNames) + "所有权限");
                 }
             }
             else
             {
                 if (!permissions.Any(p => permissionNames.Contains(p.Name)))
                 {
-                    throw new AncAuthenticationException("用户必须具有" + string.Join(", ", permissionNames) + "中任意一个");
+                    throw new AncAuthorizationException("用户必须具有" + string.Join(", ", permissionNames) + "中任意一个");
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using Castle.Core.Logging;
+using Microsoft.AspNetCore.Http;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.IRepository;
@@ -10,6 +11,7 @@ using Snow.AuthorityManagement.IService.Authorization;
 using Snow.AuthorityManagement.Repository;
 using Snow.AuthorityManagement.Service.Authorization;
 using Snow.AuthorityManagement.Web.Authorization;
+using Snow.AuthorityManagement.Web.Manager;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -31,6 +33,9 @@ namespace Snow.AuthorityManagement.Web.Configuration
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(BaseRepository<>)).As(typeof(IBaseRepository<>));
+            builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+            builder.RegisterType<UserNavigationManager>().As<IUserNavigationManager>();
         }
     }
 }

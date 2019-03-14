@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Snow.AuthorityManagement.Web.Views.Shared.Components.SideBarNav
+@{
     Layout = null;
 }
 
@@ -115,27 +116,28 @@
                 </form>
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
-                <ul class="sidebar-menu tree" data-widget="tree">
-                    <li class="treeview ">
-                        <a href="#">
-                            <i class="fa fa-th"></i> <span>系统管理</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a class="deepNav" href="/User/Index" data-id="2" data-name="用户管理" target="tab_2"><i class="fa fa-circle-o"></i> 用户管理</a>
-                            </li>
-                            <li>
-                                <a class="deepNav" href="/Role/Index" data-id="3" data-name="角色管理" target="tab_3"><i class="fa fa-circle-o"></i> 角色管理</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/docs/2.4/installation"><i class="fa fa-microchip"></i> <span>Installation</span></a>
-                    </li>
-                </ul>
+                @await Component.InvokeAsync(typeof(SideBarNavViewComponent))
+                @*<ul class="sidebar-menu tree" data-widget="tree">
+                        <li class="treeview ">
+                            <a href="#">
+                                <i class="fa fa-th"></i> <span>系统管理</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a class="deepNav" href="/User/Index" data-id="2" data-name="用户管理" target="tab_2"><i class="fa fa-circle-o"></i> 用户管理</a>
+                                </li>
+                                <li>
+                                    <a class="deepNav" href="/Role/Index" data-id="3" data-name="角色管理" target="tab_3"><i class="fa fa-circle-o"></i> 角色管理</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/docs/2.4/installation"><i class="fa fa-microchip"></i> <span>Installation</span></a>
+                        </li>
+                    </ul>*@
                 <!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->

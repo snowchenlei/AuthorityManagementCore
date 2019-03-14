@@ -33,7 +33,7 @@ namespace Snow.AuthorityManagement.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Permission_UserID",
                 table: "Permission",
-                column: "UserID");
+                column: "ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

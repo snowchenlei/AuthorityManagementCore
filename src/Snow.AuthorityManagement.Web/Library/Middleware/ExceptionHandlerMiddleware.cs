@@ -42,7 +42,6 @@ namespace Snow.AuthorityManagement.Web.Library.Middleware
                 monitorLog.IP = GetUserIp(context);
 
                 await _next(context);
-
                 monitorLog.ExecuteEndTime = DateTime.Now;
                 monitorLog.ResponseData = await ReadBodyAsync(context.Response);
                 _logger.LogInformation(monitorLog.GetLoginfo());
@@ -55,35 +54,43 @@ namespace Snow.AuthorityManagement.Web.Library.Middleware
                 {
                     statusCode = 400;
                 }
+                else if (ex is AncAuthorizationException)
+                {
+                    statusCode = 401;
+                }
+                else if (ex is AncAuthenticationException)
+                {
+                    statusCode = 403;
+                }
                 await HandleExceptionAsync(context, statusCode, ex.Message);
             }
-            finally
-            {
-                var statusCode = context.Response.StatusCode;
-                var msg = "";
-                switch (statusCode)
-                {
-                    case 500:
-                        msg = "服务器系统内部错误";
-                        break;
+            //finally
+            //{
+            //    var statusCode = context.Response.StatusCode;
+            //    var msg = "";
+            //    switch (statusCode)
+            //    {
+            //        case 500:
+            //            msg = "服务器系统内部错误";
+            //            break;
 
-                    case 401:
-                        msg = "未登录";
-                        break;
+            //        case 401:
+            //            msg = "未登录";
+            //            break;
 
-                    case 403:
-                        msg = "无权限执行此操作";
-                        break;
+            //        case 403:
+            //            msg = "无权限执行此操作";
+            //            break;
 
-                    case 408:
-                        msg = "请求超时";
-                        break;
-                }
-                if (!string.IsNullOrWhiteSpace(msg))
-                {
-                    await HandleExceptionAsync(context, statusCode, msg);
-                }
-            }
+            //        case 408:
+            //            msg = "请求超时";
+            //            break;
+            //    }
+            //    if (!string.IsNullOrWhiteSpace(msg))
+            //    {
+            //        await HandleExceptionAsync(context, statusCode, msg);
+            //    }
+            //}
         }
 
         public static string GetUserIp(HttpContext context)
@@ -156,11 +163,17 @@ namespace Snow.AuthorityManagement.Web.Library.Middleware
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
+        private static async Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
         {
-            context.Response.ContentType = "application/json;charset=utf-8";
-            context.Response.StatusCode = statusCode;
-            return context.Response.WriteAsync(msg);
+            try
+            {
+                context.Response.ContentType = "application/json;charset=utf-8";
+                context.Response.StatusCode = statusCode;
+                await context.Response.WriteAsync(msg);
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

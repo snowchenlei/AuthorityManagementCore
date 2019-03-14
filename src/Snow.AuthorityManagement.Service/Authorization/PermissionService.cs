@@ -15,15 +15,22 @@ namespace Snow.AuthorityManagement.Service.Authorization
     public class PermissionService : IPermissionService
     {
         private readonly IBaseRepository<Permission> _permissionRepository;
+        private readonly IBaseRepository<UserRole> _userRoleRepository;
 
-        public PermissionService(IBaseRepository<Permission> permissionRepository)
+        public PermissionService(IBaseRepository<Permission> permissionRepository, IBaseRepository<UserRole> userRoleRepository)
         {
             _permissionRepository = permissionRepository;
+            _userRoleRepository = userRoleRepository;
         }
 
         public async Task<List<Permission>> GetAllPermissionsAsync(int userId)
         {
-            return await _permissionRepository.LoadListAsync(p => p.User.ID == userId);
+            var userRoles = await _userRoleRepository.LoadListAsync(r => r.UserID == userId);
+            var roleIds = userRoles.Select(ur => ur.RoleID);
+
+            return await _permissionRepository
+                .LoadListAsync(p => p.User.ID == userId
+                                    || roleIds.Contains(p.Role.ID));
         }
 
         public async Task<List<Permission>> GetPermissionsByRoleIdAsync(int roleId)

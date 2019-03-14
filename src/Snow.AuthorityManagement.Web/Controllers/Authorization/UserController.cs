@@ -55,7 +55,6 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
-            throw new UserFriendlyException("沙发");
             if (id.HasValue)
             {
                 return PartialView(await Edit(id.Value));

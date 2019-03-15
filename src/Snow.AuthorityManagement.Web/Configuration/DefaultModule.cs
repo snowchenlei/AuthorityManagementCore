@@ -12,6 +12,7 @@ using Snow.AuthorityManagement.Repository;
 using Snow.AuthorityManagement.Service.Authorization;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Manager;
+using Snow.AuthorityManagement.Web.Session;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -36,6 +37,7 @@ namespace Snow.AuthorityManagement.Web.Configuration
             builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
             builder.RegisterType<UserNavigationManager>().As<IUserNavigationManager>();
+            builder.RegisterType<ClaimsAncSession>().As<IAncSession>();
         }
     }
 }

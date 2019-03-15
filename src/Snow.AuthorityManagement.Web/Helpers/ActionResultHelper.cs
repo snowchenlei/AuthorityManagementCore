@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Snow.AuthorityManagement.Web.Results
+namespace Snow.AuthorityManagement.Web.Helpers
 {
     public static class ActionResultHelper
     {

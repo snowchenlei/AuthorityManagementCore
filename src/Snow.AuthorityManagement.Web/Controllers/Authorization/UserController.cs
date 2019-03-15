@@ -36,6 +36,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [ResponseCache(CacheProfileName = "Header")]
         public ActionResult Index()
         {
+            ViewBag.AbsoluteUrl = "/User";
             return View();
         }
 

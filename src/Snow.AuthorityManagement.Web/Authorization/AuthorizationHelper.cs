@@ -12,18 +12,19 @@ using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Core.Model;
 using Snow.AuthorityManagement.IService.Authorization;
+using Snow.AuthorityManagement.Web.Session;
 
 namespace Snow.AuthorityManagement.Web.Authorization
 {
     public class AuthorizationHelper : IAuthorizationHelper
     {
         private readonly IPermissionService _permissionService;
-        private readonly ISession _session;
+        private readonly IAncSession _ancSession;
 
-        public AuthorizationHelper(IPermissionService permissionService, IHttpContextAccessor httpContextAccessor)
+        public AuthorizationHelper(IPermissionService permissionService, IAncSession ancSession)
         {
             _permissionService = permissionService;
-            _session = httpContextAccessor.HttpContext.Session;
+            _ancSession = ancSession;
         }
 
         public async Task CheckPermissionsAsync(MethodInfo methodInfo, Type type)
@@ -32,16 +33,7 @@ namespace Snow.AuthorityManagement.Web.Authorization
             {
                 return;
             }
-            string session = _session.GetString("LoginUser");
-            if (String.IsNullOrEmpty(session))
-            {
-                throw new AncAuthorizationException("请登陆");
-            }
-            UserLoginOutput user = Serialization.DeserializeObject<UserLoginOutput>(session);
-            if (user == null)
-            {
-                throw new AncAuthorizationException("请登陆");
-            }
+
             AncAuthorizeAttribute[] authorizeAttributes =
                 ReflectionHelper
                     .GetAttributesOfMemberAndType(methodInfo, type)
@@ -52,17 +44,16 @@ namespace Snow.AuthorityManagement.Web.Authorization
                 return;
             }
 
-            await AuthorizeAsync(authorizeAttributes, user);
+            await AuthorizeAsync(authorizeAttributes);
         }
 
-        public virtual async Task AuthorizeAsync(IEnumerable<AncAuthorizeAttribute> authorizeAttributes, UserLoginOutput user)
+        public virtual async Task AuthorizeAsync(IEnumerable<AncAuthorizeAttribute> authorizeAttributes)
         {
-            if ("admin".Equals(user.UserName, StringComparison.InvariantCultureIgnoreCase))
+            if (!_ancSession.UserId.HasValue)
             {
-                return;
+                throw new AncAuthorizationException("请登陆");
             }
-
-            List<Permission> permissions = await _permissionService.GetAllPermissionsAsync(user.ID);
+            List<Permission> permissions = await _permissionService.GetAllPermissionsAsync(_ancSession.UserId.Value);
 
             foreach (var authorizeAttribute in authorizeAttributes)
             {

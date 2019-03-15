@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Web.Extensions;
-using Snow.AuthorityManagement.Web.Results;
+using Snow.AuthorityManagement.Web.Helpers;
 
 namespace Snow.AuthorityManagement.Web.Authorization
 {

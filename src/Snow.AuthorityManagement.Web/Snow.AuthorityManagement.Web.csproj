@@ -29,10 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\Authorization\PermissionController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\css\home\index.css" />
     <None Include="wwwroot\errors\404.html" />
     <None Include="wwwroot\errors\500.html" />

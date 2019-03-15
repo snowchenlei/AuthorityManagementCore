@@ -52,6 +52,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
 
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, output.ID.ToString()),
                 new Claim(ClaimTypes.Name, output.Name),
                 new Claim("UserName", output.UserName)
             };

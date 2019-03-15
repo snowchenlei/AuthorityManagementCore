@@ -69,18 +69,6 @@
                 <div class="load_title">正在加载LoveFeel站点<br><span>V1.0</span></div>
             </div>*@
         @RenderBody()
-        <div class="bs-bars pull-left">
-            <div id="toolbar" class="btn-group">
-                <button id="btnAdd" class="btn btn-sm btn-success" onclick="operate.add()">
-                    <i class="glyphicon glyphicon-plus" style="margin-right: 5px;"></i>添加
-                </button>
-                <!--<select style="margin-right: 10px;border-radius: 4px;" id="sel_exportoption">
-                    <option value="basic">导出本页</option>
-                    <option value="all">导出所有</option>
-                    <option value="selected">导出选中项</option>
-                </select>-->
-            </div>
-        </div>
 
         <table id="tb-body" data-bind="bootstrapTable :$root" data-filter-control="true"></table>
     </div>
@@ -118,15 +106,15 @@
         <!-- 导出 -->
         @*<script src="~/js/bundle/bootstrapTableExport.min.js"></script>*@
         @*<script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-            <script src="~/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js"></script>
-            <!-- Excel 2007+ XML Format -->
-            <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>
-            <!-- PDF -->
-            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
-            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
-            <!-- PNG -->
-            <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script><!-- Excel 2007+ XML Format -->
-            <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>*@
+        <script src="~/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js"></script>
+        <!-- Excel 2007+ XML Format -->
+        <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>
+        <!-- PDF -->
+        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
+        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+        <!-- PNG -->
+        <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script><!-- Excel 2007+ XML Format -->
+        <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>*@
         <!-- PDF -->
         @*<script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>*@
         @*<script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>*@
@@ -149,6 +137,7 @@
         <script src="~/lib/zTree/js/jquery.ztree.exedit.min.js"></script>
         <!-- 自定义 -->
         <script src="~/js/jquery.formPopulate.js"></script>
+        <script src="~/js/anc.js"></script>
         <script src="~/js/dataInit.js"></script>
         <script src="~/js/common.js"></script>
         <script src="~/js/frame-common.js"></script>
@@ -159,7 +148,7 @@
     @RenderSection("scripts", false)
     <script type="text/javascript">
          absoluteUrl = '@ViewBag.AbsoluteUrl';
-         title = '@ViewBag.Title';
+        title = '@ViewBag.Title';
     </script>
 </body>
 </html>

@@ -126,6 +126,11 @@ function createOrEdit(title, id) {
         });
     });
 }
+//是否包含权限
+function isGranted(permission) {
+    var data = localStorage.getItem('permissions');
+    return data.indexOf(permission) > 0;
+}
 //表格刷新
 function refreshTable() {
     $('#tb-body').bootstrapTable("refresh");

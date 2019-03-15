@@ -17,6 +17,7 @@
         </div>
         <div id="searchPanel" class="panel-collapse collapse in">
             <div class="panel-body">
+
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-1" for="txt_search_userName">用户名</label>
@@ -33,7 +34,13 @@
         </div>
     </div>
 </div>
-
+<div class="bs-bars pull-left">
+    <div id="toolbar" class="btn-group">
+        <button id="btnAdd" class="btn btn-sm btn-success" onclick="operate.add()">
+            <i class="glyphicon glyphicon-plus" style="margin-right: 5px;"></i>添加
+        </button>
+    </div>
+</div>
 @section Scripts
     {
     <script src="~/js/timeBucket.js"></script>

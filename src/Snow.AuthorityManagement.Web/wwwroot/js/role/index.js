@@ -10,8 +10,20 @@ var columns = [
 function actionFormater(value, row, index) {
     var htmlArr = [];
     htmlArr.push('<div class="btn-group" style="display: inline-block;" role="group" aria-label="...">');
-    htmlArr.push('<button type = "button" class="btn btn-sm btn-warning" onclick="operate.edit(\'' + row.name + '\', ' + row.id + ')"><i class="glyphicon glyphicon-pencil" style="margin-right: 5px;"></i></button>');
-    htmlArr.push('<button type="button" class="btn btn-sm btn-danger" onclick="operate.del(\'' + row.name + '\', ' + row.id + ')"><i class="glyphicon glyphicon-trash" style="margin-right: 5px;"></i></button>');
+    if (isGranted('Pages.Roles.Edit')) {
+        htmlArr.push('<button type = "button" class="btn btn-sm btn-warning" onclick="operate.edit(\'' +
+            row.name +
+            '\', ' +
+            row.id +
+            ')"><i class="glyphicon glyphicon-pencil" style="margin-right: 5px;"></i></button>');
+    }
+    if (isGranted('Pages.Roles.Delete')) {
+        htmlArr.push('<button type="button" class="btn btn-sm btn-danger" onclick="operate.del(\'' +
+            row.name +
+            '\', ' +
+            row.id +
+            ')"><i class="glyphicon glyphicon-trash" style="margin-right: 5px;"></i></button>');
+    }
     htmlArr.push('<div class="btn-group">');
     htmlArr.push('<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">');
     htmlArr.push('Action <span class="caret"></span>');
@@ -26,7 +38,9 @@ function actionFormater(value, row, index) {
     return htmlArr.join('');
 }
 $(function () {
-    absoluteUrl = "/Role/";
+    if (!isGranted('Pages.Roles.Create')) {
+        $('#btnAdd').remove();
+    }
     //1、初始化表格
     table.init(columns);
     //3、pannel初始化

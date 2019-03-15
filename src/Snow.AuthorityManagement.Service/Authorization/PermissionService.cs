@@ -23,6 +23,16 @@ namespace Snow.AuthorityManagement.Service.Authorization
             _userRoleRepository = userRoleRepository;
         }
 
+        public async Task<bool> IsGrantedAsync(string permissionName, int userId)
+        {
+            var userRoles = await _userRoleRepository.LoadListAsync(r => r.UserID == userId);
+            var roleIds = userRoles.Select(ur => ur.RoleID);
+
+            return await _permissionRepository
+                .IsExistsAsync(p => (p.User.ID == userId
+                                    || roleIds.Contains(p.Role.ID)) && p.Name == permissionName);
+        }
+
         public async Task<List<Permission>> GetAllPermissionsAsync(int userId)
         {
             var userRoles = await _userRoleRepository.LoadListAsync(r => r.UserID == userId);

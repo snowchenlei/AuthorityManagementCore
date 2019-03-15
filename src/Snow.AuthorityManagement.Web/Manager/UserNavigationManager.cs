@@ -9,6 +9,7 @@ using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Core.Model.Navigation;
 using Snow.AuthorityManagement.IService.Authorization;
+using Snow.AuthorityManagement.Web.Session;
 using Snow.AuthorityManagement.Web.Startup;
 
 namespace Snow.AuthorityManagement.Web.Manager
@@ -16,25 +17,22 @@ namespace Snow.AuthorityManagement.Web.Manager
     public class UserNavigationManager : IUserNavigationManager
     {
         private readonly IPermissionService _permissionService;
-        private readonly ISession _session;
+        private readonly IAncSession _ancSession;
 
-        public UserNavigationManager(IHttpContextAccessor httpContextAccessor, IPermissionService permissionService)
+        public UserNavigationManager(IPermissionService permissionService, IAncSession ancSession)
         {
             _permissionService = permissionService;
-            _session = httpContextAccessor.HttpContext.Session;
+            _ancSession = ancSession;
         }
 
         public async Task<UserMenu> GetMenuAsync()
         {
-            string session = _session.GetString("LoginUser");
-            if (String.IsNullOrEmpty(session))
+            if (!_ancSession.UserId.HasValue)
             {
                 throw new AncAuthorizationException("请登陆");
             }
-            UserLoginOutput user = Serialization.DeserializeObject<UserLoginOutput>(session);
+            var permissions = await _permissionService.GetAllPermissionsAsync(_ancSession.UserId.Value);
             MenuDefinition menuDefinition = NavigationProvider.GetNavigation();
-
-            var permissions = await _permissionService.GetAllPermissionsAsync(user.ID);
             UserMenu userMenu = new UserMenu(menuDefinition);
             CheckPermission(permissions, menuDefinition.Items, userMenu.Items);
             return userMenu;

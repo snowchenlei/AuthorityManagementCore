@@ -82,28 +82,13 @@ $('.close-all').click(function () {
 });
 // #endregion
 
-// #region 导航列表
-//SetNavs();
-////刷新列表
-//$('#sidebarRefresh').click(function () {
-//    SetNavs();
-//});
-
-////设置导航
-//function SetNavs() {
-//    $.getJSON('/Home/Navs', function (data) {
-//        if (data.State = 1) {
-//            $('#navList').html(data.Data);
-//            ChangeNav();
-//        }
-//    });
-//}
 $(function () {
-    ChangeNav();
+    changeNav();
+    initData();
 });
 
 //点击导航
-function ChangeNav() {
+function changeNav() {
     $('.sidebar-menu .deepNav').click(function () {
         $('li').removeClass('active');
         $(this).parent('li').addClass('active');
@@ -112,3 +97,17 @@ function ChangeNav() {
     });
 }
 // #endregion
+//获取登陆用户所有权限
+function initData() {
+    $.ajax({
+        type: "get",
+        url: '/Permission/GetAllPermission',
+        success: function (result) {
+            if (result.status === 200 && result.data) {
+                localStorage.removeItem('permissions');
+                localStorage.setItem('permissions', result.data);
+            }
+        }, error: function () {
+        }
+    });
+}

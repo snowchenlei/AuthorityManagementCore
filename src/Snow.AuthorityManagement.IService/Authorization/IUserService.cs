@@ -6,7 +6,7 @@ using Snow.AuthorityManagement.Core.Entities.Authorization;
 
 namespace Snow.AuthorityManagement.IService.Authorization
 {
-    public partial interface IUserService : IBaseService<User>
+    public partial interface IUserService
     {
         /// <summary>
         /// 分页

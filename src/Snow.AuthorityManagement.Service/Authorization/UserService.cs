@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Snow.AuthorityManagement.Core.Dto;
 using Snow.AuthorityManagement.Core.Dto.Role;
@@ -16,22 +17,28 @@ using Snow.AuthorityManagement.IService.Authorization;
 
 namespace Snow.AuthorityManagement.Service.Authorization
 {
-    public partial class UserService : BaseService<User>, IUserService
+    public partial class UserService : IUserService
     {
         private readonly IMapper _mapper;
+        private readonly DbContext CurrentContext;
         private readonly IConfiguration _configuration;
         private readonly IBaseRepository<Role> _roleRepository;
+        private readonly IBaseRepository<User> CurrentRepository;
         private readonly IBaseRepository<UserRole> _userRoleRepository;
 
         public UserService(
             IMapper mapper
             , AuthorityManagementContext context
             , IBaseRepository<User> currentRepository
-            , IConfiguration configuration, IBaseRepository<Role> roleRepository, IBaseRepository<UserRole> userRoleRepository) : base(context, currentRepository)
+            , IConfiguration configuration
+            , IBaseRepository<Role> roleRepository
+            , IBaseRepository<UserRole> userRoleRepository)
         {
             _mapper = mapper;
+            CurrentContext = context;
             _configuration = configuration;
             _roleRepository = roleRepository;
+            CurrentRepository = currentRepository;
             _userRoleRepository = userRoleRepository;
         }
 

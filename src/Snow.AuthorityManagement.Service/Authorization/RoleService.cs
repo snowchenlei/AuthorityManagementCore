@@ -17,20 +17,25 @@ using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Core.Model;
 using Snow.AuthorityManagement.IRepository.Authorization;
 using Snow.AuthorityManagement.IService.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Snow.AuthorityManagement.Service.Authorization
 {
-    public class RoleService : BaseService<Role>, IRoleService
+    public class RoleService : IRoleService
     {
         private readonly IMapper _mapper;
+        private readonly DbContext CurrentContext;
+        private readonly IBaseRepository<Role> CurrentRepository;
         private readonly IPermissionRepository _permissionRepository;
 
         public RoleService(
             IMapper mapper
             , AuthorityManagementContext context
-            , IBaseRepository<Role> currentRepository, IPermissionRepository permissionRepository) : base(context, currentRepository)
+            , IBaseRepository<Role> currentRepository, IPermissionRepository permissionRepository)
         {
             _mapper = mapper;
+            CurrentContext = context;
+            CurrentRepository = currentRepository;
             _permissionRepository = permissionRepository;
         }
 

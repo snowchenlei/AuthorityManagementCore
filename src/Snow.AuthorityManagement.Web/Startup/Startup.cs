@@ -16,6 +16,7 @@ using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Configuration;
 using Snow.AuthorityManagement.Web.Library.Middleware;
+using Snow.AuthorityManagement.Web.Startup.OnceTask;
 
 namespace Snow.AuthorityManagement.Web.Startup
 {
@@ -104,6 +105,12 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            #region 首次执行任务
+            services.AddStartupTask<InitalPermissionTask>();
+            services.AddStartupTask<InitialHostDbTask>(); 
+            #endregion
+
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();

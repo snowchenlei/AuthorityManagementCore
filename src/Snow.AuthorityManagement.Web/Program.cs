@@ -10,30 +10,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Snow.AuthorityManagement.Web.Authorization;
+using Snow.AuthorityManagement.Web.Startup.OnceTask;
 
 namespace Snow.AuthorityManagement.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateWebHostBuilder(args);
-            //using (var scope = host.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    try
-            //    {
-            //        var context = services.GetRequiredService<AuthorityManagementContext>();
-            //        DbInitializer.Initialize(context);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        var logger = services.GetRequiredService<ILogger<Program>>();
-            //        logger.LogError(ex, "An error occurred while seeding the database.");
-            //    }
-            //}
-            AuthorizationProvider.SetPermissions();
-            host.Run();
+            
+            await host.RunWithTasksAsync();
         }
 
         public static IWebHost CreateWebHostBuilder(string[] args) =>

@@ -17,7 +17,7 @@ namespace Snow.AuthorityManagement.Data
         {
             var builder = new DbContextOptionsBuilder<AuthorityManagementContext>();
 
-            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AuthCore1;Trusted_Connection=True;MultipleActiveResultSets=true");
+            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AuthCore;Trusted_Connection=True;MultipleActiveResultSets=true");
 
             return new AuthorityManagementContext(builder.Options);
         }

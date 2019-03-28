@@ -10,7 +10,7 @@ namespace Snow.AuthorityManagement.Common.Encryption
         /// <summary>
         /// MD5 加密
         /// </summary>
-        /// <param name="password">要加密的字符串</param>
+        /// <param name="value">要加密的字符串</param>
         /// <returns></returns>
         public static string Encrypt(string value)
         {
@@ -20,14 +20,14 @@ namespace Snow.AuthorityManagement.Common.Encryption
         /// <summary>
         /// MD5 加密
         /// </summary>
-        /// <param name="password">要加密的字符串</param>
+        /// <param name="value">要加密的字符串</param>
         /// <param name="mode">加密强度</param>
         /// <returns></returns>
         public static string Encrypt(string value, Md5EncryptionType mode)
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException("参数有误");
+                throw new ArgumentNullException("加密参数不能为空");
             }
             MD5CryptoServiceProvider provider = new MD5CryptoServiceProvider();
             string str = BitConverter.ToString(provider.ComputeHash(Encoding.UTF8.GetBytes(value)));

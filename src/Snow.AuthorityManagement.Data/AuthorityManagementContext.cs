@@ -37,6 +37,7 @@ namespace Snow.AuthorityManagement.Data
                 .HasOne(pt => pt.Role)
                 .WithMany(t => t.UserRoles)
                 .HasForeignKey(pt => pt.RoleID);
+            
             base.OnModelCreating(modelBuilder);
         }
     }

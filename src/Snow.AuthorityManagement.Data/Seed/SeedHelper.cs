@@ -8,9 +8,9 @@ namespace Snow.AuthorityManagement.Data.Seed
 {
     public class SeedHelper
     {
-        public static async Task SeedHostDbAsync(AuthorityManagementContext context)
+        public static async Task SeedHostDbAsync(AuthorityManagementContext context, IConfiguration configuration)
         {
-            await new HostRoleAndUserCreator(context).CreateAsync();
+            await new HostRoleAndUserCreator(context, configuration).CreateAsync();
         }
     }
 }

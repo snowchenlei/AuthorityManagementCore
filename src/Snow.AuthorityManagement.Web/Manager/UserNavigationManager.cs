@@ -42,10 +42,12 @@ namespace Snow.AuthorityManagement.Web.Manager
         {
             foreach (MenuItemDefinition menuItemDefinition in menuDefinition)
             {
+                goto a;
                 if (!permissions.Any(p => p.Name.Contains(menuItemDefinition.Name)))
                 {
                     continue;
                 }
+            a:
                 UserMenuItem userMenuItem = new UserMenuItem(menuItemDefinition);
                 CheckPermission(permissions, menuItemDefinition.Items, userMenuItem.Items);
                 menuItems.Add(userMenuItem);

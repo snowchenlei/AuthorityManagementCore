@@ -1,0 +1,82 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.4.1",
+      "files": [
+        "jquery.min.js",
+        "jquery.js",
+        "jquery.min.map"
+      ],
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validate@1.19.1",
+      "destination": "wwwroot/lib/jquery-validate/",
+      "files": [
+        "jquery.validate.js",
+        "jquery.validate.min.js",
+        "localization/messages_zh.js",
+        "localization/messages_zh.min.js"
+      ]
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "twitter-bootstrap@4.3.1",
+      "destination": "wwwroot/lib/twitter-bootstrap/"
+    },
+    {
+      "library": "bootstrap-table@1.15.3",
+      "destination": "wwwroot/lib/bootstrap-table/",
+      "files": [
+        "locale/bootstrap-table-zh-CN.js",
+        "locale/bootstrap-table-zh-CN.min.js",
+        "extensions/fixed-columns/bootstrap-table-fixed-columns.css",
+        "extensions/fixed-columns/bootstrap-table-fixed-columns.min.css",
+        "extensions/fixed-columns/bootstrap-table-fixed-columns.js",
+        "extensions/fixed-columns/bootstrap-table-fixed-columns.min.js",
+        "bootstrap-table.js",
+        "bootstrap-table.min.js",
+        "bootstrap-table.css",
+        "bootstrap-table.min.css"
+      ]
+    },
+    {
+      "library": "bootstrap-daterangepicker@3.0.5",
+      "destination": "wwwroot/lib/bootstrap-daterangepicker/"
+    },
+    {
+      "library": "bootbox.js@4.4.0",
+      "destination": "wwwroot/lib/bootbox.js/"
+    },
+    {
+      "library": "zTree.v3@3.5.40",
+      "destination": "wwwroot/lib/zTree.v3/"
+    },
+    {
+      "library": "select2@4.0.8",
+      "destination": "wwwroot/lib/select2/",
+      "files": [
+        "css/select2.css",
+        "css/select2.min.css",
+        "js/select2.full.js",
+        "js/select2.full.min.js",
+        "js/i18n/zh-CN.js"
+      ]
+    },
+
+    {
+      "library": "font-awesome@5.9.0",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
+    }
+
+  ]
+}

@@ -3,40 +3,43 @@
 @{
     int index = 1;
 }
-<ul class="sidebar-menu tree" data-widget="tree">
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     @foreach (var menuItem in Model.MainMenu.Items)
     {
-        <li class="treeview">
-            @if (menuItem.Items.IsNullOrEmpty())
-            {
-                <a href="@menuItem.Url" data-id="@index" data-name="@menuItem.DisplayName" target="tab_@index">
-                    <i class="fa fa-th"></i> <span>@menuItem.DisplayName</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+        @if (menuItem.Items.IsNullOrEmpty())
+        {
+            <li class="nav-item">
+                <a href="@menuItem.Url" class="nav-link">
+                    <i class="nav-icon @menuItem.Icon"></i>
+                    <p>
+                        @menuItem.DisplayName
+                    </p>
                 </a>
-                index++;
-            }
-            else
-            {
-                <a href="javascript:void(0);">
-                    <i class="fa fa-th"></i> <span>@menuItem.DisplayName</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item has-treeview menu-open">
+                <a href="javascript:void(0);" class="nav-link active">
+                    <i class="nav-icon @menuItem.Icon"></i>
+                    <p>
+                        @menuItem.DisplayName
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
                 </a>
-                <ul class="treeview-menu">
+                <ul class="nav nav-treeview">
                     @foreach (var subMenuItem in menuItem.Items)
                     {
-                        <li>
-                            <a class="deepNav" href="@subMenuItem.Url" data-id="@index" data-name="@subMenuItem.DisplayName" target="tab_@index">
-                                <i class="fa fa-circle-o"></i> @subMenuItem.DisplayName
+                        <li class="nav-item" data-id="@index" data-name="@subMenuItem.DisplayName" target="tab_@index">
+                            <a href="javascript:void(0);" data-href="@subMenuItem.Url" class="nav-link deepNav" data-name="@subMenuItem.Name" data-id="@subMenuItem.Target.Substring(subMenuItem.Target.IndexOf('_') + 1)" target="@subMenuItem.Target">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> @subMenuItem.DisplayName</p>
                             </a>
                         </li>
                         index++;
                     }
                 </ul>
-            }
-        </li>
+            </li>
+        }
     }
 </ul>

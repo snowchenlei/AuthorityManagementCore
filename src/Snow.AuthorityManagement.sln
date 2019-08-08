@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.IS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Repository", "Snow.AuthorityManagement.Repository\Snow.AuthorityManagement.Repository.csproj", "{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.RepositoryFactory", "Snow.AuthorityManagement.RepositoryFactory\Snow.AuthorityManagement.RepositoryFactory.csproj", "{6B467FC0-6176-4758-8F03-B640814B0B98}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Service", "Snow.AuthorityManagement.Service\Snow.AuthorityManagement.Service.csproj", "{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Web", "Snow.AuthorityManagement.Web\Snow.AuthorityManagement.Web.csproj", "{71093CEE-2FF7-4188-BEDC-82D267787A15}"
@@ -49,10 +47,6 @@ Global
 		{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B467FC0-6176-4758-8F03-B640814B0B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B467FC0-6176-4758-8F03-B640814B0B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B467FC0-6176-4758-8F03-B640814B0B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B467FC0-6176-4758-8F03-B640814B0B98}.Release|Any CPU.Build.0 = Release|Any CPU
 		{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}.Release|Any CPU.ActiveCfg = Release|Any CPU

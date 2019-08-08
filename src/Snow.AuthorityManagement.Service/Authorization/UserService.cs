@@ -28,10 +28,10 @@ namespace Snow.AuthorityManagement.Service.Authorization
 
         public UserService(
             IMapper mapper
-            , AuthorityManagementContext context
-            , IBaseRepository<User> currentRepository
             , IConfiguration configuration
+            , AuthorityManagementContext context
             , IBaseRepository<Role> roleRepository
+            , IBaseRepository<User> currentRepository
             , IBaseRepository<UserRole> userRoleRepository)
         {
             _mapper = mapper;

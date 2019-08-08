@@ -21,8 +21,6 @@
     <None Include="wwwroot\css\home\index.css" />
     <None Include="wwwroot\errors\404.html" />
     <None Include="wwwroot\errors\500.html" />
-    <None Include="wwwroot\js\view-resources\home\index.js" />
-    <None Include="wwwroot\js\view-resources\user\index.js" />
     <None Include="wwwroot\js\bootstrap-tab.js" />
     <None Include="wwwroot\js\common.js" />
     <None Include="wwwroot\js\dataInit.js" />

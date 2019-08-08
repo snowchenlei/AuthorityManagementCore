@@ -6,49 +6,15 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <environment include="Development">
-        <!-- bootstrap & fontawesome -->
-        <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
-        <!-- ladda -->
-        @*<link href="~/lib/ladda/ladda.min.css" rel="stylesheet" />*@
-        <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" />
-        <!-- page specific plugin styles -->
-        <!-- bootstrap-table -->
-        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
-        <link href="~/lib/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.css" rel="stylesheet" />
-
-        <link href="~/lib/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" />
-        @*<link href="~/lib/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css" rel="stylesheet" />*@
-        <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
-        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
-
-        @*<link href="~/lib/customerMain.css" rel="stylesheet" />
-            <link href="~/lib/customer/loader.css" rel="stylesheet" />*@
+    <environment names="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/toastr/toastr.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment>
         <link href="~/css/bundle/frame.min.css" rel="stylesheet" />
     </environment>
-    <style type="text/css">
-        .btn, .dropdown-colorpicker a {
-            cursor: pointer;
-        }
-
-        .breadcrumb, .breadcrumb > li > a, .btn {
-            display: inline-block;
-        }
-
-        #searchTitle {
-            -webkit-transition: all 2s ease;
-            -moz-transition: all 2s ease;
-            -o-transition: all 2s ease;
-            transition: all 2s ease;
-        }
-
-        #searchPanel .form-group:last-child {
-            margin-bottom: 0px;
-        }
-    </style>
     @RenderSection("style", required: false)
 </head>
 <body>
@@ -61,25 +27,16 @@
         </div>
     </div>
 
-    <div class="panel-body" style="padding-bottom:0px;">
-        @*<div id="loader-wrapper">
-                <div id="loader"></div>
-                <div class="loader-section section-left"></div>
-                <div class="loader-section section-right"></div>
-                <div class="load_title">正在加载LoveFeel站点<br><span>V1.0</span></div>
-            </div>*@
-        @RenderBody()
+    @RenderBody()
 
-        <table id="tb-body" data-bind="bootstrapTable :$root" data-filter-control="true"></table>
-    </div>
+    <table id="tb-body" data-bind="bootstrapTable :$root" data-filter-control="true"></table>
 
     <environment include="Development">
         <!-- jquery -->
         <script src="~/lib/jquery/jquery.min.js"></script>
 
-        <!-- jquery-validate -->
-        @*
-            <script src="/js/bundle/jqueryValidate.min.js"></script>*@
+        <!-- jquery-validate -->        @*
+        <script src="/js/bundle/jqueryValidate.min.js"></script>*@
         <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
         <script src="~/lib/jquery-validate/jquery.unobtrusive-ajax.min.js"></script>
@@ -95,50 +52,51 @@
 
         <!-- bootstrap-iconpicker -->
         @*
-            <script src="~/js/bundle/bootstrapIconpicker.min.js"></script>*@
-        @*<script src="~/lib/bootstrap-iconpicker/js/bootstrap-iconpicker-iconset-all.min.js"></script>
-            <script src="~/lib/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"></script>*@
+        <script src="~/js/bundle/bootstrapIconpicker.min.js"></script>*@
+        @*
+        <script src="~/lib/bootstrap-iconpicker/js/bootstrap-iconpicker-iconset-all.min.js"></script>
+        <script src="~/lib/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"></script>*@
 
         <!-- bootstrap-table -->
         @*
-            <script src="~/js/bundle/bootstrapTable.min.js"></script>*@
+        <script src="~/js/bundle/bootstrapTable.min.js"></script>*@
         <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
         <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
         <script src="~/lib/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>
 
         <!-- 导出 -->
         @*
-            <script src="~/js/bundle/bootstrapTableExport.min.js"></script>*@
+        <script src="~/js/bundle/bootstrapTableExport.min.js"></script>*@
         @*
-            <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-            <script src="~/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js"></script>
-            <!-- Excel 2007+ XML Format -->
-            <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>
-            <!-- PDF -->
-            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
-            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
-            <!-- PNG -->
-            <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script><!-- Excel 2007+ XML Format -->
-            <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>*@
+        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+        <script src="~/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js"></script>
+        <!-- Excel 2007+ XML Format -->
+        <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>
+        <!-- PDF -->
+        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
+        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+        <!-- PNG -->
+        <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script><!-- Excel 2007+ XML Format -->
+        <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>*@
         <!-- PDF -->
         @*
-            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>*@
+        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>*@
         @*
-            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>*@
+        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>*@
         <!-- PNG -->
         @*
-            <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script>*@
+        <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script>*@
         @*
-            <script src="~/lib/tableExport.jquery.plugin/tableExport.min.js"></script>*@
+        <script src="~/lib/tableExport.jquery.plugin/tableExport.min.js"></script>*@
 
         <!-- 弹框 -->
         <script src="~/lib/toastr.js/toastr.min.js"></script>
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>-->
-        <script src="~/lib/bootbox/bootbox.min.js"></script>
+        <script src="~/lib/bootbox.js/bootbox.min.js"></script>
 
         <!-- select2 -->
         @*
-            <script src="~/js/bundle/select2.min.js"></script>*@
+        <script src="~/js/bundle/select2.min.js"></script>*@
         <script src="~/lib/select2/js/select2.full.min.js"></script>
         <script src="~/lib/select2/js/i18n/zh-CN.js"></script>
         <!-- zTree -->
@@ -154,7 +112,7 @@
     </environment>
     <environment exclude="Development">
         @*
-            <script src="~/js/bundle/frame.min.js"></script>*@
+        <script src="~/js/bundle/frame.min.js"></script>*@
     </environment>
     @RenderSection("scripts", false)
     <script type="text/javascript">

@@ -38,9 +38,13 @@ function actionFormater(value, row, index) {
 }
 
 $(function () {
-    if (!isGranted('Pages.Users.Create')) {
-        $('#btnAdd').remove();
-    }
+    //if (!isGranted('Pages.Users.Create')) {
+    //    $('#btnAdd').remove();
+    //}
+
+    $('#create').click(function () {
+        createOrEdit('添加新用户');
+    });
     //$('#modifyModal').modal('show');
     //1、初始化表格
     table.init(columns);
@@ -62,3 +66,35 @@ function queryParams(params) {
     };
 }
 // #endregion
+
+(function () {
+    function createOrEdit(title, id) {
+        dialog = bootbox.dialog({
+            title: title,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> 加载中... </p>',
+            size: 'large',
+            buttons: {
+                cancel: {
+                    label: '取消',
+                    className: 'btn-danger'
+                },
+                confirm: {//ok、confirm会在加载完成后获取焦点
+                    label: '提交',
+                    className: 'btn-success',
+                    callback: function (result) {
+                        if (result) {
+                            save();
+                            return false;
+                        }
+                    }
+                }
+            }
+        });
+        dialog.init(function () {
+            $.get('/User/CreateOrEdit', { id: id }, function (data) {
+                dialog.find('.bootbox-body').html(data);
+                dialog.find('input:not([type=hidden]):first').focus();
+            });
+        });
+    }
+})();

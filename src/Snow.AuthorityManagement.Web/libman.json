@@ -68,7 +68,6 @@
         "js/i18n/zh-CN.js"
       ]
     },
-
     {
       "library": "font-awesome@5.9.0",
       "destination": "wwwroot/lib/font-awesome/"
@@ -76,7 +75,16 @@
     {
       "library": "toastr.js@2.1.4",
       "destination": "wwwroot/lib/toastr.js/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "wwwroot/lib/icheck-bootstrap/",
+      "destination": "wwwroot/lib/icheck-bootstrap/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "wwwroot/lib/adminLte.v3/",
+      "destination": "wwwroot/lib/adminLte.v3/"
     }
-
   ]
 }

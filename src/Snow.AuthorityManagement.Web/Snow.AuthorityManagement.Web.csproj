@@ -31,6 +31,18 @@
     <None Include="wwwroot\js\showInfo.js" />
     <None Include="wwwroot\css\table-column-formater.css" />
     <None Include="wwwroot\js\timeBucket.js" />
+    <None Include="wwwroot\lib\adminLte.v3\css\adminlte.css.map" />
+    <None Include="wwwroot\lib\adminLte.v3\css\adminlte.min.css.map" />
+    <None Include="wwwroot\lib\adminLte.v3\js\adminlte.js" />
+    <None Include="wwwroot\lib\adminLte.v3\js\adminlte.js.map" />
+    <None Include="wwwroot\lib\adminLte.v3\js\adminlte.min.js" />
+    <None Include="wwwroot\lib\adminLte.v3\js\adminlte.min.js.map" />
+    <None Include="wwwroot\lib\adminLte.v3\js\demo.js" />
+    <None Include="wwwroot\lib\adminLte.v3\js\pages\dashboard.js" />
+    <None Include="wwwroot\lib\adminLte.v3\js\pages\dashboard2.js" />
+    <None Include="wwwroot\lib\adminLte.v3\js\pages\dashboard3.js" />
+    <None Include="wwwroot\lib\icheck-bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\icheck-bootstrap\README.md" />
   </ItemGroup>
 
   <ItemGroup>

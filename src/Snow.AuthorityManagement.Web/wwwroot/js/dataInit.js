@@ -41,7 +41,7 @@ var table = {
             columns: columns,
             detailView: existsChildTable,             //是否显示父子表
             fixedColumns: true,
-            fixedNumber: 2,
+            //fixedNumber: 2,
             onExpandRow: table.onExpandRow,
             onLoadSuccess: table.onLoadSuccess, //加载成功
         });
@@ -52,80 +52,80 @@ var table = {
     }
 };
 
-var operate = {
-    //新增
-    add: function () {
-        createOrEdit('添加');
-    },
-    //编辑
-    edit: function (name, id) {
-        createOrEdit('修改' + name, id);
-    },
-    //删除
-    del: function (name, id) {
-        bootbox.confirm({
-            size: 'small',
-            title: '删除',
-            message: '确定要删除"' + name + '"吗？',
-            callback: function (result) {
-                if (result) {
-                    $.post(absoluteUrl + '/Delete',
-                        { id: id },
-                        function (result) {
-                            requestCallBack(result,
-                                function () {
-                                    refreshTable();
-                                });
-                        });
-                }
-            }
-        });
-    }
-};
-function createOrEdit(title, id) {
-    var dialog = bootbox.dialog({
-        title: title,
-        message: '<p><i class="fa fa-spin fa-spinner"></i> 加载中...</p>',
-        buttons: {
-            cancel: {
-                label: "取消",
-                className: 'btn-danger ladda-button'
-            },
-            ok: {
-                label: "提交",
-                className: 'btn-success ladda-button',
-                callback: function (result) {
-                    var l = Ladda.create(result.target);
-                    l.start();
-                    //手动验证
-                    var $e = $("#modelForm");
-                    if (!$e.valid()) {
-                        l.stop();
-                        return false;
-                    }
-                    var s = $e.serializeArray();
-                    $.post(absoluteUrl + '/CreateOrEdit',
-                        s,
-                        function (result) {
-                            l.stop();
-                            requestCallBack(result,
-                                function () {
-                                    refreshTable();
-                                });
-                            dialog.modal('hide');
-                        });
-                    return false;
-                }
-            }
-        }
-    });
-    dialog.init(function () {
-        $('.ladda-button').attr('data-style', 'zoom-in');
-        $.get(absoluteUrl + '/CreateOrEdit', { id: id }, function (data) {
-            dialog.find('.bootbox-body').html(data);
-        });
-    });
-}
+//var operate = {
+//    //新增
+//    add: function () {
+//        createOrEdit('添加');
+//    },
+//    //编辑
+//    edit: function (name, id) {
+//        createOrEdit('修改' + name, id);
+//    },
+//    //删除
+//    del: function (name, id) {
+//        bootbox.confirm({
+//            size: 'small',
+//            title: '删除',
+//            message: '确定要删除"' + name + '"吗？',
+//            callback: function (result) {
+//                if (result) {
+//                    $.post(absoluteUrl + '/Delete',
+//                        { id: id },
+//                        function (result) {
+//                            requestCallBack(result,
+//                                function () {
+//                                    refreshTable();
+//                                });
+//                        });
+//                }
+//            }
+//        });
+//    }
+//};
+//function createOrEdit(title, id) {
+//    var dialog = bootbox.dialog({
+//        title: title,
+//        message: '<p><i class="fa fa-spin fa-spinner"></i> 加载中...</p>',
+//        buttons: {
+//            cancel: {
+//                label: "取消",
+//                className: 'btn-danger ladda-button'
+//            },
+//            ok: {
+//                label: "提交",
+//                className: 'btn-success ladda-button',
+//                callback: function (result) {
+//                    var l = Ladda.create(result.target);
+//                    l.start();
+//                    //手动验证
+//                    var $e = $("#modelForm");
+//                    if (!$e.valid()) {
+//                        l.stop();
+//                        return false;
+//                    }
+//                    var s = $e.serializeArray();
+//                    $.post(absoluteUrl + '/CreateOrEdit',
+//                        s,
+//                        function (result) {
+//                            l.stop();
+//                            requestCallBack(result,
+//                                function () {
+//                                    refreshTable();
+//                                });
+//                            dialog.modal('hide');
+//                        });
+//                    return false;
+//                }
+//            }
+//        }
+//    });
+//    dialog.init(function () {
+//        $('.ladda-button').attr('data-style', 'zoom-in');
+//        $.get(absoluteUrl + '/CreateOrEdit', { id: id }, function (data) {
+//            dialog.find('.bootbox-body').html(data);
+//        });
+//    });
+//}
 //是否包含权限
 function isGranted(permission) {
     var data = localStorage.getItem('permissions');

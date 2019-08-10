@@ -36,13 +36,13 @@
         <script src="~/lib/jquery/jquery.min.js"></script>
 
         <!-- jquery-validate -->        @*
-        <script src="/js/bundle/jqueryValidate.min.js"></script>*@
+            <script src="/js/bundle/jqueryValidate.min.js"></script>*@
         <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
         <script src="~/lib/jquery-validate/jquery.unobtrusive-ajax.min.js"></script>
 
         <!-- bootstrap -->
-        <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- ladda -->
         <script src="~/lib/ladda/spin.min.js"></script>
         <script src="~/lib/ladda/ladda.min.js"></script>
@@ -52,42 +52,42 @@
 
         <!-- bootstrap-iconpicker -->
         @*
-        <script src="~/js/bundle/bootstrapIconpicker.min.js"></script>*@
+            <script src="~/js/bundle/bootstrapIconpicker.min.js"></script>*@
         @*
-        <script src="~/lib/bootstrap-iconpicker/js/bootstrap-iconpicker-iconset-all.min.js"></script>
-        <script src="~/lib/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"></script>*@
+            <script src="~/lib/bootstrap-iconpicker/js/bootstrap-iconpicker-iconset-all.min.js"></script>
+            <script src="~/lib/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"></script>*@
 
         <!-- bootstrap-table -->
         @*
-        <script src="~/js/bundle/bootstrapTable.min.js"></script>*@
+            <script src="~/js/bundle/bootstrapTable.min.js"></script>*@
         <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
         <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-        <script src="~/lib/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>
+        @*<script src="~/lib/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>*@
 
         <!-- 导出 -->
         @*
-        <script src="~/js/bundle/bootstrapTableExport.min.js"></script>*@
+            <script src="~/js/bundle/bootstrapTableExport.min.js"></script>*@
         @*
-        <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-        <script src="~/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js"></script>
-        <!-- Excel 2007+ XML Format -->
-        <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>
+            <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+            <script src="~/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js"></script>
+            <!-- Excel 2007+ XML Format -->
+            <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>
+            <!-- PDF -->
+            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
+            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+            <!-- PNG -->
+            <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script><!-- Excel 2007+ XML Format -->
+            <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>*@
         <!-- PDF -->
-        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
-        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
-        <!-- PNG -->
-        <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script><!-- Excel 2007+ XML Format -->
-        <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>*@
-        <!-- PDF -->
         @*
-        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>*@
+            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>*@
         @*
-        <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>*@
+            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>*@
         <!-- PNG -->
         @*
-        <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script>*@
+            <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script>*@
         @*
-        <script src="~/lib/tableExport.jquery.plugin/tableExport.min.js"></script>*@
+            <script src="~/lib/tableExport.jquery.plugin/tableExport.min.js"></script>*@
 
         <!-- 弹框 -->
         <script src="~/lib/toastr.js/toastr.min.js"></script>
@@ -96,7 +96,7 @@
 
         <!-- select2 -->
         @*
-        <script src="~/js/bundle/select2.min.js"></script>*@
+            <script src="~/js/bundle/select2.min.js"></script>*@
         <script src="~/lib/select2/js/select2.full.min.js"></script>
         <script src="~/lib/select2/js/i18n/zh-CN.js"></script>
         <!-- zTree -->
@@ -112,7 +112,7 @@
     </environment>
     <environment exclude="Development">
         @*
-        <script src="~/js/bundle/frame.min.js"></script>*@
+            <script src="~/js/bundle/frame.min.js"></script>*@
     </environment>
     @RenderSection("scripts", false)
     <script type="text/javascript">

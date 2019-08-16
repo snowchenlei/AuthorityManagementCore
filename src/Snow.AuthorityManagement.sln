@@ -1,21 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Common", "Snow.AuthorityManagement.Common\Snow.AuthorityManagement.Common.csproj", "{5D892B26-2589-4FAB-9D7F-4B98CE7E1F93}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Core", "Snow.AuthorityManagement.Core\Snow.AuthorityManagement.Core.csproj", "{52CF5022-66FB-4A85-A2FD-9E8DE9AF9680}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.IRepository", "Snow.AuthorityManagement.IRepository\Snow.AuthorityManagement.IRepository.csproj", "{D38C9D09-7023-4579-ACF5-5842D44B22F1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.IService", "Snow.AuthorityManagement.IService\Snow.AuthorityManagement.IService.csproj", "{897FA103-E278-4CF0-8E79-BDD41867DCAC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Repository", "Snow.AuthorityManagement.Repository\Snow.AuthorityManagement.Repository.csproj", "{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.RepositoryFactory", "Snow.AuthorityManagement.RepositoryFactory\Snow.AuthorityManagement.RepositoryFactory.csproj", "{6B467FC0-6176-4758-8F03-B640814B0B98}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Service", "Snow.AuthorityManagement.Service\Snow.AuthorityManagement.Service.csproj", "{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Web", "Snow.AuthorityManagement.Web\Snow.AuthorityManagement.Web.csproj", "{71093CEE-2FF7-4188-BEDC-82D267787A15}"
 EndProject
@@ -23,7 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Data", "Snow.AuthorityManagement.Data\Snow.AuthorityManagement.Data.csproj", "{338D415E-FCED-4F60-B831-852F46D4596E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anc", "Anc\Anc.csproj", "{CBB1340C-F40A-4659-8E7D-6CC63DC25EE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc", "Anc\Anc.csproj", "{CBB1340C-F40A-4659-8E7D-6CC63DC25EE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Application", "Snow.AuthorityManagement.Application\Snow.AuthorityManagement.Application.csproj", "{C5FB6A6B-055A-47C3-B539-4E95FED152CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{7070E1A5-316E-4F30-9910-B8C2B2921274}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{F266C413-2FD5-4AEF-9D5A-FF3826E42006}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ui", "Ui", "{F2AB8448-A739-459C-A699-A43FCD448DD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,26 +41,10 @@ Global
 		{52CF5022-66FB-4A85-A2FD-9E8DE9AF9680}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52CF5022-66FB-4A85-A2FD-9E8DE9AF9680}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52CF5022-66FB-4A85-A2FD-9E8DE9AF9680}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D38C9D09-7023-4579-ACF5-5842D44B22F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D38C9D09-7023-4579-ACF5-5842D44B22F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D38C9D09-7023-4579-ACF5-5842D44B22F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D38C9D09-7023-4579-ACF5-5842D44B22F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{897FA103-E278-4CF0-8E79-BDD41867DCAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{897FA103-E278-4CF0-8E79-BDD41867DCAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{897FA103-E278-4CF0-8E79-BDD41867DCAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{897FA103-E278-4CF0-8E79-BDD41867DCAC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B467FC0-6176-4758-8F03-B640814B0B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B467FC0-6176-4758-8F03-B640814B0B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B467FC0-6176-4758-8F03-B640814B0B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B467FC0-6176-4758-8F03-B640814B0B98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58C6B98B-2ACC-42C5-86A0-56F4E50C34AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71093CEE-2FF7-4188-BEDC-82D267787A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71093CEE-2FF7-4188-BEDC-82D267787A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71093CEE-2FF7-4188-BEDC-82D267787A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,9 +61,23 @@ Global
 		{CBB1340C-F40A-4659-8E7D-6CC63DC25EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBB1340C-F40A-4659-8E7D-6CC63DC25EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBB1340C-F40A-4659-8E7D-6CC63DC25EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5FB6A6B-055A-47C3-B539-4E95FED152CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FB6A6B-055A-47C3-B539-4E95FED152CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FB6A6B-055A-47C3-B539-4E95FED152CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FB6A6B-055A-47C3-B539-4E95FED152CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5D892B26-2589-4FAB-9D7F-4B98CE7E1F93} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
+		{52CF5022-66FB-4A85-A2FD-9E8DE9AF9680} = {F266C413-2FD5-4AEF-9D5A-FF3826E42006}
+		{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD} = {F266C413-2FD5-4AEF-9D5A-FF3826E42006}
+		{71093CEE-2FF7-4188-BEDC-82D267787A15} = {F2AB8448-A739-459C-A699-A43FCD448DD9}
+		{4E104E90-48DB-43EB-93E4-EADB410DE6E5} = {F2AB8448-A739-459C-A699-A43FCD448DD9}
+		{338D415E-FCED-4F60-B831-852F46D4596E} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
+		{CBB1340C-F40A-4659-8E7D-6CC63DC25EE3} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
+		{C5FB6A6B-055A-47C3-B539-4E95FED152CF} = {7070E1A5-316E-4F30-9910-B8C2B2921274}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0FDFAB4-CB28-40CF-B14D-8869F4388CF5}

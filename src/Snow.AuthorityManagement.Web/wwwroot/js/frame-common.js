@@ -47,6 +47,6 @@ toastr.options = {
     hideEasing: "linear",//消失时的动画缓冲方式
     showMethod: "fadeIn",//显示时的动画方式
     hideMethod: "fadeOut" //消失时的动画方式
-}
+};
 //bootbox基本设置
 bootbox.setLocale('zh_CN');

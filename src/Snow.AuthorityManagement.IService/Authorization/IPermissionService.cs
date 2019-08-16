@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Snow.AuthorityManagement.Core.Entities.Authorization;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
 
 namespace Snow.AuthorityManagement.IService.Authorization
 {

@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Snow.AuthorityManagement.Application.Authorization.Permissions;
+using Snow.AuthorityManagement.Application.Authorization.Permissions.Dto;
+using Snow.AuthorityManagement.Application.Authorization.Roles;
+using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Core;
-using Snow.AuthorityManagement.Core.Dto.Permission;
-using Snow.AuthorityManagement.Core.Dto.Role;
-using Snow.AuthorityManagement.Core.Entities.Authorization;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Model;
-using Snow.AuthorityManagement.IService.Authorization;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Library;
+using Snow.AuthorityManagement.Web.Models.Roles;
 
 namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {
@@ -24,7 +26,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
         private readonly IPermissionService _permissionService;
-        private readonly PermissionDefinitionContextBase _context;
+        //private readonly PermissionDefinitionContextBase _context;
 
         public RoleController(
             IRoleService roleService, IPermissionService permissionService
@@ -33,7 +35,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         {
             _roleService = roleService;
             _permissionService = permissionService;
-            _context = PermissionDefinitionContextBase.Context;//context;
+            //_context = PermissionDefinitionContextBase.Context;//context;
             _mapper = mapper;
         }
 
@@ -41,6 +43,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [ResponseCache(CacheProfileName = "Header")]
         public ActionResult Index()
         {
+            ViewBag.AbsoluteUrl = "/Role";
             return View();
         }
 
@@ -60,17 +63,16 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Roles_Create, PermissionNames.Pages_Roles_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
-            if (id.HasValue)
+            var output = await _roleService.GetForEditAsync(id);
+            var viewModel = new CreateOrEditRoleModalViewModel(output)
             {
-                return PartialView(await Edit(id.Value));
-            }
-            else
-            {
-                return PartialView(Create());
-            }
+                //PasswordComplexitySetting = await _passwordComplexitySettingStore.GetSettingsAsync()
+            };
+            _mapper.Map(output, viewModel);
+            return PartialView(viewModel);
         }
 
-        [AncAuthorize(PermissionNames.Pages_Roles_Create)]
+        /*[AncAuthorize(PermissionNames.Pages_Roles_Create)]
         private GetRoleForEditOutput Create()
         {
             IReadOnlyList<AncPermission> permissions = _context
@@ -105,7 +107,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
                 Role = roleDto,
                 Permission = Serialization.SerializeObjectCamel(result)
             };
-        }
+        }*/
 
         private FlatPermissionDto AddPermission(AncPermission permission
             , IList<Permission> oldPermissions)

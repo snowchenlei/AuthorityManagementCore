@@ -1,5 +1,4 @@
-﻿@using Snow.AuthorityManagement.Core.Dto.Role
-@model Snow.AuthorityManagement.Core.Dto.User.GetUserForEditOutput
+﻿@model Snow.AuthorityManagement.Web.Models.Users.CreateOrEditUserModalViewModel
 
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
@@ -44,24 +43,15 @@
         </form>
     </div>
     <div class="tab-pane" id="RolesTab" role="tabpanel">
-        <div class="user-role-checkbox-list">
-            <select id="Role" name="RoleIds[]" multiple="multiple">
-                @foreach (RoleSelectDto role in Model.Roles)
-                {
-                    <option value="@role.Key" selected="@role.Selected">@role.Value</option>
-                }
-            </select>
-            @*@foreach (var role in Model.Roles)
-                {
-                <div class="m-checkbox-list">
-                    <label for="EditUser_@(role.RoleName)" class="m-checkbox">
-                        <input id="EditUser_@(role.RoleName)" type="checkbox" name="@(role.RoleName)" value="true" @Html.Raw(role.IsAssigned ? "checked=\" checked\"" : "" )>
-                        @role.RoleDisplayName
-                        <span></span>
-                    </label>
-                </div>
-                }*@
-        </div>
+        @foreach (var role in Model.Roles)
+        {
+            <label class="icheck-turquoise">
+                <input id="EditUser_@(role.Name)" type="checkbox" name="@(role.Name)" data-id="@(role.ID)" value="true" @Html.Raw(role.Selected ? "checked=\" checked\"" : "")>
+                <label for="EditUser_@(role.Name)">
+                    @role.DisplayName
+                </label>
+            </label>
+        }
     </div>
 </div>
 

@@ -8,14 +8,16 @@
     <title>@ViewBag.Title</title>
     <environment names="Development">
         <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/lib/toastr/toastr.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment>
         <link href="~/css/bundle/frame.min.css" rel="stylesheet" />
     </environment>
-    @RenderSection("style", required: false)
+    @RenderSection("styles", required: false)
 </head>
 <body>
     <!--页面加载end-->
@@ -33,8 +35,7 @@
 
     <environment include="Development">
         <!-- jquery -->
-        <script src="~/lib/jquery/jquery.min.js"></script>
-
+        <script src="~/lib/jquery/jquery.js"></script>
         <!-- jquery-validate -->        @*
             <script src="/js/bundle/jqueryValidate.min.js"></script>*@
         <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
@@ -62,7 +63,8 @@
             <script src="~/js/bundle/bootstrapTable.min.js"></script>*@
         <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
         <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-        @*<script src="~/lib/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>*@
+        @*
+            <script src="~/lib/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>*@
 
         <!-- 导出 -->
         @*
@@ -92,23 +94,21 @@
         <!-- 弹框 -->
         <script src="~/lib/toastr.js/toastr.min.js"></script>
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>-->
-        <script src="~/lib/bootbox.js/bootbox.min.js"></script>
+        <script src="~/lib/bootbox.js/bootbox.all.min.js"></script>
+        <script src="~/lib/bootbox.js/locales/zh_CN.js"></script>
 
         <!-- select2 -->
         @*
             <script src="~/js/bundle/select2.min.js"></script>*@
         <script src="~/lib/select2/js/select2.full.min.js"></script>
         <script src="~/lib/select2/js/i18n/zh-CN.js"></script>
-        <!-- zTree -->
-        <script src="~/lib/zTree.v3/js/jquery.ztree.core.min.js"></script>
-        <script src="~/lib/zTree.v3/js/jquery.ztree.excheck.min.js"></script>
-        <script src="~/lib/zTree.v3/js/jquery.ztree.exedit.min.js"></script>
         <!-- 自定义 -->
-        <script src="~/js/jquery.formPopulate.js"></script>
+        @*<script src="~/js/jquery.formPopulate.js"></script>*@
         <script src="~/js/anc.js"></script>
         <script src="~/js/dataInit.js"></script>
         <script src="~/js/common.js"></script>
         <script src="~/js/frame-common.js"></script>
+        <script src="~/js/main.js"></script>
     </environment>
     <environment exclude="Development">
         @*

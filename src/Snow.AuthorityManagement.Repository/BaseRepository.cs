@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using Snow.AuthorityManagement.IRepository;
+using Snow.AuthorityManagement.Core;
 
 namespace Snow.AuthorityManagement.Repository
 {

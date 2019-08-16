@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Snow.AuthorityManagement.Application.Authorization.Permissions;
 using Snow.AuthorityManagement.Common.Conversion;
-using Snow.AuthorityManagement.Core.Dto.User;
-using Snow.AuthorityManagement.Core.Entities.Authorization;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Core.Model.Navigation;
-using Snow.AuthorityManagement.IService.Authorization;
 using Snow.AuthorityManagement.Web.Session;
 using Snow.AuthorityManagement.Web.Startup;
 

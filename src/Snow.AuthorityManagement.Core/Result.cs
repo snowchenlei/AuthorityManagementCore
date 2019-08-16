@@ -15,7 +15,6 @@
 
     public class Result
     {
-        public int State { get; set; }
         public Status Status { get; set; }
         public string Message { get; set; }
     }

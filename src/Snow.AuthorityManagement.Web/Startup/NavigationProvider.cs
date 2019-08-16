@@ -27,7 +27,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                             "角色管理",
                             "user",
                             "/Role/Index",
-                            target: "tab_1",
+                            target: "tab_2",
                             requiredPermissionName: PermissionNames.Pages_Roles))
                 );
             return menu;

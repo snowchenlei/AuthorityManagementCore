@@ -3,6 +3,21 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
+      "provider": "filesystem",
+      "library": "wwwroot/lib/icheck-bootstrap/",
+      "destination": "wwwroot/lib/icheck-bootstrap/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "wwwroot/lib/adminLte.v3/",
+      "destination": "wwwroot/lib/adminLte.v3/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "wwwroot/lib/ladda/",
+      "destination": "wwwroot/lib/ladda/"
+    },
+    {
       "library": "jquery@3.4.1",
       "files": [
         "jquery.min.js",
@@ -50,14 +65,6 @@
       "destination": "wwwroot/lib/bootstrap-daterangepicker/"
     },
     {
-      "library": "bootbox.js@4.4.0",
-      "destination": "wwwroot/lib/bootbox.js/"
-    },
-    {
-      "library": "zTree.v3@3.5.40",
-      "destination": "wwwroot/lib/zTree.v3/"
-    },
-    {
       "library": "select2@4.0.8",
       "destination": "wwwroot/lib/select2/",
       "files": [
@@ -78,13 +85,8 @@
     },
     {
       "provider": "filesystem",
-      "library": "wwwroot/lib/icheck-bootstrap/",
-      "destination": "wwwroot/lib/icheck-bootstrap/"
-    },
-    {
-      "provider": "filesystem",
-      "library": "wwwroot/lib/adminLte.v3/",
-      "destination": "wwwroot/lib/adminLte.v3/"
+      "library": "wwwroot/lib/bootbox.js/",
+      "destination": "wwwroot/lib/bootbox.js/"
     }
   ]
 }

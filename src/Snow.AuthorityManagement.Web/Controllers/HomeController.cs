@@ -1,6 +1,5 @@
 ﻿using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Common.Http;
-using Snow.AuthorityManagement.IService;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
@@ -11,7 +10,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
-using Snow.AuthorityManagement.IService.Authorization;
 using Snow.AuthorityManagement.Web.Session;
 
 namespace Snow.AuthorityManagement.Web.Controllers

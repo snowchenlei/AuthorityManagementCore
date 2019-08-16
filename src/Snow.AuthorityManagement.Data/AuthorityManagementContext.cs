@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
+using Snow.AuthorityManagement.Core.Authorization.Roles;
+using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 
 namespace Snow.AuthorityManagement.Data

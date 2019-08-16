@@ -3,44 +3,27 @@
     Layout = "~/Views/Shared/_LayoutPageTable.cshtml";
 }
 
-<!--搜索-->
-<div class="panel-group" id="accordion">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <span style="font-size:16px;">查询条件</span>
-            <span class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#searchPanel" style="float: right;">
-                    <i id="searchTitle" class="glyphicon glyphicon-menu-up"></i>
-                </a>
-            </span>
-        </div>
-        <div id="searchPanel" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <form id="formSearch" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-md-1" for="txt_search_name">角色名</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="txt_search_name">
-                        </div>
-                        <label class="col-md-1 control-label" for="txt_search_addTime" style="float: left;">添加时间</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="txt_search_addTime">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+<div id="toolbar">
+    <div class="btn-group" role="group" aria-label="Operate Group">
+        <button id="create" type="button" class="btn btn-primary"><i class="fas fa-plus"></i>添加</button>
     </div>
 </div>
-<div class="bs-bars pull-left">
-    <div id="toolbar" class="btn-group">
-        <button id="btnAdd" class="btn btn-sm btn-success" onclick="operate.add()">
-            <i class="glyphicon glyphicon-plus" style="margin-right: 5px;"></i>添加
-        </button>
+<!--搜索-->
+<div class="card">
+    <div class="card-header">
+        查询条件
+    </div>
+    <div class="card-body">
+        <form id="formSearch" class="form-inline">
+            <label class="sr-only" for="txt_search_name">角色名</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="txt_search_name" placeholder="角色名">
+            <label class="sr-only" for="txt_search_addTime">添加时间</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 col-md-3" id="txt_search_addTime" placeholder="添加时间">
+        </form>
     </div>
 </div>
 @section Scripts
-    {
+{
     <script src="~/js/timeBucket.js"></script>
-    <script src="~/js/role/index.js"></script>
+    <script src="~/view-resources/role/index.js"></script>
 }

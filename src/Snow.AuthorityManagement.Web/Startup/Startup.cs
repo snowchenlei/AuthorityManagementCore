@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Reflection;
+using System.Runtime.Loader;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +41,8 @@ namespace Snow.AuthorityManagement.Web.Startup
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                // This lambda determines whether user consent for non-essential cookies is needed
+                // for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
@@ -53,7 +57,10 @@ namespace Snow.AuthorityManagement.Web.Startup
 
             #endregion 线程内唯一
 
-            services.AddAutoMapper();
+            var application = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Application"));
+            var web = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web"));
+            AppDomain.CurrentDomain.GetAssemblies();
+            services.AddAutoMapper(web, application);
 
             services.AddAuthentication(options =>
             {
@@ -104,13 +111,21 @@ namespace Snow.AuthorityManagement.Web.Startup
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            })
+            //启用FluentValidation验证
+            .AddFluentValidation(fv =>
+            {
+                //禁用其它的认证
+                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             #region 首次执行任务
-            services.AddStartupTask<InitalPermissionTask>();
-            services.AddStartupTask<InitialHostDbTask>(); 
-            #endregion
 
+            services.AddStartupTask<InitalPermissionTask>();
+            services.AddStartupTask<InitialHostDbTask>();
+
+            #endregion 首次执行任务
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();

@@ -3,31 +3,34 @@ using Snow.AuthorityManagement.Common;
 using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Common.Encryption;
 using Snow.AuthorityManagement.Enum;
-using Snow.AuthorityManagement.IService;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Snow.AuthorityManagement.Core;
-using Snow.AuthorityManagement.Core.Dto.User;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Library;
 using Microsoft.Extensions.Logging;
 using Snow.AuthorityManagement.Core.Exception;
-using Snow.AuthorityManagement.IService.Authorization;
+using Snow.AuthorityManagement.Core;
+using Snow.AuthorityManagement.Application.Authorization.Roles;
+using Snow.AuthorityManagement.Application.Authorization.Users;
+using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
+using Snow.AuthorityManagement.Web.Models.Users;
 
 namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {
     [AncAuthorize(PermissionNames.Pages_Users)]
     public class UserController : BaseController
     {
+        private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
 
         public UserController(
-            IUserService userService, IRoleService roleService)
+            IMapper mapper, IUserService userService, IRoleService roleService)
         {
+            _mapper = mapper;
             _userService = userService;
             _roleService = roleService;
         }
@@ -56,14 +59,13 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
-            if (id.HasValue)
+            var output = await _userService.GetForEditAsync(id);
+            var viewModel = new CreateOrEditUserModalViewModel(output)
             {
-                return PartialView(await Edit(id.Value));
-            }
-            else
-            {
-                return PartialView(await Create());
-            }
+                //PasswordComplexitySetting = await _passwordComplexitySettingStore.GetSettingsAsync()
+            };
+            _mapper.Map(output, viewModel);
+            return PartialView(viewModel);
         }
 
         [AncAuthorize(PermissionNames.Pages_Users_Create)]
@@ -85,16 +87,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         {
             if (ModelState.IsValid)
             {
-                UserListDto userDto;
-                if (input.User.ID.HasValue)
-                {
-                    userDto = await Edit(input.User, input.RoleIds);
-                }
-                else
-                {
-                    userDto = await Create(input.User, input.RoleIds);
-                }
-
+                UserListDto userDto = await _userService.CreateOrEditUserAsync(input);
                 return Json(new Result<UserListDto>()
                 {
                     Status = Status.Success,
@@ -116,7 +109,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Users_Create)]
         public Task<UserListDto> Create(UserEditDto input, List<int> roleIds)
         {
-            return _userService.AddAsync(input, roleIds);
+            return _userService.CreateAsync(input, roleIds);
         }
 
         [AncAuthorize(PermissionNames.Pages_Users_Edit)]

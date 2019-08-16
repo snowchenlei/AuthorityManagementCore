@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Snow.AuthorityManagement.Core.Entities.Authorization;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
+using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Data;
-using Snow.AuthorityManagement.IRepository.Authorization;
 
 namespace Snow.AuthorityManagement.Repository.Authorization
 {

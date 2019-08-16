@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Snow.AuthorityManagement.Common.Encryption;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
+using Snow.AuthorityManagement.Core.Authorization.Roles;
+using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Enum;
 

@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Snow.AuthorityManagement.Application.Authorization.Users;
+using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Common.Extensions;
-using Snow.AuthorityManagement.Core.Dto.User;
 using Snow.AuthorityManagement.Core.Exception;
-using Snow.AuthorityManagement.IService.Authorization;
+using Snow.AuthorityManagement.Web.Models.Account;
 
 namespace Snow.AuthorityManagement.Web.Controllers
 {
@@ -32,7 +33,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginInput input)
+        public async Task<IActionResult> Login(LoginViewModel input)
         {
             if (!ModelState.IsValid)
             {
@@ -42,7 +43,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
             UserLoginOutput output;
             try
             {
-                output = await _userService.LoginAsync(input);
+                output = await _userService.LoginAsync(new UserLoginInput { UserName = input.UserName, Password = input.Password });
             }
             catch (UserFriendlyException ue)
             {

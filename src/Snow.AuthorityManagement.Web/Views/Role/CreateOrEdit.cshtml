@@ -1,44 +1,61 @@
-﻿@model Snow.AuthorityManagement.Core.Dto.Role.GetRoleForEditOutput
-@*<link href="~/lib/zTree/css/demo.css" rel="stylesheet" />*@
-@*<link href="~/lib/zTree/css/metroStyle/metroStyle.css" rel="stylesheet" />*@
-<form asp-controller="Role" asp-action="CreateOrEdit" id="modelForm" method="post" enctype="multipart/form-data"
-      data-ajax="true" data-ajax-success="saveSuccess" data-ajax-failure="saveFailure">
-    @Html.AntiForgeryToken()
-    <input type="hidden" id="Permissions" name="Permission" />
-    <div>
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#base" aria-controls="base" role="tab" data-toggle="tab">基本信息</a></li>
-            <li role="presentation"><a href="#permissions" aria-controls="permissions" role="tab" data-toggle="tab">权限</a></li>
-        </ul>
+﻿@model Snow.AuthorityManagement.Web.Models.Roles.CreateOrEditRoleModalViewModel;
+@*<link href="~/lib/zTree.v3/css/demo.css" rel="stylesheet" />*@
+<link href="~/lib/zTree.v3/css/metroStyle/metroStyle.css" rel="stylesheet" />
 
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="base">
-                <div class="modal-body form-horizontal" id="modify">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Role.ID" />
-                    <div class="form-group">
-                        <label asp-for="Role.Name" class="control-label col-md-2"></label>
-                        <div class="col-md-10">
-                            <input asp-for="Role.Name" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Role.Name)" />
-                            <span asp-validation-for="Role.Name" class="text-danger"></span>
-                        </div>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a href="#UserInformationsTab" class="nav-link active" data-toggle="tab" role="tab">
+            角色信息
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="#RolesTab" data-toggle="tab" role="tab" class="nav-link">
+            权限 @*<b class="badge badge-primary"><span id="assigned-role-count">@Model.AssignedRoleCount</span></b>*@
+        </a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="UserInformationsTab" role="tabpanel">
+        <form asp-controller="Role" asp-action="CreateOrEdit" id="modelForm" method="post" enctype="multipart/form-data"
+              data-ajax="true" data-ajax-success="saveSuccess" data-ajax-failure="saveFailure">
+            @Html.AntiForgeryToken()
+            <input type="hidden" id="Permissions" name="Permission" />
+            <div class="modal-body form-horizontal" id="modify">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Role.ID" />
+                <div class="form-group">
+                    <label asp-for="Role.Name" class="control-label col-md-2"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Role.Name" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Role.Name)" />
+                        <span asp-validation-for="Role.Name" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Role.Sort" class="control-label col-md-2"></label>
-                        <div class="col-md-10">
-                            <input asp-for="Role.Sort" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Role.Sort)" />
-                            <span asp-validation-for="Role.Sort" class="text-danger"></span>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Role.DisplayName" class="control-label col-md-2"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Role.DisplayName" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Role.DisplayName)" />
+                        <span asp-validation-for="Role.DisplayName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Role.Sort" class="control-label col-md-2"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Role.Sort" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Role.Sort)" />
+                        <span asp-validation-for="Role.Sort" class="text-danger"></span>
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="permissions"><ul id="authTree" class="ztree"></ul></div>
-        </div>
+        </form>
     </div>
-</form>
-<script src="~/js/role/createOrEdit.js"></script>
+    <div class="tab-pane" id="RolesTab" role="tabpanel">
+        <ul id="authTree" class="ztree"></ul>
+    </div>
+</div>
+<!-- zTree -->
+<script src="~/lib/zTree.v3/js/jquery.ztree.core.min.js"></script>
+<script src="~/lib/zTree.v3/js/jquery.ztree.excheck.min.js"></script>
+<script src="~/lib/zTree.v3/js/jquery.ztree.exedit.min.js"></script>
+<script src="~/view-resources/role/createOrEdit.js"></script>
 <script type="text/javascript">
     $.validator.unobtrusive.parse('form');
     var zNodes = @Html.Raw(Model.Permission);

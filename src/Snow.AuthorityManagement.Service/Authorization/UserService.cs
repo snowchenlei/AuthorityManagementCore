@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Snow.AuthorityManagement.Core;
+using Snow.AuthorityManagement.Core.Authorization.Roles;
+using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Core.Dto;
 using Snow.AuthorityManagement.Core.Dto.Role;
 using Snow.AuthorityManagement.Core.Dto.User;
@@ -12,7 +15,6 @@ using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Core.Enum;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Data;
-using Snow.AuthorityManagement.IRepository;
 using Snow.AuthorityManagement.IService.Authorization;
 
 namespace Snow.AuthorityManagement.Service.Authorization
@@ -201,12 +203,15 @@ namespace Snow.AuthorityManagement.Service.Authorization
             List<UserRole> userRoles = await _userRoleRepository
                     .LoadListAsync(ur => ur.UserID == input.ID);
             _userRoleRepository.DeleteRange(userRoles);
-            await _userRoleRepository.AddRangeAsync(roleIds
-                .Select(r => new UserRole
-                {
-                    UserID = user.ID,
-                    RoleID = r
-                }));
+            if (roleIds.Count > 0)
+            {
+                await _userRoleRepository.AddRangeAsync(roleIds
+                    .Select(r => new UserRole
+                    {
+                        UserID = user.ID,
+                        RoleID = r
+                    }));
+            }
 
             #endregion 角色
 

@@ -2,7 +2,6 @@
 using Snow.AuthorityManagement.Core.Dto;
 using Snow.AuthorityManagement.Core.Dto.Role;
 using Snow.AuthorityManagement.Core.Entities;
-using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Core.Enum;
 using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.IRepository;
@@ -18,6 +17,9 @@ using Snow.AuthorityManagement.Core.Model;
 using Snow.AuthorityManagement.IRepository.Authorization;
 using Snow.AuthorityManagement.IService.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Snow.AuthorityManagement.Core;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
+using Snow.AuthorityManagement.Core.Authorization.Roles;
 
 namespace Snow.AuthorityManagement.Service.Authorization
 {

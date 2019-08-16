@@ -20,21 +20,23 @@ function queryParams(params) {
         'click .remove': function (e, value, row, index) {
             bootbox.confirm({
                 size: 'small',
-                title: app.localize('Delete', row.name),
-                message: abp.utils.formatString(abp.localization.localize('AreYouSureWantToDelete', 'Template'), row.name),
+                title: '删除用户' + row.name,
+                message: '你确定要删除' + row.name + '吗？',
                 callback: function (result) {
                     if (result) {
-                        _userService.deleteUser({
-                            id: row.id
-                        }).done(function () {
-                            var $table = $('#tb-body');
-                            $table.bootstrapTable('remove',
-                                {
-                                    field: 'id',
-                                    values: [row.id]
-                                });
-                            //refreshUserList();
-                        });
+                        $.post('/User/Delete',
+                            { id: row.id },
+                            function (result) {
+                                requestCallBack(result,
+                                    function () {
+                                        var $table = $('#tb-body');
+                                        $table.bootstrapTable('remove',
+                                            {
+                                                field: 'id',
+                                                values: [row.id]
+                                            });
+                                    });
+                            });
                     }
                 }
             });
@@ -87,7 +89,7 @@ function queryParams(params) {
         //4、时间初始化
         setDate($('#txt_search_addTime'), true, true);
     });
-
+    var dialog, l;
     function createOrEdit(title, id) {
         dialog = bootbox.dialog({
             title: title,
@@ -103,6 +105,8 @@ function queryParams(params) {
                     className: 'btn-success',
                     callback: function (result) {
                         if (result) {
+                            l = Ladda.create(result.target);
+                            l.start();
                             return save();
                         }
                     }
@@ -123,17 +127,40 @@ function queryParams(params) {
             l.stop();
             return false;
         }
-        var s = $e.serializeArray();
-        $.post('/User/CreateOrEdit',
-            s,
-            function (result) {
+        var user = $e.serializeFormToObject();
+        var roleIds = _findAssignedRoleIDs();
+        $.ajax({
+            type: "POST",
+            url: "/User/CreateOrEdit",
+            data:
+            {
+                user,
+                roleIds
+            },
+            success: function (result) {
                 l.stop();
                 requestCallBack(result,
                     function () {
                         refreshTable();
                     });
                 dialog.modal('hide');
-            });
+            },
+            error: function () {
+                l.stop();
+            }
+        });
         return false;
+    }
+    function _findAssignedRoleIDs() {
+        var assignedRoleIDs = [];
+
+        dialog.find('#RolesTab input[type=checkbox]')
+            .each(function () {
+                if ($(this).is(':checked')) {
+                    assignedRoleIDs.push($(this).data('id'));
+                }
+            });
+
+        return assignedRoleIDs;
     }
 })();

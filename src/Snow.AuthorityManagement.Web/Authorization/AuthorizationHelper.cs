@@ -5,13 +5,12 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Snow.AuthorityManagement.Application.Authorization.Permissions;
 using Snow.AuthorityManagement.Common;
 using Snow.AuthorityManagement.Common.Conversion;
-using Snow.AuthorityManagement.Core.Dto.User;
-using Snow.AuthorityManagement.Core.Entities.Authorization;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Core.Model;
-using Snow.AuthorityManagement.IService.Authorization;
 using Snow.AuthorityManagement.Web.Session;
 
 namespace Snow.AuthorityManagement.Web.Authorization

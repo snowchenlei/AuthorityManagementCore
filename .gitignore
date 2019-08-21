@@ -37,3 +37,6 @@
 /src/Snow.AuthorityManagement.Service/obj
 /src/Anc/bin/Debug/netcoreapp2.2
 /src/Anc/obj
+/src/Anc/bin/Debug/netcoreapp2.1
+/src/Anc.EntityFrameworkCore/bin/Debug
+/src/Anc.EntityFrameworkCore/obj

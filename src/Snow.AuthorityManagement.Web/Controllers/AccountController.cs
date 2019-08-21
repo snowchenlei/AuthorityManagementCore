@@ -43,7 +43,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
             UserLoginOutput output;
             try
             {
-                output = await _userService.LoginAsync(new UserLoginInput { UserName = input.UserName, Password = input.Password });
+                output = await _userService.LoginAsync(input.UserName, input.Password);
             }
             catch (UserFriendlyException ue)
             {

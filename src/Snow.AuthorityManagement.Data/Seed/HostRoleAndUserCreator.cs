@@ -36,7 +36,7 @@ namespace Snow.AuthorityManagement.Data.Seed
             var adminRoleForHost = await _context.Role.IgnoreQueryFilters().FirstOrDefaultAsync();
             if (adminRoleForHost == null)
             {
-                adminRoleForHost = (await _context.Role.AddAsync(new Role(){ Name = "系统管理员", Sort = 1})).Entity;
+                adminRoleForHost = (await _context.Role.AddAsync(new Role() { Name = "Admin", DisplayName = "系统管理员", Sort = 1 })).Entity;
                 await _context.SaveChangesAsync();
             }
             //TODO:权限获取
@@ -68,7 +68,7 @@ namespace Snow.AuthorityManagement.Data.Seed
 
                 adminUserForHost = (await _context.User.AddAsync(user)).Entity;
                 await _context.SaveChangesAsync();
-                
+
                 await _context.Set<UserRole>().AddAsync(new UserRole()
                 {
                     UserID = adminUserForHost.ID,

@@ -1,4 +1,5 @@
-﻿using Snow.AuthorityManagement.Core.Authorization.Permissions;
+﻿using Anc.Domain.Entities;
+using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Core.Entities;
 using System;

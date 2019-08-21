@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v2.1": {
       "Snow.AuthorityManagement.Application/1.0.0": {
         "dependencies": {
+          "Anc": "1.0.0",
           "AutoMapper": "9.0.0",
           "Snow.AuthorityManagement.Core": "1.0.0",
           "Snow.AuthorityManagement.Data": "1.0.0"
@@ -525,6 +526,14 @@
           "System.Runtime.Extensions": "4.3.0"
         }
       },
+      "System.Linq.Dynamic.Core/1.0.18": {
+        "runtime": {
+          "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {
+            "assemblyVersion": "1.0.18.0",
+            "fileVersion": "1.0.18.0"
+          }
+        }
+      },
       "System.Linq.Expressions/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -777,6 +786,21 @@
           }
         }
       },
+      "Anc/1.0.0": {
+        "runtime": {
+          "Anc.dll": {}
+        }
+      },
+      "Anc.EntityFrameworkCore/1.0.0": {
+        "dependencies": {
+          "Anc": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "2.1.1",
+          "System.Linq.Dynamic.Core": "1.0.18"
+        },
+        "runtime": {
+          "Anc.EntityFrameworkCore.dll": {}
+        }
+      },
       "Snow.AuthorityManagement.Common/1.0.0": {
         "dependencies": {
           "Autofac.Extras.DynamicProxy": "4.5.0",
@@ -791,6 +815,7 @@
       },
       "Snow.AuthorityManagement.Core/1.0.0": {
         "dependencies": {
+          "Anc": "1.0.0",
           "FluentValidation": "8.4.0"
         },
         "runtime": {
@@ -799,9 +824,11 @@
       },
       "Snow.AuthorityManagement.Data/1.0.0": {
         "dependencies": {
+          "Anc.EntityFrameworkCore": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.1.1",
           "Snow.AuthorityManagement.Common": "1.0.0",
-          "Snow.AuthorityManagement.Core": "1.0.0"
+          "Snow.AuthorityManagement.Core": "1.0.0",
+          "System.Linq.Dynamic.Core": "1.0.18"
         },
         "runtime": {
           "Snow.AuthorityManagement.Data.dll": {}
@@ -1179,6 +1206,13 @@
       "path": "system.linq/4.3.0",
       "hashPath": "system.linq.4.3.0.nupkg.sha512"
     },
+    "System.Linq.Dynamic.Core/1.0.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VonVK0xHQLzm+H6n5TE6wDwoCrVMuTBMdGQrXDfIAmf/klG/sJUai3bkMTlTgtqArB1NYEdWxUVqpPFnMZwVog==",
+      "path": "system.linq.dynamic.core/1.0.18",
+      "hashPath": "system.linq.dynamic.core.1.0.18.nupkg.sha512"
+    },
     "System.Linq.Expressions/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -1402,6 +1436,16 @@
       "sha512": "sha512-r8OLPZ2cb9SSwjm8GNkMbqOgo58N8d8RwxJN1yF01atv+MQdNOqa5Xx117tIjWUbB6pBnVe6u+pXkYVORaCeWw==",
       "path": "zkweb.system.drawing/4.0.1",
       "hashPath": "zkweb.system.drawing.4.0.1.nupkg.sha512"
+    },
+    "Anc/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Anc.EntityFrameworkCore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Snow.AuthorityManagement.Common/1.0.0": {
       "type": "project",

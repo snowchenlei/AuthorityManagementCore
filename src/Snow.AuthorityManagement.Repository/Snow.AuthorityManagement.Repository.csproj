@@ -12,12 +12,13 @@
   <ItemGroup>
     <Compile Remove="Authorization\RoleRepository.cs" />
     <Compile Remove="Authorization\UserRepository.cs" />
+    <Compile Remove="BaseRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.1" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.10" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.18" />
   </ItemGroup>
 
   <ItemGroup>

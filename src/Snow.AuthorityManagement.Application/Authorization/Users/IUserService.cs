@@ -1,11 +1,12 @@
-﻿using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
+﻿using Anc.Application.Services;
+using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Application.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Users
 {
-    public partial interface IUserService
+    public partial interface IUserService : IApplicationService
     {
         /// <summary>
         /// 分页
@@ -26,7 +27,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<UserLoginOutput> LoginAsync(UserLoginInput input);
+        Task<UserLoginOutput> LoginAsync(string userName, string password);
 
         /// <summary>
         /// 添加修改用户

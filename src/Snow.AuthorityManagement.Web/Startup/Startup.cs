@@ -4,6 +4,7 @@ using System.Runtime.Loader;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -15,6 +16,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
+using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
 using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Configuration;
@@ -116,9 +119,15 @@ namespace Snow.AuthorityManagement.Web.Startup
             .AddFluentValidation(fv =>
             {
                 //禁用其它的认证
-                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                //fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            #region 注册FluentValidation
+
+            services.AddTransient<IValidator<UserEditDto>, UserEditValidator>();
+
+            #endregion 注册FluentValidation
 
             #region 首次执行任务
 

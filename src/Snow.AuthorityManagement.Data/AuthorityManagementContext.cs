@@ -28,8 +28,8 @@ namespace Snow.AuthorityManagement.Data
             //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
             //https://docs.microsoft.com/zh-cn/ef/core/modeling/relationships#other-relationship-patterns
-            modelBuilder.Entity<UserRole>()
-                .HasKey(t => new { t.UserID, t.RoleID });
+            //modelBuilder.Entity<UserRole>()
+            //    .HasKey(t => new { t.UserID, t.RoleID });
 
             modelBuilder.Entity<UserRole>()
                 .HasOne(pt => pt.User)
@@ -40,7 +40,7 @@ namespace Snow.AuthorityManagement.Data
                 .HasOne(pt => pt.Role)
                 .WithMany(t => t.UserRoles)
                 .HasForeignKey(pt => pt.RoleID);
-            
+
             base.OnModelCreating(modelBuilder);
         }
     }

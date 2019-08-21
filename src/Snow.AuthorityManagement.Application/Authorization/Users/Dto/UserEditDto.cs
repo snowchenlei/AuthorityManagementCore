@@ -6,16 +6,14 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
     {
         public int? ID { get; set; }
 
-        //[Display(Name = "姓名")]
-        //[StringLength(50)]
+        [Display(Name = "姓名")]
         public string Name { get; set; }
 
         /// <summary>
         /// 用户名
         /// </summary>
         //[StringLength(50)]
-        //[Display(Name = "用户名")]
-        //[Required(ErrorMessage = "{0}不能为空")]
+        [Display(Name = "用户名")]
         public string UserName { get; set; }
 
         //[StringLength(50)]
@@ -26,8 +24,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
         /// <summary>
         /// 手机号
         /// </summary>
-        //[StringLength(11, MinimumLength = 11)]
-        //[Display(Name = "手机号")]
+        [Display(Name = "手机号")]
         public string PhoneNumber { get; set; }
     }
 }

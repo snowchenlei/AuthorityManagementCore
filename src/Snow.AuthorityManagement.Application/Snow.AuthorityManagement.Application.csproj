@@ -5,16 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Authorization\Users\Validators\**" />
-    <EmbeddedResource Remove="Authorization\Users\Validators\**" />
-    <None Remove="Authorization\Users\Validators\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Anc\Anc.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Core\Snow.AuthorityManagement.Core.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Data\Snow.AuthorityManagement.Data.csproj" />
   </ItemGroup>

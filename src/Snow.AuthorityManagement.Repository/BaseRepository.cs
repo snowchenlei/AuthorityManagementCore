@@ -7,10 +7,11 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using Snow.AuthorityManagement.Core;
+using Anc.Domain.Repositories;
 
 namespace Snow.AuthorityManagement.Repository
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
+    public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity<int>
     {
         protected readonly AuthorityManagementContext CurrentContext = null;
 
@@ -24,9 +25,9 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="whereLamada">过滤条件</param>
         /// <returns></returns>
-        public bool IsExists(Expression<Func<T, bool>> whereLamada)
+        public bool IsExists(Expression<Func<TEntity, bool>> whereLamada)
         {
-            return CurrentContext.Set<T>().Any(whereLamada);
+            return CurrentContext.Set<TEntity>().Any(whereLamada);
         }
 
         /// <summary>
@@ -34,9 +35,9 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="whereLamada">过滤条件</param>
         /// <returns></returns>
-        public Task<bool> IsExistsAsync(Expression<Func<T, bool>> whereLamada)
+        public Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> whereLamada)
         {
-            return CurrentContext.Set<T>().AnyAsync(whereLamada);
+            return CurrentContext.Set<TEntity>().AnyAsync(whereLamada);
         }
 
         /// <summary>
@@ -44,9 +45,9 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="entity">要添加的实体</param>
         /// <returns>添加的实体</returns>
-        public T Add(T entity)
+        public TEntity Add(TEntity entity)
         {
-            CurrentContext.Set<T>().Add(entity);
+            CurrentContext.Set<TEntity>().Add(entity);
             return entity;
         }
 
@@ -55,9 +56,9 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="entity">要添加的实体</param>
         /// <returns>添加的实体</returns>
-        public async Task<T> AddAsync(T entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
-            await CurrentContext.Set<T>().AddAsync(entity);
+            await CurrentContext.Set<TEntity>().AddAsync(entity);
 
             return entity;
         }
@@ -67,9 +68,9 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="entities">实体集合</param>
         /// <returns>添加的实体</returns>
-        public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
+        public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            await CurrentContext.Set<T>().AddRangeAsync(entities);
+            await CurrentContext.Set<TEntity>().AddRangeAsync(entities);
 
             return entities;
         }
@@ -79,9 +80,9 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="entity">要删除的实体</param>
         /// <returns></returns>
-        public bool Delete(T entity)
+        public bool Delete(TEntity entity)
         {
-            CurrentContext.Set<T>().Remove(entity);
+            CurrentContext.Set<TEntity>().Remove(entity);
             return true;
         }
 
@@ -90,9 +91,9 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="entities">实体集合</param>
         /// <returns></returns>
-        public bool DeleteRange(IEnumerable<T> entities)
+        public bool DeleteRange(IEnumerable<TEntity> entities)
         {
-            CurrentContext.Set<T>().RemoveRange(entities);
+            CurrentContext.Set<TEntity>().RemoveRange(entities);
             return true;
         }
 
@@ -101,7 +102,7 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="entity">要修改的实体</param>
         /// <returns></returns>
-        public bool Edit(T entity)
+        public bool Edit(TEntity entity)
         {
             CurrentContext.Entry(entity).State = EntityState.Modified;
             return true;
@@ -114,9 +115,9 @@ namespace Snow.AuthorityManagement.Repository
         /// <param name="whereLamada">过滤条件</param>
         /// <param name="selector">查询条件</param>
         /// <returns></returns>
-        public S LoadScalar<S>(Expression<Func<T, bool>> whereLamada, Expression<Func<T, int, S>> selectLamada)
+        public S LoadScalar<S>(Expression<Func<TEntity, bool>> whereLamada, Expression<Func<TEntity, int, S>> selectLamada)
         {
-            return CurrentContext.Set<T>().Where(whereLamada).Select(selectLamada).FirstOrDefault();
+            return CurrentContext.Set<TEntity>().Where(whereLamada).Select(selectLamada).FirstOrDefault();
         }
 
         /// <summary>
@@ -126,9 +127,9 @@ namespace Snow.AuthorityManagement.Repository
         /// <param name="whereLamada">过滤条件</param>
         /// <param name="selector">查询条件</param>
         /// <returns></returns>
-        public Task<S> LoadScalarAsync<S>(Expression<Func<T, bool>> whereLamada, Expression<Func<T, int, S>> selectLamada)
+        public Task<S> LoadScalarAsync<S>(Expression<Func<TEntity, bool>> whereLamada, Expression<Func<TEntity, int, S>> selectLamada)
         {
-            return CurrentContext.Set<T>().Where(whereLamada).Select(selectLamada).FirstOrDefaultAsync();
+            return CurrentContext.Set<TEntity>().Where(whereLamada).Select(selectLamada).FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -136,15 +137,15 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="whereLamada">过滤表达式</param>
         /// <returns>满足条件的第一条数据</returns>
-        public T FirstOrDefault(Expression<Func<T, bool>> whereLamada, bool isAsNoTracking = false)
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> whereLamada, bool isAsNoTracking = false)
         {
             if (isAsNoTracking)
             {
-                return CurrentContext.Set<T>().AsNoTracking().FirstOrDefault(whereLamada);
+                return CurrentContext.Set<TEntity>().AsNoTracking().FirstOrDefault(whereLamada);
             }
             else
             {
-                return CurrentContext.Set<T>().FirstOrDefault(whereLamada);
+                return CurrentContext.Set<TEntity>().FirstOrDefault(whereLamada);
             }
         }
 
@@ -153,15 +154,15 @@ namespace Snow.AuthorityManagement.Repository
         /// </summary>
         /// <param name="whereLamada">过滤表达式</param>
         /// <returns>满足条件的第一条数据</returns>
-        public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> whereLamada, bool isAsNoTracking = false)
+        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> whereLamada, bool isAsNoTracking = false)
         {
             if (isAsNoTracking)
             {
-                return CurrentContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(whereLamada);
+                return CurrentContext.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(whereLamada);
             }
             else
             {
-                return CurrentContext.Set<T>().FirstOrDefaultAsync(whereLamada);
+                return CurrentContext.Set<TEntity>().FirstOrDefaultAsync(whereLamada);
             }
         }
 
@@ -171,27 +172,27 @@ namespace Snow.AuthorityManagement.Repository
         /// <param name="whereLamada">过滤条件</param>
         /// <param name="isAsNoTracking">是否追踪查询结果(如果有select则忽略)</param>
         /// <returns></returns>
-        public IQueryable<T> LoadEntities(Expression<Func<T, bool>> whereLamada, bool isAsNoTracking = false)
+        public IQueryable<TEntity> LoadEntities(Expression<Func<TEntity, bool>> whereLamada, bool isAsNoTracking = false)
         {
             if (isAsNoTracking)
             {
-                return CurrentContext.Set<T>().AsNoTracking().Where(whereLamada);
+                return CurrentContext.Set<TEntity>().AsNoTracking().Where(whereLamada);
             }
             else
             {
-                return CurrentContext.Set<T>().Where(whereLamada);
+                return CurrentContext.Set<TEntity>().Where(whereLamada);
             }
         }
 
-        public Task<List<T>> LoadListAsync(Expression<Func<T, bool>> whereLamada, bool isAsNoTracking = false)
+        public Task<List<TEntity>> LoadListAsync(Expression<Func<TEntity, bool>> whereLamada, bool isAsNoTracking = false)
         {
             if (isAsNoTracking)
             {
-                return CurrentContext.Set<T>().AsNoTracking().Where(whereLamada).ToListAsync();
+                return CurrentContext.Set<TEntity>().AsNoTracking().Where(whereLamada).ToListAsync();
             }
             else
             {
-                return CurrentContext.Set<T>().Where(whereLamada).ToListAsync();
+                return CurrentContext.Set<TEntity>().Where(whereLamada).ToListAsync();
             }
         }
 
@@ -205,22 +206,22 @@ namespace Snow.AuthorityManagement.Repository
         /// <param name="parameters">参数</param>
         /// <param name="orders">排序方式</param>
         /// <returns></returns>
-        public async Task<Tuple<List<T>, int>> GetPagedAsync(int pageIndex, int pageSize
+        public async Task<Tuple<List<TEntity>, int>> GetPagedAsync(int pageIndex, int pageSize
             , string wheres, object[] parameters, string orders)
         {
-            IQueryable<T> temp;
+            IQueryable<TEntity> temp;
             if (String.IsNullOrEmpty(wheres))
             {
-                temp = CurrentContext.Set<T>().AsNoTracking();
+                temp = CurrentContext.Set<TEntity>().AsNoTracking();
             }
             else
             {
-                temp = CurrentContext.Set<T>().AsNoTracking().Where(wheres, parameters);
+                temp = CurrentContext.Set<TEntity>().AsNoTracking().Where(wheres, parameters);
             }
             int totalCount = await temp.CountAsync();
             temp = temp.OrderBy(orders);
             var result = await temp.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            return new Tuple<List<T>, int>(result, totalCount);
+            return new Tuple<List<TEntity>, int>(result, totalCount);
         }
 
         /// <summary>
@@ -235,16 +236,16 @@ namespace Snow.AuthorityManagement.Repository
         /// <param name="isASC">排序方式</param>
         /// <param name="isAsNoTracking">是否跟踪</param>
         /// <returns></returns>
-        public IQueryable<T> LoadPageEntities<s>(int pageIndex, int pageSize, out int totalCount, Expression<Func<T, bool>> whereLamada, Expression<Func<T, s>> orderbyLamada, bool isASC = true, bool isAsNoTracking = false)
+        public IQueryable<TEntity> LoadPageEntities<s>(int pageIndex, int pageSize, out int totalCount, Expression<Func<TEntity, bool>> whereLamada, Expression<Func<TEntity, s>> orderbyLamada, bool isASC = true, bool isAsNoTracking = false)
         {
-            IQueryable<T> temp = null;
+            IQueryable<TEntity> temp = null;
             if (isAsNoTracking)
             {
-                temp = CurrentContext.Set<T>().AsNoTracking().Where(whereLamada);
+                temp = CurrentContext.Set<TEntity>().AsNoTracking().Where(whereLamada);
             }
             else
             {
-                temp = CurrentContext.Set<T>().Where(whereLamada);
+                temp = CurrentContext.Set<TEntity>().Where(whereLamada);
             }
             totalCount = temp.Count();
             return LoadPageEntities(pageIndex, pageSize, temp, orderbyLamada, isASC);
@@ -259,7 +260,7 @@ namespace Snow.AuthorityManagement.Repository
         /// <param name="orderbyLamada">排序条件</param>
         /// <param name="isASC">排序方式</param>
         /// <returns></returns>
-        public IQueryable<T> LoadPageEntities<s>(int pageIndex, int pageSize, IQueryable<T> entities, Expression<Func<T, s>> orderbyLamada, bool isASC = true)
+        public IQueryable<TEntity> LoadPageEntities<s>(int pageIndex, int pageSize, IQueryable<TEntity> entities, Expression<Func<TEntity, s>> orderbyLamada, bool isASC = true)
         {
             if (isASC)
             {
@@ -279,7 +280,7 @@ namespace Snow.AuthorityManagement.Repository
         /// <param name="pageSize">每页记录数</param>
         /// <param name="entities">待分页数据</param>
         /// <returns></returns>
-        public IQueryable<T> LoadPageEntities(int pageIndex, int pageSize, IQueryable<T> entities)
+        public IQueryable<TEntity> LoadPageEntities(int pageIndex, int pageSize, IQueryable<TEntity> entities)
         {
             return entities.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }

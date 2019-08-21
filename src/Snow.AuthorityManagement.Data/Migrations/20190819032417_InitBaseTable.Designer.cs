@@ -10,18 +10,18 @@ using Snow.AuthorityManagement.Data;
 namespace Snow.AuthorityManagement.Data.Migrations
 {
     [DbContext(typeof(AuthorityManagementContext))]
-    [Migration("20190312071921_AddUserAndRoleRelationShip")]
-    partial class AddUserAndRoleRelationShip
+    [Migration("20190819032417_InitBaseTable")]
+    partial class InitBaseTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.Permission", b =>
+            modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.Permissions.Permission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,24 +35,28 @@ namespace Snow.AuthorityManagement.Data.Migrations
 
                     b.Property<int?>("RoleID");
 
-                    b.Property<int?>("ID");
+                    b.Property<int?>("UserID");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleID");
 
-                    b.HasIndex("ID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Permission");
                 });
 
-            modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.Role", b =>
+            modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.Roles.Role", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("AddTime");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(200);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -63,6 +67,19 @@ namespace Snow.AuthorityManagement.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.UserRoles.UserRole", b =>
+                {
+                    b.Property<int>("UserID");
+
+                    b.Property<int>("RoleID");
+
+                    b.HasKey("UserID", "RoleID");
+
+                    b.HasIndex("RoleID");
+
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.User", b =>
@@ -94,40 +111,27 @@ namespace Snow.AuthorityManagement.Data.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.UserRole", b =>
+            modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.Permissions.Permission", b =>
                 {
-                    b.Property<int>("ID");
-
-                    b.Property<int>("RoleID");
-
-                    b.HasKey("ID", "RoleID");
-
-                    b.HasIndex("RoleID");
-
-                    b.ToTable("UserRole");
-                });
-
-            modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.Permission", b =>
-                {
-                    b.HasOne("Snow.AuthorityManagement.Core.Entities.Authorization.Role", "Role")
+                    b.HasOne("Snow.AuthorityManagement.Core.Authorization.Roles.Role", "Role")
                         .WithMany("Permissions")
                         .HasForeignKey("RoleID");
 
                     b.HasOne("Snow.AuthorityManagement.Core.Entities.Authorization.User", "User")
                         .WithMany("Permissions")
-                        .HasForeignKey("ID");
+                        .HasForeignKey("UserID");
                 });
 
-            modelBuilder.Entity("Snow.AuthorityManagement.Core.Entities.Authorization.UserRole", b =>
+            modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.UserRoles.UserRole", b =>
                 {
-                    b.HasOne("Snow.AuthorityManagement.Core.Entities.Authorization.Role", "Role")
+                    b.HasOne("Snow.AuthorityManagement.Core.Authorization.Roles.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Snow.AuthorityManagement.Core.Entities.Authorization.User", "User")
                         .WithMany("UserRoles")
-                        .HasForeignKey("ID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

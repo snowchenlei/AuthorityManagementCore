@@ -4,6 +4,132 @@
     "D:\\per\\git\\AuthorityManagementCore\\src\\Snow.AuthorityManagement.Application\\Snow.AuthorityManagement.Application.csproj": {}
   },
   "projects": {
+    "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\Anc.EntityFrameworkCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\Anc.EntityFrameworkCore.csproj",
+        "projectName": "Anc.EntityFrameworkCore",
+        "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\Anc.EntityFrameworkCore.csproj",
+        "packagesPath": "C:\\Users\\Snow\\.nuget\\packages\\",
+        "outputPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Snow\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {
+              "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj": {
+                "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.0.18, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj",
+        "projectName": "Anc",
+        "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj",
+        "packagesPath": "C:\\Users\\Snow\\.nuget\\packages\\",
+        "outputPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Snow\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
     "D:\\per\\git\\AuthorityManagementCore\\src\\Snow.AuthorityManagement.Application\\Snow.AuthorityManagement.Application.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -30,6 +156,9 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
+              "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj": {
+                "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj"
+              },
               "D:\\per\\git\\AuthorityManagementCore\\src\\Snow.AuthorityManagement.Core\\Snow.AuthorityManagement.Core.csproj": {
                 "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Snow.AuthorityManagement.Core\\Snow.AuthorityManagement.Core.csproj"
               },
@@ -174,7 +303,11 @@
         },
         "frameworks": {
           "netcoreapp2.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj": {
+                "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -236,6 +369,9 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
+              "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\Anc.EntityFrameworkCore.csproj": {
+                "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\Anc.EntityFrameworkCore.csproj"
+              },
               "D:\\per\\git\\AuthorityManagementCore\\src\\Snow.AuthorityManagement.Common\\Snow.AuthorityManagement.Common.csproj": {
                 "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Snow.AuthorityManagement.Common\\Snow.AuthorityManagement.Common.csproj"
               },
@@ -263,6 +399,10 @@
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.0.18, )"
             }
           },
           "imports": [

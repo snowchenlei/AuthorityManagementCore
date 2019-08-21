@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Anc.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
@@ -14,10 +15,10 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
 {
     public class PermissionService : IPermissionService
     {
-        private readonly IBaseRepository<Permission> _permissionRepository;
-        private readonly IBaseRepository<UserRole> _userRoleRepository;
+        private readonly ILambdaRepository<Permission> _permissionRepository;
+        private readonly ILambdaRepository<UserRole> _userRoleRepository;
 
-        public PermissionService(IBaseRepository<Permission> permissionRepository, IBaseRepository<UserRole> userRoleRepository)
+        public PermissionService(ILambdaRepository<Permission> permissionRepository, ILambdaRepository<UserRole> userRoleRepository)
         {
             _permissionRepository = permissionRepository;
             _userRoleRepository = userRoleRepository;
@@ -25,7 +26,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
 
         public async Task<bool> IsGrantedAsync(string permissionName, int userId)
         {
-            var userRoles = await _userRoleRepository.LoadListAsync(r => r.UserID == userId);
+            var userRoles = await _userRoleRepository.GetAllListAsync(r => r.UserID == userId);
             var roleIds = userRoles.Select(ur => ur.RoleID);
 
             return await _permissionRepository
@@ -35,17 +36,17 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
 
         public async Task<List<Permission>> GetAllPermissionsAsync(int userId)
         {
-            var userRoles = await _userRoleRepository.LoadListAsync(r => r.UserID == userId);
+            var userRoles = await _userRoleRepository.GetAllListAsync(r => r.UserID == userId);
             var roleIds = userRoles.Select(ur => ur.RoleID);
 
             return await _permissionRepository
-                .LoadListAsync(p => p.User.ID == userId
+                .GetAllListAsync(p => p.User.ID == userId
                                     || roleIds.Contains(p.Role.ID));
         }
 
         public async Task<List<Permission>> GetPermissionsByRoleIdAsync(int roleId)
         {
-            return await _permissionRepository.LoadListAsync(p => p.Role.ID == roleId);
+            return await _permissionRepository.GetAllListAsync(p => p.Role.ID == roleId);
         }
     }
 }

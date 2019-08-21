@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Anc.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Data;
 
 namespace Snow.AuthorityManagement.Repository.Authorization
 {
-    public class PermissionRepository : BaseRepository<Permission>, IPermissionRepository
+    public class PermissionRepository : AuthorityManagementRepositoryBase<Permission>, IPermissionRepository
     {
-        public PermissionRepository(AuthorityManagementContext context) : base(context)
+        public PermissionRepository(DbContext context) : base(context)
         {
         }
 
@@ -25,7 +27,7 @@ namespace Snow.AuthorityManagement.Repository.Authorization
             foreach (var newPermission in newPermissions)
             {
                 newPermission.Role = role;
-                await AddAsync(newPermission);
+                await InsertAsync(newPermission);
             }
 
             return true;

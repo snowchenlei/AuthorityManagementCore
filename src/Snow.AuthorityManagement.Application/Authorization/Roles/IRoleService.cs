@@ -1,10 +1,11 @@
-﻿using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
+﻿using Anc.Application.Services;
+using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Dto;
 using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles
 {
-    public interface IRoleService
+    public interface IRoleService : IApplicationService
     {
         /// <summary>
         /// 分页

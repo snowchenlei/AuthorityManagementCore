@@ -8,11 +8,11 @@ using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Data;
 
-namespace Snow.AuthorityManagement.Repository.Authorization
+namespace Snow.AuthorityManagement.Repository.Authorization.Permissions
 {
     public class PermissionRepository : AuthorityManagementRepositoryBase<Permission>, IPermissionRepository
     {
-        public PermissionRepository(DbContext context) : base(context)
+        public PermissionRepository(AuthorityManagementContext context) : base(context)
         {
         }
 

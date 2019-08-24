@@ -13,7 +13,7 @@ namespace Snow.AuthorityManagement.Repository
     public class AuthorityManagementRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepositoryBase<TEntity, TPrimaryKey>
          where TEntity : class, IEntity<TPrimaryKey>
     {
-        protected AuthorityManagementRepositoryBase(DbContext context)
+        public AuthorityManagementRepositoryBase(AuthorityManagementContext context)
             : base(context)
         {
         }
@@ -26,10 +26,10 @@ namespace Snow.AuthorityManagement.Repository
     /// cref="AuthorityManagementRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="int"/> primary key.
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public abstract class AuthorityManagementRepositoryBase<TEntity> : AuthorityManagementRepositoryBase<TEntity, int>, IRepository<TEntity>
+    public class AuthorityManagementRepositoryBase<TEntity> : AuthorityManagementRepositoryBase<TEntity, int>, ILambdaRepository<TEntity>
         where TEntity : class, IEntity<int>
     {
-        protected AuthorityManagementRepositoryBase(DbContext context)
+        public AuthorityManagementRepositoryBase(AuthorityManagementContext context)
             : base(context)
         {
         }

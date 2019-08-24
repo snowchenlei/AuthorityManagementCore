@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Anc.Domain.Repositories;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
@@ -24,7 +23,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
     public partial class UserService : IUserService
     {
         private readonly IMapper _mapper;
-        private readonly DbContext CurrentContext;
+        private readonly AuthorityManagementContext CurrentContext;
         private readonly IConfiguration _configuration;
         private readonly IRepository<Role> _roleRepository;
         private readonly IUserRepository _userRepository;

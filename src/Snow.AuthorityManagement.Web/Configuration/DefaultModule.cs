@@ -11,6 +11,7 @@ using Anc.Domain.Repositories;
 using Anc.EntityFrameworkCore.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Data;
+using Snow.AuthorityManagement.Repository;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -56,12 +57,11 @@ namespace Snow.AuthorityManagement.Web.Configuration
             //builder.RegisterType<RoleService>().As<IRoleService>();
             //builder.RegisterType<PermissionService>().As<IPermissionService>();
             //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();
-            builder.RegisterType<AuthorityManagementContext>().As<DbContext>();
 
-            builder.RegisterGeneric(typeof(EfCoreRepositoryBase<>)).As(typeof(ILambdaRepository<>));
-            builder.RegisterGeneric(typeof(EfCoreRepositoryBase<,>)).As(typeof(ILambdaRepository<,>));
-            builder.RegisterGeneric(typeof(EfCoreRepositoryBase<>)).As(typeof(IRepository<>));
-            builder.RegisterGeneric(typeof(EfCoreRepositoryBase<,>)).As(typeof(IRepository<,>));
+            builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<>)).As(typeof(ILambdaRepository<>));
+            builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(ILambdaRepository<,>));
+            builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<>)).As(typeof(IRepository<>));
+            builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(IRepository<,>));
             //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();
             builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();

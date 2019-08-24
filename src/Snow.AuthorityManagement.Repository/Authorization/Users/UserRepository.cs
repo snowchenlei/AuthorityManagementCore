@@ -11,7 +11,7 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Users
 {
     public class UserRepository : AuthorityManagementRepositoryBase<User>, IUserRepository
     {
-        public UserRepository(DbContext context) : base(context)
+        public UserRepository(AuthorityManagementContext context) : base(context)
         {
         }
 

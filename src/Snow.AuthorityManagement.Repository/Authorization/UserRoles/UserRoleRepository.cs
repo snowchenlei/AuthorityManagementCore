@@ -10,7 +10,7 @@ namespace Snow.AuthorityManagement.Repository.Authorization.UserRoles
 {
     public class UserRoleRepository : AuthorityManagementRepositoryBase<UserRole>, IUserRoleRepository
     {
-        public UserRoleRepository(DbContext context) : base(context)
+        public UserRoleRepository(AuthorityManagementContext context) : base(context)
         {
         }
 

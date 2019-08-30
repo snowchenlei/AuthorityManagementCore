@@ -16,8 +16,6 @@
   <ItemGroup>
     <Compile Remove="Authorization\PermissionDefinitionContextBase.cs" />
     <Compile Remove="Authorization\PermissionDictionary.cs" />
-    <Compile Remove="Controllers\Authorization\PermissionController.cs" />
-    <Compile Remove="Controllers\Authorization\RoleController.cs" />
     <Compile Remove="Startup\IStartupTask.cs" />
   </ItemGroup>
 

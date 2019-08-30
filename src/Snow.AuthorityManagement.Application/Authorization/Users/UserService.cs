@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Anc.Domain.Repositories;
+using Anc.Domain.Uow;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
@@ -23,7 +24,10 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
     public partial class UserService : IUserService
     {
         private readonly IMapper _mapper;
+
+        private readonly IUnitOfWork _unitOfWork;
         private readonly AuthorityManagementContext CurrentContext;
+
         private readonly IConfiguration _configuration;
         private readonly IRepository<Role> _roleRepository;
         private readonly IUserRepository _userRepository;
@@ -31,6 +35,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
 
         public UserService(
             IMapper mapper
+            //, IUnitOfWork unitOfWork
             , AuthorityManagementContext context
             , IUserRepository userRepository
             , IConfiguration configuration
@@ -39,6 +44,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             )
         {
             _mapper = mapper;
+            //_unitOfWork = unitOfWork;
             CurrentContext = context;
             _userRepository = userRepository;
             _configuration = configuration;
@@ -174,17 +180,29 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             {
                 throw new UserFriendlyException("用户名已存在");
             }
+
             User user = _mapper.Map<User>(input);
             user.CanUse = true;
             user.Password = _configuration["AppSetting:DefaultPassword"];
-            user = await _userRepository.InsertAsync(user);
+            using (IUnitOfWork um = _unitOfWork.Begin())
+            {
+                try
+                {
+                    user = await _userRepository.InsertAsync(user);
 
-            #endregion 用户
+                    #endregion 用户
 
-            await SetUserRoleAsync(user.ID, roleIds);
+                    await SetUserRoleAsync(user.ID, roleIds);
 
-            await CurrentContext.SaveChangesAsync();
-            return _mapper.Map<UserListDto>(user);
+                    await CurrentContext.SaveChangesAsync();
+                    return _mapper.Map<UserListDto>(user);
+                }
+                catch (Exception e)
+                {
+                    um.Rollback();
+                    throw e;
+                }
+            }
         }
 
         /// <summary>
@@ -225,11 +243,11 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <returns></returns>
         private async Task SetUserRoleAsync(int userID, IEnumerable<int> roleIds)
         {
+            List<UserRole> userRoles = await _userRoleRepository
+                    .GetUserRolesByUserIdAsync(userID);
+            await _userRoleRepository.DeleteAsync(userRoles);
             if (roleIds != null && roleIds.Any())
             {
-                List<UserRole> userRoles = await _userRoleRepository
-                        .GetUserRolesByUserIdAsync(userID);
-                await _userRoleRepository.DeleteAsync(userRoles);
                 await _userRoleRepository.InsertAsync(roleIds
                     .Select(r => new UserRole
                     {

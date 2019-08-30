@@ -10,34 +10,36 @@ namespace Anc.Domain.Uow
     /// <summary>
     /// Unit of work manager. Used to begin and control a unit of work.
     /// </summary>
-    public interface IUnitOfWork : ITransientDependency
+    public interface IUnitOfWork : IDisposable, ITransientDependency
     {
         /// <summary>
         /// Begins a new unit of work.
         /// </summary>
         /// <returns>A handle to be able to complete the unit of work</returns>
-        void Begin();
+        IUnitOfWork Begin();
 
         /// <summary>
         /// Begins a new unit of work.
         /// </summary>
         /// <returns>A handle to be able to complete the unit of work</returns>
-        void Begin(TransactionScopeOption scope);
+        IUnitOfWork Begin(TransactionScopeOption scope);
 
         /// <summary>
         /// Begins a new unit of work.
         /// </summary>
         /// <returns>A handle to be able to complete the unit of work</returns>
-        void Begin(UnitOfWorkOptions options);
+        IUnitOfWork Begin(UnitOfWorkOptions options);
 
         /// <summary>
         /// Completes this unit of work. It saves all changes and commit transaction if exists.
         /// </summary>
-        void Complete();
+        void Commit();
 
         /// <summary>
         /// Completes this unit of work. It saves all changes and commit transaction if exists.
         /// </summary>
-        Task CompleteAsync();
+        Task CommitAsync();
+
+        void Rollback();
     }
 }

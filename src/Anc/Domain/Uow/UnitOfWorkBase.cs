@@ -9,7 +9,7 @@ namespace Anc.Domain.Uow
     /// <summary>
     /// Unit of work manager.
     /// </summary>
-    public abstract class UnitOfWork : IUnitOfWork
+    public abstract class UnitOfWorkBase : IUnitOfWork
     {
         public UnitOfWorkOptions Options { get; private set; }
 
@@ -23,23 +23,23 @@ namespace Anc.Domain.Uow
         /// </summary>
         private Exception _exception;
 
-        public void Begin()
+        public IUnitOfWork Begin()
         {
-            Begin(new UnitOfWorkOptions());
+            return Begin(new UnitOfWorkOptions());
         }
 
-        public void Begin(TransactionScopeOption scope)
+        public IUnitOfWork Begin(TransactionScopeOption scope)
         {
-            Begin(new UnitOfWorkOptions { Scope = scope });
+            return Begin(new UnitOfWorkOptions { Scope = scope });
         }
 
-        public void Begin(UnitOfWorkOptions options)
+        public IUnitOfWork Begin(UnitOfWorkOptions options)
         {
             Options = options;
-            BeginUow();
+            return BeginUow();
         }
 
-        public void Complete()
+        public void Commit()
         {
             try
             {
@@ -53,15 +53,28 @@ namespace Anc.Domain.Uow
             }
         }
 
-        public Task CompleteAsync()
+        public Task CommitAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public void Rollback()
+        {
+            try
+            {
+                RollbackUow();
+            }
+            catch (Exception ex)
+            {
+                _exception = ex;
+                throw;
+            }
         }
 
         /// <summary>
         /// Can be implemented by derived classes to start UOW.
         /// </summary>
-        protected abstract void BeginUow();
+        protected abstract IUnitOfWork BeginUow();
 
         /// <summary>
         /// Should be implemented by derived classes to complete UOW.
@@ -72,5 +85,9 @@ namespace Anc.Domain.Uow
         /// Should be implemented by derived classes to complete UOW.
         /// </summary>
         protected abstract Task CompleteUowAsync();
+
+        protected abstract void RollbackUow();
+
+        public abstract void Dispose();
     }
 }

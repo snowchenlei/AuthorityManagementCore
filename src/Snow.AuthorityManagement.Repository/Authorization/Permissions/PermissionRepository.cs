@@ -32,5 +32,10 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions
 
             return true;
         }
+
+        public Task<List<Permission>> GetPermissionsByRoleIdAsync(int roleId)
+        {
+            return GetAllListAsync(a => a.Role.ID == roleId);
+        }
     }
 }

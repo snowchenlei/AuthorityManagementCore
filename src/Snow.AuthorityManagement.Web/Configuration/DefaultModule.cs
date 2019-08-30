@@ -12,6 +12,8 @@ using Anc.EntityFrameworkCore.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.Repository;
+using Anc.Domain.Uow;
+using Anc.EntityFrameworkCore.Uow;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -63,6 +65,8 @@ namespace Snow.AuthorityManagement.Web.Configuration
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<>)).As(typeof(IRepository<>));
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(IRepository<,>));
             //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();
+            builder.RegisterType<EfCoreUnitOfWork>().As<IUnitOfWork>();
+
             builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
             builder.RegisterType<UserNavigationManager>().As<IUserNavigationManager>();

@@ -27,7 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ui", "Ui", "{F2AB8448-A739-459C-A699-A43FCD448DD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anc.EntityFrameworkCore", "Anc.EntityFrameworkCore\Anc.EntityFrameworkCore.csproj", "{1DC0F106-5823-4CA6-8D9E-DEF1AAF7AEC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc.EntityFrameworkCore", "Anc.EntityFrameworkCore\Anc.EntityFrameworkCore.csproj", "{1DC0F106-5823-4CA6-8D9E-DEF1AAF7AEC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anc.Dapper", "Anc.Dapper\Anc.Dapper.csproj", "{48C06ACC-7102-468D-9DF6-B034643D16CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{1DC0F106-5823-4CA6-8D9E-DEF1AAF7AEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DC0F106-5823-4CA6-8D9E-DEF1AAF7AEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DC0F106-5823-4CA6-8D9E-DEF1AAF7AEC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48C06ACC-7102-468D-9DF6-B034643D16CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48C06ACC-7102-468D-9DF6-B034643D16CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48C06ACC-7102-468D-9DF6-B034643D16CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48C06ACC-7102-468D-9DF6-B034643D16CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{CBB1340C-F40A-4659-8E7D-6CC63DC25EE3} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
 		{C5FB6A6B-055A-47C3-B539-4E95FED152CF} = {7070E1A5-316E-4F30-9910-B8C2B2921274}
 		{1DC0F106-5823-4CA6-8D9E-DEF1AAF7AEC2} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
+		{48C06ACC-7102-468D-9DF6-B034643D16CC} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0FDFAB4-CB28-40CF-B14D-8869F4388CF5}

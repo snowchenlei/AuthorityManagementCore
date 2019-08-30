@@ -40,3 +40,5 @@
 /src/Anc/bin/Debug/netcoreapp2.1
 /src/Anc.EntityFrameworkCore/bin/Debug
 /src/Anc.EntityFrameworkCore/obj
+/src/Anc.Dapper/bin/Debug
+/src/Anc.Dapper/obj

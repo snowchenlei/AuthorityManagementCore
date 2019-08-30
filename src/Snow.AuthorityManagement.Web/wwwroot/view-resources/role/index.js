@@ -1,36 +1,5 @@
 ﻿var absoluteUrl;
 
-function actionFormater(value, row, index) {
-    var htmlArr = [];
-    htmlArr.push('<div class="btn-group" style="display: inline-block;" role="group" aria-label="...">');
-    if (isGranted('Pages.Roles.Edit')) {
-        htmlArr.push('<button type = "button" class="btn btn-sm btn-warning" onclick="operate.edit(\'' +
-            row.name +
-            '\', ' +
-            row.id +
-            ')"><i class="glyphicon glyphicon-pencil" style="margin-right: 5px;"></i></button>');
-    }
-    if (isGranted('Pages.Roles.Delete')) {
-        htmlArr.push('<button type="button" class="btn btn-sm btn-danger" onclick="operate.del(\'' +
-            row.name +
-            '\', ' +
-            row.id +
-            ')"><i class="glyphicon glyphicon-trash" style="margin-right: 5px;"></i></button>');
-    }
-    htmlArr.push('<div class="btn-group">');
-    htmlArr.push('<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">');
-    htmlArr.push('Action <span class="caret"></span>');
-    htmlArr.push('</button>');
-    htmlArr.push('<ul class="dropdown-menu">');
-    htmlArr.push('<li><a href="#">Action</a></li>');
-    htmlArr.push('<li><a href="#">Another action</a></li>');
-    htmlArr.push('<li><a href="#">Something else here</a></li>');
-    htmlArr.push('</ul>');
-    htmlArr.push('</div>');
-    htmlArr.push('</div>');
-    return htmlArr.join('');
-}
-
 // #region bootstrap-table
 //搜索
 function queryParams(params) {
@@ -158,11 +127,14 @@ function queryParams(params) {
             l.stop();
             return false;
         }
-        var s = $e.serializeArray();
+        //var s = $e.serializeArray();
+        var role = $e.serializeFormToObject();
         $.ajax({
             type: "POST",
             url: "/Role/CreateOrEdit",
-            data: s,
+            data: {
+                role
+            },
             success: function (result) {
                 l.stop();
                 requestCallBack(result,

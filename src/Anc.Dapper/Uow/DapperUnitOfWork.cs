@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Anc.Dapper.Uow
 {
-    public class DapperUnitOfWork : UnitOfWorkBase
+    public class DapperUnitOfWork<TDbContext> : UnitOfWorkBase where TDbContext : DbContext
     {
         private IDbConnection _connection = null;
         private IDbTransaction _transaction = null;
 
-        public DapperUnitOfWork(IDbConnection connection)
+        public DapperUnitOfWork(TDbContext context)
         {
-            _connection = connection;
+            _connection = context.DbConnection;
         }
 
         protected override IUnitOfWork BeginUow()
@@ -43,7 +43,7 @@ namespace Anc.Dapper.Uow
             _transaction?.Rollback();
         }
 
-        public override void Dispose()
+        protected override void DisposeUow()
         {
             _transaction?.Dispose();
             if (_connection != null && _connection.State == ConnectionState.Open)

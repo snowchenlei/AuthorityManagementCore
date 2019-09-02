@@ -71,6 +71,30 @@
           }
         }
       },
+      "Dapper/2.0.4": {
+        "dependencies": {
+          "System.Reflection.Emit.Lightweight": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.4.31833"
+          }
+        }
+      },
+      "Dapper.Contrib/2.0.4": {
+        "dependencies": {
+          "Dapper": "2.0.4",
+          "Microsoft.CSharp": "4.5.0",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Dapper.Contrib.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.4.31833"
+          }
+        }
+      },
       "FluentValidation/8.4.0": {
         "dependencies": {
           "System.ComponentModel.Annotations": "4.5.0"
@@ -791,6 +815,15 @@
           "Anc.dll": {}
         }
       },
+      "Anc.Dapper/1.0.0": {
+        "dependencies": {
+          "Anc": "1.0.0",
+          "Dapper.Contrib": "2.0.4"
+        },
+        "runtime": {
+          "Anc.Dapper.dll": {}
+        }
+      },
       "Anc.EntityFrameworkCore/1.0.0": {
         "dependencies": {
           "Anc": "1.0.0",
@@ -824,6 +857,7 @@
       },
       "Snow.AuthorityManagement.Data/1.0.0": {
         "dependencies": {
+          "Anc.Dapper": "1.0.0",
           "Anc.EntityFrameworkCore": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.1.1",
           "Snow.AuthorityManagement.Common": "1.0.0",
@@ -869,6 +903,20 @@
       "sha512": "sha512-8Y/eTr6GTElAGV7eAmJuhfLhGdFpNvaNrQ9UQYDScziLmX+/BLGM+9eQr0IcdNDcPN0ADmbtwT6MgecGKy4obw==",
       "path": "castle.core/4.3.1",
       "hashPath": "castle.core.4.3.1.nupkg.sha512"
+    },
+    "Dapper/2.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DrNPDqK3nR4RpwAPX2R0R34YhlT+k5Fbw7UnqxQ2aH+wSWvEIj+fCDXB8RJWgw6fGFZLavq7nuJ6J/eAqSrIpw==",
+      "path": "dapper/2.0.4",
+      "hashPath": "dapper.2.0.4.nupkg.sha512"
+    },
+    "Dapper.Contrib/2.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/07YwNQn1EqYUIfnYr96nH/h0+SNyplsZwJN2KBCKeHPbksOHVaUOnbWE9YGf1lSMOLc+PjrKyvMAU87dpOIVw==",
+      "path": "dapper.contrib/2.0.4",
+      "hashPath": "dapper.contrib.2.0.4.nupkg.sha512"
     },
     "FluentValidation/8.4.0": {
       "type": "package",
@@ -1438,6 +1486,11 @@
       "hashPath": "zkweb.system.drawing.4.0.1.nupkg.sha512"
     },
     "Anc/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Anc.Dapper/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

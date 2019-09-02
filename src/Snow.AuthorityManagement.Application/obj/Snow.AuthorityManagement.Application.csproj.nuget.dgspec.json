@@ -4,6 +4,71 @@
     "D:\\per\\git\\AuthorityManagementCore\\src\\Snow.AuthorityManagement.Application\\Snow.AuthorityManagement.Application.csproj": {}
   },
   "projects": {
+    "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.Dapper\\Anc.Dapper.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.Dapper\\Anc.Dapper.csproj",
+        "projectName": "Anc.Dapper",
+        "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.Dapper\\Anc.Dapper.csproj",
+        "packagesPath": "C:\\Users\\Snow\\.nuget\\packages\\",
+        "outputPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.Dapper\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Snow\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {
+              "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj": {
+                "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc\\Anc.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Dapper.Contrib": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
     "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\Anc.EntityFrameworkCore.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -369,6 +434,9 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
+              "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.Dapper\\Anc.Dapper.csproj": {
+                "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.Dapper\\Anc.Dapper.csproj"
+              },
               "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\Anc.EntityFrameworkCore.csproj": {
                 "projectPath": "D:\\per\\git\\AuthorityManagementCore\\src\\Anc.EntityFrameworkCore\\Anc.EntityFrameworkCore.csproj"
               },

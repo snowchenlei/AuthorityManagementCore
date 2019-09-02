@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Reflection;
 using System.Runtime.Loader;
 using Autofac;
@@ -53,7 +54,8 @@ namespace Snow.AuthorityManagement.Web.Startup
             #region 线程内唯一
 
             //IServiceCollection services = new ServiceCollection();
-            services.AddEntityFrameworkSqlServer().AddDbContext<AuthorityManagementContext>(options =>
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<AuthorityManagementContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             }, ServiceLifetime.Scoped);

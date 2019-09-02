@@ -9,7 +9,7 @@ namespace Anc.Dapper.Repositories
     public class DapperRepositoryBase<TEntity> : DapperRepositoryBase<TEntity, int>, IDapperRepository<TEntity>
        where TEntity : class, IEntity<int>
     {
-        public DapperRepositoryBase(IDbConnection connection) : base(connection)
+        public DapperRepositoryBase(DbContext context) : base(context)
         {
         }
     }

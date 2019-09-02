@@ -19,3 +19,5 @@ D:\per\git\AuthorityManagementCore\src\Snow.AuthorityManagement.Application\bin\
 D:\per\git\AuthorityManagementCore\src\Snow.AuthorityManagement.Application\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.Application.csproj.CopyComplete
 D:\per\git\AuthorityManagementCore\src\Snow.AuthorityManagement.Application\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.Application.dll
 D:\per\git\AuthorityManagementCore\src\Snow.AuthorityManagement.Application\obj\Debug\netcoreapp2.1\Snow.AuthorityManagement.Application.pdb
+D:\per\git\AuthorityManagementCore\src\Snow.AuthorityManagement.Application\bin\Debug\netcoreapp2.1\Anc.Dapper.dll
+D:\per\git\AuthorityManagementCore\src\Snow.AuthorityManagement.Application\bin\Debug\netcoreapp2.1\Anc.Dapper.pdb

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Anc.Dapper\Anc.Dapper.csproj" />
     <ProjectReference Include="..\Anc.EntityFrameworkCore\Anc.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Common\Snow.AuthorityManagement.Common.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Core\Snow.AuthorityManagement.Core.csproj" />

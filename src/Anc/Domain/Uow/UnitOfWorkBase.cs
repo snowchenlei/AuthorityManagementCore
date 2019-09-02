@@ -14,9 +14,24 @@ namespace Anc.Domain.Uow
         public UnitOfWorkOptions Options { get; private set; }
 
         /// <summary>
+        /// Is <see cref="Begin"/> method called before?
+        /// </summary>
+        private bool _isBeginCalledBefore;
+
+        /// <summary>
+        /// Is <see cref="Complete"/> method called before?
+        /// </summary>
+        private bool _isCompleteCalledBefore;
+
+        /// <summary>
         /// Is this unit of work successfully completed.
         /// </summary>
         private bool _succeed;
+
+        /// <summary>
+        /// Gets a value indicates that this unit of work is disposed or not.
+        /// </summary>
+        public bool IsDisposed { get; private set; }
 
         /// <summary>
         /// A reference to the exception if this unit of work failed.
@@ -35,12 +50,16 @@ namespace Anc.Domain.Uow
 
         public IUnitOfWork Begin(UnitOfWorkOptions options)
         {
+            PreventMultipleBegin();
+
             Options = options;
             return BeginUow();
         }
 
         public void Commit()
         {
+            PreventMultipleComplete();
+
             try
             {
                 CompleteUow();
@@ -53,9 +72,12 @@ namespace Anc.Domain.Uow
             }
         }
 
-        public Task CommitAsync()
+        public async Task CommitAsync()
         {
-            throw new NotImplementedException();
+            PreventMultipleComplete();
+
+            await CompleteUowAsync();
+            _succeed = true;
         }
 
         public void Rollback()
@@ -69,6 +91,44 @@ namespace Anc.Domain.Uow
                 _exception = ex;
                 throw;
             }
+        }
+
+        public void Dispose()
+        {
+            if (!_isBeginCalledBefore || IsDisposed)
+            {
+                return;
+            }
+
+            IsDisposed = true;
+
+            if (!_succeed)
+            {
+                // 失败的日志
+                //OnFailed(_exception);
+            }
+
+            DisposeUow();
+        }
+
+        private void PreventMultipleBegin()
+        {
+            if (_isBeginCalledBefore)
+            {
+                throw new AncException("This unit of work has started before. Can not call Start method more than once.");
+            }
+
+            _isBeginCalledBefore = true;
+        }
+
+        private void PreventMultipleComplete()
+        {
+            if (_isCompleteCalledBefore)
+            {
+                throw new AncException("Complete is called before!");
+            }
+
+            _isCompleteCalledBefore = true;
         }
 
         /// <summary>
@@ -88,6 +148,9 @@ namespace Anc.Domain.Uow
 
         protected abstract void RollbackUow();
 
-        public abstract void Dispose();
+        /// <summary>
+        /// Should be implemented by derived classes to dispose UOW.
+        /// </summary>
+        protected abstract void DisposeUow();
     }
 }

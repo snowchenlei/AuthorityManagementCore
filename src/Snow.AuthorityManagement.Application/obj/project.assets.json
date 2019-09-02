@@ -63,6 +63,32 @@
           "lib/netstandard1.5/Castle.Core.dll": {}
         }
       },
+      "Dapper/2.0.4": {
+        "type": "package",
+        "dependencies": {
+          "System.Reflection.Emit.Lightweight": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Dapper.dll": {}
+        }
+      },
+      "Dapper.Contrib/2.0.4": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "2.0.4",
+          "Microsoft.CSharp": "4.5.0",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Dapper.Contrib.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Dapper.Contrib.dll": {}
+        }
+      },
       "FluentValidation/8.4.0": {
         "type": "package",
         "dependencies": {
@@ -1058,7 +1084,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {}
+          "ref/netstandard1.0/System.Reflection.Emit.Lightweight.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Reflection.Emit.Lightweight.dll": {}
@@ -1409,6 +1435,20 @@
           "bin/placeholder/Anc.dll": {}
         }
       },
+      "Anc.Dapper/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Anc": "1.0.0",
+          "Dapper.Contrib": "2.0.4"
+        },
+        "compile": {
+          "bin/placeholder/Anc.Dapper.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Anc.Dapper.dll": {}
+        }
+      },
       "Anc.EntityFrameworkCore/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
@@ -1459,6 +1499,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
+          "Anc.Dapper": "1.0.0",
           "Anc.EntityFrameworkCore": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.1.1",
           "Snow.AuthorityManagement.Common": "1.0.0",
@@ -1547,6 +1588,32 @@
         "lib/netstandard1.5/Castle.Core.dll",
         "lib/netstandard1.5/Castle.Core.xml",
         "readme.txt"
+      ]
+    },
+    "Dapper/2.0.4": {
+      "sha512": "DrNPDqK3nR4RpwAPX2R0R34YhlT+k5Fbw7UnqxQ2aH+wSWvEIj+fCDXB8RJWgw6fGFZLavq7nuJ6J/eAqSrIpw==",
+      "type": "package",
+      "path": "dapper/2.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dapper.2.0.4.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/netstandard2.0/Dapper.dll",
+        "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "Dapper.Contrib/2.0.4": {
+      "sha512": "/07YwNQn1EqYUIfnYr96nH/h0+SNyplsZwJN2KBCKeHPbksOHVaUOnbWE9YGf1lSMOLc+PjrKyvMAU87dpOIVw==",
+      "type": "package",
+      "path": "dapper.contrib/2.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dapper.contrib.2.0.4.nupkg.sha512",
+        "dapper.contrib.nuspec",
+        "lib/netstandard2.0/Dapper.Contrib.dll",
+        "lib/netstandard2.0/Dapper.Contrib.xml"
       ]
     },
     "FluentValidation/8.4.0": {
@@ -5329,6 +5396,11 @@
       "type": "project",
       "path": "../Anc/Anc.csproj",
       "msbuildProject": "../Anc/Anc.csproj"
+    },
+    "Anc.Dapper/1.0.0": {
+      "type": "project",
+      "path": "../Anc.Dapper/Anc.Dapper.csproj",
+      "msbuildProject": "../Anc.Dapper/Anc.Dapper.csproj"
     },
     "Anc.EntityFrameworkCore/1.0.0": {
       "type": "project",

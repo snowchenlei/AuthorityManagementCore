@@ -35,7 +35,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
 
         public UserService(
             IMapper mapper
-            //, IUnitOfWork unitOfWork
+            , IUnitOfWork unitOfWork
             , AuthorityManagementContext context
             , IUserRepository userRepository
             , IConfiguration configuration
@@ -44,7 +44,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             )
         {
             _mapper = mapper;
-            //_unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
             CurrentContext = context;
             _userRepository = userRepository;
             _configuration = configuration;
@@ -174,32 +174,31 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <returns>信息</returns>
         public async Task<UserListDto> CreateAsync(UserEditDto input, List<int> roleIds)
         {
-            #region 用户
-
-            if (await _userRepository.IsExistsByUserNameAsync(input.UserName))
-            {
-                throw new UserFriendlyException("用户名已存在");
-            }
-
-            User user = _mapper.Map<User>(input);
-            user.CanUse = true;
-            user.Password = _configuration["AppSetting:DefaultPassword"];
-            using (IUnitOfWork um = _unitOfWork.Begin())
+            using (IUnitOfWork uow = _unitOfWork.Begin())
             {
                 try
                 {
+                    #region 用户
+
+                    if (await _userRepository.IsExistsByUserNameAsync(input.UserName))
+                    {
+                        throw new UserFriendlyException("用户名已存在");
+                    }
+
+                    User user = _mapper.Map<User>(input);
+                    user.CanUse = true;
+                    user.Password = _configuration["AppSetting:DefaultPassword"];
                     user = await _userRepository.InsertAsync(user);
 
                     #endregion 用户
 
                     await SetUserRoleAsync(user.ID, roleIds);
-
-                    await CurrentContext.SaveChangesAsync();
+                    await uow.CommitAsync();
                     return _mapper.Map<UserListDto>(user);
                 }
                 catch (Exception e)
                 {
-                    um.Rollback();
+                    uow.Rollback();
                     throw e;
                 }
             }
@@ -264,10 +263,21 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <returns></returns>
         public async Task<bool> DeleteAsync(int id)
         {
-            User user = await _userRepository.GetAsync(id)
-                ?? throw new UserFriendlyException("用户不存在");
-
-            await _userRepository.DeleteAsync(user);
+            using (IUnitOfWork uow = _unitOfWork.Begin())
+            {
+                try
+                {
+                    User user = await _userRepository.GetAsync(id)
+                        ?? throw new UserFriendlyException("用户不存在");
+                    await _userRepository.DeleteAsync(user);
+                    await uow.CommitAsync();
+                }
+                catch (Exception e)
+                {
+                    uow.Rollback();
+                    throw e;
+                }
+            }
             return await CurrentContext.SaveChangesAsync() > 0;
         }
     }

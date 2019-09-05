@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Core.Authorization.Users
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : ILambdaRepository<User>
     {
         Task<bool> IsExistsByUserNameAsync(string userName);
 

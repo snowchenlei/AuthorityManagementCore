@@ -131,7 +131,7 @@ function queryParams(params) {
         var roleIds = _findAssignedRoleIDs();
         $.ajax({
             type: "POST",
-            url: "/User/CreateOrEdit",
+            url: "/api/User",
             data:
             {
                 user,
@@ -149,6 +149,26 @@ function queryParams(params) {
                 l.stop();
             }
         });
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/User/CreateOrEdit",
+        //    data:
+        //    {
+        //        user,
+        //        roleIds
+        //    },
+        //    success: function (result) {
+        //        l.stop();
+        //        requestCallBack(result,
+        //            function () {
+        //                refreshTable();
+        //            });
+        //        dialog.modal('hide');
+        //    },
+        //    error: function () {
+        //        l.stop();
+        //    }
+        //});
         return false;
     }
     function _findAssignedRoleIDs() {

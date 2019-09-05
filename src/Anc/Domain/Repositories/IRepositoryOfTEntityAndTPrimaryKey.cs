@@ -24,9 +24,6 @@ namespace Anc.Domain.Repositories
 
         Task<TEntity> GetAsync(TPrimaryKey id);
 
-        Task<Tuple<List<TEntity>, int>> GetPagedAsync(int pageIndex, int pageSize
-            , string wheres, object[] parameters, string orders);
-
         TEntity FirstOrDefault(TPrimaryKey id);
 
         Task<TEntity> FirstOrDefaultAsync(TPrimaryKey id);

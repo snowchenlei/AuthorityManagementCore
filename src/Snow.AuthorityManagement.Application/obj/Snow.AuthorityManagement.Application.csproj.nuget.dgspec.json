@@ -175,6 +175,10 @@
       "frameworks": {
         "netcoreapp2.1": {
           "dependencies": {
+            "Castle.Core": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",

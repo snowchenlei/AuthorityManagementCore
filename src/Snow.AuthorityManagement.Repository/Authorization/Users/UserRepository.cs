@@ -22,7 +22,7 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Users
 
         public Task<bool> IsExistsByUserNameAsync(string userName)
         {
-            return IsExistsAsync(a => a.UserName == userName);
+            return ExistsAsync(a => a.UserName == userName);
         }
     }
 }

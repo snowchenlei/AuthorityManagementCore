@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using Autofac;
@@ -22,6 +23,7 @@ using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
 using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Configuration;
+using Snow.AuthorityManagement.Web.Library;
 using Snow.AuthorityManagement.Web.Library.Middleware;
 using Snow.AuthorityManagement.Web.Startup.OnceTask;
 
@@ -63,9 +65,14 @@ namespace Snow.AuthorityManagement.Web.Startup
             #endregion 线程内唯一
 
             var application = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Application"));
-            var web = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web"));
+            var web = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web.Mvc"));
             AppDomain.CurrentDomain.GetAssemblies();
             services.AddAutoMapper(web, application);
+            //禁用 dotnet core 2.1的formbody等模式自动校验和转换
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             services.AddAuthentication(options =>
             {
@@ -84,6 +91,7 @@ namespace Snow.AuthorityManagement.Web.Startup
             {
                 //options.Filters.Add(typeof(CustomerExceptionAttribute));
                 options.Filters.Add(typeof(AncAuthorizeFilter));
+                options.Filters.Add(typeof(ModelStateInvalidFilter));// 自定义模型验证(ApiController无需此语句，可自动验证)
 
                 #region 输出缓存配置
 
@@ -121,13 +129,31 @@ namespace Snow.AuthorityManagement.Web.Startup
             .AddFluentValidation(fv =>
             {
                 //禁用其它的认证
-                //fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            var mall = Assembly.Load(new AssemblyName("Snow.AuthorityManagement.Web.Core")); //类库的程序集名称
+            services.AddMvc().AddApplicationPart(mall);
 
             #region 注册FluentValidation
 
             services.AddTransient<IValidator<UserEditDto>, UserEditValidator>();
+            services.AddTransient<IValidator<CreateOrUpdateUser>, CreateOrUpdateUserValidator>();
+            // override modelstate
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = (context) =>
+                {
+                    var errors = context.ModelState.Values.SelectMany(x => x.Errors.Select(p => p.ErrorMessage)).ToList();
+                    var result = new
+                    {
+                        Code = "00009",
+                        Message = "Validation errors",
+                        Errors = errors
+                    };
+                    return new BadRequestObjectResult(result);
+                };
+            });
 
             #endregion 注册FluentValidation
 

@@ -52,6 +52,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
@@ -68,6 +69,7 @@
     <ProjectReference Include="..\Snow.AuthorityManagement.Application\Snow.AuthorityManagement.Application.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Common\Snow.AuthorityManagement.Common.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Repository\Snow.AuthorityManagement.Repository.csproj" />
+    <ProjectReference Include="..\Snow.AuthorityManagement.Web.Host\Snow.AuthorityManagement.Web.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

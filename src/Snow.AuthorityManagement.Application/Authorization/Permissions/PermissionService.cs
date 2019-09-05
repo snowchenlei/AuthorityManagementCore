@@ -30,7 +30,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
             var roleIds = userRoles.Select(ur => ur.RoleID);
 
             return await _permissionRepository
-                .IsExistsAsync(p => (p.User.ID == userId
+                .ExistsAsync(p => (p.User.ID == userId
                                     || roleIds.Contains(p.Role.ID)) && p.Name == permissionName);
         }
 

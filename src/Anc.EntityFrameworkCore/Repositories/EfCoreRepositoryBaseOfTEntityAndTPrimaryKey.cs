@@ -44,6 +44,172 @@ namespace Anc.EntityFrameworkCore.Repositories
         private static readonly ConcurrentDictionary<Type, bool> EntityIsDbQuery =
             new ConcurrentDictionary<Type, bool>();
 
+        public bool Exists(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().Any(predicate);
+        }
+
+        public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().AnyAsync(predicate);
+        }
+
+        public override TEntity Single(TPrimaryKey id)
+        {
+            return GetAll().Single(CreateEqualityExpressionForId(id));
+        }
+
+        public override Task<TEntity> SingleAsync(TPrimaryKey id)
+        {
+            return GetAll().SingleAsync(CreateEqualityExpressionForId(id));
+        }
+
+        public TEntity Single(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().Single(predicate);
+        }
+
+        public Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().SingleAsync(predicate);
+        }
+
+        public override TEntity FirstOrDefault(TPrimaryKey id)
+        {
+            return GetAll().FirstOrDefault(CreateEqualityExpressionForId(id));
+        }
+
+        public override Task<TEntity> FirstOrDefaultAsync(TPrimaryKey id)
+        {
+            return GetAll().FirstOrDefaultAsync(CreateEqualityExpressionForId(id));
+        }
+
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().FirstOrDefault(predicate);
+        }
+
+        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().FirstOrDefaultAsync(predicate);
+        }
+
+        public int Count(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().Count(predicate);
+        }
+
+        public long Int64Count(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().LongCount(predicate);
+        }
+
+        public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().CountAsync(predicate);
+        }
+
+        public Task<long> Int64CountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().LongCountAsync(predicate);
+        }
+
+        public override TEntity Get(TPrimaryKey id)
+        {
+            TEntity entity = FirstOrDefault(id);
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(typeof(TEntity), id);
+            }
+
+            return entity;
+        }
+
+        public override async Task<TEntity> GetAsync(TPrimaryKey id)
+        {
+            TEntity entity = await FirstOrDefaultAsync(id);
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(typeof(TEntity), id);
+            }
+
+            return entity;
+        }
+
+        public virtual Tuple<List<TEntity>, int> GetPaged(int pageIndex, int pageSize, string wheres, object[] parameters, string orders)
+        {
+            IQueryable<TEntity> temp;
+            if (string.IsNullOrEmpty(wheres))
+            {
+                temp = GetAll().AsNoTracking();
+            }
+            else
+            {
+                temp = GetAll().AsNoTracking().Where(wheres, parameters);
+            }
+            int totalCount = temp.Count();
+            temp = temp.OrderBy(orders);
+            var result = temp.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            return new Tuple<List<TEntity>, int>(result, totalCount);
+        }
+
+        public virtual async Task<Tuple<List<TEntity>, int>> GetPagedAsync(int pageIndex, int pageSize, string wheres, object[] parameters, string orders)
+        {
+            IQueryable<TEntity> temp;
+            if (string.IsNullOrEmpty(wheres))
+            {
+                temp = GetAll().AsNoTracking();
+            }
+            else
+            {
+                temp = GetAll().AsNoTracking().Where(wheres, parameters);
+            }
+            int totalCount = await temp.CountAsync();
+            temp = temp.OrderBy(orders);
+            var result = await temp.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            return new Tuple<List<TEntity>, int>(result, totalCount);
+        }
+
+        public List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().Where(predicate).ToList();
+        }
+
+        public virtual Task<List<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return GetAll().Where(predicate).ToListAsync();
+        }
+
+        public override IEnumerable<TEntity> GetAllEnumerable()
+        {
+            return GetAll().ToList();
+        }
+
+        public override async Task<IEnumerable<TEntity>> GetAllEnumerableAsync()
+        {
+            return await GetAll().ToListAsync();
+        }
+
+        public virtual IQueryable<TEntity> GetAll()
+        {
+            return GetAllIncluding();
+        }
+
+        public virtual IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
+        {
+            var query = GetQueryable();
+
+            if (!propertySelectors.IsNullOrEmpty())
+            {
+                foreach (var propertySelector in propertySelectors)
+                {
+                    query = query.Include(propertySelector);
+                }
+            }
+
+            return query;
+        }
+
         public override void Delete(TPrimaryKey key)
         {
             var entity = GetFromChangeTrackerOrNull(key);
@@ -90,58 +256,6 @@ namespace Anc.EntityFrameworkCore.Repositories
             Table.RemoveRange(entities);
         }
 
-        public override TEntity FirstOrDefault(TPrimaryKey id)
-        {
-            return GetAll().FirstOrDefault(CreateEqualityExpressionForId(id));
-        }
-
-        public override Task<TEntity> FirstOrDefaultAsync(TPrimaryKey id)
-        {
-            return GetAll().FirstOrDefaultAsync(CreateEqualityExpressionForId(id));
-        }
-
-        public override TEntity Get(TPrimaryKey id)
-        {
-            var entity = FirstOrDefault(id);
-            if (entity == null)
-            {
-                throw new EntityNotFoundException(typeof(TEntity), id);
-            }
-
-            return entity;
-        }
-
-        public override Task<TEntity> GetAsync(TPrimaryKey id)
-        {
-            var entity = FirstOrDefaultAsync(id);
-            if (entity == null)
-            {
-                throw new EntityNotFoundException(typeof(TEntity), id);
-            }
-
-            return entity;
-        }
-
-        public virtual IQueryable<TEntity> GetAll()
-        {
-            return GetAllIncluding();
-        }
-
-        public virtual IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
-        {
-            var query = GetQueryable();
-
-            if (!propertySelectors.IsNullOrEmpty())
-            {
-                foreach (var propertySelector in propertySelectors)
-                {
-                    query = query.Include(propertySelector);
-                }
-            }
-
-            return query;
-        }
-
         public override TEntity Insert(TEntity entity)
         {
             return Table.Add(entity).Entity;
@@ -186,16 +300,6 @@ namespace Anc.EntityFrameworkCore.Repositories
             }
 
             return entity.ID;
-        }
-
-        public override TEntity Single(TPrimaryKey id)
-        {
-            return GetAll().Single(CreateEqualityExpressionForId(id));
-        }
-
-        public override Task<TEntity> SingleAsync(TPrimaryKey id)
-        {
-            return GetAll().SingleAsync(CreateEqualityExpressionForId(id));
         }
 
         public override TEntity Update(TEntity entity)
@@ -285,68 +389,6 @@ namespace Anc.EntityFrameworkCore.Repositories
             }
 
             return false;
-        }
-
-        public override async Task<Tuple<List<TEntity>, int>> GetPagedAsync(int pageIndex, int pageSize, string wheres, object[] parameters, string orders)
-        {
-            IQueryable<TEntity> temp;
-            if (string.IsNullOrEmpty(wheres))
-            {
-                temp = GetAll().AsNoTracking();
-            }
-            else
-            {
-                temp = GetAll().AsNoTracking().Where(wheres, parameters);
-            }
-            int totalCount = await temp.CountAsync();
-            temp = temp.OrderBy(orders);
-            var result = await temp.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            return new Tuple<List<TEntity>, int>(result, totalCount);
-        }
-
-        public Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return GetAll().SingleAsync(predicate);
-        }
-
-        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return GetAll().FirstOrDefaultAsync(predicate);
-        }
-
-        public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return GetAll().CountAsync(predicate);
-        }
-
-        public Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return GetAll().LongCountAsync(predicate);
-        }
-
-        public bool IsExists(Expression<Func<TEntity, bool>> predicate)
-        {
-            return GetAll().Any(predicate);
-        }
-
-        public Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return GetAll().AnyAsync(predicate);
-        }
-
-        public Task<List<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return GetAll().Where(predicate).ToListAsync();
-        }
-
-        public override IEnumerable<TEntity> GetAllEnumerable()
-        {
-            return GetAll().ToList();
-        }
-
-        public override async Task<IEnumerable<TEntity>> GetAllEnumerableAsync()
-        {
-            return await GetAll().ToListAsync();
         }
     }
 }

@@ -27,8 +27,6 @@ namespace Anc.Domain.Repositories
 
         public abstract Task<IEnumerable<TEntity>> GetAllEnumerableAsync();
 
-        public abstract Task<Tuple<List<TEntity>, int>> GetPagedAsync(int pageIndex, int pageSize, string wheres, object[] parameters, string orders);
-
         public abstract TEntity Insert(TEntity entity);
 
         public abstract IEnumerable<TEntity> Insert(IEnumerable<TEntity> entities);

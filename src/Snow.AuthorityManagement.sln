@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Repository", "Snow.AuthorityManagement.Repository\Snow.AuthorityManagement.Repository.csproj", "{8C9472BA-9F23-4040-95C6-26BDDE3BEFFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Web", "Snow.AuthorityManagement.Web\Snow.AuthorityManagement.Web.csproj", "{71093CEE-2FF7-4188-BEDC-82D267787A15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Web.Mvc", "Snow.AuthorityManagement.Web\Snow.AuthorityManagement.Web.Mvc.csproj", "{71093CEE-2FF7-4188-BEDC-82D267787A15}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snow.AuthorityManagement.Api", "Snow.AuthorityManagement.Api\Snow.AuthorityManagement.Api.csproj", "{4E104E90-48DB-43EB-93E4-EADB410DE6E5}"
 EndProject
@@ -29,7 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ui", "Ui", "{F2AB8448-A739-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc.EntityFrameworkCore", "Anc.EntityFrameworkCore\Anc.EntityFrameworkCore.csproj", "{1DC0F106-5823-4CA6-8D9E-DEF1AAF7AEC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anc.Dapper", "Anc.Dapper\Anc.Dapper.csproj", "{48C06ACC-7102-468D-9DF6-B034643D16CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc.Dapper", "Anc.Dapper\Anc.Dapper.csproj", "{48C06ACC-7102-468D-9DF6-B034643D16CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anc.Web.Mvc", "Anc.Web.Mvc\Anc.Web.Mvc.csproj", "{C8BBE59F-1A07-4408-BC96-9DD79E18803B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snow.AuthorityManagement.Web.Core", "Snow.AuthorityManagement.Web.Host\Snow.AuthorityManagement.Web.Core.csproj", "{50F45BF3-C2FB-4E1D-A7C1-9A017746D647}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +81,14 @@ Global
 		{48C06ACC-7102-468D-9DF6-B034643D16CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48C06ACC-7102-468D-9DF6-B034643D16CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48C06ACC-7102-468D-9DF6-B034643D16CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8BBE59F-1A07-4408-BC96-9DD79E18803B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8BBE59F-1A07-4408-BC96-9DD79E18803B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8BBE59F-1A07-4408-BC96-9DD79E18803B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8BBE59F-1A07-4408-BC96-9DD79E18803B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50F45BF3-C2FB-4E1D-A7C1-9A017746D647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50F45BF3-C2FB-4E1D-A7C1-9A017746D647}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50F45BF3-C2FB-4E1D-A7C1-9A017746D647}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50F45BF3-C2FB-4E1D-A7C1-9A017746D647}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +104,8 @@ Global
 		{C5FB6A6B-055A-47C3-B539-4E95FED152CF} = {7070E1A5-316E-4F30-9910-B8C2B2921274}
 		{1DC0F106-5823-4CA6-8D9E-DEF1AAF7AEC2} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
 		{48C06ACC-7102-468D-9DF6-B034643D16CC} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
+		{C8BBE59F-1A07-4408-BC96-9DD79E18803B} = {3C0F11C6-5BFF-4335-A8CE-E4141076AE7D}
+		{50F45BF3-C2FB-4E1D-A7C1-9A017746D647} = {F2AB8448-A739-459C-A699-A43FCD448DD9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0FDFAB4-CB28-40CF-B14D-8869F4388CF5}

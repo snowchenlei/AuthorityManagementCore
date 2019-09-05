@@ -15,6 +15,7 @@ using Snow.AuthorityManagement.Repository;
 using Anc.Domain.Uow;
 using Anc.EntityFrameworkCore.Uow;
 using Snow.AuthorityManagement.Data.Dapper.Repositories;
+using Autofac.Extras.DynamicProxy;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -40,11 +41,14 @@ namespace Snow.AuthorityManagement.Web.Configuration
             //    .Where(t => t.Name.EndsWith("Repository"))
             //    .AsImplementedInterfaces()
             //    .InstancePerLifetimeScope();
+            builder.RegisterType<UnitOfWorkInterceptor>();
+
             var baseType = typeof(ITransientDependency);
             builder.RegisterAssemblyTypes(application, anc, ancEfCore, data, rep, core)
                 .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
                 .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+                .InstancePerLifetimeScope()
+                .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
             //builder.RegisterAssemblyTypes(rep, core)
             //    .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
             //    .AsImplementedInterfaces()
@@ -66,7 +70,7 @@ namespace Snow.AuthorityManagement.Web.Configuration
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<>)).As(typeof(IRepository<>));
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(IRepository<,>));
             //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();
-            builder.RegisterType<AuthDbContext>().As<AuthDbContext>();
+            //builder.RegisterType<AuthDbContext>().As<AuthDbContext>();
             builder.RegisterType<EfCoreUnitOfWork<AuthorityManagementContext>>().As<IUnitOfWork>();
             builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();

@@ -139,7 +139,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <returns>信息</returns>
         public async Task<RoleListDto> AddAsync(RoleEditDto input, string permission)
         {
-            if (await _roleRepository.IsExistsAsync(u => u.Name == input.Name))
+            if (await _roleRepository.ExistsAsync(u => u.Name == input.Name))
             {
                 throw new UserFriendlyException("角色名已存在");
             }

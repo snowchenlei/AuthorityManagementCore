@@ -42,3 +42,7 @@
 /src/Anc.EntityFrameworkCore/obj
 /src/Anc.Dapper/bin/Debug
 /src/Anc.Dapper/obj
+/src/Anc.Web.Mvc/obj
+/src/Anc.Web.Mvc/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.Web.Host/bin/Debug/netcoreapp2.1
+/src/Snow.AuthorityManagement.Web.Host/obj

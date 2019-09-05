@@ -10,7 +10,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
             RoleIds = new List<int>();
         }
 
-        [Required]
+        [Display(Name = "用户")]
         public UserEditDto User { get; set; }
 
         [Display(Name = "角色")]

@@ -172,36 +172,25 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <param name="input">信息</param>
         /// <param name="roleIds">角色Id</param>
         /// <returns>信息</returns>
-        public async Task<UserListDto> CreateAsync(UserEditDto input, List<int> roleIds)
+        [UnitOfWork]
+        public virtual async Task<UserListDto> CreateAsync(UserEditDto input, List<int> roleIds)
         {
-            using (IUnitOfWork uow = _unitOfWork.Begin())
+            #region 用户
+
+            if (await _userRepository.IsExistsByUserNameAsync(input.UserName))
             {
-                try
-                {
-                    #region 用户
-
-                    if (await _userRepository.IsExistsByUserNameAsync(input.UserName))
-                    {
-                        throw new UserFriendlyException("用户名已存在");
-                    }
-
-                    User user = _mapper.Map<User>(input);
-                    user.CanUse = true;
-                    user.Password = _configuration["AppSetting:DefaultPassword"];
-                    user = await _userRepository.InsertAsync(user);
-
-                    #endregion 用户
-
-                    await SetUserRoleAsync(user.ID, roleIds);
-                    await uow.CommitAsync();
-                    return _mapper.Map<UserListDto>(user);
-                }
-                catch (Exception e)
-                {
-                    uow.Rollback();
-                    throw e;
-                }
+                throw new UserFriendlyException("用户名已存在");
             }
+
+            User user = _mapper.Map<User>(input);
+            user.CanUse = true;
+            user.Password = _configuration["AppSetting:DefaultPassword"];
+            user = await _userRepository.InsertAsync(user);
+
+            #endregion 用户
+
+            await SetUserRoleAsync(user.ID, roleIds);
+            return _mapper.Map<UserListDto>(user);
         }
 
         /// <summary>
@@ -210,6 +199,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <param name="input">用户信息</param>
         /// <param name="roleIds">角色Id</param>
         /// <returns>用户信息</returns>
+        [UnitOfWork]
         public async Task<UserListDto> EditAsync(UserEditDto input, List<int> roleIds)
         {
             #region 用户
@@ -263,21 +253,11 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <returns></returns>
         public async Task<bool> DeleteAsync(int id)
         {
-            using (IUnitOfWork uow = _unitOfWork.Begin())
-            {
-                try
-                {
-                    User user = await _userRepository.GetAsync(id)
-                        ?? throw new UserFriendlyException("用户不存在");
-                    await _userRepository.DeleteAsync(user);
-                    await uow.CommitAsync();
-                }
-                catch (Exception e)
-                {
-                    uow.Rollback();
-                    throw e;
-                }
-            }
+            User user = await _userRepository.GetAsync(id)
+                ?? throw new UserFriendlyException("用户不存在");
+            await _userRepository.DeleteAsync(user);
+            await CurrentContext.SaveChangesAsync();
+
             return await CurrentContext.SaveChangesAsync() > 0;
         }
     }

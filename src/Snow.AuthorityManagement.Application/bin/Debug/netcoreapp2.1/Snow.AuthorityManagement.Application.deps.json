@@ -31,7 +31,7 @@
       "Autofac.Extras.DynamicProxy/4.5.0": {
         "dependencies": {
           "Autofac": "4.0.1",
-          "Castle.Core": "4.3.1"
+          "Castle.Core": "4.4.0"
         },
         "runtime": {
           "lib/netstandard1.3/Autofac.Extras.DynamicProxy.dll": {
@@ -52,7 +52,7 @@
           }
         }
       },
-      "Castle.Core/4.3.1": {
+      "Castle.Core/4.4.0": {
         "dependencies": {
           "System.Collections.Specialized": "4.3.0",
           "System.ComponentModel": "4.3.0",
@@ -67,7 +67,7 @@
         "runtime": {
           "lib/netstandard1.5/Castle.Core.dll": {
             "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.3.1.0"
+            "fileVersion": "4.4.0.0"
           }
         }
       },
@@ -811,6 +811,9 @@
         }
       },
       "Anc/1.0.0": {
+        "dependencies": {
+          "Castle.Core": "4.4.0"
+        },
         "runtime": {
           "Anc.dll": {}
         }
@@ -897,12 +900,12 @@
       "path": "automapper/9.0.0",
       "hashPath": "automapper.9.0.0.nupkg.sha512"
     },
-    "Castle.Core/4.3.1": {
+    "Castle.Core/4.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-8Y/eTr6GTElAGV7eAmJuhfLhGdFpNvaNrQ9UQYDScziLmX+/BLGM+9eQr0IcdNDcPN0ADmbtwT6MgecGKy4obw==",
-      "path": "castle.core/4.3.1",
-      "hashPath": "castle.core.4.3.1.nupkg.sha512"
+      "sha512": "sha512-b5rRL5zeaau1y/5hIbI+6mGw3cwun16YjkHZnV9RRT5UyUIFsgLmNXJ0YnIN9p8Hw7K7AbG1q1UclQVU3DinAQ==",
+      "path": "castle.core/4.4.0",
+      "hashPath": "castle.core.4.4.0.nupkg.sha512"
     },
     "Dapper/2.0.4": {
       "type": "package",

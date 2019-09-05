@@ -12,7 +12,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
         /// <summary>
         /// 用户名
         /// </summary>
-        //[StringLength(50)]
         [Display(Name = "用户名")]
         public string UserName { get; set; }
 

@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\XsrfToken.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anc.Web.Mvc\Anc.AspNetCore.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Application\Snow.AuthorityManagement.Application.csproj" />
   </ItemGroup>
 

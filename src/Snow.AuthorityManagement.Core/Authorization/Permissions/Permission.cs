@@ -1,4 +1,5 @@
-﻿using Anc.Domain.Entities;
+﻿using Anc.Authorization;
+using Anc.Domain.Entities;
 using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Snow.AuthorityManagement.Core.Authorization.Permissions
 {
-    public class Permission : Entity
+    public class Permission : Entity, IPermission
     {
         public bool IsGranted { get; set; }
         public string Name { get; set; }

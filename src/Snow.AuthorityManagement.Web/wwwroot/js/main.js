@@ -24,4 +24,19 @@
 
         return obj;
     };
+    $.fn.serializeFormToJson = function () {
+        var formArr = $(this).serializeArray();
+        var formObj = new Object();
+        $.each(formArr, function () {
+            if (formObj[this.name]) {
+                if (!formObj[this.name].push) {
+                    formObj[this.name] = [formObj[this.name]];
+                }
+                formObj[this.name].push(this.value || '');
+            } else {
+                formObj[this.name] = this.value || '';
+            }
+        });
+        return formObj;
+    };
 })(jQuery);

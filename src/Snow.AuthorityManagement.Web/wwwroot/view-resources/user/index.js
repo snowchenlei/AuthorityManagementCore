@@ -120,6 +120,16 @@ function queryParams(params) {
             });
         });
     }
+    function getFormData($form) {
+        var unindexed_array = $form.serializeArray();
+        var indexed_array = {};
+
+        $.map(unindexed_array, function (n, i) {
+            indexed_array[n['name']] = n['value'];
+        });
+
+        return indexed_array;
+    }
     function save() {
         //手动验证
         var $e = $("#modelForm");
@@ -127,16 +137,31 @@ function queryParams(params) {
             l.stop();
             return false;
         }
-        var user = $e.serializeFormToObject();
+        var user = $e.serializeFormToJson();
+        //var user = getFormData($e);
         var roleIds = _findAssignedRoleIDs();
+        var data = {
+            user,
+            roleIds
+        };
+        var para = JSON.stringify(data);
+        console.log(para);
+
+        //$.post('/api/User',
+        //    para
+        //    , function (data) {
+        //        l.stop();
+        //        requestCallBack(result,
+        //            function () {
+        //                refreshTable();
+        //            });
+        //        dialog.modal('hide');
+        //    },'json');
         $.ajax({
             type: "POST",
             url: "/api/User",
-            data:
-            {
-                user,
-                roleIds
-            },
+            contentType: "application/json",
+            data: para,
             success: function (result) {
                 l.stop();
                 requestCallBack(result,

@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc.EntityFrameworkCore", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc.Dapper", "Anc.Dapper\Anc.Dapper.csproj", "{48C06ACC-7102-468D-9DF6-B034643D16CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anc.Web.Mvc", "Anc.Web.Mvc\Anc.Web.Mvc.csproj", "{C8BBE59F-1A07-4408-BC96-9DD79E18803B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anc.AspNetCore", "Anc.Web.Mvc\Anc.AspNetCore.csproj", "{C8BBE59F-1A07-4408-BC96-9DD79E18803B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snow.AuthorityManagement.Web.Core", "Snow.AuthorityManagement.Web.Host\Snow.AuthorityManagement.Web.Core.csproj", "{50F45BF3-C2FB-4E1D-A7C1-9A017746D647}"
 EndProject

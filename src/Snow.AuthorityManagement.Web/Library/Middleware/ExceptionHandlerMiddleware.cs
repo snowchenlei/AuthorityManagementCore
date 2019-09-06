@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Anc.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.WebUtilities;
@@ -74,13 +75,9 @@ namespace Snow.AuthorityManagement.Web.Library.Middleware
             //            msg = "服务器系统内部错误";
             //            break;
 
-            //        case 401:
-            //            msg = "未登录";
-            //            break;
+            // case 401: msg = "未登录"; break;
 
-            //        case 403:
-            //            msg = "无权限执行此操作";
-            //            break;
+            // case 403: msg = "无权限执行此操作"; break;
 
             //        case 408:
             //            msg = "请求超时";

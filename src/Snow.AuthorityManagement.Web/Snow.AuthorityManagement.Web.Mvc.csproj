@@ -14,8 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Authorization\AncAuthorizeAttribute.cs" />
+    <Compile Remove="Authorization\AncAuthorizeFilter.cs" />
+    <Compile Remove="Authorization\AuthorizationHelper.cs" />
+    <Compile Remove="Authorization\IAuthorizationHelper.cs" />
     <Compile Remove="Authorization\PermissionDefinitionContextBase.cs" />
     <Compile Remove="Authorization\PermissionDictionary.cs" />
+    <Compile Remove="Session\ClaimsAncSession.cs" />
+    <Compile Remove="Session\IAncSession.cs" />
     <Compile Remove="Startup\IStartupTask.cs" />
   </ItemGroup>
 
@@ -61,11 +67,12 @@
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="2.2.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Anc.EntityFrameworkCore\Anc.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Anc.Web.Mvc\Anc.AspNetCore.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Application\Snow.AuthorityManagement.Application.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Common\Snow.AuthorityManagement.Common.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Repository\Snow.AuthorityManagement.Repository.csproj" />

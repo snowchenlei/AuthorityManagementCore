@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Anc.AspNetCore.Web.Mvc.Authorization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;

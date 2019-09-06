@@ -16,6 +16,9 @@ using Anc.Domain.Uow;
 using Anc.EntityFrameworkCore.Uow;
 using Snow.AuthorityManagement.Data.Dapper.Repositories;
 using Autofac.Extras.DynamicProxy;
+using Anc.Runtime.Session;
+using Anc.Authorization;
+using Snow.AuthorityManagement.Repository.Authorization.Permissions.DomainService;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -25,10 +28,12 @@ namespace Snow.AuthorityManagement.Web.Configuration
         {
             var application = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Application"));
             var anc = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc"));
+            var ancAspCore = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.AspNetCore"));
             var ancEfCore = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.EntityFrameworkCore"));
             var data = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Data"));
             var rep = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Repository"));
             var core = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Core"));
+
             //var service = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Service"));
             //var iRepository = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.IRepository"));
             //var repository = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Repository"));
@@ -43,12 +48,18 @@ namespace Snow.AuthorityManagement.Web.Configuration
             //    .InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWorkInterceptor>();
 
-            var baseType = typeof(ITransientDependency);
-            builder.RegisterAssemblyTypes(application, anc, ancEfCore, data, rep, core)
-                .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
+            var transientType = typeof(ITransientDependency);
+            var singletonType = typeof(ISingletonDependency);
+            builder.RegisterAssemblyTypes(application, anc, ancAspCore, ancEfCore, data, rep, core)
+                .Where(m => transientType.IsAssignableFrom(m) && m != transientType)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope()
                 .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
+            builder.RegisterAssemblyTypes(application, anc, ancAspCore, ancEfCore, data, rep, core)
+               .Where(m => singletonType.IsAssignableFrom(m) && m != singletonType)
+               .AsImplementedInterfaces()
+               .SingleInstance()
+               .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
             //builder.RegisterAssemblyTypes(rep, core)
             //    .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
             //    .AsImplementedInterfaces()
@@ -72,10 +83,11 @@ namespace Snow.AuthorityManagement.Web.Configuration
             //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();
             //builder.RegisterType<AuthDbContext>().As<AuthDbContext>();
             builder.RegisterType<EfCoreUnitOfWork<AuthorityManagementContext>>().As<IUnitOfWork>();
-            builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
-            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+            //builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
+            //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
             builder.RegisterType<UserNavigationManager>().As<IUserNavigationManager>();
-            builder.RegisterType<ClaimsAncSession>().As<IAncSession>();
+            //builder.RegisterType<ClaimsAncSession>().As<IAncSession>();
+            //builder.RegisterType<PermissionManager>().As<IPermissionManagerBase>();
         }
     }
 }

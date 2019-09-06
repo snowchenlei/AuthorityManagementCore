@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Anc.AspNetCore.Web.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Snow.AuthorityManagement.Application.Authorization.Users;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core;
@@ -14,6 +15,11 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+
+        public UsersController(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         [HttpPost]
         //[AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]

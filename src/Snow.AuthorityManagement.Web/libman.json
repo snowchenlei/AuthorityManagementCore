@@ -87,6 +87,6 @@
       "provider": "filesystem",
       "library": "wwwroot/lib/bootbox.js/",
       "destination": "wwwroot/lib/bootbox.js/"
-    }
+    },
   ]
 }

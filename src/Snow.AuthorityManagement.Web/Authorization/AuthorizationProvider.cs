@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Snow.AuthorityManagement.Common.Authorization;
+using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Model;
 
 namespace Snow.AuthorityManagement.Web.Authorization

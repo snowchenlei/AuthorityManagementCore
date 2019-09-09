@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Snow.AuthorityManagement.Core.Entities;
-using Snow.AuthorityManagement.Core.Enum;
 using Snow.AuthorityManagement.Data;
 using System;
 using System.Collections.Generic;
@@ -21,6 +20,9 @@ using Snow.AuthorityManagement.Application.Authorization.Permissions.Dto;
 using Snow.AuthorityManagement.Common.Authorization;
 using System.Collections.Immutable;
 using Anc.Domain.Repositories;
+using Anc.Application.Services.Dto;
+using Anc.Domain.Model;
+using Anc.Domain.Uow;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles
 {
@@ -35,7 +37,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         public RoleService(
             IMapper mapper
             , AuthorityManagementContext context
-            , ILambdaRepository<Role> roleRepository, IPermissionRepository permissionRepository)
+            , ILambdaRepository<Role> roleRepository
+            , IPermissionRepository permissionRepository)
         {
             _mapper = mapper;
             CurrentContext = context;
@@ -137,7 +140,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <param name="input">信息</param>
         /// <param name="permission">权限</param>
         /// <returns>信息</returns>
-        public async Task<RoleListDto> AddAsync(RoleEditDto input, string permission)
+        [UnitOfWork]
+        public virtual async Task<RoleListDto> CreateAsync(RoleEditDto input, string permission)
         {
             if (await _roleRepository.ExistsAsync(u => u.Name == input.Name))
             {
@@ -145,9 +149,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             }
             Role role = _mapper.Map<Role>(input);
             role.Permissions = CreatePermissions(permission);
-            role = await _roleRepository.InsertAsync(role);
-
-            await CurrentContext.SaveChangesAsync();
+            role.ID = await _roleRepository.InsertAndGetIdAsync(role);
             return _mapper.Map<RoleListDto>(role);
         }
 
@@ -157,7 +159,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <param name="input">信息</param>
         /// <param name="permission">权限</param>
         /// <returns>信息</returns>
-        public async Task<RoleListDto> EditAsync(RoleEditDto input, string permission)
+        [UnitOfWork]
+        public virtual async Task<RoleListDto> EditAsync(RoleEditDto input, string permission)
         {
             #region 角色
 
@@ -179,11 +182,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             await _permissionRepository.SetPermissionsByRoleId(role, newPermissions, lostPermissions);
 
             #endregion 权限
-
-            if (await CurrentContext.SaveChangesAsync() <= 0)
-            {
-                throw new UserFriendlyException("修改失败");
-            }
 
             return _mapper.Map<RoleListDto>(role);
         }
@@ -222,13 +220,16 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// </summary>
         /// <param name="id">编号</param>
         /// <returns></returns>
-        public async Task<bool> DeleteAsync(int id)
+        [UnitOfWork]
+        public virtual async Task<bool> DeleteAsync(int id)
         {
             Role role = await _roleRepository.GetAsync(id)
                         ?? throw new UserFriendlyException("角色不存在");
 
-            _roleRepository.Delete(role);
-            return await CurrentContext.SaveChangesAsync() > 0;
+            List<Permission> permissions = await _permissionRepository.GetPermissionsByRoleIdAsync(id);
+            await _permissionRepository.DeleteAsync(permissions);
+            await _roleRepository.DeleteAsync(role);
+            return true;
         }
     }
 }

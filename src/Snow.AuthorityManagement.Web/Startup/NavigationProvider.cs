@@ -1,5 +1,5 @@
-﻿using Snow.AuthorityManagement.Core.Model.Navigation;
-using Snow.AuthorityManagement.Web.Authorization;
+﻿using Snow.AuthorityManagement.Core;
+using Snow.AuthorityManagement.Core.Model.Navigation;
 
 namespace Snow.AuthorityManagement.Web.Startup
 {

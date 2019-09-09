@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Enum\OrderType.cs" />
     <Compile Remove="Exception\AncAuthorizationException.cs" />
     <Compile Remove="IBaseRepository.cs" />
   </ItemGroup>

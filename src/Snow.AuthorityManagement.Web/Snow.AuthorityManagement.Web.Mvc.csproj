@@ -20,6 +20,7 @@
     <Compile Remove="Authorization\IAuthorizationHelper.cs" />
     <Compile Remove="Authorization\PermissionDefinitionContextBase.cs" />
     <Compile Remove="Authorization\PermissionDictionary.cs" />
+    <Compile Remove="Authorization\PermissionNames.cs" />
     <Compile Remove="Session\ClaimsAncSession.cs" />
     <Compile Remove="Session\IAncSession.cs" />
     <Compile Remove="Startup\IStartupTask.cs" />

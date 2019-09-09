@@ -12,6 +12,7 @@ namespace Snow.AuthorityManagement.Enum
         /// 强
         /// </summary>
         Strong,
+
         /// <summary>
         /// 弱
         /// </summary>

@@ -24,19 +24,19 @@ function queryParams(params) {
                 message: '你确定要删除' + row.name + '吗？',
                 callback: function (result) {
                     if (result) {
-                        $.post('/User/Delete',
-                            { id: row.id },
-                            function (result) {
-                                requestCallBack(result,
-                                    function () {
-                                        var $table = $('#tb-body');
-                                        $table.bootstrapTable('remove',
-                                            {
-                                                field: 'id',
-                                                values: [row.id]
-                                            });
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/api/user/' + row.id,
+                            success: function () {
+                                var $table = $('#tb-body');
+                                $table.bootstrapTable('remove',
+                                    {
+                                        field: 'id',
+                                        values: [row.id]
                                     });
-                            });
+                                toastr.success('删除成功');
+                            }
+                        });
                     }
                 }
             });
@@ -107,7 +107,12 @@ function queryParams(params) {
                         if (result) {
                             l = Ladda.create(result.target);
                             l.start();
-                            return save();
+                            if (id === undefined) {
+                                create();
+                            } else {
+                                edit(id);
+                            }
+                            return false;
                         }
                     }
                 }
@@ -120,17 +125,71 @@ function queryParams(params) {
             });
         });
     }
-    function getFormData($form) {
-        var unindexed_array = $form.serializeArray();
-        var indexed_array = {};
-
-        $.map(unindexed_array, function (n, i) {
-            indexed_array[n['name']] = n['value'];
-        });
-
-        return indexed_array;
+    function check($e) {
+        if (!$e.valid()) {
+            l.stop();
+            return false;
+        }
+        return true;
     }
-    function save() {
+    function getPara($e) {
+        var user = $e.serializeFormToJson();
+        var roleIds = _findAssignedRoleIDs();
+        var data = {
+            user,
+            roleIds
+        };
+        return JSON.stringify(data);
+    }
+    function create() {
+        var $e = $("#modelForm");
+
+        if (!check($e)) {
+            return false;
+        }
+        var para = getPara($e);
+        $.ajax({
+            type: 'POST',
+            url: '/api/user/',
+            contentType: "application/json",
+            data: para,
+            success: function (result) {
+                l.stop();
+                toastr.success('添加成功');
+                refreshTable();
+                dialog.modal('hide');
+            },
+            error: function (result) {
+                toastr.error(result.responseText);
+                l.stop();
+            }
+        });
+    }
+    function edit(id) {
+        var $e = $("#modelForm");
+        if (!check($e)) {
+            return false;
+        }
+        var para = getPara($e);
+        $.ajax({
+            type: 'PUT',
+            url: '/api/user/' + id,
+            contentType: "application/json",
+            data: para,
+            success: function (result) {
+                l.stop();
+                toastr.success('修改成功');
+                refreshTable();
+                dialog.modal('hide');
+            },
+            error: function (result) {
+                toastr.error(result.responseText);
+                l.stop();
+            }
+        });
+    }
+
+    function save(id) {
         //手动验证
         var $e = $("#modelForm");
         if (!$e.valid()) {
@@ -138,28 +197,22 @@ function queryParams(params) {
             return false;
         }
         var user = $e.serializeFormToJson();
-        //var user = getFormData($e);
         var roleIds = _findAssignedRoleIDs();
         var data = {
             user,
             roleIds
         };
         var para = JSON.stringify(data);
-        console.log(para);
+        var url = '/api/user/';
+        var type = 'POST';
+        if (id !== undefined) {
+            url += id;
+            type = 'PUT';
+        }
 
-        //$.post('/api/User',
-        //    para
-        //    , function (data) {
-        //        l.stop();
-        //        requestCallBack(result,
-        //            function () {
-        //                refreshTable();
-        //            });
-        //        dialog.modal('hide');
-        //    },'json');
         $.ajax({
-            type: "POST",
-            url: "/api/User",
+            type: type,
+            url: url,
             contentType: "application/json",
             data: para,
             success: function (result) {

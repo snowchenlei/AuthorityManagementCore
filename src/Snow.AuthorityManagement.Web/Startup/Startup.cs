@@ -141,20 +141,20 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddTransient<IValidator<UserEditDto>, UserEditValidator>();
             services.AddTransient<IValidator<CreateOrUpdateUser>, CreateOrUpdateUserValidator>();
             // override modelstate
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.InvalidModelStateResponseFactory = (context) =>
-                {
-                    var errors = context.ModelState.Values.SelectMany(x => x.Errors.Select(p => p.ErrorMessage)).ToList();
-                    var result = new
-                    {
-                        Code = "00009",
-                        Message = "Validation errors",
-                        Errors = errors
-                    };
-                    return new BadRequestObjectResult(result);
-                };
-            });
+            //services.Configure<ApiBehaviorOptions>(options =>
+            //{
+            //    options.InvalidModelStateResponseFactory = (context) =>
+            //    {
+            //        var errors = context.ModelState.Values.SelectMany(x => x.Errors.Select(p => p.ErrorMessage)).ToList();
+            //        var result = new
+            //        {
+            //            Code = "00009",
+            //            Message = "Validation errors",
+            //            Errors = errors
+            //        };
+            //        return new BadRequestObjectResult(result);
+            //    };
+            //});
 
             #endregion 注册FluentValidation
 

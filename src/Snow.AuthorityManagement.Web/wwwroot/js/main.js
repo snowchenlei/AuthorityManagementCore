@@ -28,13 +28,18 @@
         var formArr = $(this).serializeArray();
         var formObj = new Object();
         $.each(formArr, function () {
-            if (formObj[this.name]) {
-                if (!formObj[this.name].push) {
-                    formObj[this.name] = [formObj[this.name]];
+            var names = this.name.split('.');
+            var name = this.name;
+            if (names.length > 1) {
+                name = names[names.length - 1];
+            }
+            if (formObj[name]) {
+                if (!formObj[name].push) {
+                    formObj[name] = [formObj[name]];
                 }
-                formObj[this.name].push(this.value || '');
+                formObj[name].push(this.value || '');
             } else {
-                formObj[this.name] = this.value || '';
+                formObj[name] = this.value || '';
             }
         });
         return formObj;

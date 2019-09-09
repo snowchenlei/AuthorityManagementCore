@@ -63,6 +63,10 @@ namespace Snow.AuthorityManagement.Web.Library.Middleware
                 {
                     statusCode = 403;
                 }
+                else
+                {
+                    statusCode = 500;
+                }
                 await HandleExceptionAsync(context, statusCode, ex.Message);
             }
             //finally

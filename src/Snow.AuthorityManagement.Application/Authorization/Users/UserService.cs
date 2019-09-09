@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Anc.Application.Services.Dto;
+using Anc.Domain.Model;
 using Anc.Domain.Repositories;
 using Anc.Domain.Uow;
 using AutoMapper;
@@ -15,7 +17,6 @@ using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Core.Authorization.Users;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
-using Snow.AuthorityManagement.Core.Enum;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Data;
 
@@ -185,7 +186,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             User user = _mapper.Map<User>(input);
             user.CanUse = true;
             user.Password = _configuration["AppSetting:DefaultPassword"];
-            user = await _userRepository.InsertAsync(user);
+
+            user.ID = await _userRepository.InsertAndGetIdAsync(user);
 
             #endregion 用户
 
@@ -200,7 +202,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <param name="roleIds">角色Id</param>
         /// <returns>用户信息</returns>
         [UnitOfWork]
-        public async Task<UserListDto> EditAsync(UserEditDto input, List<int> roleIds)
+        public virtual async Task<UserListDto> EditAsync(UserEditDto input, List<int> roleIds)
         {
             #region 用户
 
@@ -216,11 +218,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             #endregion 用户
 
             await SetUserRoleAsync(user.ID, roleIds);
-
-            if (await CurrentContext.SaveChangesAsync() <= 0)
-            {
-                throw new UserFriendlyException("修改失败");
-            }
             return _mapper.Map<UserListDto>(user);
         }
 
@@ -251,14 +248,15 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// </summary>
         /// <param name="id">编号</param>
         /// <returns></returns>
-        public async Task<bool> DeleteAsync(int id)
+        [UnitOfWork]
+        public virtual async Task<bool> DeleteAsync(int id)
         {
             User user = await _userRepository.GetAsync(id)
                 ?? throw new UserFriendlyException("用户不存在");
+            List<UserRole> userRoles = await _userRoleRepository.GetUserRolesByUserIdAsync(id);
+            await _userRoleRepository.DeleteAsync(userRoles);
             await _userRepository.DeleteAsync(user);
-            await CurrentContext.SaveChangesAsync();
-
-            return await CurrentContext.SaveChangesAsync() > 0;
+            return true;
         }
     }
 }

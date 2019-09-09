@@ -62,7 +62,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
-            var output = await _userService.GetForEditAsync(id);
+            GetUserForEditOutput output = await _userService.GetForEditAsync(id);
             var viewModel = new CreateOrEditUserModalViewModel(output)
             {
                 //PasswordComplexitySetting = await _passwordComplexitySettingStore.GetSettingsAsync()

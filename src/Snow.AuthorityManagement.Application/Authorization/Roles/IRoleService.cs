@@ -1,4 +1,5 @@
 ﻿using Anc.Application.Services;
+using Anc.Application.Services.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Dto;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <param name="input">信息</param>
         /// <param name="permission">权限</param>
         /// <returns>信息</returns>
-        Task<RoleListDto> AddAsync(RoleEditDto input, string permission);
+        Task<RoleListDto> CreateAsync(RoleEditDto input, string permission);
 
         /// <summary>
         /// 修改

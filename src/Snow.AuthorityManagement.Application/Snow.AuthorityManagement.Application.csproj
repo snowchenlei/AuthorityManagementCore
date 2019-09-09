@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\PagedAndSortedInputDto.cs" />
+    <Compile Remove="Dto\PagedResultDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
   </ItemGroup>
 

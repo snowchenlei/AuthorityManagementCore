@@ -27,12 +27,11 @@ namespace Snow.AuthorityManagement.Web.Library
                         errors.Add(error.ErrorMessage);
                     }
                 }
-
-                filterContext.Result = new JsonResult(new Result
+                filterContext.HttpContext.Response.StatusCode = 400;
+                filterContext.Result = new ContentResult
                 {
-                    Status = Status.Failure,
-                    Message = "[" + string.Join(",", errors) + "]"
-                });
+                    Content = "[" + string.Join(",", errors) + "]"
+                };
             }
         }
     }

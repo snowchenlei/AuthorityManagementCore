@@ -54,16 +54,9 @@
         }
     </div>
 </div>
-
-<script type="text/javascript">
-    $.validator.unobtrusive.parse('form');
-    if ($('#Role').data('select2') !== undefined) {
-        $('#Role').data('select2').destroy();
-    }
-    $('#Role').select2({
-        language: "zh-CN",// 指定语言为中文，国际化才起效
-        placeholder: '请选择',
-        width: '100%',
-        //data: modules
-    });
-</script>
+<environment include="Development">
+    <script src="~/view-resources/user/createOrEdit.js" asp-append-version="true"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/bundle/user.index.min.js" asp-append-version="true"></script>
+</environment>

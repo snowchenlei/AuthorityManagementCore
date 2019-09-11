@@ -9,6 +9,14 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
 {
     public class GetRoleInput : PagedAndSortedInputDto
     {
+        /// <summary>
+        /// 构造
+        /// </summary>
+        public GetRoleInput()
+        {
+            Sorting = "ID";
+        }
+
         public string Name { get; set; }
         public string Date { get; set; }
     }

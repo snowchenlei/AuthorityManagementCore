@@ -19,12 +19,16 @@ namespace Snow.AuthorityManagement.Web
         public static async Task Main(string[] args)
         {
             var host = CreateWebHostBuilder(args);
-            
+
             await host.RunWithTasksAsync();
         }
 
         public static IWebHost CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                 .ConfigureAppConfiguration((hostingContext, config) =>
+                 {
+                     config.AddJsonFile("cache.json", true);
+                 })
                 .UseStartup<Startup.Startup>()
                 .Build();
     }

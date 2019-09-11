@@ -1,125 +1,191 @@
 ﻿[
-  {
-    "outputFileName": "wwwroot/css/bundle/home.min.css",
-    "inputFiles": [
-      "wwwroot/lib/Font-Awesome-3.2.1/css/font-awesome.min.css",
-      "wwwroot/lib/ace/font-awesome/4.5.0/css/font-awesome.min.css",
-      "wwwroot/lib/ace/css/fonts.googleapis.com.css",
-      "wwwroot/lib/ace/css/bootstrap.min.css",
-      "wwwroot/lib/toastr/css/toastr.min.css",
-      "wwwroot/lib/ace/css/ace.min.css",
-      "wwwroot/lib/ace/css/ace-skins.min.css",
-      "wwwroot/lib/ace/css/ace-rtl.min.css"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/bundle/home.min.js",
-    "inputFiles": [
-      "wwwroot/lib/ace/js/ace-extra.min.js",
-      "wwwroot/lib/ace/js/jquery-2.1.4.min.js",
-      "wwwroot/lib/ace/js/bootstrap.min.js",
-      "wwwroot/lib/ace/js/jquery-ui.custom.min.js",
-      "wwwroot/lib/ace/js/jquery.ui.touch-punch.min.js",
-      "wwwroot/lib/ace/js/jquery.easypiechart.min.js",
-      "wwwroot/lib/ace/js/jquery.sparkline.index.min.js",
-      "wwwroot/lib/ace/js/ace-elements.min.js",
-      "wwwroot/lib/ace/js/ace.min.js",
-      "wwwroot/lib/fullscreen/jquery.fullscreen.js",
-      "wwwroot/lib/customer/bootstrap-tab.js",
-      "wwwroot/lib/toastr/js/toastr.min.js",
-      "wwwroot/lib/customer/common.js",
-      "wwwroot/js/home/index.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    "sourceMap": false
-  },
-  {
-    "outputFileName": "wwwroot/css/bundle/frame.min.css",
-    "inputFiles": [
-      "wwwroot/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css",
-      "wwwroot/lib/bootstrap-table/bootstrap-table.min.css",
-      "wwwroot/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css",
-      "wwwroot/lib/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css",
-      "wwwroot/lib/select2/css/select2.min.css",
-      "wwwroot/lib/toastr/css/toastr.min.css",
-      "wwwroot/lib/zTree/css/metroStyle/metroStyle.css",
-      "wwwroot/lib/customerMain.css",
-      "wwwroot/lib/customer/loader.css",
-      "wwwroot/lib/Font-Awesome-3.2.1/css/font-awesome.min.css"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/bundle/jqueryValidate.min.js",
-    "inputFiles": [
-      "wwwroot/lib/jquery-validate/jquery.validate.min.js",
-      "wwwroot/lib/jquery-validate/jquery.validate.unobtrusive.min.js",
-      "wwwroot/lib/jquery-validate/jquery.unobtrusive-ajax.min.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/bundle/bootstrapDatetimepicker.min.js",
-    "inputFiles": [
-      "wwwroot/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
-      "wwwroot/lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/bundle/bootstrapIconpicker.min.js",
-    "inputFiles": [
-      "wwwroot/lib/bootstrap-iconpicker/js/bootstrap-iconpicker-iconset-all.min.js",
-      "wwwroot/lib/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/bundle/bootstrapTable.min.js",
-    "inputFiles": [
-      "wwwroot/lib/bootstrap-table/bootstrap-table.js",
-      "wwwroot/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/bundle/bootstrapTableExport.min.js",
-    "inputFiles": [
-      "wwwroot/lib/bootstrap-table/extensions/bootstrap-table-export.js",
-      "wwwroot/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js",
-      "wwwroot/lib/tableExport.jquery.plugin/tableExport.min.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/bundle/select2.min.js",
-    "inputFiles": [
-      "wwwroot/lib/select2/js/select2.full.js",
-      "wwwroot/lib/select2/js/i18n/zh-CN.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/bundle/frame.min.js",
-    "inputFiles": [
-      "wwwroot/lib/jquery/jquery-3.3.1.min.js",
-      "wwwroot/js/jqueryValidate.min.js",
-      "wwwroot/bootstrap-3.3.7-dist/js/bootstrap.min.js",
-      "wwwroot/js/bootstrapDatetimepicker.min.js",
-      "wwwroot/js/bootstrapIconpicker.min.js",
-      "wwwroot/js/bootstrapTable.min.js",
-      "wwwroot/js/bootstrapTableExport.min.js",
-      "wwwroot/toastr/js/toastr.min.js",
-      "wwwroot/lib/bootbox/bootbox.min.js",
-      "wwwroot/js/select2.min.js",
-      "wwwroot/zTree/js/jquery.ztree.all.min.js",
-      "wwwroot/js/knockout.min.js",
-      "wwwroot/lib/customer/dataInit.js",
-      "wwwroot/lib/customer/common.js",
-      "wwwroot/lib/customer/frame-common.js",
-      "wwwroot/lib/bootstrap-table/extensions/bootstraptable.formatter.js",
-      "wwwroot/lib/customer/knockout.bootstraptable.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    "sourceMap": false
-  }
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/jqueryValidate.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/jquery-validate/jquery.validate.min.js",
+  //    "wwwroot/lib/jquery-validate/jquery.validate.unobtrusive.min.js",
+  //    "wwwroot/lib/jquery-validate/jquery.unobtrusive-ajax.min.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/bootstrapDatetimepicker.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+  //    "wwwroot/lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/bootstrapIconpicker.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/bootstrap-iconpicker/js/bootstrap-iconpicker-iconset-all.min.js",
+  //    "wwwroot/lib/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/bootstrapTable.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/bootstrap-table/bootstrap-table.js",
+  //    "wwwroot/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/bootstrapTableExport.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/bootstrap-table/extensions/bootstrap-table-export.js",
+  //    "wwwroot/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js",
+  //    "wwwroot/lib/tableExport.jquery.plugin/tableExport.min.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/select2.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/select2/js/select2.full.js",
+  //    "wwwroot/lib/select2/js/i18n/zh-CN.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/jquery.ztree.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/zTree.v3/js/jquery.ztree.core.min.js",
+  //    "wwwroot/lib/zTree.v3/js/jquery.ztree.excheck.min.js",
+  //    "wwwroot/lib/zTree.v3/js/jquery.ztree.exedit.min.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/css/bundle/login.min.css",
+  //  "inputFiles": [
+  //    "wwwroot/lib/font-awesome/css/all.min.",
+  //    "wwwroot/lib/ace/font-awesome/4.5.0/css/font-awesome.min.css",
+  //    "wwwroot/lib/ace/css/fonts.googleapis.com.css",
+  //    "wwwroot/lib/ace/css/bootstrap.min.css",
+  //    "wwwroot/lib/toastr/css/toastr.min.css",
+  //    "wwwroot/lib/ace/css/ace.min.css",
+  //    "wwwroot/lib/ace/css/ace-skins.min.css",
+  //    "wwwroot/lib/ace/css/ace-rtl.min.css"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/css/bundle/home.min.css",
+  //  "inputFiles": [
+  //    "wwwroot/lib/Font-Awesome-3.2.1/css/font-awesome.min.css",
+  //    "wwwroot/lib/ace/font-awesome/4.5.0/css/font-awesome.min.css",
+  //    "wwwroot/lib/ace/css/fonts.googleapis.com.css",
+  //    "wwwroot/lib/ace/css/bootstrap.min.css",
+  //    "wwwroot/lib/toastr/css/toastr.min.css",
+  //    "wwwroot/lib/ace/css/ace.min.css",
+  //    "wwwroot/lib/ace/css/ace-skins.min.css",
+  //    "wwwroot/lib/ace/css/ace-rtl.min.css"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/home.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/ace/js/ace-extra.min.js",
+  //    "wwwroot/lib/ace/js/jquery-2.1.4.min.js",
+  //    "wwwroot/lib/ace/js/bootstrap.min.js",
+  //    "wwwroot/lib/ace/js/jquery-ui.custom.min.js",
+  //    "wwwroot/lib/ace/js/jquery.ui.touch-punch.min.js",
+  //    "wwwroot/lib/ace/js/jquery.easypiechart.min.js",
+  //    "wwwroot/lib/ace/js/jquery.sparkline.index.min.js",
+  //    "wwwroot/lib/ace/js/ace-elements.min.js",
+  //    "wwwroot/lib/ace/js/ace.min.js",
+  //    "wwwroot/lib/fullscreen/jquery.fullscreen.js",
+  //    "wwwroot/lib/customer/bootstrap-tab.js",
+  //    "wwwroot/lib/toastr/js/toastr.min.js",
+  //    "wwwroot/lib/customer/common.js",
+  //    "wwwroot/js/home/index.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+  //{
+  //  "outputFileName": "wwwroot/css/bundle/_layoutPageTable.min.css",
+  //  "inputFiles": [
+  //    "wwwroot/lib/twitter-bootstrap/css/bootstrap.min.css",
+  //    "wwwroot/lib/font-awesome/css/all.min.css",
+  //    "wwwroot/lib/toastr.js/toastr.min.css",
+  //    "wwwroot/lib/ladda/ladda-themeless.min.css",
+  //    "wwwroot/lib/bootstrap-table/bootstrap-table.min.css",
+  //    "wwwroot/lib/bootstrap-daterangepicker/daterangepicker.min.css"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/css/bundle/_layoutPageTable.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/twitter-bootstrap/css/bootstrap.min.css",
+  //    "wwwroot/lib/font-awesome/css/all.min.css",
+  //    "wwwroot/lib/font-awesome/css/all.min.css",
+  //    "wwwroot/lib/ladda/ladda-themeless.min.css",
+  //    "wwwroot/lib/bootstrap-table/bootstrap-table.min.css",
+  //    "wwwroot/lib/bootstrap-daterangepicker/daterangepicker.min.css"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/css/bundle/frame.min.css",
+  //  "inputFiles": [
+  //    "wwwroot/lib/twitter-bootstrap/css/bootstrap.min.css",
+  //    "wwwroot/lib/font-awesome/css/all.min.css",
+  //    "wwwroot/lib/font-awesome/css/all.min.css",
+  //    "wwwroot/lib/ladda/ladda-themeless.min.css",
+  //    "wwwroot/lib/bootstrap-table/bootstrap-table.min.css",
+  //    "wwwroot/lib/bootstrap-daterangepicker/daterangepicker.min.css"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/frame.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/lib/jquery/jquery-3.3.1.min.js",
+  //    "wwwroot/js/jqueryValidate.min.js",
+  //    "wwwroot/bootstrap-3.3.7-dist/js/bootstrap.min.js",
+  //    "wwwroot/js/bootstrapDatetimepicker.min.js",
+  //    "wwwroot/js/bootstrapIconpicker.min.js",
+  //    "wwwroot/js/bootstrapTable.min.js",
+  //    "wwwroot/js/bootstrapTableExport.min.js",
+  //    "wwwroot/toastr/js/toastr.min.js",
+  //    "wwwroot/lib/bootbox/bootbox.min.js",
+  //    "wwwroot/js/select2.min.js",
+  //    "wwwroot/zTree/js/jquery.ztree.all.min.js",
+  //    "wwwroot/js/knockout.min.js",
+  //    "wwwroot/lib/customer/dataInit.js",
+  //    "wwwroot/lib/customer/common.js",
+  //    "wwwroot/lib/customer/frame-common.js",
+  //    "wwwroot/lib/bootstrap-table/extensions/bootstraptable.formatter.js",
+  //    "wwwroot/lib/customer/knockout.bootstraptable.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": false
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/user.index.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/timeBucket.js",
+  //    "wwwroot/view-resources/user/index.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/user.createOrEdit.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/view-resources/user/createOrEdit.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/role.index.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/timeBucket.js",
+  //    "wwwroot/view-resources/role/index.js"
+  //  ]
+  //},
+  //{
+  //  "outputFileName": "wwwroot/js/bundle/role.createOrEdit.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/bundle/jquery.ztree.min.js",
+  //    "wwwroot/view-resources/role/createOrEdit.js"
+  //  ]
+  //},
 ]

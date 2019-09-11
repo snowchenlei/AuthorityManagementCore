@@ -26,7 +26,7 @@ function queryParams(params) {
                     if (result) {
                         $.ajax({
                             type: 'DELETE',
-                            url: '/api/user/' + row.id,
+                            url: url + row.id,
                             success: function () {
                                 var $table = $('#tb-body');
                                 $table.bootstrapTable('remove',
@@ -89,7 +89,8 @@ function queryParams(params) {
         //4、时间初始化
         setDate($('#txt_search_addTime'), true, true);
     });
-    var dialog, l;
+    var dialog, l,
+        url = '/api/users/';
     function createOrEdit(title, id) {
         dialog = bootbox.dialog({
             title: title,
@@ -150,7 +151,7 @@ function queryParams(params) {
         var para = getPara($e);
         $.ajax({
             type: 'POST',
-            url: '/api/user/',
+            url: url,
             contentType: "application/json",
             data: para,
             success: function (result) {
@@ -173,7 +174,7 @@ function queryParams(params) {
         var para = getPara($e);
         $.ajax({
             type: 'PUT',
-            url: '/api/user/' + id,
+            url: url + id,
             contentType: "application/json",
             data: para,
             success: function (result) {

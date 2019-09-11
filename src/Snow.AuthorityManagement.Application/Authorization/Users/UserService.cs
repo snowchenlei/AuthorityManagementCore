@@ -186,7 +186,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             User user = _mapper.Map<User>(input);
             user.CanUse = true;
             user.Password = _configuration["AppSetting:DefaultPassword"];
-
             user.ID = await _userRepository.InsertAndGetIdAsync(user);
 
             #endregion 用户
@@ -213,6 +212,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
                 throw new UserFriendlyException("用户不存在");
             }
             User user = _mapper.Map(input, oldUser);
+            user.LastModificationTime = DateTime.Now;
             await _userRepository.UpdateAsync(user);
 
             #endregion 用户

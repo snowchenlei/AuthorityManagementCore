@@ -3,10 +3,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Anc.Application.Services.Dto;
 using Anc.AspNetCore.Web.Mvc.Authorization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using CacheCow.Server.Core.Mvc;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -19,11 +21,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
+using Snow.AuthorityManagement.Application.Authorization.Roles.Validators;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
 using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Configuration;
+using Snow.AuthorityManagement.Web.Core.Common.ETag.User;
 using Snow.AuthorityManagement.Web.Library;
 using Snow.AuthorityManagement.Web.Library.Middleware;
 using Snow.AuthorityManagement.Web.Startup.OnceTask;
@@ -54,6 +59,20 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            #region CacheManager缓存
+
+            services.AddLogging(c => c.AddConsole().AddDebug().AddConfiguration(Configuration));
+            // using the new overload which adds a singleton of the configuration to services and the configure method to add logging
+            //services.AddCacheManagerConfiguration(Configuration, cfg => cfg.WithMicrosoftLogging(services));
+            services.AddCacheManagerConfiguration(Configuration);
+            // any other type will be this. Configurastion used will be the one defined by
+            // AddCacheManagerConfiguration earlier.
+            services.AddCacheManager();
+
+            #endregion CacheManager缓存
+
+            services.AddMemoryCache();
+
             #region 线程内唯一
 
             //IServiceCollection services = new ServiceCollection();
@@ -65,29 +84,38 @@ namespace Snow.AuthorityManagement.Web.Startup
 
             #endregion 线程内唯一
 
-            var application = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Application"));
-            var web = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web.Mvc"));
-            AppDomain.CurrentDomain.GetAssemblies();
-            services.AddAutoMapper(web, application);
+            AddAutoMapper(services);
             //禁用 dotnet core 2.1的formbody等模式自动校验和转换
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddCookie(options =>
-            {
-                // 在这里可以根据需要添加一些Cookie认证相关的配置。
-                options.AccessDeniedPath = "/Home/Welcome";//未通过授权
-                options.LoginPath = "/Account/Login";//未登录时
-                options.LogoutPath = "/Account/Logout";//退出
-                //options.EventsType = typeof(CustomCookieAuthenticationEvents);//影响性能
-            });
             //services.AddScoped<CustomCookieAuthenticationEvents>();
+            AddAuthentication(services);
+            AddMvc(services);
+
+            AddFluentValidation(services);
+
+            AddStartupTask(services);
+            // Adds a default in-memory implementation of IDistributedCache.
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // 设置超时时间
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+            });
+            AddCacheCow(services);
+
+            return AddIoc(services);
+        }
+
+        private void AddMvc(IServiceCollection services)
+        {
+            var mall = Assembly.Load(new AssemblyName("Snow.AuthorityManagement.Web.Core")); //类库的程序集名称
+
             services.AddMvc(options =>
             {
                 //options.Filters.Add(typeof(CustomerExceptionAttribute));
@@ -126,6 +154,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
             })
+            .AddApplicationPart(mall)
             //启用FluentValidation验证
             .AddFluentValidation(fv =>
             {
@@ -133,57 +162,85 @@ namespace Snow.AuthorityManagement.Web.Startup
                 fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            var mall = Assembly.Load(new AssemblyName("Snow.AuthorityManagement.Web.Core")); //类库的程序集名称
-            services.AddMvc().AddApplicationPart(mall);
+        }
 
-            #region 注册FluentValidation
+        /// <summary>
+        /// 注入授权
+        /// </summary>
+        /// <param name="services"></param>
+        private void AddAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+           .AddCookie(options =>
+           {
+               // 在这里可以根据需要添加一些Cookie认证相关的配置。
+               options.AccessDeniedPath = "/Home/Welcome";//未通过授权
+               options.LoginPath = "/Account/Login";//未登录时
+               options.LogoutPath = "/Account/Logout";//退出
+                                                      //options.EventsType = typeof(CustomCookieAuthenticationEvents);//影响性能
+           });
+        }
 
-            services.AddTransient<IValidator<UserEditDto>, UserEditValidator>();
-            services.AddTransient<IValidator<CreateOrUpdateUser>, CreateOrUpdateUserValidator>();
-            // override modelstate
-            //services.Configure<ApiBehaviorOptions>(options =>
-            //{
-            //    options.InvalidModelStateResponseFactory = (context) =>
-            //    {
-            //        var errors = context.ModelState.Values.SelectMany(x => x.Errors.Select(p => p.ErrorMessage)).ToList();
-            //        var result = new
-            //        {
-            //            Code = "00009",
-            //            Message = "Validation errors",
-            //            Errors = errors
-            //        };
-            //        return new BadRequestObjectResult(result);
-            //    };
-            //});
+        /// <summary>
+        /// 注入AutoMapper
+        /// </summary>
+        /// <param name="services"></param>
+        private void AddAutoMapper(IServiceCollection services)
+        {
+            var application = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Application"));
+            var web = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web.Mvc"));
+            AppDomain.CurrentDomain.GetAssemblies();
+            services.AddAutoMapper(web, application);
+        }
 
-            #endregion 注册FluentValidation
-
-            #region 首次执行任务
-
+        /// <summary>
+        /// 注册首次执行任务
+        /// </summary>
+        /// <param name="services"></param>
+        private void AddStartupTask(IServiceCollection services)
+        {
             services.AddStartupTask<InitalPermissionTask>();
             services.AddStartupTask<InitialHostDbTask>();
+        }
 
-            #endregion 首次执行任务
+        /// <summary>
+        /// 注册FluentValidation
+        /// </summary>
+        /// <param name="services"></param>
+        private void AddFluentValidation(IServiceCollection services)
+        {
+            services.AddTransient<IValidator<UserEditDto>, UserEditValidator>();
+            services.AddTransient<IValidator<CreateOrUpdateUser>, CreateOrUpdateUserValidator>();
+            services.AddTransient<IValidator<RoleEditDto>, RoleEditValidator>();
+            services.AddTransient<IValidator<CreateOrUpdateRole>, CreateOrUpdateRoleValidator>();
+        }
 
-            // Adds a default in-memory implementation of IDistributedCache.
-            services.AddDistributedMemoryCache();
+        /// <summary>
+        /// 注册缓存
+        /// </summary>
+        /// <param name="services"></param>
+        private void AddCacheCow(IServiceCollection services)
+        {
+            services.AddHttpCachingMvc();
+            services.AddQueryProviderAndExtractorForViewModelMvc<GetUserForEditOutput, TimedETagQueryUserRepository, UserETagExtractor>(false);
+            services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<UserListDto>, TimedETagQueryUserRepository, UserCollectionETagExtractor>(false);
+        }
 
-            services.AddSession(options =>
-            {
-                // 设置超时时间
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
-                options.Cookie.HttpOnly = true;
-            });
-
-            #region Autofac
-
+        /// <summary>
+        /// 注册Ioc容器
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        private IServiceProvider AddIoc(IServiceCollection services)
+        {
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterModule<DefaultModule>();
             builder.Populate(services);
             IContainer container = builder.Build();
             return new AutofacServiceProvider(container);
-
-            #endregion Autofac
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

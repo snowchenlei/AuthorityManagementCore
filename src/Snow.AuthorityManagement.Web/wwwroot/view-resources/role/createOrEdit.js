@@ -1,4 +1,5 @@
 ﻿//#region zTree
+$.validator.unobtrusive.parse('form');
 var setting = {
     view: {
         selectedMulti: false

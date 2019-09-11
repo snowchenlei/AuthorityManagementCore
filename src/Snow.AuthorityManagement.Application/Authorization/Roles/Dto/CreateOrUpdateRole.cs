@@ -7,7 +7,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
 {
     public class CreateOrUpdateRole
     {
-        [Required]
+        [Display(Name = "角色")]
         public RoleEditDto Role { get; set; }
 
         public string Permission { get; set; }

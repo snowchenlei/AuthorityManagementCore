@@ -23,7 +23,7 @@ namespace Snow.AuthorityManagement.Core
 
         public const string Pages_Roles = "Pages.Roles";
         public const string Pages_Roles_Query = "Pages.Roles.Query";
-        public const string Pages_Roles_Create = "Pages.Roles.CreateAsync";
+        public const string Pages_Roles_Create = "Pages.Roles.Create";
         public const string Pages_Roles_Edit = "Pages.Roles.Edit";
         public const string Pages_Roles_Delete = "Pages.Roles.Delete";
         public const string Pages_Roles_BatchDelete = "Pages.Roles.BatchDelete";

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Anc.Application.Navigation;
 using Anc.Authorization;
 using Anc.Runtime.Session;
 using Microsoft.AspNetCore.Http;
@@ -43,12 +44,10 @@ namespace Snow.AuthorityManagement.Web.Manager
         {
             foreach (MenuItemDefinition menuItemDefinition in menuDefinition)
             {
-                goto a;
                 if (!permissions.Any(p => p.Name.Contains(menuItemDefinition.Name)))
                 {
                     continue;
                 }
-            a:
                 UserMenuItem userMenuItem = new UserMenuItem(menuItemDefinition);
                 CheckPermission(permissions, menuItemDefinition.Items, userMenuItem.Items);
                 menuItems.Add(userMenuItem);

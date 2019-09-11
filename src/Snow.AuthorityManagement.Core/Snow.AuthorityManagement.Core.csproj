@@ -1,14 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Entities\**" />
+    <Compile Remove="Model\Navigation\**" />
     <EmbeddedResource Remove="Entities\**" />
+    <EmbeddedResource Remove="Model\Navigation\**" />
     <None Remove="Entities\**" />
+    <None Remove="Model\Navigation\**" />
   </ItemGroup>
 
   <ItemGroup>

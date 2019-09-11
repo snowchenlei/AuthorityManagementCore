@@ -15,7 +15,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
         [Display(Name = "显示名")]
         public string DisplayName { get; set; }
 
-        [Required]
         [Display(Name = "排序")]
         public int Sort { get; set; }
     }

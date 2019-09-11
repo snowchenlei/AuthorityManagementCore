@@ -1,6 +1,8 @@
 ﻿using Anc.Domain.Entities;
+using Anc.Domain.Entities.Auditing;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,8 +12,13 @@ namespace Snow.AuthorityManagement.Core.Entities.Authorization
     /// <summary>
     /// 用户
     /// </summary>
-    public class User : Entity
+    public class User : Entity, IHasModificationTime, IHasCreationTime
     {
+        public User()
+        {
+            CreationTime = DateTime.Now;
+        }
+
         [StringLength(50)]
         public string Name { get; set; }
 
@@ -39,6 +46,9 @@ namespace Snow.AuthorityManagement.Core.Entities.Authorization
         public string PhoneNumber { get; set; }
 
         public bool CanUse { get; set; }
+
+        public DateTime? LastModificationTime { get; set; }
+        public DateTime CreationTime { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Permission> Permissions { get; set; }

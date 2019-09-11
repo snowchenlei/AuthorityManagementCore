@@ -46,3 +46,12 @@
 /src/Anc.Web.Mvc/bin/Debug/netcoreapp2.1
 /src/Snow.AuthorityManagement.Web.Host/bin/Debug/netcoreapp2.1
 /src/Snow.AuthorityManagement.Web.Host/obj
+/src/Anc.Web.Mvc/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Application/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Application/obj/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Common/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Core/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Data/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Repository/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Web/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Web.Host/bin/Debug/netcoreapp2.2

@@ -19,6 +19,7 @@ using Autofac.Extras.DynamicProxy;
 using Anc.Runtime.Session;
 using Anc.Authorization;
 using Snow.AuthorityManagement.Repository.Authorization.Permissions.DomainService;
+using Anc.Application.Navigation;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -27,6 +28,7 @@ namespace Snow.AuthorityManagement.Web.Configuration
         protected override void Load(ContainerBuilder builder)
         {
             var application = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Application"));
+            var mvc = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web.Mvc"));
             var anc = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc"));
             var ancAspCore = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.AspNetCore"));
             var ancEfCore = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.EntityFrameworkCore"));
@@ -50,7 +52,7 @@ namespace Snow.AuthorityManagement.Web.Configuration
 
             var transientType = typeof(ITransientDependency);
             var singletonType = typeof(ISingletonDependency);
-            builder.RegisterAssemblyTypes(application, anc, ancAspCore, ancEfCore, data, rep, core)
+            builder.RegisterAssemblyTypes(application, anc, ancAspCore, ancEfCore, data, rep, core, mvc)
                 .Where(m => transientType.IsAssignableFrom(m) && m != transientType)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope()
@@ -80,12 +82,11 @@ namespace Snow.AuthorityManagement.Web.Configuration
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(ILambdaRepository<,>));
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<>)).As(typeof(IRepository<>));
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(IRepository<,>));
-            //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();
-            //builder.RegisterType<AuthDbContext>().As<AuthDbContext>();
             builder.RegisterType<EfCoreUnitOfWork<AuthorityManagementContext>>().As<IUnitOfWork>();
+            builder.RegisterType<UserNavigationManager>().As<IUserNavigationManager>();
+            //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();
             //builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
             //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
-            builder.RegisterType<UserNavigationManager>().As<IUserNavigationManager>();
             //builder.RegisterType<ClaimsAncSession>().As<IAncSession>();
             //builder.RegisterType<PermissionManager>().As<IPermissionManagerBase>();
         }

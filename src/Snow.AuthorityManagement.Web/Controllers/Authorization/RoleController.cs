@@ -169,7 +169,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Roles_Create)]
         public Task<RoleListDto> Create(RoleEditDto input, string permission)
         {
-            return _roleService.AddAsync(input, permission);
+            return _roleService.CreateAsync(input, permission);
         }
 
         [AncAuthorize(PermissionNames.Pages_Roles_Edit)]

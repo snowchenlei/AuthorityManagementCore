@@ -27,19 +27,19 @@ function queryParams(params) {
                 message: '你确定要删除' + row.name + '吗？',
                 callback: function (result) {
                     if (result) {
-                        $.post('/Role/Delete',
-                            { id: row.id },
-                            function (result) {
-                                requestCallBack(result,
-                                    function () {
-                                        var $table = $('#tb-body');
-                                        $table.bootstrapTable('remove',
-                                            {
-                                                field: 'id',
-                                                values: [row.id]
-                                            });
+                        $.ajax({
+                            type: 'DELETE',
+                            url: url + row.id,
+                            success: function () {
+                                var $table = $('#tb-body');
+                                $table.bootstrapTable('remove',
+                                    {
+                                        field: 'id',
+                                        values: [row.id]
                                     });
-                            });
+                                toastr.success('删除成功');
+                            }
+                        });
                     }
                 }
             });
@@ -89,7 +89,8 @@ function queryParams(params) {
         setDate($('#txt_search_addTime'), true, true);
     });
 
-    var dialog, l;
+    var dialog, l,
+        url = '/api/roles/';
     function createOrEdit(title, id) {
         dialog = bootbox.dialog({
             title: title,
@@ -107,7 +108,12 @@ function queryParams(params) {
                         if (result) {
                             l = Ladda.create(result.target);
                             l.start();
-                            return save();
+                            if (id === undefined) {
+                                create();
+                            } else {
+                                edit(id);
+                            }
+                            return false;
                         }
                     }
                 }
@@ -118,6 +124,68 @@ function queryParams(params) {
                 dialog.find('.bootbox-body').html(data);
                 dialog.find('input:not([type=hidden]):first').focus();
             });
+        });
+    }
+
+    function check($e) {
+        if (!$e.valid()) {
+            l.stop();
+            return false;
+        }
+        return true;
+    }
+    function getPara($e) {
+        var role = $e.serializeFormToJson();
+        var data = {
+            role
+        };
+        return JSON.stringify(data);
+    }
+    function create() {
+        var $e = $("#modelForm");
+
+        if (!check($e)) {
+            return false;
+        }
+        var para = getPara($e);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            contentType: "application/json",
+            data: para,
+            success: function (result) {
+                l.stop();
+                toastr.success('添加成功');
+                refreshTable();
+                dialog.modal('hide');
+            },
+            error: function (result) {
+                toastr.error(result.responseText);
+                l.stop();
+            }
+        });
+    }
+    function edit(id) {
+        var $e = $("#modelForm");
+        if (!check($e)) {
+            return false;
+        }
+        var para = getPara($e);
+        $.ajax({
+            type: 'PUT',
+            url: url + id,
+            contentType: "application/json",
+            data: para,
+            success: function (result) {
+                l.stop();
+                toastr.success('修改成功');
+                refreshTable();
+                dialog.modal('hide');
+            },
+            error: function (result) {
+                toastr.error(result.responseText);
+                l.stop();
+            }
         });
     }
     function save() {

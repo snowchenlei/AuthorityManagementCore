@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 using System.Threading.Tasks;
+using Anc.AspNetCore.Web.Mvc.Authorization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
-using Cl.AuthorityManagement.Data;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +23,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using Snow.AuthorityManagement.Data;
+using Snow.AuthorityManagement.Web.Core.Startup;
 
 namespace Cl.AuthorityManagement.Api
 {
@@ -51,26 +56,34 @@ namespace Cl.AuthorityManagement.Api
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                // This lambda determines whether user consent for non-essential cookies is needed
+                // for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             #region 线程内唯一
+
             //IServiceCollection services = new ServiceCollection();
             services.AddEntityFrameworkSqlServer().AddDbContext<AuthorityManagementContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             }, ServiceLifetime.Scoped);
-            #endregion
 
-            services.AddAutoMapper();
+            #endregion 线程内唯一
+
+            var application = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Application"));
+            var web = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web.Mvc"));
+            AppDomain.CurrentDomain.GetAssemblies();
+            services.AddAutoMapper(web, application);
+            var mall = Assembly.Load(new AssemblyName("Snow.AuthorityManagement.Web.Core")); //类库的程序集名称
 
             services.AddMvc(options =>
             {
-                //options.Filters.Add(typeof(CustomerExceptionAttribute));
-                //options.Filters.Add(typeof(CustomerResultAttribute));
+                options.Filters.Add(typeof(AncAuthorizeFilter));
+
                 #region 输出缓存配置
+
                 options.CacheProfiles.Add("Default",
                     new CacheProfile()
                     {
@@ -88,17 +101,25 @@ namespace Cl.AuthorityManagement.Api
                         Location = ResponseCacheLocation.None,
                         NoStore = true
                     });
-                #endregion
+
+                #endregion 输出缓存配置
             })
             .AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
+            })
+            .AddApplicationPart(mall)
+            .AddFluentValidation(fv =>
+            {
+                //禁用其它的认证
+                fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDistributedMemoryCache();
 
             #region Token
+
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = "Jwt";
@@ -108,33 +129,37 @@ namespace Cl.AuthorityManagement.Api
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false,
-                    //ValidAudience = "the audience you want to validate",
-                    ValidateIssuer = false,
-                    //ValidIssuer = "the isser you want to validate",
+                        //ValidAudience = "the audience you want to validate",
+                        ValidateIssuer = false,
+                        //ValidIssuer = "the isser you want to validate",
 
-                    ValidateIssuerSigningKey = true,
+                        ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("the secret that needs to be at least 16 characeters long for HmacSha256")),
 
                         ValidateLifetime = true, //validate the expiration and not before values in the token
 
-                    ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
-                };
+                        ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
+                    };
                 });
-            #endregion
+
+            #endregion Token
+
+            services.AddFluentValidation();
 
             #region Autofac
+
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterModule<DefaultModule>();
             builder.Populate(services);
             IContainer container = builder.Build();
             return new AutofacServiceProvider(container);
-            #endregion
+
+            #endregion Autofac
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -146,7 +171,7 @@ namespace Cl.AuthorityManagement.Api
             app.UseCors("any");
 
             app.UseAuthentication();
-            
+
             app.UseHttpsRedirection();
 
             app.UseMvc(routes =>

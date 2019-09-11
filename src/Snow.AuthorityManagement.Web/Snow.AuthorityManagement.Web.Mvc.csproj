@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
@@ -21,6 +21,8 @@
     <Compile Remove="Authorization\PermissionDefinitionContextBase.cs" />
     <Compile Remove="Authorization\PermissionDictionary.cs" />
     <Compile Remove="Authorization\PermissionNames.cs" />
+    <Compile Remove="Manager\IUserNavigationManager.cs" />
+    <Compile Remove="Manager\UserNavigationManager.cs" />
     <Compile Remove="Session\ClaimsAncSession.cs" />
     <Compile Remove="Session\IAncSession.cs" />
     <Compile Remove="Startup\IStartupTask.cs" />
@@ -64,6 +66,8 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="BundlerMinifier.Core" Version="2.8.391" />
+    <PackageReference Include="CacheCow.Server.Core.Mvc" Version="2.4.4" />
+    <PackageReference Include="CacheManager.Microsoft.Extensions.Configuration" Version="1.2.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.4.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -99,8 +103,6 @@
   </ItemGroup>
 
   <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties appsettings_1json__JSONSchema="" libman_1json__JsonSchema="" />
-    </VisualStudio>
+    <VisualStudio><UserProperties bundleconfig_1json__JsonSchema="" appsettings_1json__JSONSchema="" libman_1json__JsonSchema="" /></VisualStudio>
   </ProjectExtensions>
 </Project>

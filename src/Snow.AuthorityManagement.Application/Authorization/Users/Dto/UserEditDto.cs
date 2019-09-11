@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Anc.Domain.Entities.Auditing;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
 {
-    public class UserEditDto
+    public class UserEditDto : IHasCreationTime, IHasModificationTime
     {
         public int? ID { get; set; }
 
@@ -25,5 +27,15 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
         /// </summary>
         [Display(Name = "手机号")]
         public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreationTime { get; set; }
+
+        /// <summary>
+        /// 最后修改时间
+        /// </summary>
+        public DateTime? LastModificationTime { get; set; }
     }
 }

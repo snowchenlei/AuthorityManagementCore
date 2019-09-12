@@ -87,6 +87,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
                     string.Join(" AND ", wheres), parameters.ToArray(), input.Sorting);
             return new PagedResultDto<UserListDto>()
             {
+                PageIndex = input.PageIndex,
+                PageSize = input.PageSize,
                 Items = _mapper.Map<List<UserListDto>>(result.Item1),
                 TotalCount = result.Item2
             };

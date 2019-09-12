@@ -26,5 +26,15 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Users.DomainService
         {
             return _userRepository.CountAsync(a => true);
         }
+
+        public DateTime? GetLastModificationTime()
+        {
+            return _userRepository.Max(a => a.LastModificationTime);
+        }
+
+        public Task<DateTime?> GetLastModificationTimeAsync()
+        {
+            return _userRepository.MaxAsync(a => a.LastModificationTime);
+        }
     }
 }

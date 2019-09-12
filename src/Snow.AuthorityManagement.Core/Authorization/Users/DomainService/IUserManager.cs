@@ -11,5 +11,9 @@ namespace Snow.AuthorityManagement.Core.Authorization.Users.DomainService
         int GetCount();
 
         Task<int> GetCountAsync();
+
+        DateTime? GetLastModificationTime();
+
+        Task<DateTime?> GetLastModificationTimeAsync();
     }
 }

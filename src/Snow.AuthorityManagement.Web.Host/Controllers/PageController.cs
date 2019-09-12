@@ -112,7 +112,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers
                     NamingStrategy = new SnakeCaseNamingStrategy()
                 }
             }));
-            return Ok(output.Items);
+            return Ok(output);
         }
     }
 }

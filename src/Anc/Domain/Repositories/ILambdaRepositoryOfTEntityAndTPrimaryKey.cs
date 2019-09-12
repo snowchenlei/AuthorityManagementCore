@@ -32,6 +32,10 @@ namespace Anc.Domain.Repositories
 
         Task<long> Int64CountAsync(Expression<Func<TEntity, bool>> predicate);
 
+        TResult Max<TResult>(Expression<Func<TEntity, TResult>> selector);
+
+        Task<TResult> MaxAsync<TResult>(Expression<Func<TEntity, TResult>> selector);
+
         TEntity Single(Expression<Func<TEntity, bool>> predicate);
 
         Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate);

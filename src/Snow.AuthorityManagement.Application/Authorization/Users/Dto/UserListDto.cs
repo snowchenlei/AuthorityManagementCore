@@ -1,4 +1,5 @@
 ﻿using Snow.AuthorityManagement.Application.Dto;
+using System;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
 {
@@ -15,5 +16,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
         /// 手机号
         /// </summary>
         public string PhoneNumber { get; set; }
+
+        public DateTime? LastModificationTime { get; set; }
     }
 }

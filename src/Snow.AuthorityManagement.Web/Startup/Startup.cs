@@ -161,7 +161,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                 //禁用其它的认证
                 fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         /// <summary>

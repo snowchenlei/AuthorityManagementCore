@@ -29,7 +29,11 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.User
             DateTime? time = _cache.Get(AuthorityManagementConsts.UserLastResponseCache);
             if (time == null)
             {
-                return null;
+                time = _userManager.GetLastModificationTime();
+                if (time == null)
+                {
+                    return null;
+                }
             }
 
             return new TimedEntityTagHeaderValue(new DateTimeOffset(time.Value).ToETagString(_userManager.GetCount()));

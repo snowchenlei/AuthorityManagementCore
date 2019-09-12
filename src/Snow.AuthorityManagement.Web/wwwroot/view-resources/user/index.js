@@ -3,7 +3,7 @@
 function queryParams(params) {
     return {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         pageSize: params.limit,   //页面大小
-        pageIndex: params.offset / params.limit + 1,  //页码
+        pageIndex: params.offset / params.limit,  //页码
         sort: params.sort,
         order: params.order,
         userName: $('#txt_search_userName').val(),
@@ -83,7 +83,7 @@ function queryParams(params) {
         });
         //$('#modifyModal').modal('show');
         //1、初始化表格
-        table.init(columns);
+        table.init(url, columns);
         //3、pannel初始化
         loadPanel();
         //4、时间初始化

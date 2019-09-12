@@ -40,7 +40,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<UserListDto>))]
         [AncAuthorize(PermissionNames.Pages_Users_Query)]
         [ProducesResponseType(typeof(PagedResultDto<UserListDto>), 200)]
-        public async Task<IActionResult> GetPaged(GetUserInput input)
+        public async Task<IActionResult> GetPaged([FromQuery]GetUserInput input)
         {
             var result = await _userService.GetPagedAsync(input);
             return Return<GetUserInput, PagedResultDto<UserListDto>, UserListDto>(input, "GetUsersPage", result);
@@ -66,10 +66,6 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
             GetUserForEditOutput result = await _userService.GetForEditAsync(id);
             DateTime? lastModified = result.User.LastModificationTime;
             _cache.Add(String.Format(AuthorityManagementConsts.UserResponseCache, id), lastModified);
-            if (lastModified.HasValue && _cache.Get(AuthorityManagementConsts.UserLastResponseCache) < lastModified)
-            {
-                _cache.Add(AuthorityManagementConsts.UserLastResponseCache, lastModified);
-            }
             return Ok(result);
         }
 
@@ -87,8 +83,9 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Users_Create)]
         public async Task<IActionResult> Post([FromBody]CreateOrUpdateUser input)
         {
-            var result = await _userService.CreateAsync(input.User, input.RoleIds);
-            return CreatedAtRoute("GetUser", new { id = result.ID }, result);
+            UserListDto user = await _userService.CreateAsync(input.User, input.RoleIds);
+            CacheLastModificationTime(user.LastModificationTime);
+            return CreatedAtRoute("GetUser", new { id = user.ID }, user);
         }
 
         /// <summary>
@@ -107,9 +104,22 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         public async Task<IActionResult> Put(int id, [FromBody]CreateOrUpdateUser input)
         {
             input.User.ID = id;
-            await _userService.EditAsync(input.User, input.RoleIds);
+            UserListDto user = await _userService.EditAsync(input.User, input.RoleIds);
             _cache.Remove(String.Format(AuthorityManagementConsts.UserResponseCache, id));
+            CacheLastModificationTime(user.LastModificationTime);
             return NoContent();
+        }
+
+        /// <summary>
+        /// 缓存最后修改时间
+        /// </summary>
+        /// <param name="lastModified"></param>
+        private void CacheLastModificationTime(DateTime? lastModified)
+        {
+            if (lastModified.HasValue && _cache.Get(AuthorityManagementConsts.UserLastResponseCache) < lastModified)
+            {
+                _cache.Add(AuthorityManagementConsts.UserLastResponseCache, lastModified);
+            }
         }
 
         /// <summary>

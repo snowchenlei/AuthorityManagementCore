@@ -94,6 +94,16 @@ namespace Anc.EntityFrameworkCore.Repositories
             return GetAll().FirstOrDefaultAsync(predicate);
         }
 
+        public TResult Max<TResult>(Expression<Func<TEntity, TResult>> selector)
+        {
+            return DbQueryTable.Max(selector);
+        }
+
+        public Task<TResult> MaxAsync<TResult>(Expression<Func<TEntity, TResult>> selector)
+        {
+            return DbQueryTable.MaxAsync(selector);
+        }
+
         public int Count(Expression<Func<TEntity, bool>> predicate)
         {
             return GetAll().Count(predicate);
@@ -166,7 +176,7 @@ namespace Anc.EntityFrameworkCore.Repositories
             }
             int totalCount = await temp.CountAsync();
             temp = temp.OrderBy(orders);
-            var result = await temp.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            var result = await temp.Skip((pageIndex) * pageSize).Take(pageSize).ToListAsync();
             return new Tuple<List<TEntity>, int>(result, totalCount);
         }
 

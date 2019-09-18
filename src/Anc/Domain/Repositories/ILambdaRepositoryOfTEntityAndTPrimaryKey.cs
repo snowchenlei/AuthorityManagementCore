@@ -44,11 +44,13 @@ namespace Anc.Domain.Repositories
 
         Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
+        IQueryable<TEntity> GetAll();
+
         IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors);
 
-        List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate);
+        List<TEntity> GetAllList();
 
-        Task<List<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<List<TEntity>> GetAllListAsync();
 
         Tuple<List<TEntity>, int> GetPaged(int pageIndex, int pageSize, string wheres, object[] parameters, string orders);
 

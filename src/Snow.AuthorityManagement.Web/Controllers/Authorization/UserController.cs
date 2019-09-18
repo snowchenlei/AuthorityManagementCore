@@ -16,10 +16,11 @@ using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Application.Authorization.Roles;
 using Snow.AuthorityManagement.Application.Authorization.Users;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
-using Snow.AuthorityManagement.Web.Models.Users;
 using Snow.AuthorityManagement.Web.Startup;
 using FluentValidation;
 using Anc.AspNetCore.Web.Mvc.Authorization;
+using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
+using Snow.AuthorityManagement.Web.Mvc.Models.Users;
 
 namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {
@@ -49,7 +50,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Users_Query)]
         public async Task<JsonResult> Load(GetUserInput input)
         {
-            var result = await _userService.GetPagedAsync(input);
+            var result = await _userService.GetUserPagedAsync(input);
             return Json(new
             {
                 total = result.TotalCount,
@@ -59,28 +60,17 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 
         [HttpGet]
         [AjaxOnly]
+        [ResponseCache(CacheProfileName = "Header")]
         [AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
-            GetUserForEditOutput output = await _userService.GetForEditAsync(id);
+            GetUserForEditOutput output = await _userService.GetUserForEditAsync(id);
             var viewModel = new CreateOrEditUserModalViewModel(output)
             {
                 //PasswordComplexitySetting = await _passwordComplexitySettingStore.GetSettingsAsync()
             };
             _mapper.Map(output, viewModel);
-            return PartialView(viewModel);
-        }
-
-        [AncAuthorize(PermissionNames.Pages_Users_Create)]
-        private async Task<GetUserForEditOutput> Create()
-        {
-            return await _userService.GetForEditAsync(null);
-        }
-
-        [AncAuthorize(PermissionNames.Pages_Users_Edit)]
-        private async Task<GetUserForEditOutput> Edit(int userId)
-        {
-            return await _userService.GetForEditAsync(userId);
+            return PartialView("_CreateOrEditModal", viewModel);
         }
 
         [HttpPost]
@@ -112,19 +102,19 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Users_Create)]
         public Task<UserListDto> Create(UserEditDto input, List<int> roleIds)
         {
-            return _userService.CreateAsync(input, roleIds);
+            return _userService.CreateUserAsync(input, roleIds);
         }
 
         [AncAuthorize(PermissionNames.Pages_Users_Edit)]
         public Task<UserListDto> Edit(UserEditDto input, List<int> roleIds)
         {
-            return _userService.EditAsync(input, roleIds);
+            return _userService.EditUserAsync(input, roleIds);
         }
 
         [AncAuthorize(PermissionNames.Pages_Users_Delete)]
         public async Task<JsonResult> Delete(int id)
         {
-            if (await _userService.DeleteAsync(id))
+            if (await _userService.DeleteUserAsync(id))
             {
                 return Json(new Result()
                 {

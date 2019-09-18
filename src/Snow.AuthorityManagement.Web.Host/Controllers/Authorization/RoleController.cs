@@ -1,6 +1,7 @@
 ﻿using Anc.Application.Services.Dto;
 using Anc.AspNetCore.Web.Mvc.Authorization;
 using AutoMapper;
+using CacheCow.Server.Core.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Snow.AuthorityManagement.Application.Authorization.Roles;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
@@ -12,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
 {
-    [ApiController]
     [Route("api/roles")]
     public class RoleController : PageController
     {
@@ -32,9 +32,10 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="200">获取成功</response>
         /// <returns></returns>
         [HttpGet(Name = "GetRolesPage")]
+        [HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<RoleListDto>))]
         [AncAuthorize(PermissionNames.Pages_Roles_Query)]
         [ProducesResponseType(typeof(PagedResultDto<RoleListDto>), 200)]
-        public async Task<IActionResult> GetPaged(GetRoleInput input)
+        public async Task<IActionResult> GetPaged([FromQuery]GetRoleInput input)
         {
             var result = await _roleService.GetPagedAsync(input);
             return Return<GetRoleInput, PagedResultDto<RoleListDto>, RoleListDto>(input, "GetUsersPage", result);
@@ -50,6 +51,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="404">没有找到</response>
         /// <returns></returns>
         [HttpGet("{id}", Name = "GetRole")]
+        [HttpCacheFactory(0, ViewModelType = typeof(GetRoleForEditOutput))]
         [ProducesResponseType(typeof(GetRoleForEditOutput), 200)]
         [ProducesResponseType(304)]
         [ProducesResponseType(404)]

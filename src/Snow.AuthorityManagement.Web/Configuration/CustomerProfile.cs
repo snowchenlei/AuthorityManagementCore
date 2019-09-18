@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Web.Models.Roles;
-using Snow.AuthorityManagement.Web.Models.Users;
+using Snow.AuthorityManagement.Web.Mvc.Models.Menus;
+using Snow.AuthorityManagement.Web.Mvc.Models.Users;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -12,6 +14,7 @@ namespace Snow.AuthorityManagement.Web.Configuration
         {
             CreateMap<GetUserForEditOutput, CreateOrEditUserModalViewModel>();
             CreateMap<GetRoleForEditOutput, CreateOrEditRoleModalViewModel>();
+            CreateMap<MenuEditDto, CreateOrEditMenuModalViewModel>();
 
             //Mapper.Initialize(x =>
             //{

@@ -2,6 +2,7 @@
 using CacheCow.Server;
 using CacheManager.Core;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
+using Snow.AuthorityManagement.Core.Authorization.Roles.DomainService;
 using Snow.AuthorityManagement.Core.Authorization.Users.DomainService;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,10 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.User
     public class UserCollectionETagExtractor : ITimedETagExtractor<PagedResultDto<UserListDto>>
     {
         private readonly ICacheManager<DateTime?> _cache;
-        private readonly IUserManager _userManager;
+        private readonly IRoleManager _userManager;
 
         public UserCollectionETagExtractor(ICacheManager<DateTime?> cache,
-          IUserManager userManager)
+          IRoleManager userManager)
         {
             _cache = cache;
             _userManager = userManager;

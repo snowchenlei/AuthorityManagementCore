@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core;
 using System;

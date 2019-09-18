@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace Snow.AuthorityManagement.Web.Core.Controllers
 {
+    [ApiController]
     public class PageController : ControllerBase
     {
         private readonly IMapper _mapper;

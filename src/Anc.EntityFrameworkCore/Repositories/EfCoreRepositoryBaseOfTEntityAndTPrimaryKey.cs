@@ -96,12 +96,12 @@ namespace Anc.EntityFrameworkCore.Repositories
 
         public TResult Max<TResult>(Expression<Func<TEntity, TResult>> selector)
         {
-            return DbQueryTable.Max(selector);
+            return Table.Max(selector);
         }
 
         public Task<TResult> MaxAsync<TResult>(Expression<Func<TEntity, TResult>> selector)
         {
-            return DbQueryTable.MaxAsync(selector);
+            return Table.MaxAsync(selector);
         }
 
         public int Count(Expression<Func<TEntity, bool>> predicate)
@@ -180,14 +180,14 @@ namespace Anc.EntityFrameworkCore.Repositories
             return new Tuple<List<TEntity>, int>(result, totalCount);
         }
 
-        public List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate)
+        public List<TEntity> GetAllList()
         {
-            return GetAll().Where(predicate).ToList();
+            return GetAll().ToList();
         }
 
-        public virtual Task<List<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual Task<List<TEntity>> GetAllListAsync()
         {
-            return GetAll().Where(predicate).ToListAsync();
+            return GetAll().ToListAsync();
         }
 
         public override IEnumerable<TEntity> GetAllEnumerable()
@@ -200,12 +200,12 @@ namespace Anc.EntityFrameworkCore.Repositories
             return await GetAll().ToListAsync();
         }
 
-        public virtual IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
             return GetAllIncluding();
         }
 
-        public virtual IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
+        public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
         {
             var query = GetQueryable();
 

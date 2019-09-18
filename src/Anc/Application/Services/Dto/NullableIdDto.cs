@@ -5,15 +5,15 @@ using System.Text;
 namespace Anc.Application.Services.Dto
 {
     /// <summary>
-    /// This DTO can be directly used (or inherited)
-    /// to pass an nullable Id value to an application service method.
+    /// This DTO can be directly used (or inherited) to pass an nullable Id value to an application
+    /// service method.
     /// </summary>
     /// <typeparam name="TId">Type of the Id</typeparam>
     [Serializable]
     public class NullableIdDto<TId>
         where TId : struct
     {
-        public TId? Id { get; set; }
+        public TId? ID { get; set; }
 
         public NullableIdDto()
         {
@@ -21,7 +21,7 @@ namespace Anc.Application.Services.Dto
 
         public NullableIdDto(TId? id)
         {
-            Id = id;
+            ID = id;
         }
     }
 

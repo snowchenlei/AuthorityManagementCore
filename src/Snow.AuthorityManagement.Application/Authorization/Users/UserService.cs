@@ -8,6 +8,7 @@ using Anc.Domain.Repositories;
 using Anc.Domain.Uow;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Application.Dto;
@@ -16,6 +17,7 @@ using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Core.Authorization.Users;
+using Snow.AuthorityManagement.Core.Authorization.Users.DomainService;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Core.Exception;
 using Snow.AuthorityManagement.Data;
@@ -28,8 +30,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly AuthorityManagementContext CurrentContext;
-
         private readonly IConfiguration _configuration;
+        private readonly IUserManager _userManager;
         private readonly IRepository<Role> _roleRepository;
         private readonly IUserRepository _userRepository;
         private readonly IUserRoleRepository _userRoleRepository;
@@ -37,6 +39,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         public UserService(
             IMapper mapper
             , IUnitOfWork unitOfWork
+            , IUserManager userManager
             , AuthorityManagementContext context
             , IUserRepository userRepository
             , IConfiguration configuration
@@ -46,6 +49,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
             CurrentContext = context;
             _userRepository = userRepository;
             _configuration = configuration;
@@ -58,7 +62,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// </summary>
         /// <param name="input">过滤条件</param>
         /// <returns></returns>
-        public async Task<PagedResultDto<UserListDto>> GetPagedAsync(GetUserInput input)
+        public async Task<PagedResultDto<UserListDto>> GetUserPagedAsync(GetUserInput input)
         {
             List<string> wheres = new List<string>();
             List<object> parameters = new List<object>();
@@ -99,7 +103,19 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// </summary>
         /// <param name="userId">用户编号</param>
         /// <returns></returns>
-        public async Task<GetUserForEditOutput> GetForEditAsync(int? userId)
+        public async Task<UserEditDto> GetUserForEditAsync(int userId)
+        {
+            User user = await _userRepository.GetAsync(userId);
+            UserEditDto userEditDto = _mapper.Map<UserEditDto>(user);
+            return userEditDto;
+        }
+
+        /// <summary>
+        /// 根据Id获取数据
+        /// </summary>
+        /// <param name="userId">用户编号</param>
+        /// <returns></returns>
+        public async Task<GetUserForEditOutput> GetUserForEditAsync(int? userId)
         {
             UserEditDto userEditDto = null;
             RoleSelectDto[] roles = (await _roleRepository
@@ -160,11 +176,11 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             UserListDto userDto = null;
             if (input.User.ID.HasValue)
             {
-                userDto = await EditAsync(input.User, input.RoleIds);
+                userDto = await EditUserAsync(input.User, input.RoleIds);
             }
             else
             {
-                userDto = await CreateAsync(input.User, input.RoleIds);
+                userDto = await CreateUserAsync(input.User, input.RoleIds);
             }
             return userDto;
         }
@@ -176,7 +192,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <param name="roleIds">角色Id</param>
         /// <returns>信息</returns>
         [UnitOfWork]
-        public virtual async Task<UserListDto> CreateAsync(UserEditDto input, List<int> roleIds)
+        public virtual async Task<UserListDto> CreateUserAsync(UserEditDto input, List<int> roleIds)
         {
             #region 用户
 
@@ -188,6 +204,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             User user = _mapper.Map<User>(input);
             user.CanUse = true;
             user.Password = _configuration["AppSetting:DefaultPassword"];
+            user.LastModificationTime = user.CreationTime;
             user.ID = await _userRepository.InsertAndGetIdAsync(user);
 
             #endregion 用户
@@ -203,7 +220,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <param name="roleIds">角色Id</param>
         /// <returns>用户信息</returns>
         [UnitOfWork]
-        public virtual async Task<UserListDto> EditAsync(UserEditDto input, List<int> roleIds)
+        public virtual async Task<UserListDto> EditUserAsync(UserEditDto input, List<int> roleIds)
         {
             #region 用户
 
@@ -251,7 +268,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <param name="id">编号</param>
         /// <returns></returns>
         [UnitOfWork]
-        public virtual async Task<bool> DeleteAsync(int id)
+        public virtual async Task<bool> DeleteUserAsync(int id)
         {
             User user = await _userRepository.GetAsync(id)
                 ?? throw new UserFriendlyException("用户不存在");
@@ -259,6 +276,11 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             await _userRoleRepository.DeleteAsync(userRoles);
             await _userRepository.DeleteAsync(user);
             return true;
+        }
+
+        public Task<DateTime?> GetLastModificationTimeAsync()
+        {
+            return _userManager.GetLastModificationTimeAsync();
         }
     }
 }

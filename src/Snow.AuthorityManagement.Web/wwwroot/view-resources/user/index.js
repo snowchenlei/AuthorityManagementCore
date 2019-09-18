@@ -178,8 +178,8 @@ function queryParams(params) {
             contentType: "application/json",
             data: para,
             success: function (result) {
-                l.stop();
                 toastr.success('修改成功');
+                l.stop();
                 refreshTable();
                 dialog.modal('hide');
             },

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using System;

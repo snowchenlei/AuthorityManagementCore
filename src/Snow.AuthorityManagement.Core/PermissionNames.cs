@@ -29,5 +29,16 @@ namespace Snow.AuthorityManagement.Core
         public const string Pages_Roles_BatchDelete = "Pages.Roles.BatchDelete";
 
         #endregion 角色管理
+
+        #region 菜单管理
+
+        public const string Pages_Menus = "Pages.Menus";
+        public const string Pages_Menus_Query = "Pages.Menus.Query";
+        public const string Pages_Menus_Create = "Pages.Menus.Create";
+        public const string Pages_Menus_Edit = "Pages.Menus.Edit";
+        public const string Pages_Menus_Delete = "Pages.Menus.Delete";
+        public const string Pages_Menus_BatchDelete = "Pages.Menus.BatchDelete";
+
+        #endregion 菜单管理
     }
 }

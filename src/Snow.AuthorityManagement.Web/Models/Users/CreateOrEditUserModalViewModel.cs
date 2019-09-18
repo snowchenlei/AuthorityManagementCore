@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Snow.AuthorityManagement.Web.Models.Users
+namespace Snow.AuthorityManagement.Web.Mvc.Models.Users
 {
     public class CreateOrEditUserModalViewModel : GetUserForEditOutput
     {

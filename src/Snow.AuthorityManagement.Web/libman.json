@@ -65,7 +65,7 @@
       "destination": "wwwroot/lib/bootstrap-daterangepicker/"
     },
     {
-      "library": "select2@4.0.8",
+      "library": "select2@4.0.10",
       "destination": "wwwroot/lib/select2/",
       "files": [
         "css/select2.css",

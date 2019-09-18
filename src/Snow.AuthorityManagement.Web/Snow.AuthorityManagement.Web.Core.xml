@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Snow.AuthorityManagement.Web.Core</name>
+    </assembly>
+    <members>
+        <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.UserResponseCache">
+            <summary>
+            User响应Chche Key
+            </summary>
+        </member>
+        <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.UserLastResponseCache">
+            <summary>
+            User响应Chche Key
+            </summary>
+        </member>
+        <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.RoleResponseCache">
+            <summary>
+            Role响应Chche Key
+            </summary>
+        </member>
+        <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.RoleLastResponseCache">
+            <summary>
+            User响应Chche Key
+            </summary>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+            <param name="menuService"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
+            <summary>
+            分页获取
+            </summary>
+            <remarks>GET: api/menus</remarks>
+            <param name="input">分页参数</param>
+            <response code="200">获取成功</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.Get(System.Int32)">
+            <summary>
+            根据Id获取
+            </summary>
+            <remarks>GET: api/menus/{id}</remarks>
+            <param name="id">主键</param>
+            <response code="200">获取成功</response>
+            <response code="304">没有修改</response>
+            <response code="404">没有找到</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.Post(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.CreateOrUpdateMenu)">
+            <summary>
+            创建
+            </summary>
+            <remarks>POST: api/menus</remarks>
+            <param name="input">创建参数</param>
+            <response code="201">创建成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.Put(System.Int32,Snow.AuthorityManagement.Application.Authorization.Menus.Dto.CreateOrUpdateMenu)">
+            <summary>
+            修改
+            </summary>
+            <remarks>PUT: api/menus/{id}</remarks>
+            <param name="id">主键</param>
+            <param name="input">修改参数</param>
+            <response code="204">修改成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <remarks>DELETE: api/menus/{id}</remarks>
+            <param name="id">主键</param>
+            <response code="204">删除成功</response>
+            <response code="404">没有找到</response>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
+            <summary>
+            分页获取
+            </summary>
+            <remarks>GET: api/role</remarks>
+            <param name="input">分页参数</param>
+            <response code="200">获取成功</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.Get(System.Int32)">
+            <summary>
+            根据Id获取
+            </summary>
+            <remarks>GET: api/role/{id}</remarks>
+            <param name="id">主键</param>
+            <response code="200">获取成功</response>
+            <response code="304">没有修改</response>
+            <response code="404">没有找到</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.Post(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.CreateOrUpdateRole)">
+            <summary>
+            创建
+            </summary>
+            <remarks>POST: api/role</remarks>
+            <param name="input">创建参数</param>
+            <response code="201">创建成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.Put(System.Int32,Snow.AuthorityManagement.Application.Authorization.Roles.Dto.CreateOrUpdateRole)">
+            <summary>
+            修改
+            </summary>
+            <remarks>PUT: api/role/5</remarks>
+            <param name="id">主键</param>
+            <param name="input">修改参数</param>
+            <response code="204">修改成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <remarks>DELETE: api/role/5</remarks>
+            <param name="id">主键</param>
+            <response code="204">删除成功</response>
+            <response code="404">没有找到</response>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.#ctor(AutoMapper.IMapper,CacheManager.Core.ICacheManager{System.Nullable{System.DateTime}},Snow.AuthorityManagement.Application.Authorization.Users.IUserService)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+            <param name="cache"></param>
+            <param name="userService"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput)">
+            <summary>
+            分页获取
+            </summary>
+            <remarks>GET: api/user</remarks>
+            <param name="input">分页参数</param>
+            <response code="200">获取成功</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.Get(System.Int32)">
+            <summary>
+            根据Id获取
+            </summary>
+            <remarks>GET: api/user/{id}</remarks>
+            <param name="id">主键</param>
+            <response code="200">获取成功</response>
+            <response code="304">没有修改</response>
+            <response code="404">没有找到</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.Post(Snow.AuthorityManagement.Application.Authorization.Users.Dto.CreateOrUpdateUser)">
+            <summary>
+            创建
+            </summary>
+            <remarks>POST: api/user</remarks>
+            <param name="input">创建参数</param>
+            <response code="201">创建成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.Put(System.Int32,Snow.AuthorityManagement.Application.Authorization.Users.Dto.CreateOrUpdateUser)">
+            <summary>
+            修改
+            </summary>
+            <remarks>PUT: api/user/5</remarks>
+            <param name="id">主键</param>
+            <param name="input">修改参数</param>
+            <response code="204">修改成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.CacheLastModificationTime(System.Nullable{System.DateTime})">
+            <summary>
+            缓存最后修改时间
+            </summary>
+            <param name="lastModified"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <remarks>DELETE: api/user/5</remarks>
+            <param name="id">主键</param>
+            <response code="204">删除成功</response>
+            <response code="404">没有找到</response>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.PageController.CreateUri``1(``0,System.String,Snow.AuthorityManagement.Core.Model.PaginationResourceUriType,System.Int32)">
+            <summary>
+            创建分页地址
+            </summary>
+            <typeparam name="T">分页请求参数类型</typeparam>
+            <param name="parameters">分页请求参数</param>
+            <param name="actionName">分页地址名</param>
+            <param name="uriType">地址类型</param>
+            <param name="pageCount"></param>
+            <returns>地址</returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.PageController.Return``3(``0,System.String,``1)">
+            <summary>
+            分页返回
+            </summary>
+            <typeparam name="TInput">输入类型</typeparam>
+            <typeparam name="TOutput">响应类型</typeparam>
+            <typeparam name="T">响应具体类型</typeparam>
+            <param name="parameters">输入参数</param>
+            <param name="actionName">分页地址名</param>
+            <param name="output">响应参数</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

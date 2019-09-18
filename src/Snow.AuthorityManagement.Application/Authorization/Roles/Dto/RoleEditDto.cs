@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Anc.Domain.Entities.Auditing;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
 {
-    public class RoleEditDto
+    public class RoleEditDto : IHasCreationTime, IHasModificationTime
     {
         public int? ID { get; set; }
 
@@ -17,5 +18,9 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
 
         [Display(Name = "排序")]
         public int Sort { get; set; }
+
+        public DateTime CreationTime { get; set; }
+
+        public DateTime? LastModificationTime { get; set; }
     }
 }

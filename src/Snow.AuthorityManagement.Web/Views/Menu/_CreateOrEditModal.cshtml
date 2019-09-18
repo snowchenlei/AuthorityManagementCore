@@ -1,0 +1,59 @@
+﻿@model Snow.AuthorityManagement.Web.Mvc.Models.Menus.CreateOrEditMenuModalViewModel
+
+<environment include="Development">
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/select2-bootstrap4-theme/select2-bootstrap4.css" rel="stylesheet" asp-append-version="true" />
+</environment>
+<environment exclude="Development">
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" asp-append-version="true" />
+</environment>
+<form asp-controller="User" asp-action="CreateOrEdit" id="modelForm" method="post" enctype="multipart/form-data"
+      data-ajax="true" data-ajax-success="saveSuccess" data-ajax-failure="saveFailure">
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal" id="modify">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Name)" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PermissionName"></label>
+            <input asp-for="PermissionName" class="form-control" placeholder="@Html.DisplayNameFor(model => model.PermissionName)">
+            <span asp-validation-for="PermissionName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Icon"></label>
+            <input asp-for="Icon" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Icon)" />
+            <span asp-validation-for="Icon" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Route"></label>
+            <input asp-for="Route" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Route)" />
+            <span asp-validation-for="Route" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Sort"></label>
+            <input asp-for="Sort" class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.Sort)" />
+            <span asp-validation-for="Sort" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ParentId"></label>
+            <select asp-for="ParentId" class="form-control" placeholder="@Html.DisplayNameFor(model => model.ParentId)"></select>
+            <span asp-validation-for="ParentId" class="text-danger"></span>
+        </div>
+    </div>
+</form>
+<environment include="Development">
+    <script src="~/lib/select2/js/select2.full.js" asp-append-version="true"></script>
+    <script src="~/lib/select2/js/i18n/zh-CN.js" asp-append-version="true"></script>
+    <script src="~/view-resources/menu/createOrEdit.js" asp-append-version="true"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/bundle/menu.createOrEdit.min.js" asp-append-version="true"></script>
+</environment>

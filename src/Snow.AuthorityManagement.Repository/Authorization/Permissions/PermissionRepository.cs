@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Anc.Domain.Repositories;
@@ -35,7 +36,7 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions
 
         public Task<List<Permission>> GetPermissionsByRoleIdAsync(int roleId)
         {
-            return GetAllListAsync(a => a.Role.ID == roleId);
+            return GetAll().Where(a => a.Role.ID == roleId).ToListAsync();
         }
     }
 }

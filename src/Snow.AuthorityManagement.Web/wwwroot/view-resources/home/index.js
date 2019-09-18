@@ -79,8 +79,6 @@ function ChangeIFrame() {
 //创建导航
 function changeNav() {
     $('.mt-2 .deepNav').click(function () {
-        $(this).parent('li').addClass('active');
-        $(this).parents('.open').addClass('active');
         var para = {
             "id": $(this).data('id'),
             "title": $(this).data('name'),
@@ -89,6 +87,8 @@ function changeNav() {
             "height": getHeight()
         };
         addTabs(para);
+        $(this).addClass('active');
+        $(this).parents('.nav').prev('.nav-link').addClass('active');
     });
 }
 

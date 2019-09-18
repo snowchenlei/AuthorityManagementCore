@@ -150,6 +150,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             Role role = _mapper.Map<Role>(input);
             role.Permissions = CreatePermissions(permission);
             role.ID = await _roleRepository.InsertAndGetIdAsync(role);
+            role.LastModificationTime = role.CreationTime;
             return _mapper.Map<RoleListDto>(role);
         }
 
@@ -167,6 +168,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             Role oldRole = await _roleRepository.GetAsync(input.ID.Value)
                 ?? throw new UserFriendlyException("角色不存在");
             Role role = _mapper.Map(input, oldRole);
+            role.LastModificationTime = DateTime.Now;
             await _roleRepository.UpdateAsync(role);
 
             #endregion 角色

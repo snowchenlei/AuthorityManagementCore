@@ -13,6 +13,9 @@ using Snow.AuthorityManagement.Core.Exception;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Permissions
 {
+    /// <summary>
+    /// 权限服务
+    /// </summary>
     public class PermissionService : IPermissionService
     {
         private readonly ILambdaRepository<Permission> _permissionRepository;
@@ -26,8 +29,11 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
 
         public async Task<bool> IsGrantedAsync(string permissionName, int userId)
         {
-            var userRoles = await _userRoleRepository.GetAllListAsync(r => r.UserID == userId);
-            var roleIds = userRoles.Select(ur => ur.RoleID);
+            var roleIds = await _userRoleRepository
+                .GetAll()
+                .Where(r => r.UserID == userId)
+                .Select(ur => ur.RoleID)
+                .ToListAsync();
 
             return await _permissionRepository
                 .ExistsAsync(p => (p.User.ID == userId
@@ -36,17 +42,25 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
 
         public async Task<List<Permission>> GetAllPermissionsAsync(int userId)
         {
-            var userRoles = await _userRoleRepository.GetAllListAsync(r => r.UserID == userId);
-            var roleIds = userRoles.Select(ur => ur.RoleID);
+            var roleIds = await _userRoleRepository
+               .GetAll()
+               .Where(r => r.UserID == userId)
+               .Select(ur => ur.RoleID)
+               .ToListAsync();
 
             return await _permissionRepository
-                .GetAllListAsync(p => p.User.ID == userId
-                                    || roleIds.Contains(p.Role.ID));
+                .GetAll()
+                .Where(p => p.User.ID == userId
+                            || roleIds.Contains(p.Role.ID))
+                .ToListAsync();
         }
 
         public async Task<List<Permission>> GetPermissionsByRoleIdAsync(int roleId)
         {
-            return await _permissionRepository.GetAllListAsync(p => p.Role.ID == roleId);
+            return await _permissionRepository
+               .GetAll()
+               .Where(p => p.Role.ID == roleId)
+               .ToListAsync();
         }
     }
 }

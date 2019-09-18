@@ -1,4 +1,5 @@
 ﻿using Anc.Domain.Entities;
+using Anc.Domain.Entities.Auditing;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Core.Entities;
@@ -12,7 +13,7 @@ namespace Snow.AuthorityManagement.Core.Authorization.Roles
     /// <summary>
     /// 用户
     /// </summary>
-    public class Role : Entity
+    public class Role : Entity, IHasModificationTime, IHasCreationTime
     {
         /// <summary>
         /// 角色名称
@@ -32,5 +33,7 @@ namespace Snow.AuthorityManagement.Core.Authorization.Roles
 
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Permission> Permissions { get; set; }
+        public DateTime? LastModificationTime { get; set; }
+        public DateTime CreationTime { get; set; }
     }
 }

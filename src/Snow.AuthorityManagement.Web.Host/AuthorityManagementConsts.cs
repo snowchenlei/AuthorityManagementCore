@@ -20,5 +20,10 @@ namespace Snow.AuthorityManagement.Web.Core
         /// Role响应Chche Key
         /// </summary>
         public const string RoleResponseCache = "Role_{0}";
+
+        /// <summary>
+        /// User响应Chche Key
+        /// </summary>
+        public const string RoleLastResponseCache = "Role_Last";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Snow.AuthorityManagement.Core.Authorization.Menus;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
@@ -16,6 +17,7 @@ namespace Snow.AuthorityManagement.Data
         public virtual DbSet<User> User { get; set; }
 
         public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

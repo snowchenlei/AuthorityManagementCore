@@ -4,6 +4,7 @@ using CacheManager.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
+using Snow.AuthorityManagement.Core.Authorization.Roles.DomainService;
 using Snow.AuthorityManagement.Core.Authorization.Users.DomainService;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,10 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.User
     public class TimedETagQueryUserRepository : ITimedETagQueryProvider<PagedResultDto<UserListDto>>, ITimedETagQueryProvider<GetUserForEditOutput>
     {
         private readonly ICacheManager<DateTime?> _cache;
-        private readonly IUserManager _userManager;
+        private readonly IRoleManager _userManager;
 
         public TimedETagQueryUserRepository(ICacheManager<DateTime?> cache
-            , IUserManager userManager)
+            , IRoleManager userManager)
         {
             _cache = cache;
             _userManager = userManager;

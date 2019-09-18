@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "菜单管理";
+    Layout = "~/Views/Shared/_LayoutPageTable.cshtml";
+}
+
+<div id="toolbar">
+    <div class="btn-group" role="group" aria-label="Operate Group">
+        <button id="create" type="button" class="btn btn-primary"><i class="fas fa-plus"></i>添加</button>
+    </div>
+</div>
+<!--搜索-->
+<div class="card">
+    <div class="card-header">
+        查询条件
+    </div>
+    <div class="card-body">
+        <form id="formSearch" class="form-inline">
+            <label class="sr-only" for="txt_search_userName">用户名</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="txt_search_userName" placeholder="用户名">
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+    <environment include="Development">
+        <script src="~/js/timeBucket.js" asp-append-version="true"></script>
+        <script src="~/view-resources/menu/index.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/bundle/menu.index.min.js" asp-append-version="true"></script>
+    </environment>
+}

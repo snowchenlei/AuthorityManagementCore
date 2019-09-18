@@ -28,7 +28,16 @@ namespace Snow.AuthorityManagement.Web.Startup
                            "user",
                            "/Role/Index",
                            target: "tab_2",
-                           requiredPermissionName: PermissionNames.Pages_Roles))
+                           requiredPermissionName: PermissionNames.Pages_Roles)
+                       ).AddItem(
+                           new MenuItemDefinition(
+                               PageNames.Menus,
+                               "菜单管理",
+                               "menu",
+                               "/Menu/Index",
+                               target: "tab_3",
+                               requiredPermissionName: PermissionNames.Pages_Menus)
+                       )
                );
             return menu;
         }

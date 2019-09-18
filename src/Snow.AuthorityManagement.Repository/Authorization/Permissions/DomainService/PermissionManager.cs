@@ -1,6 +1,7 @@
 ﻿using Anc.Authorization;
 using Anc.Dependency;
 using Anc.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.Permissions.DomainService;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
@@ -26,11 +27,15 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions.DomainSe
 
         public async Task<IEnumerable<IPermission>> GetAllPermissionsAsync(int userId)
         {
-            var userRoles = await _userRoleRepository.GetAllListAsync(r => r.UserID == userId);
-            var roleIds = userRoles.Select(ur => ur.RoleID);
+            var roleIds = await _userRoleRepository
+                .GetAll()
+                .Where(r => r.UserID == userId)
+                .Select(ur => ur.RoleID)
+                .ToListAsync();
             return await _permissionRepository
-                .GetAllListAsync(p => p.User.ID == userId
-                                    || roleIds.Contains(p.Role.ID));
+                .GetAll().Where(p => p.User.ID == userId
+                                    || roleIds.Contains(p.Role.ID))
+                .ToListAsync();
         }
     }
 }

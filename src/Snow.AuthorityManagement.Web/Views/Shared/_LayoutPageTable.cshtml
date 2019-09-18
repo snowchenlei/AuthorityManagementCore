@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <environment names="Development">
+    <environment include="Development">
         <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" asp-append-version="true" />
@@ -14,7 +14,7 @@
         <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
-    <environment>
+    <environment exclude="Development">
         <link href="~/css/bundle/frame.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     @RenderSection("styles", required: false)

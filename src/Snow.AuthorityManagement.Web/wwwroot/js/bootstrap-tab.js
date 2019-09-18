@@ -11,7 +11,6 @@ var addTabs = function (options) {
     var htmlArr = new Array();
     if (!$("#" + id)[0]) {
         //创建新TAB的title
-
         htmlArr.push('<li class="nav-item"><a class="nav-link" id="tab_' + id + '" data-id="' + id + '" data-toggle="tab" href="#' + id + '" role="tab" aria-controls="' + id + '" aria-selected="true">' + options.title + '');
         //是否允许关闭
         if (options.close) {

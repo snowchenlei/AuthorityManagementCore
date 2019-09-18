@@ -19,6 +19,35 @@ namespace Snow.AuthorityManagement.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.Menus.Menu", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("ParentID");
+
+                    b.Property<string>("PermissionName");
+
+                    b.Property<string>("Route");
+
+                    b.Property<int>("Sort");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ParentID");
+
+                    b.ToTable("Menu");
+                });
+
             modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.Permissions.Permission", b =>
                 {
                     b.Property<int>("ID")
@@ -50,9 +79,13 @@ namespace Snow.AuthorityManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreationTime");
+
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasMaxLength(200);
+
+                    b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -113,6 +146,13 @@ namespace Snow.AuthorityManagement.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.Menus.Menu", b =>
+                {
+                    b.HasOne("Snow.AuthorityManagement.Core.Authorization.Menus.Menu", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentID");
                 });
 
             modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.Permissions.Permission", b =>

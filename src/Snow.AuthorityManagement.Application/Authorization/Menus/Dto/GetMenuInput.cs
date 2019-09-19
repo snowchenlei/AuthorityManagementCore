@@ -18,5 +18,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus.Dto
         /// 菜单名称
         /// </summary>
         public string Name { get; set; }
+
+        public int? ParentID { get; set; }
     }
 }

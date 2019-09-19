@@ -26,6 +26,8 @@ namespace Snow.AuthorityManagement.Core.Authorization.Menus
 
         public DateTime? LastModificationTime { get; set; }
 
-        public Menu Parent { get; set; }
+        public int? ParentID { get; set; }
+
+        public virtual Menu Parent { get; set; }
     }
 }

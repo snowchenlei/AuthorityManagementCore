@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
@@ -15,6 +16,9 @@ namespace Snow.AuthorityManagement.Web.Configuration
             CreateMap<GetUserForEditOutput, CreateOrEditUserModalViewModel>();
             CreateMap<GetRoleForEditOutput, CreateOrEditRoleModalViewModel>();
             CreateMap<MenuEditDto, CreateOrEditMenuModalViewModel>();
+            CreateMap<MenuListDto, SelectListItem>()
+                .ForMember(a => a.Value, opt => opt.MapFrom(src => src.ID))
+                .ForMember(a => a.Text, opt => opt.MapFrom(src => src.Name));
 
             //Mapper.Initialize(x =>
             //{

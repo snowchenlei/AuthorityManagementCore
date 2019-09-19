@@ -5,7 +5,10 @@
 }
 @section Styles
 {
-    <link href="~/lib/icheck-bootstrap/icheck-bootstrap.css" rel="stylesheet" asp-append-version="true" />
+    <environment include="Development">
+        <link href="~/lib/icheck-bootstrap/icheck-bootstrap.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
 }
 <div id="toolbar">
     <div class="btn-group" role="group" aria-label="Operate Group">
@@ -29,6 +32,9 @@
 @section Scripts
 {
     <environment include="Development">
+        <!-- daterangepicker -->
+        <script src="~/lib/bootstrap-daterangepicker/moment.min.js"></script>
+        <script src="~/lib/bootstrap-daterangepicker/daterangepicker.min.js"></script>
         <script src="~/js/timeBucket.js" asp-append-version="true"></script>
         <script src="~/view-resources/user/index.js" asp-append-version="true"></script>
     </environment>

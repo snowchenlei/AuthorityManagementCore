@@ -6,12 +6,12 @@ function queryParams(params) {
         pageIndex: params.offset / params.limit,  //页码
         sort: params.sort,
         order: params.order,
-        userName: $('#txt_search_userName').val(),
-        date: $('#txt_search_addTime').val()
+        parentId: $('#parentId').val()
     };
 }
 
 (function () {
+    var treeId = 'navTree';
     window.operateEvents = {
         'click .edit': function (e, value, row, index) {
             e.preventDefault();
@@ -72,8 +72,61 @@ function queryParams(params) {
         { field: 'icon', title: '图标' },
         { field: 'sort', title: '排序' }
     ];
-
+    //#region ztree
+    var setting = {
+        view: {
+            selectedMulti: false
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "parentID",
+                rootPId: 0
+            },
+            key: {
+                title: 'id',
+                name: 'name'
+            }
+        },
+        async: {
+            enable: true,
+            url: "/api/menus?pageSize=1000&pageIndex=0",
+            autoParam: ["id", "name=n", "level=lv"],
+            otherParam: { "otherParam": "zTreeAsyncTest" },
+            dataFilter: filter,
+            type: "get"
+        },
+        callback: {
+            onAsyncSuccess: onAsyncSuccess,
+            onClick: onClick
+        },
+    };
+    function filter(treeId, parentNode, childNodes) {
+        return childNodes.items;
+    }
+    function onAsyncSuccess(event, treeId, treeNode, msg) {
+        // 展开全部节点
+        var zTree = $.fn.zTree.getZTreeObj(treeId);
+        zTree.expandAll(true);
+    }
+    function onClick(event, treeId, treeNode, clickFlag) {
+        // 非多选模式下取消选中
+        if (clickFlag === 0) {
+            $('#parentId').val('');
+        } else {
+            $('#parentId').val(treeNode.id);
+        }
+        refreshTable();
+    }
+    //#endregion
     $(function () {
+        //1、初始化表格
+        table.init(url, columns);
+        //3、pannel初始化
+        loadPanel();
+        $.fn.zTree.init($("#navTree"), setting);
+
         if (!isGranted('Pages.Menus.Create')) {
             $('#btnAdd').remove();
         }
@@ -81,13 +134,6 @@ function queryParams(params) {
         $('#create').click(function () {
             createOrEdit('添加新菜单');
         });
-        //$('#modifyModal').modal('show');
-        //1、初始化表格
-        table.init(url, columns);
-        //3、pannel初始化
-        loadPanel();
-        //4、时间初始化
-        setDate($('#txt_search_addTime'), true, true);
     });
     var dialog, l,
         url = '/api/menus/';

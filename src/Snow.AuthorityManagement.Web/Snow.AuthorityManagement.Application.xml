@@ -9,6 +9,11 @@
             构造
             </summary>
         </member>
+        <member name="P:Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput.Name">
+            <summary>
+            菜单名称
+            </summary>
+        </member>
         <member name="T:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService">
             <summary>
             菜单应用服务

@@ -1,4 +1,5 @@
-﻿using Snow.AuthorityManagement.Core.Authorization.Menus;
+﻿using Microsoft.EntityFrameworkCore;
+using Snow.AuthorityManagement.Core.Authorization.Menus;
 using Snow.AuthorityManagement.Data;
 using System;
 using System.Collections.Generic;

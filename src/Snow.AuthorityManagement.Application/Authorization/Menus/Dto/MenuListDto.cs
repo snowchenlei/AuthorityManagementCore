@@ -17,6 +17,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus.Dto
 
         public DateTime? LastModificationTime { get; set; }
 
+        public int ParentID { get; set; }
         public string ParentName { get; set; }
     }
 }

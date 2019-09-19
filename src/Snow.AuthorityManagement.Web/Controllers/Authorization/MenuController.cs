@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Anc.AspNetCore.Web.Mvc.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Snow.AuthorityManagement.Application.Authorization.Menus;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Core;
@@ -46,7 +47,10 @@ namespace Snow.AuthorityManagement.Web.Mvc.Controllers.Authorization
                 output = await _menuService.GetMenuForEditAsync(id.Value);
             }
             var viewModel = new CreateOrEditMenuModalViewModel();
-            _mapper.Map(output, viewModel);
+            viewModel.Menu = output;
+            List<MenuListDto> menus = await _menuService.GetAllListAsync();
+            List<SelectListItem> menuItems = _mapper.Map<List<SelectListItem>>(menus);
+            viewModel.MenuList = menuItems;
             return PartialView("_CreateOrEditModal", viewModel);
         }
     }

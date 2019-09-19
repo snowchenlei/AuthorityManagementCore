@@ -55,12 +55,25 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
         /// <returns></returns>
         public async Task<PagedResultDto<MenuListDto>> GetPagedMenuAsync(GetMenuInput input)
         {
+            List<string> wheres = new List<string>();
+            List<object> parameters = new List<object>();
+            int index = 0;
+            if (!String.IsNullOrWhiteSpace(input.Name))
+            {
+                wheres.Add($"Name.Contains(@{index++})");
+                parameters.Add(input.Name);
+            }
+            if (input.ParentID.HasValue)
+            {
+                wheres.Add($"ParentID=@{index++}");
+                parameters.Add(input.ParentID);
+            }
             if (!string.IsNullOrEmpty(input.Sorting))
             {
                 input.Sorting = input.Sorting + (input.Order == OrderType.ASC ? " ASC" : " DESC");
             }
             var result = await _menuRepository
-                .GetPagedAsync(input.PageIndex, input.PageSize, String.Empty, null, input.Sorting);
+                .GetPagedAsync(input.PageIndex, input.PageSize, string.Join(" AND ", wheres), parameters.ToArray(), input.Sorting);
             return new PagedResultDto<MenuListDto>()
             {
                 PageIndex = input.PageIndex,
@@ -77,7 +90,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
         /// <returns></returns>
         public async Task<MenuEditDto> GetMenuForEditAsync(int menuId)
         {
-            Menu menu = await _menuRepository.GetAsync(menuId);
+            Menu menu = await _menuRepository.GetAsync(menuId)
+                ?? throw new UserFriendlyException("菜单不存在");
             return _mapper.Map<MenuEditDto>(menu);
         }
 
@@ -111,8 +125,9 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
             {
                 throw new UserFriendlyException("菜单名已存在");
             }
-
+            Menu parentMenu = await GetParentMenuAsync(input.ParentID);
             Menu menu = _mapper.Map<Menu>(input);
+            menu.Parent = parentMenu;
             menu.LastModificationTime = menu.CreationTime;
             menu.ID = await _menuRepository.InsertAndGetIdAsync(menu);
             await _currentContext.SaveChangesAsync();
@@ -128,11 +143,23 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
         {
             int menuId = input.ID.Value;
             Menu oldMenu = await _menuRepository.GetAsync(menuId);
+            Menu parentMenu = await GetParentMenuAsync(input.ParentID);
             Menu menu = _mapper.Map(input, oldMenu);
+            menu.Parent = parentMenu;
             menu.LastModificationTime = DateTime.Now;
             await _menuRepository.UpdateAsync(menu);
             await _currentContext.SaveChangesAsync();
             return _mapper.Map<MenuListDto>(menu);
+        }
+
+        private async Task<Menu> GetParentMenuAsync(int? parentId)
+        {
+            Menu parentMenu = null;
+            if (parentId.HasValue)
+            {
+                parentMenu = await _menuRepository.GetAsync(parentId.Value);
+            }
+            return parentMenu;
         }
 
         /// <summary>

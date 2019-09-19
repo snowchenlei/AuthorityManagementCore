@@ -22,7 +22,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus.Dto
         [Display(Name = "排序")]
         public int Sort { get; set; }
 
-        [Display(Name = "父Id")]
-        public int? ParentId { get; set; }
+        [Display(Name = "父ID")]
+        public int? ParentID { get; set; }
     }
 }

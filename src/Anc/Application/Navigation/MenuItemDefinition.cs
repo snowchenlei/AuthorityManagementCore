@@ -35,7 +35,6 @@ namespace Anc.Application.Navigation
         /// <summary>
         /// A permission name. Only users that has this permission can see this menu item. Optional.
         /// </summary>
-        [Obsolete("Use PermissionDependency instead.")]
         public string RequiredPermissionName { get; set; }
 
         /// <summary>
@@ -106,6 +105,7 @@ namespace Anc.Application.Navigation
             Icon = icon;
             Url = url;
             RequiresAuthentication = requiresAuthentication;
+            RequiredPermissionName = requiredPermissionName;
             Order = order;
             CustomData = customData;
             Target = target;

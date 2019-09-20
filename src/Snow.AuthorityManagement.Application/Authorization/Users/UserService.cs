@@ -72,7 +72,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
                 wheres.Add($"UserName.Contains(@{index++})");
                 parameters.Add(input.UserName);
             }
-
             if (!string.IsNullOrEmpty(input.Date))
             {
                 DateTime[] date = Array.ConvertAll(input.Date

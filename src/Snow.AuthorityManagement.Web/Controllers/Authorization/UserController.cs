@@ -21,10 +21,11 @@ using FluentValidation;
 using Anc.AspNetCore.Web.Mvc.Authorization;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Web.Mvc.Models.Users;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {
-    [AncAuthorize(PermissionNames.Pages_Users)]
+    [AncAuthorize(PermissionNames.Pages_Administration_Users)]
     public class UserController : BaseController
     {
         private readonly IMapper _mapper;
@@ -39,15 +40,19 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             _roleService = roleService;
         }
 
-        [AncAuthorize(PermissionNames.Pages_Users)]
+        [AncAuthorize(PermissionNames.Pages_Administration_Users)]
         [ResponseCache(CacheProfileName = "Header")]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            // TODO:添加角色列表
+            var roles = await _roleService.GetAllRoleListAsync();
+            List<SelectListItem> roleItems = _mapper.Map<List<SelectListItem>>(roles);
+            ViewBag.RoleList = roleItems;
             ViewBag.AbsoluteUrl = "/User";
             return View();
         }
 
-        [AncAuthorize(PermissionNames.Pages_Users_Query)]
+        [AncAuthorize(PermissionNames.Pages_Administration_Users_Query)]
         public async Task<JsonResult> Load(GetUserInput input)
         {
             var result = await _userService.GetUserPagedAsync(input);
@@ -61,7 +66,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [HttpGet]
         [AjaxOnly]
         [ResponseCache(CacheProfileName = "Header")]
-        [AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
+        [AncAuthorize(PermissionNames.Pages_Administration_Users_Create, PermissionNames.Pages_Administration_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(int? id)
         {
             GetUserForEditOutput output = await _userService.GetUserForEditAsync(id);
@@ -75,7 +80,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 
         [HttpPost]
         [AjaxOnly]
-        [AncAuthorize(PermissionNames.Pages_Users_Create, PermissionNames.Pages_Users_Edit)]
+        [AncAuthorize(PermissionNames.Pages_Administration_Users_Create, PermissionNames.Pages_Administration_Users_Edit)]
         public async Task<ActionResult> CreateOrEdit(CreateOrUpdateUser input)
         {
             if (ModelState.IsValid)
@@ -99,19 +104,19 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             }
         }
 
-        [AncAuthorize(PermissionNames.Pages_Users_Create)]
+        [AncAuthorize(PermissionNames.Pages_Administration_Users_Create)]
         public Task<UserListDto> Create(UserEditDto input, List<int> roleIds)
         {
             return _userService.CreateUserAsync(input, roleIds);
         }
 
-        [AncAuthorize(PermissionNames.Pages_Users_Edit)]
+        [AncAuthorize(PermissionNames.Pages_Administration_Users_Edit)]
         public Task<UserListDto> Edit(UserEditDto input, List<int> roleIds)
         {
             return _userService.EditUserAsync(input, roleIds);
         }
 
-        [AncAuthorize(PermissionNames.Pages_Users_Delete)]
+        [AncAuthorize(PermissionNames.Pages_Administration_Users_Delete)]
         public async Task<JsonResult> Delete(int id)
         {
             if (await _userService.DeleteUserAsync(id))

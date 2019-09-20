@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
+using Snow.AuthorityManagement.Application.Authorization.Menus.Validators;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
 using Snow.AuthorityManagement.Data;
@@ -23,6 +24,7 @@ namespace Snow.AuthorityManagement.Web.Core.Startup
         public static void AddFluentValidation(this IServiceCollection services)
         {
             services.AddTransient<IValidator<UserEditDto>, UserEditValidator>();
+            services.AddTransient<IValidator<MenuEditDto>, MenuEditValidator>();
             services.AddTransient<IValidator<CreateOrUpdateUser>, CreateOrUpdateUserValidator>();
         }
     }

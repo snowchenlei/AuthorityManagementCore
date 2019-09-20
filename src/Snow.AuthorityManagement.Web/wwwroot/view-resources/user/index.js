@@ -7,6 +7,7 @@ function queryParams(params) {
         sort: params.sort,
         order: params.order,
         userName: $('#txt_search_userName').val(),
+        //roleID: $('#txt_sel_role option:checked').val(),
         date: $('#txt_search_addTime').val()
     };
 }
@@ -46,21 +47,12 @@ function queryParams(params) {
         var htmlArr = [];
 
         htmlArr.push('<div class="btn-group" style="display: inline-block;" role="group" aria-label="...">');
-        if (isGranted('Pages.Users.Edit')) {
-            htmlArr.push('<button type = "button" class="btn btn-sm btn-warning edit"><i class="far fa-edit"></i></button>');
+        if (isGranted('Pages.Administration.Users.Edit')) {
+            htmlArr.push('<button type = "button" class="btn btn-sm btn-warning edit" title="修改"><i class="far fa-edit"></i></button>');
         }
-        if (isGranted('Pages.Users.Delete')) {
-            htmlArr.push('<button type="button" class="btn btn-sm btn-danger remove"><i class="fas fa-trash"></i></button>');
+        if (isGranted('Pages.Administration.Users.Delete')) {
+            htmlArr.push('<button type="button" class="btn btn-sm btn-danger remove" title="删除"><i class="fas fa-trash"></i></button>');
         }
-        htmlArr.push('<div class="btn-group" role="group">');
-        htmlArr.push('<button id="btnGroupDrop1" type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">');
-        htmlArr.push('Action');
-        htmlArr.push('</button>');
-        htmlArr.push('<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">');
-        htmlArr.push('<a class="dropdown-item" href="#">Dropdown link</a>');
-        htmlArr.push('<a class="dropdown-item" href="#">Dropdown link</a>');
-        htmlArr.push('</div>');
-        htmlArr.push('</div>');
         htmlArr.push('</div>');
         return htmlArr.join('');
     }
@@ -74,7 +66,7 @@ function queryParams(params) {
     ];
 
     $(function () {
-        if (!isGranted('Pages.Users.Create')) {
+        if (!isGranted('Pages.Administration.Users.Create')) {
             $('#btnAdd').remove();
         }
 
@@ -88,6 +80,13 @@ function queryParams(params) {
         loadPanel();
         //4、时间初始化
         setDate($('#txt_search_addTime'), true, true);
+        $('#txt_sel_role').select2({
+            language: 'zh-CN',
+            placeholder: '请选择',
+            allowClear: true,
+            theme: 'bootstrap4',
+            //width: '100%'
+        });
     });
     var dialog, l,
         url = '/api/users/';

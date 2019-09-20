@@ -11,7 +11,6 @@
 <form asp-controller="User" asp-action="CreateOrEdit" id="modelForm" method="post"
       data-ajax="true" data-ajax-success="saveSuccess" data-ajax-failure="saveFailure">
     @Html.AntiForgeryToken()
-
     <div class="modal-body form-horizontal" id="modify">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Menu.ID" />
@@ -39,7 +38,7 @@
         </div>
         <div class="form-group">
             <label asp-for="Menu.Sort"></label>
-            <input asp-for="Menu.Sort" class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.Menu.Sort)" />
+            <input asp-for="Menu.Sort" class="form-control" type="number" min="0" placeholder="@Html.DisplayNameFor(model => model.Menu.Sort)" />
             <span asp-validation-for="Menu.Sort" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -52,6 +51,7 @@
     </div>
 </form>
 <environment include="Development">
+    <script src="~/lib/bootstrap-input-spinner/bootstrap-input-spinner.js" asp-append-version="true"></script>
     <script src="~/lib/select2/js/select2.full.js" asp-append-version="true"></script>
     <script src="~/lib/select2/js/i18n/zh-CN.js" asp-append-version="true"></script>
     <script src="~/view-resources/menu/createOrEdit.js" asp-append-version="true"></script>

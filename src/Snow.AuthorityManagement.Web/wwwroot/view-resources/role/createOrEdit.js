@@ -1,5 +1,4 @@
 ﻿//#region zTree
-$.validator.unobtrusive.parse('form');
 var setting = {
     view: {
         selectedMulti: false
@@ -19,6 +18,7 @@ var setting = {
     }
 };
 $(document).ready(function () {
+    $.validator.unobtrusive.parse('form');
     $.fn.zTree.init($("#authTree"), setting, zNodes);
     var treeObj = $.fn.zTree.getZTreeObj("authTree");
     treeObj.expandAll(true);

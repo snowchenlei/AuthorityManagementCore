@@ -7,37 +7,40 @@ namespace Snow.AuthorityManagement.Core
 {
     public class PermissionNames
     {
+        public const string Pages = "Pages";
+        public const string Pages_Administration = "Pages.Administration";
+
         #region 用户管理
 
-        public const string Pages_Users = "Pages.Users";
-        public const string Pages_Users_Query = "Pages.Users.Query";
-        public const string Pages_Users_Create = "Pages.Users.Create";
-        public const string Pages_Users_Edit = "Pages.Users.Edit";
-        public const string Pages_Users_Reset = "Pages.Users.Reset";
-        public const string Pages_Users_Delete = "Pages.Users.Delete";
-        public const string Pages_Users_BatchDelete = "Pages.Users.BatchDelete";
+        public const string Pages_Administration_Users = "Pages.Administration.Users";
+        public const string Pages_Administration_Users_Query = "Pages.Administration.Users.Query";
+        public const string Pages_Administration_Users_Create = "Pages.Administration.Users.Create";
+        public const string Pages_Administration_Users_Edit = "Pages.Administration.Users.Edit";
+        public const string Pages_Administration_Users_Reset = "Pages.Administration.Users.Reset";
+        public const string Pages_Administration_Users_Delete = "Pages.Administration.Users.Delete";
+        public const string Pages_Administration_Users_BatchDelete = "Pages.Administration.Users.BatchDelete";
 
         #endregion 用户管理
 
         #region 角色管理
 
-        public const string Pages_Roles = "Pages.Roles";
-        public const string Pages_Roles_Query = "Pages.Roles.Query";
-        public const string Pages_Roles_Create = "Pages.Roles.Create";
-        public const string Pages_Roles_Edit = "Pages.Roles.Edit";
-        public const string Pages_Roles_Delete = "Pages.Roles.Delete";
-        public const string Pages_Roles_BatchDelete = "Pages.Roles.BatchDelete";
+        public const string Pages_Administration_Roles = "Pages.Administration.Roles";
+        public const string Pages_Administration_Roles_Query = "Pages.Administration.Roles.Query";
+        public const string Pages_Administration_Roles_Create = "Pages.Administration.Roles.Create";
+        public const string Pages_Administration_Roles_Edit = "Pages.Administration.Roles.Edit";
+        public const string Pages_Administration_Roles_Delete = "Pages.Administration.Roles.Delete";
+        public const string Pages_Administration_Roles_BatchDelete = "Pages.Administration.Roles.BatchDelete";
 
         #endregion 角色管理
 
         #region 菜单管理
 
-        public const string Pages_Menus = "Pages.Menus";
-        public const string Pages_Menus_Query = "Pages.Menus.Query";
-        public const string Pages_Menus_Create = "Pages.Menus.Create";
-        public const string Pages_Menus_Edit = "Pages.Menus.Edit";
-        public const string Pages_Menus_Delete = "Pages.Menus.Delete";
-        public const string Pages_Menus_BatchDelete = "Pages.Menus.BatchDelete";
+        public const string Pages_Administration_Menus = "Pages.Administration.Menus";
+        public const string Pages_Administration_Menus_Query = "Pages.Administration.Menus.Query";
+        public const string Pages_Administration_Menus_Create = "Pages.Administration.Menus.Create";
+        public const string Pages_Administration_Menus_Edit = "Pages.Administration.Menus.Edit";
+        public const string Pages_Administration_Menus_Delete = "Pages.Administration.Menus.Delete";
+        public const string Pages_Administration_Menus_BatchDelete = "Pages.Administration.Menus.BatchDelete";
 
         #endregion 菜单管理
     }

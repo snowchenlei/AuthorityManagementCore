@@ -26,6 +26,9 @@ using Anc.Domain.Uow;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles
 {
+    /// <summary>
+    /// 角色服务
+    /// </summary>
     public class RoleService : IRoleService
     {
         private readonly IMapper _mapper;
@@ -34,6 +37,13 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         private readonly ILambdaRepository<Role> _roleRepository;
         private readonly IPermissionRepository _permissionRepository;
 
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="context"></param>
+        /// <param name="roleRepository"></param>
+        /// <param name="permissionRepository"></param>
         public RoleService(
             IMapper mapper
             , AuthorityManagementContext context
@@ -48,6 +58,16 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         }
 
         /// <summary>
+        /// 获取所有
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<RoleListDto>> GetAllRoleListAsync()
+        {
+            List<Role> roles = await _roleRepository.GetAllListAsync();
+            return _mapper.Map<List<RoleListDto>>(roles);
+        }
+
+        /// <summary>
         /// 分页
         /// </summary>
         /// <param name="input">过滤条件</param>
@@ -57,10 +77,10 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             List<string> wheres = new List<string>();
             List<object> parameters = new List<object>();
             int index = 0;
-            if (!string.IsNullOrEmpty(input.Name))
+            if (!string.IsNullOrEmpty(input.DisplayName))
             {
-                wheres.Add($"Name.Contains(@{index++})");
-                parameters.Add(input.Name);
+                wheres.Add($"DisplayName.Contains(@{index++})");
+                parameters.Add(input.DisplayName);
             }
             if (!string.IsNullOrEmpty(input.Date))
             {
@@ -81,7 +101,9 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             return new PagedResultDto<RoleListDto>()
             {
                 Items = _mapper.Map<List<RoleListDto>>(result.Item1),
-                TotalCount = result.Item2
+                TotalCount = result.Item2,
+                PageIndex = input.PageIndex,
+                PageSize = input.PageSize
             };
         }
 

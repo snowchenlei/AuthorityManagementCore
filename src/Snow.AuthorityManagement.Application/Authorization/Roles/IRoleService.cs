@@ -2,12 +2,22 @@
 using Anc.Application.Services.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Dto;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles
 {
+    /// <summary>
+    /// 角色服务接口
+    /// </summary>
     public interface IRoleService : IApplicationService
     {
+        /// <summary>
+        /// 获取所有
+        /// </summary>
+        /// <returns></returns>
+        Task<List<RoleListDto>> GetAllRoleListAsync();
+
         /// <summary>
         /// 分页
         /// </summary>

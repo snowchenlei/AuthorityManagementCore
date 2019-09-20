@@ -29,7 +29,7 @@ namespace Anc.Application.Navigation
                 throw new AncAuthorizationException("请登陆");
             }
             var permissions = await _permissionService.GetAllPermissionsAsync(_ancSession.UserId.Value);
-            MenuDefinition menuDefinition = _navigationProvider.GetNavigation();
+            MenuDefinition menuDefinition = await _navigationProvider.GetNavigationAsync();
             UserMenu userMenu = new UserMenu(menuDefinition);
             CheckPermission(permissions, menuDefinition.Items, userMenu.Items);
             return userMenu;
@@ -39,9 +39,12 @@ namespace Anc.Application.Navigation
         {
             foreach (MenuItemDefinition menuItemDefinition in menuDefinition)
             {
-                if (!permissions.Any(p => p.Name.Contains(menuItemDefinition.Name)))
+                if (!String.IsNullOrEmpty(menuItemDefinition.RequiredPermissionName))
                 {
-                    continue;
+                    if (!permissions.Any(p => p.Name == menuItemDefinition.RequiredPermissionName))
+                    {
+                        continue;
+                    }
                 }
                 UserMenuItem userMenuItem = new UserMenuItem(menuItemDefinition);
                 CheckPermission(permissions, menuItemDefinition.Items, userMenuItem.Items);

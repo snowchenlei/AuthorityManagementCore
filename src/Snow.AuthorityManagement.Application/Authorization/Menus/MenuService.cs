@@ -42,7 +42,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
         /// 菜单应用服务
         /// </summary>
         /// <returns></returns>
-        public async Task<List<MenuListDto>> GetAllListAsync()
+        public async Task<List<MenuListDto>> GetAllMenuListAsync()
         {
             List<Menu> menus = await _menuRepository.GetAllListAsync();
             return _mapper.Map<List<MenuListDto>>(menus);

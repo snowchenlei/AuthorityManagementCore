@@ -8,8 +8,14 @@ using System.Text;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Users.Validators
 {
+    /// <summary>
+    /// UserEditDto验证
+    /// </summary>
     public class UserEditValidator : TemplateValidator<UserEditDto>
     {
+        /// <summary>
+        /// 构造
+        /// </summary>
         public UserEditValidator()
         {
             RuleFor(u => u.Name)

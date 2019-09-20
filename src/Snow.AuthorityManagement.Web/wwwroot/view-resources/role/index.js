@@ -8,8 +8,8 @@ function queryParams(params) {
         pageIndex: params.offset / params.limit,  //页码
         sort: params.sort,
         order: params.order,
-        name: $('#txt_search_name').val(),
-        date: $('#txt_search_addTime').val()
+        displayName: $('#txt_search_display_name').val(),
+        //date: $('#txt_search_addTime').val()
     };
 }
 // #endregion
@@ -49,21 +49,12 @@ function queryParams(params) {
         var htmlArr = [];
 
         htmlArr.push('<div class="btn-group" style="display: inline-block;" role="group" aria-label="...">');
-        if (isGranted('Pages.Users.Edit')) {
-            htmlArr.push('<button type = "button" class="btn btn-sm btn-warning edit"><i class="far fa-edit"></i></button>');
+        if (isGranted('Pages.Administration.Roles.Edit')) {
+            htmlArr.push('<button type="button" class="btn btn-sm btn-warning edit" title="修改"><i class="far fa-edit"></i></button>');
         }
-        if (isGranted('Pages.Users.Delete')) {
-            htmlArr.push('<button type="button" class="btn btn-sm btn-danger remove"><i class="fas fa-trash"></i></button>');
+        if (isGranted('Pages.Administration.Roles.Delete')) {
+            htmlArr.push('<button type="button" class="btn btn-sm btn-danger remove" title="删除"><i class="fas fa-trash"></i></button>');
         }
-        htmlArr.push('<div class="btn-group" role="group">');
-        htmlArr.push('<button id="btnGroupDrop1" type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">');
-        htmlArr.push('Action');
-        htmlArr.push('</button>');
-        htmlArr.push('<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">');
-        htmlArr.push('<a class="dropdown-item" href="#">Dropdown link</a>');
-        htmlArr.push('<a class="dropdown-item" href="#">Dropdown link</a>');
-        htmlArr.push('</div>');
-        htmlArr.push('</div>');
         htmlArr.push('</div>');
         return htmlArr.join('');
     }
@@ -71,11 +62,11 @@ function queryParams(params) {
         { checkbox: true },
         { title: '操作', formatter: actionFormater, events: operateEvents },
         { field: 'id', title: 'Id', visible: false },
-        { field: 'name', title: '名称' },
+        { field: 'displayName', title: '名称' },
         { field: 'sort', title: '排序', sortable: true }
     ];
     $(function () {
-        if (!isGranted('Pages.Roles.Create')) {
+        if (!isGranted('Pages.Administration.Roles.Create')) {
             $('#btnAdd').remove();
         }
         $('#create').click(function () {

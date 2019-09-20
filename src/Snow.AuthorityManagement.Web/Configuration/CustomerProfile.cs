@@ -19,6 +19,9 @@ namespace Snow.AuthorityManagement.Web.Configuration
             CreateMap<MenuListDto, SelectListItem>()
                 .ForMember(a => a.Value, opt => opt.MapFrom(src => src.ID))
                 .ForMember(a => a.Text, opt => opt.MapFrom(src => src.Name));
+            CreateMap<RoleListDto, SelectListItem>()
+                .ForMember(a => a.Value, opt => opt.MapFrom(src => src.ID))
+                .ForMember(a => a.Text, opt => opt.MapFrom(src => src.DisplayName));
 
             //Mapper.Initialize(x =>
             //{

@@ -13,9 +13,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus.Mapper
         {
             CreateMap<Menu, MenuListDto>();
             CreateMap<MenuEditDto, Menu>();
-            CreateMap<Menu, MenuEditDto>()
-                .ForMember(a => a.ParentID,
-                    opt => opt.MapFrom(src => src.Parent == null ? null : (int?)src.Parent.ID));
+            CreateMap<Menu, MenuEditDto>();
         }
     }
 }

@@ -6,6 +6,7 @@ function queryParams(params) {
         pageIndex: params.offset / params.limit,  //页码
         sort: params.sort,
         order: params.order,
+        name: $("#txt_search_name").val(),
         parentId: $('#parentId').val()
     };
 }
@@ -14,10 +15,14 @@ function queryParams(params) {
     var treeId = 'navTree';
     window.operateEvents = {
         'click .edit': function (e, value, row, index) {
+            l = Ladda.create(e.target);
+            l.start();
             e.preventDefault();
             createOrEdit('修改菜单：' + row.name, row.id);
         },
         'click .remove': function (e, value, row, index) {
+            l = Ladda.create(e.target);
+            l.start();
             bootbox.confirm({
                 size: 'small',
                 title: '删除菜单' + row.name,
@@ -34,9 +39,12 @@ function queryParams(params) {
                                         field: 'id',
                                         values: [row.id]
                                     });
+                                l.stop();
                                 toastr.success('删除成功');
                             }
                         });
+                    } else {
+                        l.stop();
                     }
                 }
             });
@@ -46,11 +54,11 @@ function queryParams(params) {
         var htmlArr = [];
 
         htmlArr.push('<div class="btn-group" style="display: inline-block;" role="group" aria-label="...">');
-        if (isGranted('Pages.Users.Edit')) {
-            htmlArr.push('<button type = "button" class="btn btn-sm btn-warning edit"><i class="far fa-edit"></i></button>');
+        if (isGranted('Pages.Administration.Menus.Edit')) {
+            htmlArr.push('<button type = "button" class="btn btn-sm btn-warning edit" title="修改"><i class="far fa-edit"></i></button>');
         }
-        if (isGranted('Pages.Users.Delete')) {
-            htmlArr.push('<button type="button" class="btn btn-sm btn-danger remove"><i class="fas fa-trash"></i></button>');
+        if (isGranted('Pages.Administration.Menus.Delete')) {
+            htmlArr.push('<button type="button" class="btn btn-sm btn-danger remove" title="删除"><i class="fas fa-trash"></i></button>');
         }
         htmlArr.push('<div class="btn-group" role="group">');
         htmlArr.push('<button id="btnGroupDrop1" type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">');
@@ -70,7 +78,7 @@ function queryParams(params) {
         { field: 'id', title: 'Id', visible: false },
         { field: 'name', title: '名称' },
         { field: 'icon', title: '图标' },
-        { field: 'sort', title: '排序' }
+        { field: 'sort', title: '排序', sortable: true }
     ];
     //#region ztree
     var setting = {
@@ -127,11 +135,13 @@ function queryParams(params) {
         loadPanel();
         $.fn.zTree.init($("#navTree"), setting);
 
-        if (!isGranted('Pages.Menus.Create')) {
+        if (!isGranted('Pages.Administration.Menus.Create')) {
             $('#btnAdd').remove();
         }
 
         $('#create').click(function () {
+            l = Ladda.create(this);
+            l.start();
             createOrEdit('添加新菜单');
         });
     });
@@ -166,9 +176,10 @@ function queryParams(params) {
             }
         });
         dialog.init(function () {
-            $.get('/Menu/CreateOrEdit', { id: id }, function (data) {
+            $.get('/Menu/CreateOrEdit', { id: id, parentId: $('#parentId').val() }, function (data) {
                 dialog.find('.bootbox-body').html(data);
                 dialog.find('input:not([type=hidden]):first').focus();
+                l.stop();
             });
         });
     }

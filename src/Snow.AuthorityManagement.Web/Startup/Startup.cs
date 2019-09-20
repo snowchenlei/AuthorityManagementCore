@@ -23,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
+using Snow.AuthorityManagement.Application.Authorization.Menus.Validators;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Validators;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
@@ -221,6 +222,7 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddTransient<IValidator<CreateOrUpdateUser>, CreateOrUpdateUserValidator>();
             services.AddTransient<IValidator<RoleEditDto>, RoleEditValidator>();
             services.AddTransient<IValidator<CreateOrUpdateRole>, CreateOrUpdateRoleValidator>();
+            services.AddTransient<IValidator<MenuEditDto>, MenuEditValidator>();
         }
 
         /// <summary>

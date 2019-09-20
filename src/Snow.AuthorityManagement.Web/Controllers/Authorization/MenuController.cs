@@ -15,7 +15,7 @@ using Snow.AuthorityManagement.Web.Mvc.Models.Menus;
 
 namespace Snow.AuthorityManagement.Web.Mvc.Controllers.Authorization
 {
-    [AncAuthorize(PermissionNames.Pages_Menus)]
+    [AncAuthorize(PermissionNames.Pages_Administration_Menus)]
     public class MenuController : BaseController
     {
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace Snow.AuthorityManagement.Web.Mvc.Controllers.Authorization
             _menuService = menuService;
         }
 
-        [AncAuthorize(PermissionNames.Pages_Menus)]
+        [AncAuthorize(PermissionNames.Pages_Administration_Menus)]
         [ResponseCache(CacheProfileName = "Header")]
         public IActionResult Index()
         {
@@ -38,17 +38,20 @@ namespace Snow.AuthorityManagement.Web.Mvc.Controllers.Authorization
         [HttpGet]
         [AjaxOnly]
         [ResponseCache(CacheProfileName = "Header")]
-        [AncAuthorize(PermissionNames.Pages_Menus_Create, PermissionNames.Pages_Menus_Edit)]
-        public async Task<ActionResult> CreateOrEdit(int? id)
+        [AncAuthorize(PermissionNames.Pages_Administration_Menus_Create, PermissionNames.Pages_Administration_Menus_Edit)]
+        public async Task<ActionResult> CreateOrEdit(int? menuId, int? parentId)
         {
-            MenuEditDto output = new MenuEditDto();
-            if (id.HasValue)
+            MenuEditDto output = new MenuEditDto()
             {
-                output = await _menuService.GetMenuForEditAsync(id.Value);
+                ParentID = parentId
+            };
+            if (menuId.HasValue)
+            {
+                output = await _menuService.GetMenuForEditAsync(menuId.Value);
             }
             var viewModel = new CreateOrEditMenuModalViewModel();
             viewModel.Menu = output;
-            List<MenuListDto> menus = await _menuService.GetAllListAsync();
+            List<MenuListDto> menus = await _menuService.GetAllMenuListAsync();
             List<SelectListItem> menuItems = _mapper.Map<List<SelectListItem>>(menus);
             viewModel.MenuList = menuItems;
             return PartialView("_CreateOrEditModal", viewModel);

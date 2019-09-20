@@ -8,6 +8,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
     public class RoleListDto : EntityDto
     {
         public string Name { get; set; }
+        public string DisplayName { get; set; }
+
         public int Sort { get; set; }
     }
 }

@@ -1,12 +1,26 @@
 ﻿using Anc.Application.Navigation;
 using Snow.AuthorityManagement.Core;
+using Snow.AuthorityManagement.Core.Authorization.Menus;
+using Snow.AuthorityManagement.Core.Authorization.Menus.DomainService;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Startup
 {
     public class NavigationProvider : INavigationProvider
     {
-        MenuDefinition INavigationProvider.GetNavigation()
+        private readonly IMenuManager _menuManager;
+
+        public NavigationProvider(IMenuManager menuManager)
         {
+            _menuManager = menuManager;
+        }
+
+        async Task<MenuDefinition> INavigationProvider.GetNavigationAsync()
+        {
+            MenuDefinition menus = await _menuManager.CreateMenuDefinitionAsync();
+            //return menus;
             MenuDefinition menu = new MenuDefinition("MainMenu", "主菜单")
                .AddItem(new MenuItemDefinition(
                        PageNames.Users,
@@ -19,7 +33,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                            "user",
                            "/User/Index",
                            target: "tab_1",
-                           requiredPermissionName: PermissionNames.Pages_Users
+                           requiredPermissionName: PermissionNames.Pages_Administration_Users
                        )
                    ).AddItem(
                        new MenuItemDefinition(
@@ -28,7 +42,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                            "user",
                            "/Role/Index",
                            target: "tab_2",
-                           requiredPermissionName: PermissionNames.Pages_Roles)
+                           requiredPermissionName: PermissionNames.Pages_Administration_Roles)
                        ).AddItem(
                            new MenuItemDefinition(
                                PageNames.Menus,
@@ -36,10 +50,10 @@ namespace Snow.AuthorityManagement.Web.Startup
                                "menu",
                                "/Menu/Index",
                                target: "tab_3",
-                               requiredPermissionName: PermissionNames.Pages_Menus)
+                               requiredPermissionName: PermissionNames.Pages_Administration_Menus)
                        )
                );
-            return menu;
+            return menus;
         }
     }
 }

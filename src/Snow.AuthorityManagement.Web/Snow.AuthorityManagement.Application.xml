@@ -19,7 +19,7 @@
             菜单应用服务
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.GetAllListAsync">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.GetAllMenuListAsync">
             <summary>
             获取所有
             </summary>
@@ -82,7 +82,7 @@
             <param name="menuRepository"></param>
             <param name="context"></param>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.GetAllListAsync">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.GetAllMenuListAsync">
             <summary>
             菜单应用服务
             </summary>
@@ -130,6 +130,16 @@
             <param name="menuId"></param>
             <returns></returns>
         </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Menus.Validators.MenuEditValidator">
+            <summary>
+            MenuEditDto验证
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.Validators.MenuEditValidator.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
         <member name="T:Snow.AuthorityManagement.Application.Authorization.Permissions.PermissionService">
             <summary>
             权限服务
@@ -139,6 +149,17 @@
             <summary>
             构造
             </summary>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService">
+            <summary>
+            角色服务接口
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService.GetAllRoleListAsync">
+            <summary>
+            获取所有
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
             <summary>
@@ -175,6 +196,26 @@
             删除
             </summary>
             <param name="id">编号</param>
+            <returns></returns>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService">
+            <summary>
+            角色服务
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Data.AuthorityManagementContext,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.Roles.Role},Snow.AuthorityManagement.Core.Authorization.Permissions.IPermissionRepository)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+            <param name="context"></param>
+            <param name="roleRepository"></param>
+            <param name="permissionRepository"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.GetAllRoleListAsync">
+            <summary>
+            获取所有
+            </summary>
             <returns></returns>
         </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
@@ -221,9 +262,24 @@
             <param name="id">编号</param>
             <returns></returns>
         </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput">
+            <summary>
+            用户查询参数
+            </summary>
+        </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput.#ctor">
             <summary>
             构造
+            </summary>
+        </member>
+        <member name="P:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput.Date">
+            <summary>
+            创建时间段
             </summary>
         </member>
         <member name="P:Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto.UserName">
@@ -391,6 +447,16 @@
             </summary>
             <param name="id">编号</param>
             <returns></returns>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Users.Validators.UserEditValidator">
+            <summary>
+            UserEditDto验证
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.Validators.UserEditValidator.#ctor">
+            <summary>
+            构造
+            </summary>
         </member>
     </members>
 </doc>

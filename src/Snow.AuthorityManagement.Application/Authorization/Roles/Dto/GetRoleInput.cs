@@ -17,7 +17,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
             Sorting = "ID";
         }
 
-        public string Name { get; set; }
+        public string DisplayName { get; set; }
         public string Date { get; set; }
     }
 }

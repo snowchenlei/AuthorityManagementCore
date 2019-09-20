@@ -17,7 +17,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
         /// 获取所有
         /// </summary>
         /// <returns></returns>
-        Task<List<MenuListDto>> GetAllListAsync();
+        Task<List<MenuListDto>> GetAllMenuListAsync();
 
         /// <summary>
         /// 分页

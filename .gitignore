@@ -55,3 +55,9 @@
 /src/Snow.AuthorityManagement.Repository/bin/Debug/netcoreapp2.2
 /src/Snow.AuthorityManagement.Web/bin/Debug/netcoreapp2.2
 /src/Snow.AuthorityManagement.Web.Host/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Application/obj
+/src/Snow.AuthorityManagement.Web.Core/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Web.Core/obj
+/src/Snow.AuthorityManagement.Web.Mvc/App_Data
+/src/Snow.AuthorityManagement.Web.Mvc/bin/Debug/netcoreapp2.2
+/src/Snow.AuthorityManagement.Web.Mvc/obj

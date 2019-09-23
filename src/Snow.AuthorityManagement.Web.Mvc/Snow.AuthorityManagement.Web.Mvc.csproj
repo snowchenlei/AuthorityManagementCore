@@ -87,7 +87,7 @@
     <ProjectReference Include="..\Snow.AuthorityManagement.Application\Snow.AuthorityManagement.Application.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Common\Snow.AuthorityManagement.Common.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Repository\Snow.AuthorityManagement.Repository.csproj" />
-    <ProjectReference Include="..\Snow.AuthorityManagement.Web.Host\Snow.AuthorityManagement.Web.Core.csproj" />
+    <ProjectReference Include="..\Snow.AuthorityManagement.Web.Core\Snow.AuthorityManagement.Web.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -109,6 +109,8 @@
   </ItemGroup>
 
   <ProjectExtensions>
-    <VisualStudio><UserProperties bundleconfig_1json__JsonSchema="" appsettings_1json__JSONSchema="" libman_1json__JsonSchema="" /></VisualStudio>
+    <VisualStudio>
+      <UserProperties bundleconfig_1json__JsonSchema="" appsettings_1json__JSONSchema="" libman_1json__JsonSchema="" />
+    </VisualStudio>
   </ProjectExtensions>
 </Project>

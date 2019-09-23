@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>../Snow.AuthorityManagement.Web/Snow.AuthorityManagement.Web.Core.xml</DocumentationFile>
+    <DocumentationFile>../Snow.AuthorityManagement.Web.Mvc/Snow.AuthorityManagement.Web.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,5 +27,4 @@
     <PackageReference Include="CacheCow.Server.Core.Mvc" Version="2.4.4" />
     <PackageReference Include="CacheManager.Core" Version="1.2.0" />
   </ItemGroup>
-
 </Project>

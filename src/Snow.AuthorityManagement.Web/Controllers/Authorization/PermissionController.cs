@@ -9,7 +9,6 @@ using Snow.AuthorityManagement.Application.Authorization.Permissions;
 using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Exception;
-using Snow.AuthorityManagement.Web.Session;
 
 namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {

@@ -38,7 +38,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <param name="input">信息</param>
         /// <param name="permission">权限</param>
         /// <returns>信息</returns>
-        Task<RoleListDto> CreateAsync(RoleEditDto input, string permission);
+        Task<RoleListDto> CreateAsync(RoleEditDto input, List<string> permission);
 
         /// <summary>
         /// 修改
@@ -46,7 +46,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <param name="input">信息</param>
         /// <param name="permission">权限</param>
         /// <returns>信息</returns>
-        Task<RoleListDto> EditAsync(RoleEditDto input, string permission);
+        Task<RoleListDto> EditAsync(RoleEditDto input, List<string> permission);
 
         /// <summary>
         /// 删除

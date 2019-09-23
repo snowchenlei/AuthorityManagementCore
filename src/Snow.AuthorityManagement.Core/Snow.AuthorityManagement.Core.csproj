@@ -17,7 +17,9 @@
   <ItemGroup>
     <Compile Remove="Enum\OrderType.cs" />
     <Compile Remove="Exception\AncAuthorizationException.cs" />
+    <Compile Remove="Exception\AncInitializationException.cs" />
     <Compile Remove="IBaseRepository.cs" />
+    <Compile Remove="Model\AncPermission.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -176,7 +176,7 @@ function queryParams(params) {
             }
         });
         dialog.init(function () {
-            $.get('/Menu/CreateOrEdit', { id: id, parentId: $('#parentId').val() }, function (data) {
+            $.get('/Menu/CreateOrEdit', { menuId: id, parentId: $('#parentId').val() }, function (data) {
                 dialog.find('.bootbox-body').html(data);
                 dialog.find('input:not([type=hidden]):first').focus();
                 l.stop();

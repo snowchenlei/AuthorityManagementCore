@@ -19,7 +19,6 @@
         <form asp-controller="Role" asp-action="CreateOrEdit" id="modelForm" method="post" enctype="multipart/form-data"
               data-ajax="true" data-ajax-success="saveSuccess" data-ajax-failure="saveFailure">
             @Html.AntiForgeryToken()
-            <input type="hidden" id="Permissions" name="Permission" />
             <div class="modal-body form-horizontal" id="modify">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Role.ID" />

@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Anc.Authorization;
-using Snow.AuthorityManagement.Core.Exception;
-using Snow.AuthorityManagement.Core.Model;
 
-namespace Snow.AuthorityManagement.Common.Authorization
+namespace Anc.Authorization
 {
     public class PermissionDictionary : Dictionary<string, AncPermission>
     {

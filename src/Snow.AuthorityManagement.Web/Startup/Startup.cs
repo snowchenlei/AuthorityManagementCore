@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using Anc.Application.Services.Dto;
@@ -29,14 +26,12 @@ using Snow.AuthorityManagement.Application.Authorization.Roles.Validators;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
 using Snow.AuthorityManagement.Data;
-using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Configuration;
 using Snow.AuthorityManagement.Web.Core.Common.ETag.Role;
 using Snow.AuthorityManagement.Web.Core.Common.ETag.User;
 using Snow.AuthorityManagement.Web.Library;
 using Snow.AuthorityManagement.Web.Library.Middleware;
 using Snow.AuthorityManagement.Web.Startup.OnceTask;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Snow.AuthorityManagement.Web.Startup
 {

@@ -8,6 +8,6 @@ namespace Anc.Authorization
 {
     public interface IPermissionManagerBase
     {
-        Task<IEnumerable<IPermission>> GetAllPermissionsAsync(int userId);
+        Task<IEnumerable<IPermission>> GetAllPermissionsByUserIdAsync(int userId);
     }
 }

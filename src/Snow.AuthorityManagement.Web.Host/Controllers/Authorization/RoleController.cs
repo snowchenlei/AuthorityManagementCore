@@ -76,7 +76,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [AncAuthorize(PermissionNames.Pages_Administration_Roles_Create)]
         public async Task<IActionResult> Post([FromBody]CreateOrUpdateRole input)
         {
-            var result = await _roleService.CreateAsync(input.Role, input.Permission);
+            var result = await _roleService.CreateAsync(input.Role, input.PermissionNames);
             return CreatedAtRoute("GetRole", new { id = result.ID }, result);
         }
 
@@ -96,7 +96,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         public async Task<IActionResult> Put(int id, [FromBody]CreateOrUpdateRole input)
         {
             input.Role.ID = id;
-            await _roleService.EditAsync(input.Role, input.Permission);
+            await _roleService.EditAsync(input.Role, input.PermissionNames);
             return NoContent();
         }
 

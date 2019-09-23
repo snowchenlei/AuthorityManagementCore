@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Anc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Snow.AuthorityManagement.Common.Encryption;
+using Snow.AuthorityManagement.Core;
+using Snow.AuthorityManagement.Core.Authorization;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
@@ -17,8 +20,8 @@ namespace Snow.AuthorityManagement.Data.Seed
 {
     public class HostRoleAndUserCreator
     {
-        private readonly AuthorityManagementContext _context;
         private readonly IConfiguration _configuration;
+        private readonly AuthorityManagementContext _context;
 
         public HostRoleAndUserCreator(AuthorityManagementContext context, IConfiguration configuration)
         {
@@ -33,14 +36,24 @@ namespace Snow.AuthorityManagement.Data.Seed
 
         private async Task CreateHostRoleAndUsersAsync()
         {
+            // Admin role for host
             var adminRoleForHost = await _context.Role.IgnoreQueryFilters().FirstOrDefaultAsync();
             if (adminRoleForHost == null)
             {
-                adminRoleForHost = (await _context.Role.AddAsync(new Role() { Name = "Admin", DisplayName = "系统管理员", Sort = 1 })).Entity;
+                adminRoleForHost = (await _context.Role.AddAsync(new Role() { Name = StaticRoleNames.Host.Name, DisplayName = StaticRoleNames.Host.DisplayName })).Entity;
                 await _context.SaveChangesAsync();
             }
-            //TODO:权限获取
-            var permissions = new List<Permission>();
+            // Grant all permissions to admin role for host
+            var grantedPermissions = _context.Permission.IgnoreQueryFilters()
+               .Where(p => p.RoleID == adminRoleForHost.ID)
+               .Select(p => p.Name)
+               .ToList();
+
+            var permissions = PermissionFinder
+                .GetAllPermissions(new AuthorityManagementAuthorizationProvider())
+                .Where(p => !grantedPermissions.Contains(p.Name))
+                .ToList();
+
             if (permissions.Any())
             {
                 await _context.Permission.AddRangeAsync(

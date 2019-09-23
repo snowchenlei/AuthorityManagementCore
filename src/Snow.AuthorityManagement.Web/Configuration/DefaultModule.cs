@@ -3,9 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using Microsoft.AspNetCore.Http;
-using Snow.AuthorityManagement.Web.Authorization;
-using Snow.AuthorityManagement.Web.Manager;
-using Snow.AuthorityManagement.Web.Session;
 using Anc.Dependency;
 using Anc.Domain.Repositories;
 using Anc.EntityFrameworkCore.Repositories;
@@ -84,6 +81,7 @@ namespace Snow.AuthorityManagement.Web.Configuration
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(IRepository<,>));
             builder.RegisterType<EfCoreUnitOfWork<AuthorityManagementContext>>().As<IUnitOfWork>();
             builder.RegisterType<UserNavigationManager>().As<IUserNavigationManager>();
+            //builder.RegisterType<PermissionDefinitionContextBase>().As<IPermissionDefinitionContext>();
             //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();
             //builder.RegisterType<AuthorizationHelper>().As<IAuthorizationHelper>();
             //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();

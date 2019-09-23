@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using Anc.AspNetCore.Web.Mvc.Authorization;
+using Anc.Authorization;
 using AutoMapper;
 using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,6 @@ using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Model;
-using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Library;
 using Snow.AuthorityManagement.Web.Models.Roles;
 
@@ -141,11 +141,11 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
                 RoleListDto roleListDto;
                 if (input.Role.ID.HasValue)
                 {
-                    roleListDto = await Edit(input.Role, input.Permission);
+                    roleListDto = await Edit(input.Role, input.PermissionNames);
                 }
                 else
                 {
-                    roleListDto = await Create(input.Role, input.Permission);
+                    roleListDto = await Create(input.Role, input.PermissionNames);
                 }
 
                 return Json(new Result<RoleListDto>()
@@ -167,13 +167,13 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         }
 
         [AncAuthorize(PermissionNames.Pages_Administration_Roles_Create)]
-        public Task<RoleListDto> Create(RoleEditDto input, string permission)
+        public Task<RoleListDto> Create(RoleEditDto input, List<string> permission)
         {
             return _roleService.CreateAsync(input, permission);
         }
 
         [AncAuthorize(PermissionNames.Pages_Administration_Roles_Edit)]
-        public Task<RoleListDto> Edit(RoleEditDto input, string permission)
+        public Task<RoleListDto> Edit(RoleEditDto input, List<string> permission)
         {
             return _roleService.EditAsync(input, permission);
         }

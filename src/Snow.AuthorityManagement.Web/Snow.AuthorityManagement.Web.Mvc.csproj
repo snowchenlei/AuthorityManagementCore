@@ -7,24 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Authorization\**" />
+    <Compile Remove="Helpers\**" />
+    <Compile Remove="Manager\**" />
+    <Compile Remove="Session\**" />
     <Compile Remove="Views\Cache\**" />
+    <Content Remove="Authorization\**" />
+    <Content Remove="Helpers\**" />
+    <Content Remove="Manager\**" />
+    <Content Remove="Session\**" />
     <Content Remove="Views\Cache\**" />
+    <EmbeddedResource Remove="Authorization\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <EmbeddedResource Remove="Manager\**" />
+    <EmbeddedResource Remove="Session\**" />
     <EmbeddedResource Remove="Views\Cache\**" />
+    <None Remove="Authorization\**" />
+    <None Remove="Helpers\**" />
+    <None Remove="Manager\**" />
+    <None Remove="Session\**" />
     <None Remove="Views\Cache\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Authorization\AncAuthorizeAttribute.cs" />
-    <Compile Remove="Authorization\AncAuthorizeFilter.cs" />
-    <Compile Remove="Authorization\AuthorizationHelper.cs" />
-    <Compile Remove="Authorization\IAuthorizationHelper.cs" />
-    <Compile Remove="Authorization\PermissionDefinitionContextBase.cs" />
-    <Compile Remove="Authorization\PermissionDictionary.cs" />
-    <Compile Remove="Authorization\PermissionNames.cs" />
-    <Compile Remove="Manager\IUserNavigationManager.cs" />
-    <Compile Remove="Manager\UserNavigationManager.cs" />
-    <Compile Remove="Session\ClaimsAncSession.cs" />
-    <Compile Remove="Session\IAncSession.cs" />
     <Compile Remove="Startup\IStartupTask.cs" />
   </ItemGroup>
 

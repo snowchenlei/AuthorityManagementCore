@@ -28,7 +28,7 @@ namespace Anc.Application.Navigation
             {
                 throw new AncAuthorizationException("请登陆");
             }
-            var permissions = await _permissionService.GetAllPermissionsAsync(_ancSession.UserId.Value);
+            var permissions = await _permissionService.GetAllPermissionsByUserIdAsync(_ancSession.UserId.Value);
             MenuDefinition menuDefinition = await _navigationProvider.GetNavigationAsync();
             UserMenu userMenu = new UserMenu(menuDefinition);
             CheckPermission(permissions, menuDefinition.Items, userMenu.Items);

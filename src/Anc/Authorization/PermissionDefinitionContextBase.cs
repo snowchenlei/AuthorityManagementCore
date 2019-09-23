@@ -1,20 +1,16 @@
-﻿using System;
+﻿using Anc.Collections.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Anc.Authorization;
-using Snow.AuthorityManagement.Common.Extensions;
-using Snow.AuthorityManagement.Core.Exception;
-using Snow.AuthorityManagement.Core.Model;
 
-namespace Snow.AuthorityManagement.Common.Authorization
+namespace Anc.Authorization
 {
-    public class PermissionDefinitionContextBase
+    public class PermissionDefinitionContextBase : IPermissionDefinitionContext
     {
-        public readonly PermissionDictionary Permissions;
-        public static readonly PermissionDefinitionContextBase Context = new PermissionDefinitionContextBase();
+        protected readonly PermissionDictionary Permissions;
 
-        private PermissionDefinitionContextBase()
+        protected PermissionDefinitionContextBase()
         {
             Permissions = new PermissionDictionary();
         }
@@ -26,7 +22,7 @@ namespace Snow.AuthorityManagement.Common.Authorization
         {
             if (Permissions.ContainsKey(name))
             {
-                throw new UserFriendlyException("There is already a permission with name: " + name);
+                throw new AncException("There is already a permission with name: " + name);
             }
 
             var permission = new AncPermission(name, displayName, description);

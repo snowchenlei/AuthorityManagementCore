@@ -3,24 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Anc.Authorization;
-using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.Core.Model;
 
-namespace Snow.AuthorityManagement.Web.Authorization
+namespace Snow.AuthorityManagement.Core
 {
-    public static class AuthorizationProvider
+    public class AuthorityManagementAuthorizationProvider : IAuthorizationProvider
     {
-        private static readonly PermissionDefinitionContextBase Context;
-
-        static AuthorizationProvider()
+        public void SetPermissions(IPermissionDefinitionContext context)
         {
-            Context = PermissionDefinitionContextBase.Context;
-        }
-
-        public static void SetPermissions()
-        {
-            var pages = Context.GetPermissionOrNull(PermissionNames.Pages) ??
-                        Context.CreatePermission(PermissionNames.Pages, "Pages");
+            var pages = context.GetPermissionOrNull(PermissionNames.Pages) ??
+                        context.CreatePermission(PermissionNames.Pages, "Pages");
 
             AncPermission administration = pages.Children.FirstOrDefault(p => p.Name == PermissionNames.Pages_Administration) ??
                                  pages.CreateChildPermission(PermissionNames.Pages_Administration, "Administration");

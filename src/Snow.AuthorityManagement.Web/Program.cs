@@ -7,9 +7,6 @@ using Snow.AuthorityManagement.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Snow.AuthorityManagement.Web.Authorization;
 using Snow.AuthorityManagement.Web.Startup.OnceTask;
 
 namespace Snow.AuthorityManagement.Web

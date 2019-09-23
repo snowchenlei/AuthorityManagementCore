@@ -17,12 +17,13 @@ using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Dto;
 using Snow.AuthorityManagement.Common.Conversion;
 using Snow.AuthorityManagement.Application.Authorization.Permissions.Dto;
-using Snow.AuthorityManagement.Common.Authorization;
 using System.Collections.Immutable;
 using Anc.Domain.Repositories;
 using Anc.Application.Services.Dto;
 using Anc.Domain.Model;
 using Anc.Domain.Uow;
+using Anc.Authorization;
+using Snow.AuthorityManagement.Core.Authorization.Permissions.DomainService;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles
 {
@@ -33,7 +34,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
     {
         private readonly IMapper _mapper;
         private readonly DbContext CurrentContext;
-        private readonly PermissionDefinitionContextBase _context;
+        private readonly IPermissionManager _permissionManager;
+        private readonly IAncPermissionManager _ancPermissionManager;
         private readonly ILambdaRepository<Role> _roleRepository;
         private readonly IPermissionRepository _permissionRepository;
 
@@ -47,12 +49,15 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         public RoleService(
             IMapper mapper
             , AuthorityManagementContext context
+            , IPermissionManager permissionManager
+            , IAncPermissionManager ancPermissionManager
             , ILambdaRepository<Role> roleRepository
             , IPermissionRepository permissionRepository)
         {
             _mapper = mapper;
             CurrentContext = context;
-            _context = PermissionDefinitionContextBase.Context;
+            _permissionManager = permissionManager;
+            _ancPermissionManager = ancPermissionManager;
             _roleRepository = roleRepository;
             _permissionRepository = permissionRepository;
         }
@@ -121,12 +126,12 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
                 roleEditDto = _mapper.Map<RoleEditDto>(role);
             }
 
-            IReadOnlyList<AncPermission> permissions = _context
-                .Permissions.Values.ToImmutableList();
+            IReadOnlyList<AncPermission> ancPermissions = _ancPermissionManager.GetAllPermissions();
+            List<Permission> permissions = (await _permissionManager.GetAllPermissionsByRoleIdAsync(roleId.Value)).ToList();
             ICollection<FlatPermissionDto> result = new List<FlatPermissionDto>();
-            foreach (AncPermission permission in permissions.Where(p => p.Parent == null))
+            foreach (AncPermission permission in ancPermissions.Where(p => p.Parent == null))
             {
-                result.Add(AddPermission(permission, null));
+                result.Add(AddPermission(permission, permissions));
             }
             return new GetRoleForEditOutput()
             {
@@ -160,17 +165,17 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// 添加
         /// </summary>
         /// <param name="input">信息</param>
-        /// <param name="permission">权限</param>
+        /// <param name="permissionNames">权限</param>
         /// <returns>信息</returns>
         [UnitOfWork]
-        public virtual async Task<RoleListDto> CreateAsync(RoleEditDto input, string permission)
+        public virtual async Task<RoleListDto> CreateAsync(RoleEditDto input, List<string> permissionNames)
         {
             if (await _roleRepository.ExistsAsync(u => u.Name == input.Name))
             {
                 throw new UserFriendlyException("角色名已存在");
             }
             Role role = _mapper.Map<Role>(input);
-            role.Permissions = CreatePermissions(permission);
+            role.Permissions = CreatePermissions(permissionNames);
             role.ID = await _roleRepository.InsertAndGetIdAsync(role);
             role.LastModificationTime = role.CreationTime;
             return _mapper.Map<RoleListDto>(role);
@@ -180,10 +185,10 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// 修改
         /// </summary>
         /// <param name="input">信息</param>
-        /// <param name="permission">权限</param>
+        /// <param name="permissionNames">权限</param>
         /// <returns>信息</returns>
         [UnitOfWork]
-        public virtual async Task<RoleListDto> EditAsync(RoleEditDto input, string permission)
+        public virtual async Task<RoleListDto> EditAsync(RoleEditDto input, List<string> permissionNames)
         {
             #region 角色
 
@@ -197,7 +202,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
 
             #region 权限
 
-            List<Permission> permissions = CreatePermissions(permission);
+            List<Permission> permissions = CreatePermissions(permissionNames);
             List<Permission> oldPermissions = await _permissionRepository.GetPermissionsByRoleIdAsync(role.ID);
             List<Permission> newPermissions = permissions.Except(oldPermissions, new PermissionComparer()).ToList();
             List<Permission> lostPermissions = oldPermissions
@@ -213,20 +218,18 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <summary>
         /// 构建权限实体
         /// </summary>
-        /// <param name="permission">权限字符串</param>
+        /// <param name="permissionNames">权限集合</param>
         /// <returns></returns>
-        private List<Permission> CreatePermissions(string permission)
+        private List<Permission> CreatePermissions(List<string> permissionNames)
         {
-            List<Permission> permissionsEntiy = new List<Permission>();
-            if (string.IsNullOrEmpty(permission))
+            if (permissionNames == null)
             {
-                return permissionsEntiy;
+                throw new ArgumentNullException(nameof(permissionNames));
             }
-            string[] permissions = permission
-                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Distinct().ToArray();
+
+            List<Permission> permissionsEntiy = new List<Permission>();
             DateTime now = DateTime.Now;
-            foreach (string per in permissions)
+            foreach (string per in permissionNames)
             {
                 permissionsEntiy.Add(new Permission()
                 {

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Anc.Authorization;
+using AutoMapper;
 using Snow.AuthorityManagement.Application.Authorization.Permissions.Dto;
 using Snow.AuthorityManagement.Core.Model;
 using System;

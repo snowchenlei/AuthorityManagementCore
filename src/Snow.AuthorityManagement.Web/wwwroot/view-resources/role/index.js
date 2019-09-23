@@ -127,8 +127,10 @@ function queryParams(params) {
     }
     function getPara($e) {
         var role = $e.serializeFormToJson();
+        var permissionNames = _findAssignedPermissions();
         var data = {
-            role
+            role,
+            permissionNames
         };
         return JSON.stringify(data);
     }
@@ -207,5 +209,16 @@ function queryParams(params) {
             }
         });
         return false;
+    }
+    function _findAssignedPermissions() {
+        var checkAuth = [];
+        var zTree = $.fn.zTree.getZTreeObj("authTree");
+        var checkNodes = zTree.getCheckedNodes(true);
+        checkAuth.splice(0, checkAuth.length);
+        for (var i = 0; i < checkNodes.length; i++) {
+            var current = checkNodes[i];
+            checkAuth.push(current.name);
+        }
+        return checkAuth;
     }
 })();

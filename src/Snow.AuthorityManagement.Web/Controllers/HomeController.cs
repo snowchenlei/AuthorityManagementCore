@@ -10,7 +10,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
-using Snow.AuthorityManagement.Web.Session;
 
 namespace Snow.AuthorityManagement.Web.Controllers
 {

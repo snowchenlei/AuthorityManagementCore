@@ -25,7 +25,15 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions.DomainSe
             _permissionRepository = permissionRepository;
         }
 
-        public async Task<IEnumerable<IPermission>> GetAllPermissionsAsync(int userId)
+        public async Task<IEnumerable<Permission>> GetAllPermissionsByRoleIdAsync(int roleId)
+        {
+            return await _permissionRepository
+                .GetAll()
+                .Where(p => p.Role.ID == roleId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<IPermission>> GetAllPermissionsByUserIdAsync(int userId)
         {
             var roleIds = await _userRoleRepository
                 .GetAll()
@@ -33,7 +41,8 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions.DomainSe
                 .Select(ur => ur.RoleID)
                 .ToListAsync();
             return await _permissionRepository
-                .GetAll().Where(p => p.User.ID == userId
+                .GetAll()
+                .Where(p => p.User.ID == userId
                                     || roleIds.Contains(p.Role.ID))
                 .ToListAsync();
         }

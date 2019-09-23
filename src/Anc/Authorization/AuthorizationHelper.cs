@@ -46,7 +46,7 @@ namespace Anc.Authorization
             {
                 throw new AncAuthorizationException("请登陆");
             }
-            IEnumerable<IPermission> permissions = await _permissionManagerBase.GetAllPermissionsAsync(_ancSession.UserId.Value);
+            IEnumerable<IPermission> permissions = await _permissionManagerBase.GetAllPermissionsByUserIdAsync(_ancSession.UserId.Value);
 
             foreach (var authorizeAttribute in authorizeAttributes)
             {

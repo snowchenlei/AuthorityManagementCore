@@ -120,14 +120,15 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         public async Task<GetRoleForEditOutput> GetForEditAsync(int? roleId)
         {
             RoleEditDto roleEditDto = null;
+            IEnumerable<Permission> permissions = null;
             if (roleId.HasValue)
             {
                 Role role = await _roleRepository.GetAsync(roleId.Value);
                 roleEditDto = _mapper.Map<RoleEditDto>(role);
+                permissions = await _permissionManager.GetAllPermissionsByRoleIdAsync(roleId.Value);
             }
 
             IReadOnlyList<AncPermission> ancPermissions = _ancPermissionManager.GetAllPermissions();
-            List<Permission> permissions = (await _permissionManager.GetAllPermissionsByRoleIdAsync(roleId.Value)).ToList();
             ICollection<FlatPermissionDto> result = new List<FlatPermissionDto>();
             foreach (AncPermission permission in ancPermissions.Where(p => p.Parent == null))
             {
@@ -141,7 +142,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         }
 
         private FlatPermissionDto AddPermission(AncPermission permission
-           , IList<Permission> oldPermissions)
+           , IEnumerable<Permission> oldPermissions)
         {
             var flatPermission = _mapper.Map<FlatPermissionDto>(permission);
             if (oldPermissions != null && oldPermissions.Any(op => op.Name == permission.Name))

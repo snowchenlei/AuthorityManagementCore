@@ -11,7 +11,6 @@ using Snow.AuthorityManagement.Data;
 using Snow.AuthorityManagement.Repository;
 using Anc.Domain.Uow;
 using Anc.EntityFrameworkCore.Uow;
-using Snow.AuthorityManagement.Data.Dapper.Repositories;
 using Autofac.Extras.DynamicProxy;
 using Anc.Runtime.Session;
 using Anc.Authorization;

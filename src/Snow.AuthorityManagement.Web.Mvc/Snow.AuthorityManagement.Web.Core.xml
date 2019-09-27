@@ -86,6 +86,18 @@
             <response code="204">删除成功</response>
             <response code="404">没有找到</response>
         </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+            <param name="roleService"></param>
+        </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
             <summary>
             分页获取

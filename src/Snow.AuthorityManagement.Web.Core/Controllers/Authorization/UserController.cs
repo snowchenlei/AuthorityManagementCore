@@ -47,16 +47,16 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="200">获取成功</response>
         /// <returns></returns>
         [HttpGet(Name = "GetUsersPage")]
-        [HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<UserListDto>))]
+        //[HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<UserListDto>))]
         [AncAuthorize(PermissionNames.Pages_Administration_Users_Query)]
         [ProducesResponseType(typeof(PagedResultDto<UserListDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery]GetUserInput input)
         {
             var result = await _userService.GetUserPagedAsync(input);
-            if (!_cache.Exists(AuthorityManagementConsts.UserLastResponseCache))
-            {
-                _cache.Add(AuthorityManagementConsts.UserLastResponseCache, await _userService.GetLastModificationTimeAsync());
-            }
+            //if (!_cache.Exists(AuthorityManagementConsts.UserLastResponseCache))
+            //{
+            //    _cache.Add(AuthorityManagementConsts.UserLastResponseCache, await _userService.GetLastModificationTimeAsync());
+            //}
             return Return<GetUserInput, PagedResultDto<UserListDto>, UserListDto>(input, "GetUsersPage", result);
         }
 
@@ -70,7 +70,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="404">没有找到</response>
         /// <returns></returns>
         [HttpGet("{id}", Name = "GetUser")]
-        [HttpCacheFactory(0, ViewModelType = typeof(GetUserForEditOutput))]
+        //[HttpCacheFactory(0, ViewModelType = typeof(GetUserForEditOutput))]
         [ProducesResponseType(typeof(GetUserForEditOutput), 200)]
         [ProducesResponseType(304)]
         [ProducesResponseType(404)]
@@ -79,7 +79,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         {
             UserEditDto user = await _userService.GetUserForEditAsync(id);
             DateTime? lastModified = user.LastModificationTime;
-            _cache.Add(String.Format(AuthorityManagementConsts.UserResponseCache, id), lastModified);
+            //_cache.Add(String.Format(AuthorityManagementConsts.UserResponseCache, id), lastModified);
             return Ok(user);
         }
 
@@ -98,7 +98,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         public async Task<IActionResult> Post([FromBody]CreateOrUpdateUser input)
         {
             UserListDto user = await _userService.CreateUserAsync(input.User, input.RoleIds);
-            CacheLastModificationTime(user.LastModificationTime);
+            //CacheLastModificationTime(user.LastModificationTime);
             return CreatedAtRoute("GetUser", new { id = user.ID }, user);
         }
 
@@ -119,8 +119,8 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         {
             input.User.ID = id;
             UserListDto user = await _userService.EditUserAsync(input.User, input.RoleIds);
-            _cache.Remove(String.Format(AuthorityManagementConsts.UserResponseCache, id));
-            CacheLastModificationTime(user.LastModificationTime);
+            //_cache.Remove(String.Format(AuthorityManagementConsts.UserResponseCache, id));
+            //CacheLastModificationTime(user.LastModificationTime);
             return NoContent();
         }
 
@@ -150,7 +150,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         public async Task<IActionResult> Delete(int id)
         {
             await _userService.DeleteUserAsync(id);
-            _cache.Remove(String.Format(AuthorityManagementConsts.UserResponseCache, id));
+            //_cache.Remove(String.Format(AuthorityManagementConsts.UserResponseCache, id));
             return NoContent();
         }
     }

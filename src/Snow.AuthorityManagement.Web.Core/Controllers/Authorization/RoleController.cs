@@ -13,11 +13,19 @@ using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
 {
+    /// <summary>
+    /// 角色
+    /// </summary>
     [Route("api/roles")]
     public class RoleController : PageController
     {
         private readonly IRoleService _roleService;
 
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="roleService"></param>
         public RoleController(IMapper mapper
             , IRoleService roleService) : base(mapper)
         {
@@ -32,7 +40,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="200">获取成功</response>
         /// <returns></returns>
         [HttpGet(Name = "GetRolesPage")]
-        [HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<RoleListDto>))]
+        //[HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<RoleListDto>))]
         [AncAuthorize(PermissionNames.Pages_Administration_Roles_Query)]
         [ProducesResponseType(typeof(PagedResultDto<RoleListDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery]GetRoleInput input)
@@ -51,7 +59,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="404">没有找到</response>
         /// <returns></returns>
         [HttpGet("{id}", Name = "GetRole")]
-        [HttpCacheFactory(0, ViewModelType = typeof(GetRoleForEditOutput))]
+        //[HttpCacheFactory(0, ViewModelType = typeof(GetRoleForEditOutput))]
         [ProducesResponseType(typeof(GetRoleForEditOutput), 200)]
         [ProducesResponseType(304)]
         [ProducesResponseType(404)]

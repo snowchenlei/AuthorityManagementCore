@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
@@ -10,13 +10,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dapper\**" />
+    <EmbeddedResource Remove="Dapper\**" />
+    <None Remove="Dapper\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntity.cs" />
     <Compile Remove="EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,5 +37,4 @@
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
 </Project>

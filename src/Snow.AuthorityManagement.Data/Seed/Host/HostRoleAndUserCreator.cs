@@ -16,7 +16,7 @@ using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Enum;
 
-namespace Snow.AuthorityManagement.Data.Seed
+namespace Snow.AuthorityManagement.Data.Seed.Host
 {
     public class HostRoleAndUserCreator
     {

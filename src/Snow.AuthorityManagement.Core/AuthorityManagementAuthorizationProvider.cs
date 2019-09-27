@@ -38,6 +38,17 @@ namespace Snow.AuthorityManagement.Core
             rolePermission.CreateChildPermission(PermissionNames.Pages_Administration_Roles_BatchDelete, "批量删除");
 
             #endregion 角色管理
+
+            #region 菜单管理
+
+            AncPermission menuPermission = administration.CreateChildPermission(PermissionNames.Pages_Administration_Menus, "菜单管理");
+            menuPermission.CreateChildPermission(PermissionNames.Pages_Administration_Menus_Query, "查询");
+            menuPermission.CreateChildPermission(PermissionNames.Pages_Administration_Menus_Create, "创建");
+            menuPermission.CreateChildPermission(PermissionNames.Pages_Administration_Menus_Edit, "修改");
+            menuPermission.CreateChildPermission(PermissionNames.Pages_Administration_Menus_Delete, "删除");
+            menuPermission.CreateChildPermission(PermissionNames.Pages_Administration_Menus_BatchDelete, "批量删除");
+
+            #endregion 菜单管理
         }
     }
 }

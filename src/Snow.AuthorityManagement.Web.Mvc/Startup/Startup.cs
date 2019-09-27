@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
@@ -38,18 +39,15 @@ namespace Snow.AuthorityManagement.Web.Startup
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        private ILogger<Startup> _logger;
 
-        public Startup(IConfiguration configuration
-            , ILogger<Startup> logger)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _logger = logger;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -79,7 +77,16 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<AuthorityManagementContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                string sqlConnection = Configuration.GetConnectionString("DefaultConnection");
+                string providerName = Configuration["AppSetting:ProviderName"];
+                if (providerName == "SqlServer")
+                {
+                    options.UseSqlServer(sqlConnection);
+                }
+                else if (providerName == "Sqlite")
+                {
+                    options.UseSqlite(sqlConnection);
+                }
             }, ServiceLifetime.Scoped);
 
             #endregion 线程内唯一
@@ -108,8 +115,6 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.Cookie.HttpOnly = true;
             });
             AddCacheCow(services);
-
-            return AddIoc(services);
         }
 
         private void AddMvc(IServiceCollection services)
@@ -148,8 +153,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                     });
 
                 #endregion 输出缓存配置
-            })
-            .AddJsonOptions(options =>
+            }).AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
@@ -161,7 +165,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                 //禁用其它的认证
                 fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         /// <summary>
@@ -233,22 +237,13 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<RoleListDto>, TimedETagQueryRoleRepository, RoleCollectionETagExtractor>(false);
         }
 
-        /// <summary>
-        /// 注册Ioc容器
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        private IServiceProvider AddIoc(IServiceCollection services)
+        public void ConfigureContainer(ContainerBuilder builder)
         {
-            ContainerBuilder builder = new ContainerBuilder();
-            builder.RegisterModule<DefaultModule>();
-            builder.Populate(services);
-            IContainer container = builder.Build();
-            return new AutofacServiceProvider(container);
+            builder.RegisterModule(new DefaultModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -256,7 +251,7 @@ namespace Snow.AuthorityManagement.Web.Startup
             }
             else
             {
-                app.UseExceptionHandler();
+                app.UseExceptionHandler("/errors");
                 //app.UseExceptionHandler(build =>
                 //    build.Run(async context =>
                 //    {
@@ -298,22 +293,22 @@ namespace Snow.AuthorityManagement.Web.Startup
             }
 
             app.UseCustomerExceptionHandler();
-            app.UseAuthentication();
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
             //使用静态文件
             app.UseStaticFiles();
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
             //Session
             app.UseSession();
             //app.UseCookiePolicy();//添加后会导致Session失效
             app.UseHttpsRedirection();
             loggerFactory.AddLog4Net();
 
-            app.UseStatusCodePagesWithReExecute("/errors/{0}");
-
-            app.UseMvc(routes =>
+            app.UseEndpoints(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

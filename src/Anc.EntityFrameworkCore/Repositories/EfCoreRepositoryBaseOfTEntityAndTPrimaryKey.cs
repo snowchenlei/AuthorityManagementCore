@@ -369,11 +369,24 @@ namespace Anc.EntityFrameworkCore.Repositories
 
         protected virtual Expression<Func<TEntity, bool>> CreateEqualityExpressionForId(TPrimaryKey id)
         {
+            //var lambdaParam = Expression.Parameter(typeof(TEntity));
+
+            //var leftExpression = Expression.PropertyOrField(lambdaParam, "ID");
+
+            //Expression<Func<object>> closure = () => id;
+            //var rightExpression = Expression.Convert(closure.Body, leftExpression.Type);
+
+            //var lambdaBody = Expression.Equal(leftExpression, rightExpression);
+
+            //return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
+
             var lambdaParam = Expression.Parameter(typeof(TEntity));
 
             var leftExpression = Expression.PropertyOrField(lambdaParam, "ID");
 
-            Expression<Func<object>> closure = () => id;
+            var idValue = Convert.ChangeType(id, typeof(TPrimaryKey));
+
+            Expression<Func<object>> closure = () => idValue;
             var rightExpression = Expression.Convert(closure.Body, leftExpression.Type);
 
             var lambdaBody = Expression.Equal(leftExpression, rightExpression);

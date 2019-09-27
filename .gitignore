@@ -61,3 +61,14 @@
 /src/Snow.AuthorityManagement.Web.Mvc/App_Data
 /src/Snow.AuthorityManagement.Web.Mvc/bin/Debug/netcoreapp2.2
 /src/Snow.AuthorityManagement.Web.Mvc/obj
+/src/Anc/bin
+/src/Anc.Dapper/bin/Release/netcoreapp3.0
+/src/Anc.EntityFrameworkCore/bin/Release/netcoreapp3.0
+/src/Anc.Web.Mvc/bin
+/src/Snow.AuthorityManagement.Application/bin
+/src/Snow.AuthorityManagement.Common/bin
+/src/Snow.AuthorityManagement.Core/bin
+/src/Snow.AuthorityManagement.Data/bin
+/src/Snow.AuthorityManagement.Repository/bin
+/src/Snow.AuthorityManagement.Web.Core/bin
+/src/Snow.AuthorityManagement.Web.Mvc/bin

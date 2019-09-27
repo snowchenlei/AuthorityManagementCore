@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
@@ -23,11 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Anc\Anc.csproj" />
   </ItemGroup>
-
 </Project>

@@ -10,9 +10,9 @@ namespace Snow.AuthorityManagement.Web.Controllers
 {
     public class ErrorsController : BaseController
     {
-        private IHostingEnvironment _env;
+        private IWebHostEnvironment _env;
 
-        public ErrorsController(IHostingEnvironment env)
+        public ErrorsController(IWebHostEnvironment env)
         {
             _env = env;
         }

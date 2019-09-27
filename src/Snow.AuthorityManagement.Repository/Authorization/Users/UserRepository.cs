@@ -1,7 +1,6 @@
 ﻿using Snow.AuthorityManagement.Core.Authorization.Users;
 using Snow.AuthorityManagement.Core.Entities.Authorization;
 using Snow.AuthorityManagement.Data;
-using Snow.AuthorityManagement.Data.Dapper.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;

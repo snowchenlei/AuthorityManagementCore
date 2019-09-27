@@ -122,8 +122,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
                 .Select(r => new RoleSelectDto
                 {
                     ID = r.ID,
-                    Name = "rolw" + new Random().Next(),
-                    DisplayName = r.Name
+                    Name = r.Name,
+                    DisplayName = r.DisplayName
                 }).ToArray();
             var output = new GetUserForEditOutput()
             {

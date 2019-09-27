@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Snow.AuthorityManagement.Data;
 
@@ -15,31 +14,37 @@ namespace Snow.AuthorityManagement.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "3.0.0");
 
             modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.Menus.Menu", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreationTime");
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Icon");
+                    b.Property<string>("Icon")
+                        .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("LastModificationTime");
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int?>("ParentID");
+                    b.Property<int?>("ParentID")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("PermissionName");
+                    b.Property<string>("PermissionName")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Route");
+                    b.Property<string>("Route")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Sort");
+                    b.Property<int>("Sort")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 
@@ -52,17 +57,22 @@ namespace Snow.AuthorityManagement.Data.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreationTime");
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsGranted");
+                    b.Property<bool>("IsGranted")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int?>("RoleID");
+                    b.Property<int?>("RoleID")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserID");
+                    b.Property<int?>("UserID")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 
@@ -77,21 +87,26 @@ namespace Snow.AuthorityManagement.Data.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreationTime");
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
+                        .HasColumnType("TEXT")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime?>("LastModificationTime");
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<int>("Sort");
+                    b.Property<int>("Sort")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 
@@ -102,11 +117,13 @@ namespace Snow.AuthorityManagement.Data.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("RoleID");
+                    b.Property<int>("RoleID")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserID");
+                    b.Property<int>("UserID")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 
@@ -121,26 +138,33 @@ namespace Snow.AuthorityManagement.Data.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
-                    b.Property<bool>("CanUse");
+                    b.Property<bool>("CanUse")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreationTime");
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("LastModificationTime");
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(11);
 
                     b.Property<string>("UserName")
                         .IsRequired()
+                        .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
                     b.HasKey("ID");
@@ -171,12 +195,14 @@ namespace Snow.AuthorityManagement.Data.Migrations
                     b.HasOne("Snow.AuthorityManagement.Core.Authorization.Roles.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Snow.AuthorityManagement.Core.Entities.Authorization.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -5,7 +5,7 @@
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXK/5Flg3YkiWvNjbry3/lgAAAAACAAAAAAAQZgAAAAEAACAAAADFGKetemEwi2fZ6TlAUZeAlJRvGZ8dLxK8dw6cM63sigAAAAAOgAAAAAIAACAAAAB6ayOzjYrUBifOTdXnNJwR+95vHInLF7VIeF80CWwv2DAAAABRy1C8sLtoZmFxzBLUpLWHXuFW9sE3SooGBLNuRLZjvT1ZgOOon3Yob2lnNq8aQRJAAAAAsP2QbBRG4UvQvan/yRW+IDyXpzqQjJ7Viljsi6FUX9qP0YqafFffhv4kMD8F1xGVZkrUCjwzYJ/QSDj8hFLojw==</EncryptedPassword>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\per\git\AuthorityManagementCore\src\Snow.AuthorityManagement.Web.Mvc\bin\Release\netcoreapp3.0\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

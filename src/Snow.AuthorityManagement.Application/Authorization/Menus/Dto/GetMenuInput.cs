@@ -11,7 +11,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus.Dto
         /// </summary>
         public GetMenuInput()
         {
-            Sorting = "ID";
+            Sorting = "Sort";
         }
 
         /// <summary>

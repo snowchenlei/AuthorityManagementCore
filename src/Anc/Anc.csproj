@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

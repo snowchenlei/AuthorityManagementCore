@@ -1,9 +1,10 @@
 ﻿using Anc.Application.Services.Dto;
 using Anc.AspNetCore.Web.Mvc.Authorization;
+using Anc.Runtime.Caching;
 using AutoMapper;
-using CacheCow.Server.Core.Mvc;
 using CacheManager.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Snow.AuthorityManagement.Application.Authorization.Users;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core;
@@ -21,22 +22,22 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
     public class UserController : PageController
     {
         // TODO:Api缓存隔离
-
         private readonly IUserService _userService;
-        private readonly ICacheManager<DateTime?> _cache;
+
+        private readonly ICacheManager<int> _cacheManager;
 
         /// <summary>
         /// 构造
         /// </summary>
         /// <param name="mapper"></param>
-        /// <param name="cache"></param>
+        /// <param name="cacheManager"></param>
         /// <param name="userService"></param>
         public UserController(IMapper mapper
-            , ICacheManager<DateTime?> cache
+            , ICacheManager<int> cacheManager
             , IUserService userService) : base(mapper)
         {
-            _cache = cache;
             _userService = userService;
+            _cacheManager = cacheManager;
         }
 
         /// <summary>
@@ -130,10 +131,10 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <param name="lastModified"></param>
         private void CacheLastModificationTime(DateTime? lastModified)
         {
-            if (lastModified.HasValue && _cache.Get(AuthorityManagementConsts.UserLastResponseCache).Value < lastModified.Value)
-            {
-                _cache.Add(AuthorityManagementConsts.UserLastResponseCache, lastModified);
-            }
+            //if (lastModified.HasValue && _cache.Get(AuthorityManagementConsts.UserLastResponseCache).Value < lastModified.Value)
+            //{
+            //    _cache.Add(AuthorityManagementConsts.UserLastResponseCache, lastModified);
+            //}
         }
 
         /// <summary>

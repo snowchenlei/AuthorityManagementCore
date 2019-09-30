@@ -72,3 +72,11 @@
 /src/Snow.AuthorityManagement.Repository/bin
 /src/Snow.AuthorityManagement.Web.Core/bin
 /src/Snow.AuthorityManagement.Web.Mvc/bin
+/Snow.CacheManager/bin/Release/netcoreapp3.0
+/Snow.CacheManager/obj
+/src/bin/Release
+/src/obj
+/src/Snow.CacheManager.Core/bin/Release/netcoreapp3.0
+/src/Snow.CacheManager.Core/obj
+/src/Snow.CacheManager.Microsoft.Extensions.Caching.Memory/bin
+/src/Snow.CacheManager.Microsoft.Extensions.Caching.Memory/obj

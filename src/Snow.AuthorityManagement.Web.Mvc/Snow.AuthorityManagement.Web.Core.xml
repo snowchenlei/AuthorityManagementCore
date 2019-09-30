@@ -153,12 +153,12 @@
             用户
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.#ctor(AutoMapper.IMapper,CacheManager.Core.ICacheManager{System.Nullable{System.DateTime}},Snow.AuthorityManagement.Application.Authorization.Users.IUserService)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.#ctor(AutoMapper.IMapper,CacheManager.Core.ICacheManager{System.Int32},Snow.AuthorityManagement.Application.Authorization.Users.IUserService)">
             <summary>
             构造
             </summary>
             <param name="mapper"></param>
-            <param name="cache"></param>
+            <param name="cacheManager"></param>
             <param name="userService"></param>
         </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput)">

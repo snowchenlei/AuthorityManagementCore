@@ -12,7 +12,7 @@
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
     <WebStackScaffolding_LayoutPageFile>~/Views/Shared/_LayoutPageTable.cshtml</WebStackScaffolding_LayoutPageFile>
-    <ActiveDebugProfile>Docker</ActiveDebugProfile>
+    <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

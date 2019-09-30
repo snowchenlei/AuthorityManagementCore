@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using Anc.Application.Services.Dto;
 using Anc.AspNetCore.Web.Mvc.Authorization;
+using Anc.Runtime.Caching;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
@@ -68,8 +69,6 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddCacheManager();
 
             #endregion CacheManager缓存
-
-            services.AddMemoryCache();
 
             #region 线程内唯一
 

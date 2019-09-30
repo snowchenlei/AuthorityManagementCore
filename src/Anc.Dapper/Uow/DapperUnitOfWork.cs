@@ -9,8 +9,8 @@ namespace Anc.Dapper.Uow
 {
     public class DapperUnitOfWork<TDbContext> : UnitOfWorkBase where TDbContext : DbContext
     {
-        private IDbConnection _connection = null;
-        private IDbTransaction _transaction = null;
+        private readonly IDbConnection _connection;
+        private IDbTransaction _transaction;
 
         public DapperUnitOfWork(TDbContext context)
         {

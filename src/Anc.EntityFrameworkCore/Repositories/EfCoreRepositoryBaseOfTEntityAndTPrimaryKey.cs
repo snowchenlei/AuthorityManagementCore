@@ -23,11 +23,6 @@ namespace Anc.EntityFrameworkCore.Repositories
         public virtual DbSet<TEntity> Table => Context.Set<TEntity>();
 
         /// <summary>
-        /// Gets DbQuery for given entity.
-        /// </summary>
-        public virtual DbQuery<TEntity> DbQueryTable => Context.Query<TEntity>();
-
-        /// <summary>
         /// Gets EF DbContext object.
         /// </summary>
         public readonly DbContext Context;
@@ -361,7 +356,7 @@ namespace Anc.EntityFrameworkCore.Repositories
                         typeof(IEntity<>)) &&
                     property.PropertyType.GetGenericArguments().Any(x => x == typeof(TEntity)))))
             {
-                return DbQueryTable.AsQueryable();
+                return Table.AsQueryable();
             }
 
             return Table.AsQueryable();

@@ -23,6 +23,7 @@ namespace Snow.AuthorityManagement.Web
                  .ConfigureAppConfiguration((hostingContext, config) =>
                  {
                      config.AddJsonFile("cache.json", true);
+                     config.AddJsonFile("hosting.json", true);
                  })
                  .ConfigureWebHostDefaults(webBuilder =>
                  {

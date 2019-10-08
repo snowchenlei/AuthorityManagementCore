@@ -6,6 +6,7 @@ using Anc.Application.Services.Dto;
 using Anc.Domain.Model;
 using Anc.Domain.Repositories;
 using Anc.Domain.Uow;
+using Anc.UI;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
@@ -24,7 +25,7 @@ using Snow.AuthorityManagement.Data;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Users
 {
-    public partial class UserService : IUserService
+    public partial class UserAppService : IUserAppService
     {
         private readonly IMapper _mapper;
 
@@ -36,7 +37,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         private readonly IUserRepository _userRepository;
         private readonly IUserRoleRepository _userRoleRepository;
 
-        public UserService(
+        public UserAppService(
             IMapper mapper
             , IUnitOfWork unitOfWork
             , IUserManager userManager
@@ -62,7 +63,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// </summary>
         /// <param name="input">过滤条件</param>
         /// <returns></returns>
-        public async Task<PagedResultDto<UserListDto>> GetUserPagedAsync(GetUserInput input)
+        public async Task<PagedResultDto<UserListDto>> GetUserPagedAsync(GetUsersInput input)
         {
             List<string> wheres = new List<string>();
             List<object> parameters = new List<object>();

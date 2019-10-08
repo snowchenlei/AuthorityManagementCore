@@ -7,12 +7,12 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users.Dto
     /// <summary>
     /// 用户查询参数
     /// </summary>
-    public class GetUserInput : PagedAndSortedInputDto
+    public class GetUsersInput : PagedAndSortedInputDto
     {
         /// <summary>
         /// 构造
         /// </summary>
-        public GetUserInput()
+        public GetUsersInput()
         {
             Sorting = "ID";
         }

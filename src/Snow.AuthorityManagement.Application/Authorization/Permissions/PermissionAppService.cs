@@ -16,12 +16,12 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
     /// <summary>
     /// 权限服务
     /// </summary>
-    public class PermissionService : IPermissionService
+    public class PermissionAppService : IPermissionAppService
     {
         private readonly ILambdaRepository<Permission> _permissionRepository;
         private readonly ILambdaRepository<UserRole> _userRoleRepository;
 
-        public PermissionService(ILambdaRepository<Permission> permissionRepository, ILambdaRepository<UserRole> userRoleRepository)
+        public PermissionAppService(ILambdaRepository<Permission> permissionRepository, ILambdaRepository<UserRole> userRoleRepository)
         {
             _permissionRepository = permissionRepository;
             _userRoleRepository = userRoleRepository;

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Anc.Application.Services.Dto;
 using Anc.Domain.Model;
 using Anc.Domain.Repositories;
+using Anc.UI;
 using AutoMapper;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Core.Authorization.Menus;
@@ -16,7 +17,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
     /// <summary>
     /// 菜单
     /// </summary>
-    public class MenuService : IMenuService
+    public class MenuAppService : IMenuAppService
     {
         private readonly IMapper _mapper;
         private readonly IMenuRepository _menuRepository;
@@ -28,7 +29,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
         /// <param name="mapper"></param>
         /// <param name="menuRepository"></param>
         /// <param name="context"></param>
-        public MenuService(
+        public MenuAppService(
             IMapper mapper
             , IMenuRepository menuRepository
             , AuthorityManagementContext context)

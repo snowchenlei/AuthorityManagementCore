@@ -7,7 +7,7 @@ using Snow.AuthorityManagement.Core.Authorization.Permissions;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Permissions
 {
-    public interface IPermissionService : IApplicationService
+    public interface IPermissionAppService : IApplicationService
     {
         Task<bool> IsGrantedAsync(string permissionName, int userId);
 

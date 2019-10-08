@@ -19,10 +19,10 @@ namespace Snow.AuthorityManagement.Web.Mvc.Controllers.Authorization
     public class MenuController : BaseController
     {
         private readonly IMapper _mapper;
-        private readonly IMenuService _menuService;
+        private readonly IMenuAppService _menuService;
 
         public MenuController(IMapper mapper
-            , IMenuService menuService)
+            , IMenuAppService menuService)
         {
             _mapper = mapper;
             _menuService = menuService;

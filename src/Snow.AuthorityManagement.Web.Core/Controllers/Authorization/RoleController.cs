@@ -19,7 +19,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
     [Route("api/roles")]
     public class RoleController : PageController
     {
-        private readonly IRoleService _roleService;
+        private readonly IRoleAppService _roleService;
 
         /// <summary>
         /// 构造
@@ -27,7 +27,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <param name="mapper"></param>
         /// <param name="roleService"></param>
         public RoleController(IMapper mapper
-            , IRoleService roleService) : base(mapper)
+            , IRoleAppService roleService) : base(mapper)
         {
             _roleService = roleService;
         }

@@ -24,13 +24,14 @@ using Anc.Domain.Model;
 using Anc.Domain.Uow;
 using Anc.Authorization;
 using Snow.AuthorityManagement.Core.Authorization.Permissions.DomainService;
+using Anc.UI;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles
 {
     /// <summary>
     /// 角色服务
     /// </summary>
-    public class RoleService : IRoleService
+    public class RoleAppService : IRoleAppService
     {
         private readonly IMapper _mapper;
         private readonly DbContext CurrentContext;
@@ -46,7 +47,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <param name="context"></param>
         /// <param name="roleRepository"></param>
         /// <param name="permissionRepository"></param>
-        public RoleService(
+        public RoleAppService(
             IMapper mapper
             , AuthorityManagementContext context
             , IPermissionManager permissionManager

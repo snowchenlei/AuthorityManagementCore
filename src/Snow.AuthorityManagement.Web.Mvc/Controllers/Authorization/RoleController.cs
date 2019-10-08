@@ -25,12 +25,12 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
     public class RoleController : BaseController
     {
         private readonly IMapper _mapper;
-        private readonly IRoleService _roleService;
-        private readonly IPermissionService _permissionService;
+        private readonly IRoleAppService _roleService;
+        private readonly IPermissionAppService _permissionService;
         //private readonly PermissionDefinitionContextBase _context;
 
         public RoleController(
-            IRoleService roleService, IPermissionService permissionService
+            IRoleAppService roleService, IPermissionAppService permissionService
             //, PermissionDefinitionContextBase context
             , IMapper mapper)
         {

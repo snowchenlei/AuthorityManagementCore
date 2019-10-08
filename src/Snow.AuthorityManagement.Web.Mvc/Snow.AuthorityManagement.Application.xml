@@ -4,6 +4,45 @@
         <name>Snow.AuthorityManagement.Application</name>
     </assembly>
     <members>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.AuditLogs.AuditLogAppService">
+            <summary>
+            审计日志
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.AuditLogs.AuditLogAppService.#ctor(AutoMapper.IMapper,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.AuditLogs.AuditLog,System.Guid})">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+            <param name="auditLogRepository"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.AuditLogs.AuditLogAppService.GetAuditLogPagedAsync(Snow.AuthorityManagement.Application.Authorization.AuditLogs.Dto.GetAuditLogsInput)">
+            <summary>
+            分页
+            </summary>
+            <param name="input">过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.AuditLogs.Dto.AuditLogListDto">
+            <summary>
+            输出列表
+            </summary>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.AuditLogs.Dto.GetAuditLogsInput">
+            <summary>
+            获取列表参数
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.AuditLogs.Dto.GetAuditLogsInput.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.AuditLogs.IAuditLogAppService">
+            <summary>
+            审计日志
+            </summary>
+        </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput.#ctor">
             <summary>
             构造
@@ -14,39 +53,39 @@
             菜单名称
             </summary>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService">
             <summary>
             菜单应用服务
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.GetAllMenuListAsync">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.GetAllMenuListAsync">
             <summary>
             获取所有
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.GetPagedMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.GetPagedMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
             <summary>
             分页
             </summary>
             <param name="input">过滤条件</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.GetMenuForEditAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.GetMenuForEditAsync(System.Int32)">
             <summary>
             根据Id获取数据
             </summary>
             <param name="menuId">用户编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.CreateOrEditMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.CreateOrUpdateMenu)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.CreateOrEditMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.CreateOrUpdateMenu)">
             <summary>
             添加修改菜单
             </summary>
             <param name="input">信息</param>
             <returns>用户列表数据</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.CreateMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.MenuEditDto)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.CreateMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.MenuEditDto)">
             <summary>
             添加数据
             </summary>
@@ -54,7 +93,7 @@
             <param name="roleIds">角色Id</param>
             <returns>用户信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.EditMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.MenuEditDto)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.EditMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.MenuEditDto)">
             <summary>
             修改数据
             </summary>
@@ -62,19 +101,19 @@
             <param name="roleIds">角色Id</param>
             <returns>用户信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService.DeleteMenuAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.DeleteMenuAsync(System.Int32)">
             <summary>
             删除
             </summary>
             <param name="menuId">编号</param>
             <returns></returns>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService">
             <summary>
             菜单
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Core.Authorization.Menus.IMenuRepository,Snow.AuthorityManagement.Data.AuthorityManagementContext)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Core.Authorization.Menus.IMenuRepository,Snow.AuthorityManagement.Data.AuthorityManagementContext)">
             <summary>
             构造
             </summary>
@@ -82,48 +121,48 @@
             <param name="menuRepository"></param>
             <param name="context"></param>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.GetAllMenuListAsync">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.GetAllMenuListAsync">
             <summary>
             菜单应用服务
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.GetPagedMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.GetPagedMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
             <summary>
             分页
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.GetMenuForEditAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.GetMenuForEditAsync(System.Int32)">
             <summary>
             根据Id获取
             </summary>
             <param name="menuId"></param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.CreateOrEditMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.CreateOrUpdateMenu)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.CreateOrEditMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.CreateOrUpdateMenu)">
             <summary>
             添加修改
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.CreateMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.MenuEditDto)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.CreateMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.MenuEditDto)">
             <summary>
             添加
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.EditMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.MenuEditDto)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.EditMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.MenuEditDto)">
             <summary>
             修改
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuService.DeleteMenuAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.DeleteMenuAsync(System.Int32)">
             <summary>
             删除
             </summary>
@@ -140,7 +179,7 @@
             构造
             </summary>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.Permissions.PermissionService">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Permissions.PermissionAppService">
             <summary>
             权限服务
             </summary>
@@ -150,32 +189,32 @@
             构造
             </summary>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService">
             <summary>
             角色服务接口
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService.GetAllRoleListAsync">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.GetAllRoleListAsync">
             <summary>
             获取所有
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
             <summary>
             分页
             </summary>
             <param name="input">过滤条件</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService.GetForEditAsync(System.Nullable{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.GetForEditAsync(System.Nullable{System.Int32})">
             <summary>
             根据Id获取数据
             </summary>
             <param name="roleId">角色编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService.CreateAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.CreateAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
             <summary>
             添加
             </summary>
@@ -183,7 +222,7 @@
             <param name="permission">权限</param>
             <returns>信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService.EditAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.EditAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
             <summary>
             修改
             </summary>
@@ -191,19 +230,19 @@
             <param name="permission">权限</param>
             <returns>信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService.DeleteAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.DeleteAsync(System.Int32)">
             <summary>
             删除
             </summary>
             <param name="id">编号</param>
             <returns></returns>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService">
             <summary>
             角色服务
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Data.AuthorityManagementContext,Snow.AuthorityManagement.Core.Authorization.Permissions.DomainService.IPermissionManager,Anc.Authorization.IAncPermissionManager,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.Roles.Role},Snow.AuthorityManagement.Core.Authorization.Permissions.IPermissionRepository)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Data.AuthorityManagementContext,Snow.AuthorityManagement.Core.Authorization.Permissions.DomainService.IPermissionManager,Anc.Authorization.IAncPermissionManager,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.Roles.Role},Snow.AuthorityManagement.Core.Authorization.Permissions.IPermissionRepository)">
             <summary>
             构造
             </summary>
@@ -212,27 +251,27 @@
             <param name="roleRepository"></param>
             <param name="permissionRepository"></param>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.GetAllRoleListAsync">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.GetAllRoleListAsync">
             <summary>
             获取所有
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
             <summary>
             分页
             </summary>
             <param name="input">过滤条件</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.GetForEditAsync(System.Nullable{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.GetForEditAsync(System.Nullable{System.Int32})">
             <summary>
             根据Id获取数据
             </summary>
             <param name="roleId">角色编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.CreateAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.CreateAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
             <summary>
             添加
             </summary>
@@ -240,7 +279,7 @@
             <param name="permissionNames">权限</param>
             <returns>信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.EditAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.EditAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
             <summary>
             修改
             </summary>
@@ -248,36 +287,36 @@
             <param name="permissionNames">权限</param>
             <returns>信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.CreatePermissions(System.Collections.Generic.List{System.String})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.CreatePermissions(System.Collections.Generic.List{System.String})">
             <summary>
             构建权限实体
             </summary>
             <param name="permissionNames">权限集合</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleService.DeleteAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.DeleteAsync(System.Int32)">
             <summary>
             删除
             </summary>
             <param name="id">编号</param>
             <returns></returns>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput">
             <summary>
             用户查询参数
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput.#ctor">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput.#ctor">
             <summary>
             构造
             </summary>
         </member>
-        <member name="P:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput.UserName">
+        <member name="P:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput.UserName">
             <summary>
             用户名
             </summary>
         </member>
-        <member name="P:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput.Date">
+        <member name="P:Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput.Date">
             <summary>
             创建时间段
             </summary>
@@ -312,33 +351,33 @@
             手机号
             </summary>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.Users.IUserService">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService">
             <summary>
             用户服务
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.GetUserPagedAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.GetUserPagedAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput)">
             <summary>
             分页
             </summary>
             <param name="input">过滤条件</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.GetUserForEditAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.GetUserForEditAsync(System.Int32)">
             <summary>
             根据Id获取数据
             </summary>
             <param name="userId">用户编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.GetUserForEditAsync(System.Nullable{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.GetUserForEditAsync(System.Nullable{System.Int32})">
             <summary>
             根据Id获取数据
             </summary>
             <param name="userId">用户编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.LoginAsync(System.String,System.String)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.LoginAsync(System.String,System.String)">
             <summary>
             登陆
             </summary>
@@ -346,14 +385,14 @@
             <param name="password">密码</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.CreateOrEditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.CreateOrUpdateUser)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.CreateOrEditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.CreateOrUpdateUser)">
             <summary>
             添加修改用户
             </summary>
             <param name="input">信息</param>
             <returns>用户列表数据</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.CreateUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto,System.Collections.Generic.List{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.CreateUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto,System.Collections.Generic.List{System.Int32})">
             <summary>
             添加用户
             </summary>
@@ -361,7 +400,7 @@
             <param name="roleIds">角色Id</param>
             <returns>用户信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.EditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto,System.Collections.Generic.List{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.EditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto,System.Collections.Generic.List{System.Int32})">
             <summary>
             修改用户
             </summary>
@@ -369,55 +408,55 @@
             <param name="roleIds">角色Id</param>
             <returns>用户信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.DeleteUserAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.DeleteUserAsync(System.Int32)">
             <summary>
             删除用户
             </summary>
             <param name="id">编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserService.GetLastModificationTimeAsync">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.GetLastModificationTimeAsync">
             <summary>
             获取最后修改时间
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.GetUserPagedAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.GetUserPagedAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput)">
             <summary>
             分页
             </summary>
             <param name="input">过滤条件</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.GetUserForEditAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.GetUserForEditAsync(System.Int32)">
             <summary>
             根据Id获取数据
             </summary>
             <param name="userId">用户编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.GetUserForEditAsync(System.Nullable{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.GetUserForEditAsync(System.Nullable{System.Int32})">
             <summary>
             根据Id获取数据
             </summary>
             <param name="userId">用户编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.LoginAsync(System.String,System.String)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.LoginAsync(System.String,System.String)">
             <summary>
             登陆
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.CreateOrEditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.CreateOrUpdateUser)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.CreateOrEditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.CreateOrUpdateUser)">
             <summary>
             添加修改用户
             </summary>
             <param name="input">信息</param>
             <returns>用户列表数据</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.CreateUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto,System.Collections.Generic.List{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.CreateUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto,System.Collections.Generic.List{System.Int32})">
             <summary>
             添加
             </summary>
@@ -425,7 +464,7 @@
             <param name="roleIds">角色Id</param>
             <returns>信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.EditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto,System.Collections.Generic.List{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.EditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.UserEditDto,System.Collections.Generic.List{System.Int32})">
             <summary>
             修改用户
             </summary>
@@ -433,7 +472,7 @@
             <param name="roleIds">角色Id</param>
             <returns>用户信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.SetUserRoleAsync(System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.SetUserRoleAsync(System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">
             <summary>
             设置用户角色
             </summary>
@@ -441,7 +480,7 @@
             <param name="roleIds">角色ID集合</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserService.DeleteUserAsync(System.Int32)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.DeleteUserAsync(System.Int32)">
             <summary>
             删除用户
             </summary>

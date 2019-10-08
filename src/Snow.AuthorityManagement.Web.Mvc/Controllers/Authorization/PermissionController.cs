@@ -14,10 +14,10 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {
     public class PermissionController : BaseController
     {
-        private readonly IPermissionService _permissionService;
+        private readonly IPermissionAppService _permissionService;
         private readonly IAncSession _ancSession;
 
-        public PermissionController(IPermissionService permissionService, IAncSession ancSession)
+        public PermissionController(IPermissionAppService permissionService, IAncSession ancSession)
         {
             _permissionService = permissionService;
             _ancSession = ancSession;

@@ -19,7 +19,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
     [Route("api/menus")]
     public class MenuController : PageController
     {
-        private readonly IMenuService _menuService;
+        private readonly IMenuAppService _menuService;
 
         /// <summary>
         /// 构造
@@ -27,7 +27,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <param name="mapper"></param>
         /// <param name="menuService"></param>
         public MenuController(IMapper mapper
-            , IMenuService menuService) : base(mapper)
+            , IMenuAppService menuService) : base(mapper)
         {
             _menuService = menuService;
         }

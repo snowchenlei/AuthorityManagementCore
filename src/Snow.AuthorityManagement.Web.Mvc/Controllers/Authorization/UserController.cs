@@ -28,11 +28,11 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
     public class UserController : BaseController
     {
         private readonly IMapper _mapper;
-        private readonly IUserService _userService;
-        private readonly IRoleService _roleService;
+        private readonly IUserAppService _userService;
+        private readonly IRoleAppService _roleService;
 
         public UserController(
-            IMapper mapper, IUserService userService, IRoleService roleService)
+            IMapper mapper, IUserAppService userService, IRoleAppService roleService)
         {
             _mapper = mapper;
             _userService = userService;
@@ -52,7 +52,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         }
 
         [AncAuthorize(PermissionNames.Pages_Administration_Users_Query)]
-        public async Task<JsonResult> Load(GetUserInput input)
+        public async Task<JsonResult> Load(GetUsersInput input)
         {
             var result = await _userService.GetUserPagedAsync(input);
             return Json(new

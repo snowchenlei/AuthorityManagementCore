@@ -10,7 +10,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
     /// <summary>
     /// 角色服务接口
     /// </summary>
-    public interface IRoleService : IApplicationService
+    public interface IRoleAppService : IApplicationService
     {
         /// <summary>
         /// 获取所有

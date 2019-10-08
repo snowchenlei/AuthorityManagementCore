@@ -12,14 +12,14 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
     /// <summary>
     /// 用户服务
     /// </summary>
-    public partial interface IUserService : IApplicationService
+    public partial interface IUserAppService : IApplicationService
     {
         /// <summary>
         /// 分页
         /// </summary>
         /// <param name="input">过滤条件</param>
         /// <returns></returns>
-        Task<PagedResultDto<UserListDto>> GetUserPagedAsync(GetUserInput input);
+        Task<PagedResultDto<UserListDto>> GetUserPagedAsync(GetUsersInput input);
 
         /// <summary>
         /// 根据Id获取数据

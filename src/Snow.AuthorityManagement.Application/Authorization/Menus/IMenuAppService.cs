@@ -11,7 +11,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
     /// <summary>
     /// 菜单应用服务
     /// </summary>
-    public interface IMenuService : IApplicationService
+    public interface IMenuAppService : IApplicationService
     {
         /// <summary>
         /// 获取所有

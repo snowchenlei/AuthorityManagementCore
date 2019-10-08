@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Snow.AuthorityManagement.Data;
 
 namespace Snow.AuthorityManagement.Data.Migrations
 {
     [DbContext(typeof(AuthorityManagementContext))]
-    partial class AuthorityManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20191008084940_AddTableAuditLog")]
+    partial class AddTableAuditLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

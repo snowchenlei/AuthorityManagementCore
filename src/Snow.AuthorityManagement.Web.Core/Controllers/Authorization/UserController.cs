@@ -2,6 +2,7 @@
 using Anc.AspNetCore.Web.Mvc.Authorization;
 using Anc.Runtime.Caching;
 using AutoMapper;
+using CacheCow.Server.Core.Mvc;
 using CacheManager.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -22,7 +23,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
     public class UserController : PageController
     {
         // TODO:Api缓存隔离
-        private readonly IUserService _userService;
+        private readonly IUserAppService _userService;
 
         private readonly ICacheManager<int> _cacheManager;
 
@@ -34,7 +35,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <param name="userService"></param>
         public UserController(IMapper mapper
             , ICacheManager<int> cacheManager
-            , IUserService userService) : base(mapper)
+            , IUserAppService userService) : base(mapper)
         {
             _userService = userService;
             _cacheManager = cacheManager;
@@ -51,14 +52,14 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         //[HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<UserListDto>))]
         [AncAuthorize(PermissionNames.Pages_Administration_Users_Query)]
         [ProducesResponseType(typeof(PagedResultDto<UserListDto>), 200)]
-        public async Task<IActionResult> GetPaged([FromQuery]GetUserInput input)
+        public async Task<IActionResult> GetPaged([FromQuery]GetUsersInput input)
         {
             var result = await _userService.GetUserPagedAsync(input);
             //if (!_cache.Exists(AuthorityManagementConsts.UserLastResponseCache))
             //{
             //    _cache.Add(AuthorityManagementConsts.UserLastResponseCache, await _userService.GetLastModificationTimeAsync());
             //}
-            return Return<GetUserInput, PagedResultDto<UserListDto>, UserListDto>(input, "GetUsersPage", result);
+            return Return<GetUsersInput, PagedResultDto<UserListDto>, UserListDto>(input, "GetUsersPage", result);
         }
 
         /// <summary>

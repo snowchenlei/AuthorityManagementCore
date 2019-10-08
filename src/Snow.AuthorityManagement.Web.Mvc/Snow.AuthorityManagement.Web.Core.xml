@@ -24,12 +24,23 @@
             User响应Chche Key
             </summary>
         </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.AuditLogController">
+            <summary>
+            日志
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.AuditLogController.#ctor(AutoMapper.IMapper)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+        </member>
         <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController">
             <summary>
             菜单
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Menus.IMenuService)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService)">
             <summary>
             构造
             </summary>
@@ -91,7 +102,7 @@
             角色
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Roles.IRoleService)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService)">
             <summary>
             构造
             </summary>
@@ -153,7 +164,7 @@
             用户
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.#ctor(AutoMapper.IMapper,CacheManager.Core.ICacheManager{System.Int32},Snow.AuthorityManagement.Application.Authorization.Users.IUserService)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.#ctor(AutoMapper.IMapper,CacheManager.Core.ICacheManager{System.Int32},Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService)">
             <summary>
             构造
             </summary>
@@ -161,7 +172,7 @@
             <param name="cacheManager"></param>
             <param name="userService"></param>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUserInput)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput)">
             <summary>
             分页获取
             </summary>

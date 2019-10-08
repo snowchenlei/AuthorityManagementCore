@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Anc.UI;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -18,9 +19,9 @@ namespace Snow.AuthorityManagement.Web.Controllers
 {
     public class AccountController : BaseController
     {
-        private IUserService _userService;
+        private IUserAppService _userService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserAppService userService)
         {
             _userService = userService;
         }

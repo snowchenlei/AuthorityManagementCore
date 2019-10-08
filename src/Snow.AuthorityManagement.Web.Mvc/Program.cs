@@ -5,6 +5,8 @@ using Microsoft.Extensions.Hosting;
 using Autofac.Extensions.DependencyInjection;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using NLog.Web;
+using Microsoft.Extensions.Logging;
 
 namespace Snow.AuthorityManagement.Web
 {
@@ -12,9 +14,14 @@ namespace Snow.AuthorityManagement.Web
     {
         public static async Task Main(string[] args)
         {
+            // NLog: setup the logger first to catch all errors
+            var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             var host = CreateHostBuilder(args).Build();
 
             await host.RunWithTasksAsync();
+            // Ensure to flush and stop internal timers/threads before application-exit (Avoid
+            // segmentation fault on Linux)
+            NLog.LogManager.Shutdown();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -28,6 +35,12 @@ namespace Snow.AuthorityManagement.Web
                  .ConfigureWebHostDefaults(webBuilder =>
                  {
                      webBuilder
+                         .ConfigureLogging(logging =>
+                         {
+                             logging.ClearProviders();
+                             logging.SetMinimumLevel(LogLevel.Trace);
+                         })
+                         .UseNLog()
                         .UseContentRoot(Directory.GetCurrentDirectory())
                         .UseIISIntegration()
                         .UseStartup<Startup.Startup>();

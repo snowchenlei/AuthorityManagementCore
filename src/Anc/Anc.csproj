@@ -6,12 +6,16 @@
 
   <ItemGroup>
     <Compile Remove="Application\Services\Dto\NameValueDto.cs" />
+    <Compile Remove="Auditing\AuditLog.cs" />
     <Compile Remove="Authorization\DefaultPermissionManager.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
 </Project>

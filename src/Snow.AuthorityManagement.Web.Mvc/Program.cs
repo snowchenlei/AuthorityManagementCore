@@ -15,7 +15,6 @@ namespace Snow.AuthorityManagement.Web
         public static async Task Main(string[] args)
         {
             // NLog: setup the logger first to catch all errors
-            var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             var host = CreateHostBuilder(args).Build();
 
             await host.RunWithTasksAsync();

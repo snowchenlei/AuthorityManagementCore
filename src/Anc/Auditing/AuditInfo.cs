@@ -27,6 +27,13 @@ namespace Anc.Auditing
         public int? ImpersonatorTenantId { get; set; }
 
         /// <summary>
+        /// HttpMethod
+        /// </summary>
+        public string HttpMethod { get; set; }
+
+        public string HttpHeader { get; set; }
+
+        /// <summary>
         /// Service (class/interface) name.
         /// </summary>
         public string ServiceName { get; set; }
@@ -92,6 +99,21 @@ namespace Anc.Auditing
                 : "succeed";
 
             return $"AUDIT LOG: {ServiceName}.{MethodName} is executed by {loggedUserId} in {ExecutionDuration} ms from {ClientIpAddress} IP address with {exceptionOrSuccessMessage}.";
+        }
+
+        /// <summary>
+        /// 获取监控指标日志
+        /// </summary>
+        /// <param name="mtype"></param>
+        /// <returns></returns>
+        public string GetLoginfo()
+        {
+            return $@"客户端【{ClientIpAddress}】以【{HttpHeader}】头使用【{HttpMethod}】携带【{Parameters}】请求【/{ServiceName}/{MethodName}】响应【{ReturnValue}】";
+        }
+
+        public string GetErrorInfo()
+        {
+            return $@"客户端【{ClientIpAddress}】以【{HttpHeader}】头使用【{HttpMethod}】携带【{Parameters}】请求【/{ServiceName}/{MethodName}】产生异常：";
         }
     }
 }

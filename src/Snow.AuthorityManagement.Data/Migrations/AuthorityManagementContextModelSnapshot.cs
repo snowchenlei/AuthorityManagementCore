@@ -18,9 +18,9 @@ namespace Snow.AuthorityManagement.Data.Migrations
 
             modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.AuditLogs.AuditLog", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("BrowserInfo")
                         .HasColumnType("TEXT");

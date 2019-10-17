@@ -46,7 +46,7 @@ namespace Snow.AuthorityManagement.Web.Library.Middleware
                 await _next(context);
                 monitorLog.ExecuteEndTime = DateTime.Now;
                 monitorLog.ResponseData = await ReadBodyAsync(context.Response);
-                _logger.LogInformation(monitorLog.GetLoginfo());
+                //_logger.LogInformation(monitorLog.GetLoginfo());
             }
             catch (Exception ex)
             {

@@ -11,7 +11,8 @@ namespace Snow.AuthorityManagement.Data.Migrations
                 name: "AuditLog",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(nullable: false),
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<long>(nullable: true),
                     ServiceName = table.Column<string>(nullable: true),
                     MethodName = table.Column<string>(nullable: true),

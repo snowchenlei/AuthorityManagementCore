@@ -9,7 +9,7 @@
             审计日志
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.AuditLogs.AuditLogAppService.#ctor(AutoMapper.IMapper,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.AuditLogs.AuditLog,System.Guid})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.AuditLogs.AuditLogAppService.#ctor(AutoMapper.IMapper,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.AuditLogs.AuditLog,System.Int64})">
             <summary>
             构造
             </summary>

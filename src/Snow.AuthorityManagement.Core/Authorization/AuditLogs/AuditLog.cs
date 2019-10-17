@@ -10,7 +10,7 @@ using Anc.UI;
 
 namespace Snow.AuthorityManagement.Core.Authorization.AuditLogs
 {
-    public class AuditLog : Entity<Guid>
+    public class AuditLog : Entity<long>
     {
         /// <summary>
         /// Maximum length of <see cref="ServiceName"/> property.
@@ -140,17 +140,17 @@ namespace Snow.AuthorityManagement.Core.Authorization.AuditLogs
             return new AuditLog
             {
                 UserId = auditInfo.UserId,
-                ServiceName = auditInfo.ServiceName.TruncateWithPostfix(MaxServiceNameLength),
-                MethodName = auditInfo.MethodName.TruncateWithPostfix(MaxMethodNameLength),
-                Parameters = auditInfo.Parameters.TruncateWithPostfix(MaxParametersLength),
-                ReturnValue = auditInfo.ReturnValue.TruncateWithPostfix(MaxReturnValueLength),
-                ExecutionTime = auditInfo.ExecutionTime,
-                ExecutionDuration = auditInfo.ExecutionDuration,
-                ClientIpAddress = auditInfo.ClientIpAddress.TruncateWithPostfix(MaxClientIpAddressLength),
-                ClientName = auditInfo.ClientName.TruncateWithPostfix(MaxClientNameLength),
-                BrowserInfo = auditInfo.BrowserInfo.TruncateWithPostfix(MaxBrowserInfoLength),
-                Exception = exceptionMessage.TruncateWithPostfix(MaxExceptionLength),
-                CustomData = auditInfo.CustomData.TruncateWithPostfix(MaxCustomDataLength)
+                //ServiceName = auditInfo.ServiceName.TruncateWithPostfix(MaxServiceNameLength),
+                //MethodName = auditInfo.MethodName.TruncateWithPostfix(MaxMethodNameLength),
+                //Parameters = auditInfo.Parameters.TruncateWithPostfix(MaxParametersLength),
+                //ReturnValue = auditInfo.ReturnValue.TruncateWithPostfix(MaxReturnValueLength),
+                //ExecutionTime = auditInfo.ExecutionTime,
+                //ExecutionDuration = auditInfo.ExecutionDuration,
+                //ClientIpAddress = auditInfo.ClientIpAddress.TruncateWithPostfix(MaxClientIpAddressLength),
+                //ClientName = auditInfo.ClientName.TruncateWithPostfix(MaxClientNameLength),
+                //BrowserInfo = auditInfo.BrowserInfo.TruncateWithPostfix(MaxBrowserInfoLength),
+                //Exception = exceptionMessage.TruncateWithPostfix(MaxExceptionLength),
+                //CustomData = auditInfo.CustomData.TruncateWithPostfix(MaxCustomDataLength)
             };
         }
 
@@ -182,7 +182,7 @@ namespace Snow.AuthorityManagement.Core.Authorization.AuditLogs
                     break;
             }
 
-            return exception + (clearMessage.IsNullOrWhiteSpace() ? "" : "\r\n\r\n" + clearMessage);
+            return exception + (String.IsNullOrWhiteSpace(clearMessage) ? "" : "\r\n\r\n" + clearMessage);
         }
     }
 }

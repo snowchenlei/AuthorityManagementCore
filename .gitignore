@@ -80,3 +80,15 @@
 /src/Snow.CacheManager.Core/obj
 /src/Snow.CacheManager.Microsoft.Extensions.Caching.Memory/bin
 /src/Snow.CacheManager.Microsoft.Extensions.Caching.Memory/obj
+/src/Anc.AspNetCore.Mvc/bin/Debug/netcoreapp3.0
+/src/Anc.AspNetCore.Mvc/obj
+/src/Anc.Auditing/bin/Debug/netcoreapp3.0
+/src/Anc.Auditing/obj
+/src/Anc.Authorization/bin/Debug/netcoreapp3.0
+/src/Anc.Authorization/obj
+/src/Anc.Core/bin/Debug/netcoreapp3.0
+/src/Anc.Core/obj
+/src/Anc.Security.Claims/bin/Debug/netcoreapp3.0
+/src/Anc.Security.Claims/obj
+/src/Anc.Threading/bin/Debug/netcoreapp3.0
+/src/Anc.Threading/obj

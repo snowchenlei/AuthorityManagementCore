@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Anc.Authorization;
 using Anc.Runtime.Session;
+using Anc.Users;
 
 namespace Anc.Application.Navigation
 {
@@ -11,24 +12,24 @@ namespace Anc.Application.Navigation
     {
         private readonly IPermissionManagerBase _permissionService;
         private readonly INavigationProvider _navigationProvider;
-        private readonly IAncSession _ancSession;
+        private readonly ICurrentUser _currentUser;
 
         public UserNavigationManager(IPermissionManagerBase permissionService
-            , IAncSession ancSession
+            , ICurrentUser currentUser
             , INavigationProvider navigationProvider)
         {
             _permissionService = permissionService;
             _navigationProvider = navigationProvider;
-            _ancSession = ancSession;
+            _currentUser = currentUser;
         }
 
         public async Task<UserMenu> GetMenuAsync()
         {
-            if (!_ancSession.UserId.HasValue)
+            if (!_currentUser.Id.HasValue)
             {
                 throw new AncAuthorizationException("请登陆");
             }
-            var permissions = await _permissionService.GetAllPermissionsByUserIdAsync(_ancSession.UserId.Value);
+            var permissions = await _permissionService.GetAllPermissionsByUserIdAsync(_currentUser.Id.Value);
             MenuDefinition menuDefinition = await _navigationProvider.GetNavigationAsync();
             UserMenu userMenu = new UserMenu(menuDefinition);
             CheckPermission(permissions, menuDefinition.Items, userMenu.Items);

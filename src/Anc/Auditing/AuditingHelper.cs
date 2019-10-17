@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Anc.Collections.Extensions;
-using Anc.Dependency;
-using Anc.Domain.Repositories;
+using Anc.DependencyInjection;
 using Anc.Domain.Uow;
 using Anc.Runtime.Session;
 using Microsoft.Extensions.Logging;
@@ -19,7 +16,7 @@ namespace Anc.Auditing
         private IAncSession AncSession { get; set; }
 
         private readonly IUnitOfWork _unitOfWork;
-
+        private readonly IAncSession _session;
         private readonly ILogger<AuditingHelper> _logger;
         private readonly IAuditSerializer _auditSerializer;
         private readonly IAuditingConfiguration _configuration;
@@ -27,12 +24,15 @@ namespace Anc.Auditing
         //private readonly IRepository<AuditLog, long> _auditLogRepository;
 
         public AuditingHelper(IUnitOfWork unitOfWork
+            , IAncSession session
             , ILogger<AuditingHelper> logger
             , IAuditSerializer auditSerializer
             , IAuditingConfiguration configuration
-            , IClientInfoProvider clientInfoProvider)
+            , IClientInfoProvider clientInfoProvider
+            )
         {
             _logger = logger;
+            _session = session;
             _unitOfWork = unitOfWork;
             _configuration = configuration;
             _auditSerializer = auditSerializer;
@@ -46,7 +46,7 @@ namespace Anc.Auditing
                 return false;
             }
 
-            if (!_configuration.IsEnabledForAnonymousUsers && (AncSession?.UserId == null))
+            if (!_configuration.IsEnabledForAnonymousUsers && (_session?.UserId == null))
             {
                 return false;
             }
@@ -97,7 +97,7 @@ namespace Anc.Auditing
         {
             var auditInfo = new AuditInfo
             {
-                UserId = AncSession.UserId,
+                UserId = _session.UserId,
                 ServiceName = type != null
                    ? type.FullName
                    : "",
@@ -133,6 +133,23 @@ namespace Anc.Auditing
 
         public async Task SaveAsync(AuditInfo auditInfo)
         {
+            using (_logger.BeginScope(new Dictionary<string, object>
+            {
+                ["userId"] = auditInfo.UserId,
+                ["serviceName"] = auditInfo.ServiceName,
+                ["methodName"] = auditInfo.MethodName,
+                ["parameters"] = auditInfo.Parameters,
+                ["returnValue"] = auditInfo.ReturnValue,
+                ["executionTime"] = auditInfo.ExecutionTime,
+                ["executionDuration"] = auditInfo.ExecutionDuration,
+                ["clientIpAddress"] = auditInfo.ClientIpAddress,
+                ["clientName"] = auditInfo.ClientName,
+                ["browserInfo"] = auditInfo.BrowserInfo,
+                ["customData"] = auditInfo.CustomData
+            }))
+            {
+                _logger.LogInformation(auditInfo.GetLoginfo());
+            }
             using (var uow = _unitOfWork.Begin(TransactionScopeOption.Suppress))
             {
                 //await _auditLogRepository.InsertAsync(AuditLog.CreateFromAuditInfo(auditInfo));

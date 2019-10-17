@@ -5,6 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AspNetCore\**" />
+    <Compile Remove="Validation\**" />
+    <EmbeddedResource Remove="AspNetCore\**" />
+    <EmbeddedResource Remove="Validation\**" />
+    <None Remove="AspNetCore\**" />
+    <None Remove="Validation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="AspNetCore\Mvc\Results\ActionResultHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
@@ -12,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Anc\Anc.csproj" />
+    <ProjectReference Include="..\Anc.Auditing\Anc.Auditing.csproj" />
+    <ProjectReference Include="..\Anc.Security.Claims\Anc.Securit.csproj" />
   </ItemGroup>
 </Project>

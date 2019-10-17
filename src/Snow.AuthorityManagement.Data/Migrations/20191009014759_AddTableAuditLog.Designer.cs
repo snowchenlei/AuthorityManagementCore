@@ -9,7 +9,7 @@ using Snow.AuthorityManagement.Data;
 namespace Snow.AuthorityManagement.Data.Migrations
 {
     [DbContext(typeof(AuthorityManagementContext))]
-    [Migration("20191008084940_AddTableAuditLog")]
+    [Migration("20191009014759_AddTableAuditLog")]
     partial class AddTableAuditLog
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,9 +20,9 @@ namespace Snow.AuthorityManagement.Data.Migrations
 
             modelBuilder.Entity("Snow.AuthorityManagement.Core.Authorization.AuditLogs.AuditLog", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("BrowserInfo")
                         .HasColumnType("TEXT");

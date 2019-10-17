@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Anc.Security.Claims;
 using Anc.UI;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -54,9 +55,9 @@ namespace Snow.AuthorityManagement.Web.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, output.ID.ToString()),
-                new Claim(ClaimTypes.Name, output.Name),
-                new Claim("UserName", output.UserName)
+                new Claim(AncClaimTypes.UserId, output.ID.ToString()),
+                //new Claim( ClaimTypes.Name, output.Name),
+                new Claim(AncClaimTypes.UserName, output.UserName)
             };
 
             var claimsIdentity = new ClaimsIdentity(

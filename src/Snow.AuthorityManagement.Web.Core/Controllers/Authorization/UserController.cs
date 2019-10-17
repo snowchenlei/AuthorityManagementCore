@@ -1,17 +1,13 @@
 ﻿using Anc.Application.Services.Dto;
-using Anc.AspNetCore.Web.Mvc.Authorization;
-using Anc.Runtime.Caching;
+using Anc.Authorization;
 using AutoMapper;
-using CacheCow.Server.Core.Mvc;
 using CacheManager.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using Snow.AuthorityManagement.Application.Authorization.Users;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
@@ -20,6 +16,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
     /// 用户
     /// </summary>
     [Route("api/users")]
+    [Authorize(PermissionNames.Pages_Administration_Users)]
     public class UserController : PageController
     {
         // TODO:Api缓存隔离
@@ -50,7 +47,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <returns></returns>
         [HttpGet(Name = "GetUsersPage")]
         //[HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<UserListDto>))]
-        [AncAuthorize(PermissionNames.Pages_Administration_Users_Query)]
+        [Authorize(PermissionNames.Pages_Administration_Users_Query)]
         [ProducesResponseType(typeof(PagedResultDto<UserListDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery]GetUsersInput input)
         {
@@ -76,7 +73,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [ProducesResponseType(typeof(GetUserForEditOutput), 200)]
         [ProducesResponseType(304)]
         [ProducesResponseType(404)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Users_Query)]
+        [Authorize(PermissionNames.Pages_Administration_Users_Query)]
         public async Task<IActionResult> Get(int id)
         {
             UserEditDto user = await _userService.GetUserForEditAsync(id);
@@ -96,7 +93,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpPost(Name = "PostUser")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Users_Create)]
+        [Authorize(PermissionNames.Pages_Administration_Users_Create)]
         public async Task<IActionResult> Post([FromBody]CreateOrUpdateUser input)
         {
             UserListDto user = await _userService.CreateUserAsync(input.User, input.RoleIds);
@@ -116,7 +113,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpPut("{id}", Name = "PutUser")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Users_Edit)]
+        [Authorize(PermissionNames.Pages_Administration_Users_Edit)]
         public async Task<IActionResult> Put(int id, [FromBody]CreateOrUpdateUser input)
         {
             input.User.ID = id;
@@ -148,7 +145,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpDelete("{id}", Name = "DeleteUser")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Users_Delete)]
+        [Authorize(PermissionNames.Pages_Administration_Users_Delete)]
         public async Task<IActionResult> Delete(int id)
         {
             await _userService.DeleteUserAsync(id);

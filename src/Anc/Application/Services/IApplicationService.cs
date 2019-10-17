@@ -1,7 +1,4 @@
-﻿using Anc.Dependency;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Anc.DependencyInjection;
 
 namespace Anc.Application.Services
 {

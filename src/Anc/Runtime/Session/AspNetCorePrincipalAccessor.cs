@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
 
-namespace Anc.AspNetCore.AspNetCore.Runtime.Session
+namespace Anc.AspNetCore.Runtime.Session
 {
     public class AspNetCorePrincipalAccessor : DefaultPrincipalAccessor
     {

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Anc.Dependency;
 using Anc.Domain.Uow;
 using Microsoft.AspNetCore.Routing;
 
 namespace Anc.AspNetCore.AspNetCore.Configuration
 {
-    public interface IAncAspNetCoreConfiguration
+    public interface IAncAspNetCoreConfiguration : ITransientDependency
     {
         UnitOfWorkAttribute DefaultUnitOfWorkAttribute { get; }
 

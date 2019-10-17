@@ -1,14 +1,11 @@
 ﻿using Anc.Authorization;
-using Anc.Dependency;
 using Anc.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.Permissions.DomainService;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Repository.Authorization.Permissions.DomainService

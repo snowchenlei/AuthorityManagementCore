@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 using Anc.Application.Services.Dto;
-using Anc.AspNetCore.Web.Mvc.Authorization;
+using Anc.Authorization;
 using Anc.Runtime.Caching;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -11,6 +11,7 @@ using CacheCow.Server.Core.Mvc;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -90,6 +91,8 @@ namespace Snow.AuthorityManagement.Web.Startup
 
             #endregion 线程内唯一
 
+            services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
+
             AddAutoMapper(services);
             //禁用 dotnet core 2.1的formbody等模式自动校验和转换
             services.Configure<ApiBehaviorOptions>(options =>
@@ -123,7 +126,8 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddMvc(options =>
             {
                 //options.Filters.Add(typeof(CustomerExceptionAttribute));
-                options.Filters.Add(typeof(AncAuthorizeFilter));
+                //options.Filters.Add(typeof(AncAuthorizeFilter));
+                //options.Filters.Add(typeof(AncAuditActionFilter));
                 options.Filters.Add(typeof(ModelStateInvalidFilter));// 自定义模型验证(ApiController无需此语句，可自动验证)
 
                 #region 输出缓存配置

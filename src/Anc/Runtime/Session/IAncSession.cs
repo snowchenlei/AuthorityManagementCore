@@ -7,6 +7,8 @@ namespace Anc.Runtime.Session
 {
     public interface IAncSession
     {
+        bool IsAuthenticated { get; }
+
         int? UserId { get; }
     }
 }

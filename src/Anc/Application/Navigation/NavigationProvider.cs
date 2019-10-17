@@ -1,4 +1,4 @@
-﻿using Anc.Dependency;
+﻿using Anc.DependencyInjection;
 
 namespace Anc.Application.Navigation
 {

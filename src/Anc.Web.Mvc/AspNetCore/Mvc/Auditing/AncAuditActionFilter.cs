@@ -8,104 +8,105 @@ using System.Threading.Tasks;
 using Anc.AspNetCore.AspNetCore.Configuration;
 using Anc.AspNetCore.Web.Mvc.Extensions;
 using Anc.Auditing;
-using Anc.Dependency;
 using log4net.Core;
 using log4net.Layout;
 using log4net.Layout.Pattern;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Anc.AspNetCore.AspNetCore.Mvc.Auditing
 {
     public class AncAuditActionFilter : IAsyncActionFilter, ITransientDependency
     {
+        protected AncAuditingOptions Options { get; }
         private readonly IAuditingHelper _auditingHelper;
-        private readonly ILogger<AncAuditActionFilter> _logger;
-        private readonly IAncAspNetCoreConfiguration _configuration;
+        private readonly IAuditingManager _auditingManager;
 
-        public AncAuditActionFilter(IAuditingHelper auditingHelper
-            , ILogger<AncAuditActionFilter> logger)
+        public AncAuditActionFilter(
+            IOptions<AncAuditingOptions> options
+            , IAuditingHelper auditingHelper
+            , IAuditingManager auditingManager
+            )
         {
-            _logger = logger;
+            Options = options.Value;
+
             _auditingHelper = auditingHelper;
+            _auditingManager = auditingManager;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if (!ShouldSaveAudit(context))
+            if (!ShouldSaveAudit(context, out var auditLog, out var auditLogAction))
             {
                 await next();
                 return;
             }
-            var auditInfo = _auditingHelper.CreateAuditInfo(
-                context.ActionDescriptor.AsControllerActionDescriptor().ControllerTypeInfo.AsType(),
-                context.ActionDescriptor.AsControllerActionDescriptor().MethodInfo,
-                context.ActionArguments
-            );
-
             var stopwatch = Stopwatch.StartNew();
 
             try
             {
                 var result = await next();
+
                 if (result.Exception != null && !result.ExceptionHandled)
                 {
-                    auditInfo.Exception = result.Exception;
+                    auditLog.Exceptions.Add(result.Exception);
                 }
             }
             catch (Exception ex)
             {
-                auditInfo.Exception = ex;
+                auditLog.Exceptions.Add(ex);
                 throw;
             }
             finally
             {
                 stopwatch.Stop();
-                auditInfo.ExecutionDuration = Convert.ToInt32(stopwatch.Elapsed.TotalMilliseconds);
-                _logger.LogInformation("asdas");
-                await _auditingHelper.SaveAsync(auditInfo);
+                auditLogAction.ExecutionDuration = Convert.ToInt32(stopwatch.Elapsed.TotalMilliseconds);
+                auditLog.Actions.Add(auditLogAction);
             }
         }
 
-        private bool ShouldSaveAudit(ActionExecutingContext actionContext)
+        private bool ShouldSaveAudit(ActionExecutingContext context, out AuditLogInfo auditLog, out AuditLogActionInfo auditLogAction)
         {
-            return _configuration.IsAuditingEnabled &&
-                   actionContext.ActionDescriptor.IsControllerAction() &&
-                   _auditingHelper.ShouldSaveAudit(actionContext.ActionDescriptor.GetMethodInfo(), true);
-        }
-    }
+            auditLog = null;
+            auditLogAction = null;
 
-    public class CustomerPatternLayout : PatternLayout
-    {
-        public CustomerPatternLayout()
-        {
-            this.AddConverter("Property", typeof(CustomerPatternConvert));
-        }
-    }
-
-    public class CustomerPatternConvert : PatternLayoutConverter
-    {
-        protected override void Convert(TextWriter writer, LoggingEvent loggingEvent)
-        {
-            if (Option != null)
+            if (!Options.IsEnabled)
             {
-                WriteObject(writer, loggingEvent.Repository, LookupProperty(Option, loggingEvent));
+                return false;
             }
-            else
-            {
-                WriteDictionary(writer, loggingEvent.Repository, loggingEvent.GetProperties());
-            }
-        }
 
-        private object LookupProperty(string property, LoggingEvent loggingEvent)
-        {
-            object propertyValue = String.Empty;
-            PropertyInfo propertyInfo = loggingEvent.MessageObject.GetType().GetProperty(property);
-            if (propertyInfo != null)
+            if (!context.ActionDescriptor.IsControllerAction())
             {
-                propertyValue = propertyInfo.GetValue(loggingEvent.MessageObject, null);
+                return false;
             }
-            return propertyValue;
+
+            AuditLogInfo auditLogCache = _auditingManager.Current;
+            if (auditLogCache == null)
+            {
+                return false;
+            }
+
+            if (!_auditingHelper.ShouldSaveAudit(context.ActionDescriptor.GetMethodInfo(), true))
+            {
+                return false;
+            }
+
+            //TODO: This is partially duplication of AuditHelper.ShouldSaveAudit method. Check why it does not work for controllers
+            if (!AuditingInterceptorRegistrar.ShouldAuditTypeByDefault(context.Controller.GetType()))
+            {
+                return false;
+            }
+
+            auditLog = auditLogCache;
+            auditLogAction = _auditingHelper.CreateAuditLogAction(
+                auditLog,
+                context.ActionDescriptor.AsControllerActionDescriptor().ControllerTypeInfo.AsType(),
+                context.ActionDescriptor.AsControllerActionDescriptor().MethodInfo,
+                context.ActionArguments
+            );
+
+            return true;
         }
     }
 }

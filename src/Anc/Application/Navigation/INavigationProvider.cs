@@ -1,4 +1,4 @@
-﻿using Anc.Dependency;
+﻿using Anc.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;

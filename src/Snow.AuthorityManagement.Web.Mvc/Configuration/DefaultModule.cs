@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using Microsoft.AspNetCore.Http;
-using Anc.Dependency;
 using Anc.Domain.Repositories;
 using Anc.EntityFrameworkCore.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +15,9 @@ using Anc.Runtime.Session;
 using Anc.Authorization;
 using Snow.AuthorityManagement.Repository.Authorization.Permissions.DomainService;
 using Anc.Application.Navigation;
+using Anc.DependencyInjection;
+using Anc.AspNetCore.Security.Claims;
+using Anc.Security.Claims;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -27,8 +29,12 @@ namespace Snow.AuthorityManagement.Web.Configuration
             var mvc = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web.Mvc"));
             var anc = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc"));
             var ancAspCore = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.AspNetCore"));
+            var ancAspCoreMvc = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.AspNetCore.Mvc"));
+            var ancCore = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.Core"));
+            var ancThreading = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.Threading"));
+            var ancSecurit = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.Securit"));
+            var ancAuthorization = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.Authorization"));
             var ancEfCore = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Anc.EntityFrameworkCore"));
-            var data = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Data"));
             var rep = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Repository"));
             var core = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Core"));
 
@@ -45,15 +51,15 @@ namespace Snow.AuthorityManagement.Web.Configuration
             //    .AsImplementedInterfaces()
             //    .InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWorkInterceptor>();
-
+            Assembly[] assemblies = new Assembly[] { application, anc, ancAspCore, ancAspCoreMvc, ancAuthorization, ancCore, ancThreading, ancSecurit, ancEfCore, rep, core, mvc };
             var transientType = typeof(ITransientDependency);
             var singletonType = typeof(ISingletonDependency);
-            builder.RegisterAssemblyTypes(application, anc, ancAspCore, ancEfCore, data, rep, core, mvc)
+            builder.RegisterAssemblyTypes(assemblies)
                 .Where(m => transientType.IsAssignableFrom(m) && m != transientType)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope()
                 .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
-            builder.RegisterAssemblyTypes(application, anc, ancAspCore, ancEfCore, data, rep, core)
+            builder.RegisterAssemblyTypes(assemblies)
                .Where(m => singletonType.IsAssignableFrom(m) && m != singletonType)
                .AsImplementedInterfaces()
                .SingleInstance()

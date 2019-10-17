@@ -17,7 +17,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.AuditLogs
     public class AuditLogAppService : IAuditLogAppService
     {
         private readonly IMapper _mapper;
-        private readonly ILambdaRepository<AuditLog, Guid> _auditLogRepository;
+        private readonly ILambdaRepository<AuditLog, long> _auditLogRepository;
 
         /// <summary>
         /// 构造
@@ -25,7 +25,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.AuditLogs
         /// <param name="mapper"></param>
         /// <param name="auditLogRepository"></param>
         public AuditLogAppService(IMapper mapper
-            , ILambdaRepository<AuditLog, Guid> auditLogRepository)
+            , ILambdaRepository<AuditLog, long> auditLogRepository)
         {
             _mapper = mapper;
             _auditLogRepository = auditLogRepository;

@@ -33,6 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Authorization\MenuController.cs" />
+    <Compile Remove="Controllers\Authorization\PermissionController.cs" />
+    <Compile Remove="Controllers\Authorization\RoleController.cs" />
     <Compile Remove="Startup\IStartupTask.cs" />
   </ItemGroup>
 
@@ -88,6 +91,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.111" />
   </ItemGroup>
 
   <ItemGroup>

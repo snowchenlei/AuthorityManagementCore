@@ -18,6 +18,8 @@
   <ItemGroup>
     <Compile Remove="EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntity.cs" />
     <Compile Remove="EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs" />
+    <Compile Remove="Migrations\20191009014612_AddTableAuditLog.cs" />
+    <Compile Remove="Migrations\20191009014612_AddTableAuditLog.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

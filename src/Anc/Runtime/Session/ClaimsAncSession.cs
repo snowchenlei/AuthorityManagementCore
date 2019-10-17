@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Anc.Dependency;
+using Anc.DependencyInjection;
 
 namespace Anc.Runtime.Session
 {
     public class ClaimsAncSession : IAncSession, ISingletonDependency
     {
+        public virtual bool IsAuthenticated => UserId.HasValue;
+
         protected IPrincipalAccessor PrincipalAccessor { get; }
 
         public ClaimsAncSession(IPrincipalAccessor principalAccessor)

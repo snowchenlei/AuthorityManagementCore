@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Anc.DependencyInjection;
 
 namespace Anc.Auditing
 {
-    public interface IAuditingConfiguration
+    public interface IAuditingConfiguration : ITransientDependency
     {
         /// <summary>
         /// Used to enable/disable auditing system.

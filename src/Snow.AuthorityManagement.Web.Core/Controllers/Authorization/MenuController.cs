@@ -1,5 +1,5 @@
 ﻿using Anc.Application.Services.Dto;
-using Anc.AspNetCore.Web.Mvc.Authorization;
+using Anc.Authorization;
 using AutoMapper;
 using CacheCow.Server.Core.Mvc;
 using Microsoft.AspNetCore.Mvc;

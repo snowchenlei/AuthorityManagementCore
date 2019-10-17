@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Anc.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Anc.Auditing
 {
-    public class HttpContextClientInfoProvider : IClientInfoProvider
+    public class HttpContextClientInfoProvider : IClientInfoProvider, ITransientDependency
     {
         public string BrowserInfo => GetBrowserInfo();
 

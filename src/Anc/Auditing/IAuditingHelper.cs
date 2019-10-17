@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Anc.Auditing
 {
     public interface IAuditingHelper
+
     {
         bool ShouldSaveAudit(MethodInfo methodInfo, bool defaultValue = false);
 

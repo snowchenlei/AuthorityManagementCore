@@ -10,11 +10,15 @@
 
   <ItemGroup>
     <Compile Remove="Configuration\DefaultModule.cs" />
+    <Compile Remove="Controllers\Authorization\AuditLogController.cs" />
+    <Compile Remove="Controllers\Authorization\MenuController.cs" />
+    <Compile Remove="Controllers\Authorization\RoleController.cs" />
     <Compile Remove="Controllers\XsrfToken.cs" />
     <Compile Remove="Startup\NavigationProvider.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Anc.Authorization\Anc.Authorization.csproj" />
     <ProjectReference Include="..\Anc.Web.Mvc\Anc.AspNetCore.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Application\Snow.AuthorityManagement.Application.csproj" />
   </ItemGroup>

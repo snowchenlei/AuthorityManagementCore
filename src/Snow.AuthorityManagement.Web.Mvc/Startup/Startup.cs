@@ -5,7 +5,6 @@ using Anc.Application.Services.Dto;
 using Anc.Authorization;
 using Anc.Runtime.Caching;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using CacheCow.Server.Core.Mvc;
 using FluentValidation;
@@ -19,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
@@ -92,7 +92,6 @@ namespace Snow.AuthorityManagement.Web.Startup
             #endregion 线程内唯一
 
             services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
-
             AddAutoMapper(services);
             //禁用 dotnet core 2.1的formbody等模式自动校验和转换
             services.Configure<ApiBehaviorOptions>(options =>

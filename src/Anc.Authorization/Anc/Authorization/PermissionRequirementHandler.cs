@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Anc.Authorization
 {
+    /// <summary>
+    /// https://docs.microsoft.com/zh-cn/aspnet/core/security/authorization/policies?view=aspnetcore-3.0#authorization-handlers
+    /// </summary>
     public class PermissionRequirementHandler : AuthorizationHandler<PermissionRequirement>
     {
         private readonly IPermissionChecker _permissionChecker;
@@ -22,6 +25,7 @@ namespace Anc.Authorization
             AuthorizationHandlerContext context,
             PermissionRequirement requirement)
         {
+            // 进行权限检查
             if (await _permissionChecker.IsGrantedAsync(context.User, requirement.PermissionName))
             {
                 context.Succeed(requirement);

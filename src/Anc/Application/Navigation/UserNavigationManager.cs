@@ -25,11 +25,12 @@ namespace Anc.Application.Navigation
 
         public async Task<UserMenu> GetMenuAsync()
         {
+            // TODO:获取用户信息
             if (!_currentUser.Id.HasValue)
             {
                 throw new AncAuthorizationException("请登陆");
             }
-            var permissions = await _permissionService.GetAllPermissionsByUserIdAsync(_currentUser.Id.Value);
+            var permissions = await _permissionService.GetAllPermissionsByUserIdAsync(1);
             MenuDefinition menuDefinition = await _navigationProvider.GetNavigationAsync();
             UserMenu userMenu = new UserMenu(menuDefinition);
             CheckPermission(permissions, menuDefinition.Items, userMenu.Items);

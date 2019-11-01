@@ -30,11 +30,17 @@ namespace Anc.Authorization.Permissions
             return IsGrantedAsync(PrincipalAccessor.Principal, name);
         }
 
+        /// <summary>
+        /// 检查权限
+        /// </summary>
+        /// <param name="claimsPrincipal">Claims</param>
+        /// <param name="name">权限名称</param>
+        /// <returns>是否有权</returns>
         public virtual async Task<bool> IsGrantedAsync(ClaimsPrincipal claimsPrincipal, string name)
         {
             Check.NotNull(name, nameof(name));
 
-            var permission = PermissionDefinitionManager.Get(name);
+            PermissionDefinition permission = PermissionDefinitionManager.Get(name);
 
             var isGranted = false;
             var context = new PermissionValueCheckContext(permission, claimsPrincipal);

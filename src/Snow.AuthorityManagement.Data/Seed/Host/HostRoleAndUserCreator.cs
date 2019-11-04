@@ -36,7 +36,8 @@ namespace Snow.AuthorityManagement.Data.Seed.Host
 
         private async Task CreateHostRoleAndUsersAsync()
         {
-            // Admin role for host
+            // TODO:初始化数据
+            /*// Admin role for host
             var adminRoleForHost = await _context.Role.IgnoreQueryFilters().FirstOrDefaultAsync();
             if (adminRoleForHost == null)
             {
@@ -88,7 +89,7 @@ namespace Snow.AuthorityManagement.Data.Seed.Host
                     RoleID = adminRoleForHost.ID
                 });
                 await _context.SaveChangesAsync();
-            }
+            }*/
         }
     }
 }

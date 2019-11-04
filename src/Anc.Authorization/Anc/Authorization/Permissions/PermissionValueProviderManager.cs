@@ -13,21 +13,26 @@ namespace Anc.Authorization.Permissions
         public IReadOnlyList<IPermissionValueProvider> ValueProviders => _lazyProviders.Value;
         private readonly Lazy<List<IPermissionValueProvider>> _lazyProviders;
 
-        protected PermissionOptions Options { get; }
+        protected AncPermissionOptions Options { get; }
 
         public PermissionValueProviderManager(
             IServiceProvider serviceProvider,
-            IOptions<PermissionOptions> options)
+            IOptions<AncPermissionOptions> options)
         {
+            // TODO:需要抽象
             Options = options.Value;
-
             _lazyProviders = new Lazy<List<IPermissionValueProvider>>(
-                () => Options
-                    .ValueProviders
-                    .Select(c => serviceProvider.GetRequiredService(c) as IPermissionValueProvider)
-                    .ToList(),
-                true
-            );
+               () => serviceProvider.GetServices<IPermissionValueProvider>()
+                   .ToList(),
+               true
+           );
+            //_lazyProviders = new Lazy<List<IPermissionValueProvider>>(
+            //    () => Options
+            //        .ValueProviders
+            //        .Select(c => serviceProvider.GetRequiredService(c) as IPermissionValueProvider)
+            //        .ToList(),
+            //    true
+            //);
         }
     }
 }

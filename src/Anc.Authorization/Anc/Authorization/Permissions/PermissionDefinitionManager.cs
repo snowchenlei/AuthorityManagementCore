@@ -18,12 +18,12 @@ namespace Anc.Authorization.Permissions
         protected IDictionary<string, PermissionDefinition> PermissionDefinitions => _lazyPermissionDefinitions.Value;
         private readonly Lazy<Dictionary<string, PermissionDefinition>> _lazyPermissionDefinitions;
 
-        protected PermissionOptions Options { get; }
+        protected AncPermissionOptions Options { get; }
 
         private readonly IServiceProvider _serviceProvider;
 
         public PermissionDefinitionManager(
-            IOptions<PermissionOptions> options,
+            IOptions<AncPermissionOptions> options,
             IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -107,10 +107,12 @@ namespace Anc.Authorization.Permissions
 
             using (var scope = _serviceProvider.CreateScope())
             {
-                var providers = Options
-                    .DefinitionProviders
-                    .Select(p => scope.ServiceProvider.GetRequiredService(p) as IPermissionDefinitionProvider)
-                    .ToList();
+                // TODO:抽象
+                var providers = scope.ServiceProvider.GetServices<IPermissionDefinitionProvider>();
+                //var providers = Options
+                //    .DefinitionProviders
+                //    .Select(p => scope.ServiceProvider.GetRequiredService(p) as IPermissionDefinitionProvider)
+                //    .ToList();
 
                 foreach (var provider in providers)
                 {

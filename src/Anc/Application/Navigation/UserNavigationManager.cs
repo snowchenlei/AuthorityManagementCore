@@ -26,10 +26,12 @@ namespace Anc.Application.Navigation
         public async Task<UserMenu> GetMenuAsync()
         {
             // TODO:获取用户信息
+            goto a;
             if (!_currentUser.Id.HasValue)
             {
                 throw new AncAuthorizationException("请登陆");
             }
+            a:
             var permissions = await _permissionService.GetAllPermissionsByUserIdAsync(1);
             MenuDefinition menuDefinition = await _navigationProvider.GetNavigationAsync();
             UserMenu userMenu = new UserMenu(menuDefinition);

@@ -38,6 +38,8 @@ namespace Anc.Authorization.Permissions
         /// <returns>是否有权</returns>
         public virtual async Task<bool> IsGrantedAsync(ClaimsPrincipal claimsPrincipal, string name)
         {
+            // TODO:检查权限
+            return true;
             Check.NotNull(name, nameof(name));
 
             PermissionDefinition permission = PermissionDefinitionManager.Get(name);

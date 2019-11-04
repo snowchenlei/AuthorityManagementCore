@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Loader;
 using Anc.Application.Services.Dto;
 using Anc.Authorization;
+using Anc.Authorization.Permissions;
 using Anc.Runtime.Caching;
 using Autofac;
 using AutoMapper;
@@ -116,6 +118,8 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.Cookie.HttpOnly = true;
             });
             AddCacheCow(services);
+
+            AutoAddDefinitionProviders(services);
         }
 
         private void AddMvc(IServiceCollection services)
@@ -237,6 +241,26 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<UserListDto>, TimedETagQueryUserRepository, UserCollectionETagExtractor>(false);
             services.AddQueryProviderAndExtractorForViewModelMvc<GetRoleForEditOutput, TimedETagQueryRoleRepository, RoleETagExtractor>(false);
             services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<RoleListDto>, TimedETagQueryRoleRepository, RoleCollectionETagExtractor>(false);
+        }
+
+        private void AutoAddDefinitionProviders(IServiceCollection services)
+        {
+            //services.OnRegistred(AuthorizationInterceptorRegistrar.RegisterIfNeeded);
+
+            //var definitionProviders = new List<Type>();
+
+            //services.OnRegistred(context =>
+            //{
+            //    if (typeof(IPermissionDefinitionProvider).IsAssignableFrom(context.ImplementationType))
+            //    {
+            //        definitionProviders.Add(context.ImplementationType);
+            //    }
+            //});
+
+            //services.Configure<AncPermissionOptions>(options =>
+            //{
+            //    options.DefinitionProviders.AddIfNotContains(definitionProviders);
+            //});
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

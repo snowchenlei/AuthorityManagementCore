@@ -33,7 +33,6 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
         [ResponseCache(CacheProfileName = "Header")]
         public async Task<ActionResult> Index()
         {
-            // TODO:添加角色列表
             var roles = await _roleService.GetAllRoleListAsync();
             List<SelectListItem> roleItems = _mapper.Map<List<SelectListItem>>(roles);
             ViewBag.RoleList = roleItems;

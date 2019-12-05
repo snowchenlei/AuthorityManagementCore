@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Snow.AuthorityManagement.Core.Authorization.UserRoles
 {
-    public class UserRole : Entity
+    public class UserRole : Entity<int>
     {
         public int UserID { get; set; }
         public int RoleID { get; set; }

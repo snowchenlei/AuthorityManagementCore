@@ -6,7 +6,6 @@ using Anc.Auditing;
 using Anc.Domain.Entities;
 using Anc.Extensions;
 using Anc.Runtime.Validation;
-using Anc.UI;
 
 namespace Snow.AuthorityManagement.Core.Authorization.AuditLogs
 {

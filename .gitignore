@@ -92,3 +92,8 @@
 /src/Anc.Security.Claims/obj
 /src/Anc.Threading/bin/Debug/netcoreapp3.0
 /src/Anc.Threading/obj
+/src/Anc.Ddd.Application/obj
+/src/Anc.Ddd.Domain/bin/Debug
+/src/Anc.Ddd.Domain/obj
+/src/Microsoft.Extensions.Caching.Abstractions.Extension/bin/Debug/netcoreapp3.1
+/src/Microsoft.Extensions.Caching.Abstractions.Extension/obj

@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Anc\Anc.csproj" />
+    <ProjectReference Include="..\Anc.Authorization\Anc.Authorization.csproj" />
+    <ProjectReference Include="..\Anc.Ddd.Domain\Anc.Ddd.Domain.csproj" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 ﻿using System;
-using Anc.UI;
+using Anc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -76,8 +76,8 @@ namespace Snow.AuthorityManagement.Web.Library
             // * 2、先对Action方法里引发的HTTP 404/400错误进行捕捉和处理
             // * 3、其他错误默认为HTTP 500服务器错误
             // */ if (httpException != null && (httpException.GetHttpCode() == 400 ||
-            // httpException.GetHttpCode() == 404)) { filterContext.HttpContext.Response.StatusCode =
-            // 404; filterContext.HttpContext.Response.WriteFile("~/HttpError/404.html"); } else {
+            // httpException.GetHttpCode() == 404)) { filterContext.HttpContext.Response.StatusCode
+            // = 404; filterContext.HttpContext.Response.WriteFile("~/HttpError/404.html"); } else {
             // filterContext.HttpContext.Response.StatusCode = 500;
             // filterContext.HttpContext.Response.WriteFile("~/HttpError/500.html"); }
 

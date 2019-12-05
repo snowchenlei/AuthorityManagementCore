@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Anc.Domain.Entities;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 
 namespace Snow.AuthorityManagement.Core.Model
 {
-    public class PermissionComparer : IEqualityComparer<Permission>
+    public class PermissionComparer : IEqualityComparer<AncPermission>
     {
-        public bool Equals(Permission x, Permission y)
+        public bool Equals(AncPermission x, AncPermission y)
         {
             //this非空，obj如果为空，则返回false
             if (object.ReferenceEquals(x, null))
@@ -28,7 +29,7 @@ namespace Snow.AuthorityManagement.Core.Model
             return x.Name.Equals(y.Name);
         }
 
-        public int GetHashCode(Permission obj)
+        public int GetHashCode(AncPermission obj)
         {
             int hashScore = obj.Name.GetHashCode();
             return hashScore;

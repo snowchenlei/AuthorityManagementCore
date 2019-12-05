@@ -286,24 +286,24 @@ namespace Anc.EntityFrameworkCore.Repositories
         {
             entity = Insert(entity);
 
-            if (MayHaveTemporaryKey(entity) || entity.IsTransient())
+            if (MayHaveTemporaryKey(entity))
             {
                 Context.SaveChanges();
             }
 
-            return entity.ID;
+            return entity.Id;
         }
 
         public override async Task<TPrimaryKey> InsertAndGetIdAsync(TEntity entity)
         {
             entity = await InsertAsync(entity);
 
-            if (MayHaveTemporaryKey(entity) || entity.IsTransient())
+            if (MayHaveTemporaryKey(entity))
             {
                 await Context.SaveChangesAsync();
             }
 
-            return entity.ID;
+            return entity.Id;
         }
 
         public override TEntity Update(TEntity entity)
@@ -341,7 +341,7 @@ namespace Anc.EntityFrameworkCore.Repositories
                 .FirstOrDefault(
                     ent =>
                         ent.Entity is TEntity &&
-                        EqualityComparer<TPrimaryKey>.Default.Equals(id, (ent.Entity as TEntity).ID)
+                        EqualityComparer<TPrimaryKey>.Default.Equals(id, (ent.Entity as TEntity).Id)
                 );
 
             return entry?.Entity as TEntity;
@@ -397,12 +397,12 @@ namespace Anc.EntityFrameworkCore.Repositories
 
             if (typeof(TPrimaryKey) == typeof(int))
             {
-                return Convert.ToInt32(entity.ID) <= 0;
+                return Convert.ToInt32(entity.Id) <= 0;
             }
 
             if (typeof(TPrimaryKey) == typeof(long))
             {
-                return Convert.ToInt64(entity.ID) <= 0;
+                return Convert.ToInt64(entity.Id) <= 0;
             }
 
             return false;

@@ -1,4 +1,5 @@
 ﻿using Anc.Authorization;
+using Anc.Domain.Entities;
 using AutoMapper;
 using Snow.AuthorityManagement.Application.Authorization.Permissions.Dto;
 using Snow.AuthorityManagement.Core.Model;
@@ -12,9 +13,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions.Mapper
     {
         public PermissionMapperProfile()
         {
-            CreateMap<AncPermission, FlatPermissionDto>()
-               .ForMember(p => p.Children, opt => opt.MapFrom(src => src.Children.Count > 0 ? src.Children : null))
-               .ForMember(p => p.Children, opt => opt.Ignore());
+            CreateMap<AncPermission, FlatPermissionDto>();
         }
     }
 }

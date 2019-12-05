@@ -10,7 +10,7 @@ namespace Snow.AuthorityManagement.Core.Authorization.Menus
     /// <summary>
     /// 菜单
     /// </summary>
-    public class Menu : Entity, IHasModificationTime, IHasCreationTime
+    public class Menu : Entity<int>, IHasModificationTime, IHasCreationTime
     {
         public string Name { get; set; }
 

@@ -14,8 +14,7 @@ namespace Anc.Authorization.Permissions
         protected IPermissionValueProviderManager PermissionValueProviderManager { get; }
         private ICurrentPrincipalAccessor PrincipalAccessor { get; }
 
-        public PermissionChecker(
-            ICurrentPrincipalAccessor principalAccessor
+        public PermissionChecker(ICurrentPrincipalAccessor principalAccessor
             , IPermissionDefinitionManager permissionDefinitionManager
             , IPermissionValueProviderManager permissionValueProviderManager
             )
@@ -38,9 +37,11 @@ namespace Anc.Authorization.Permissions
         /// <returns>是否有权</returns>
         public virtual async Task<bool> IsGrantedAsync(ClaimsPrincipal claimsPrincipal, string name)
         {
-            // TODO:检查权限
-            return true;
             Check.NotNull(name, nameof(name));
+            // TODO:检查权限
+            // 1、检查当前系统包含此权限
+            // 2、检查用户拥有此权限
+            //return true;
 
             PermissionDefinition permission = PermissionDefinitionManager.Get(name);
 

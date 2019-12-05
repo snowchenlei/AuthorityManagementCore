@@ -20,11 +20,13 @@ using Snow.AuthorityManagement.Application.Authorization.Permissions.Dto;
 using System.Collections.Immutable;
 using Anc.Domain.Repositories;
 using Anc.Application.Services.Dto;
-using Anc.Domain.Model;
 using Anc.Domain.Uow;
 using Anc.Authorization;
 using Snow.AuthorityManagement.Core.Authorization.Permissions.DomainService;
 using Anc.UI;
+using Anc.Core.Anc;
+using Anc;
+using Anc.Domain.Entities;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles
 {
@@ -36,7 +38,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         private readonly IMapper _mapper;
         private readonly DbContext CurrentContext;
         private readonly IPermissionManager _permissionManager;
-        private readonly IAncPermissionManager _ancPermissionManager;
         private readonly ILambdaRepository<Role> _roleRepository;
         private readonly IPermissionRepository _permissionRepository;
 
@@ -51,7 +52,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             IMapper mapper
             , AuthorityManagementContext context
             , IPermissionManager permissionManager
-            , IAncPermissionManager ancPermissionManager
             , ILambdaRepository<Role> roleRepository
             , IPermissionRepository permissionRepository)
         {
@@ -120,6 +120,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <returns></returns>
         public async Task<GetRoleForEditOutput> GetForEditAsync(int? roleId)
         {
+            List<int> l = new List<int>();
             RoleEditDto roleEditDto = null;
             IEnumerable<Permission> permissions = null;
             if (roleId.HasValue)
@@ -143,7 +144,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         }
 
         private FlatPermissionDto AddPermission(AncPermission permission
-           , IEnumerable<Permission> oldPermissions)
+           , IEnumerable<AncPermission> oldPermissions)
         {
             var flatPermission = _mapper.Map<FlatPermissionDto>(permission);
             if (oldPermissions != null && oldPermissions.Any(op => op.Name == permission.Name))
@@ -177,8 +178,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
                 throw new UserFriendlyException("角色名已存在");
             }
             Role role = _mapper.Map<Role>(input);
-            role.Permissions = CreatePermissions(permissionNames);
-            role.ID = await _roleRepository.InsertAndGetIdAsync(role);
+            role.Id = await _roleRepository.InsertAndGetIdAsync(role);
             role.LastModificationTime = role.CreationTime;
             return _mapper.Map<RoleListDto>(role);
         }
@@ -204,10 +204,10 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
 
             #region 权限
 
-            List<Permission> permissions = CreatePermissions(permissionNames);
-            List<Permission> oldPermissions = await _permissionRepository.GetPermissionsByRoleIdAsync(role.ID);
-            List<Permission> newPermissions = permissions.Except(oldPermissions, new PermissionComparer()).ToList();
-            List<Permission> lostPermissions = oldPermissions
+            List<AncPermission> permissions = CreatePermissions(permissionNames);
+            List<AncPermission> oldPermissions = await _permissionRepository.GetPermissionsByRoleIdAsync(role.Name);
+            List<AncPermission> newPermissions = permissions.Except(oldPermissions, new PermissionComparer()).ToList();
+            List<AncPermission> lostPermissions = oldPermissions
                 .Except(permissions, new PermissionComparer())
                 .ToList();
             await _permissionRepository.SetPermissionsByRoleId(role, newPermissions, lostPermissions);
@@ -222,21 +222,20 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// </summary>
         /// <param name="permissionNames">权限集合</param>
         /// <returns></returns>
-        private List<Permission> CreatePermissions(List<string> permissionNames)
+        private List<AncPermission> CreatePermissions(List<string> permissionNames)
         {
             if (permissionNames == null)
             {
                 throw new ArgumentNullException(nameof(permissionNames));
             }
 
-            List<Permission> permissionsEntiy = new List<Permission>();
+            List<AncPermission> permissionsEntiy = new List<AncPermission>();
             DateTime now = DateTime.Now;
             foreach (string per in permissionNames)
             {
-                permissionsEntiy.Add(new Permission()
+                permissionsEntiy.Add(new AncPermission()
                 {
                     CreationTime = now,
-                    IsGranted = true,
                     Name = per
                 });
             }
@@ -255,7 +254,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             Role role = await _roleRepository.GetAsync(id)
                         ?? throw new UserFriendlyException("角色不存在");
 
-            List<Permission> permissions = await _permissionRepository.GetPermissionsByRoleIdAsync(id);
+            List<AncPermission> permissions = await _permissionRepository.GetPermissionsByRoleIdAsync(role.Name);
             await _permissionRepository.DeleteAsync(permissions);
             await _roleRepository.DeleteAsync(role);
             return true;

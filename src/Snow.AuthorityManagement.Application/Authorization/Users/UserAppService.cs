@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Anc;
 using Anc.Application.Services.Dto;
-using Anc.Domain.Model;
+using Anc.Core.Anc;
 using Anc.Domain.Repositories;
 using Anc.Domain.Uow;
-using Anc.UI;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
@@ -122,7 +122,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
                 .GetAllEnumerableAsync())
                 .Select(r => new RoleSelectDto
                 {
-                    ID = r.ID,
+                    ID = r.Id,
                     Name = r.Name,
                     DisplayName = r.DisplayName
                 }).ToArray();
@@ -205,11 +205,11 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             user.CanUse = true;
             user.Password = _configuration["AppSetting:DefaultPassword"];
             user.LastModificationTime = user.CreationTime;
-            user.ID = await _userRepository.InsertAndGetIdAsync(user);
+            user.Id = await _userRepository.InsertAndGetIdAsync(user);
 
             #endregion 用户
 
-            await SetUserRoleAsync(user.ID, roleIds);
+            await SetUserRoleAsync(user.Id, roleIds);
             return _mapper.Map<UserListDto>(user);
         }
 
@@ -236,7 +236,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
 
             #endregion 用户
 
-            await SetUserRoleAsync(user.ID, roleIds);
+            await SetUserRoleAsync(user.Id, roleIds);
             return _mapper.Map<UserListDto>(user);
         }
 

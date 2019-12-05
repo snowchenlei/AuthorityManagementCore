@@ -11,12 +11,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Anc.AspNetCore.Mvc\Anc.AspNetCore.Mvc.csproj" />
     <ProjectReference Include="..\Anc.Core\Anc.Core.csproj" />
+    <ProjectReference Include="..\Anc.Ddd.Domain\Anc.Ddd.Domain.csproj" />
     <ProjectReference Include="..\Anc.Security.Claims\Anc.Securit.csproj" />
     <ProjectReference Include="..\Anc.Threading\Anc.Threading.csproj" />
   </ItemGroup>

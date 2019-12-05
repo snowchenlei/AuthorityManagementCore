@@ -12,10 +12,12 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Menus.DomainService
     public class MenuManager : AuthorityManagementDomainServiceBase, IMenuManager
     {
         private readonly IMenuRepository _menuRepository;
+
         public MenuManager(IMenuRepository menuRepository)
         {
             _menuRepository = menuRepository;
         }
+
         public async Task<MenuDefinition> CreateMenuDefinitionAsync()
         {
             MenuDefinition menuDefinition = new MenuDefinition("MainMenu", "主菜单");
@@ -31,7 +33,7 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Menus.DomainService
                     order: menu.Sort,
                     requiredPermissionName: menu.PermissionName
                 );
-                CreateChild(menuItemDefinition, menus.Where(m => m.Parent?.ID == menu.ID).OrderBy(m => m.Sort));
+                CreateChild(menuItemDefinition, menus.Where(m => m.Parent?.Id == menu.Id).OrderBy(m => m.Sort));
                 menuDefinition.AddItem(menuItemDefinition);
             }
             return menuDefinition;
@@ -47,11 +49,11 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Menus.DomainService
                     menu.Name,
                     menu.Icon,
                     menu.Route,
-                    target: "tab_" + menu.ID,
+                    target: "tab_" + menu.Id,
                     requiredPermissionName: menu.PermissionName,
                     order: menu.Sort
                 );
-                CreateChild(newMenuItemDefinition, menus.Where(m => m.Parent?.ID == menu.ID).OrderBy(m => m.Sort));
+                CreateChild(newMenuItemDefinition, menus.Where(m => m.Parent?.Id == menu.Id).OrderBy(m => m.Sort));
                 menuItemDefinition.AddItem(newMenuItemDefinition);
             }
         }

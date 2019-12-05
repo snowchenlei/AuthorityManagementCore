@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Anc.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Core.Authorization.AuditLogs;
 using Snow.AuthorityManagement.Core.Authorization.Menus;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
@@ -19,7 +20,7 @@ namespace Snow.AuthorityManagement.Data
 
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
-        public virtual DbSet<Permission> Permission { get; set; }
+        public virtual DbSet<AncPermission> Permission { get; set; }
 
         public virtual DbSet<AuditLog> AuditLog { get; set; }
 

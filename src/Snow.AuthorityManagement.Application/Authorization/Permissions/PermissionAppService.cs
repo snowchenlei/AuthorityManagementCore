@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Anc.Domain.Entities;
 using Anc.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Core;
@@ -18,10 +19,10 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
     /// </summary>
     public class PermissionAppService : IPermissionAppService
     {
-        private readonly ILambdaRepository<Permission> _permissionRepository;
+        private readonly ILambdaRepository<AncPermission, Guid> _permissionRepository;
         private readonly ILambdaRepository<UserRole> _userRoleRepository;
 
-        public PermissionAppService(ILambdaRepository<Permission> permissionRepository, ILambdaRepository<UserRole> userRoleRepository)
+        public PermissionAppService(ILambdaRepository<AncPermission, Guid> permissionRepository, ILambdaRepository<UserRole> userRoleRepository)
         {
             _permissionRepository = permissionRepository;
             _userRoleRepository = userRoleRepository;

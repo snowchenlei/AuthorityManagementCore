@@ -5,7 +5,6 @@ using System.Runtime.Loader;
 using Anc.Application.Services.Dto;
 using Anc.Authorization;
 using Anc.Authorization.Permissions;
-using Anc.Runtime.Caching;
 using Autofac;
 using AutoMapper;
 using CacheCow.Server.Core.Mvc;
@@ -212,7 +211,7 @@ namespace Snow.AuthorityManagement.Web.Startup
         /// <param name="services"></param>
         private void AddStartupTask(IServiceCollection services)
         {
-            services.AddStartupTask<InitalPermissionTask>();
+            //services.AddStartupTask<InitalPermissionTask>();
             services.AddStartupTask<InitialHostDbTask>();
             // TODO:加载缓存数据
         }

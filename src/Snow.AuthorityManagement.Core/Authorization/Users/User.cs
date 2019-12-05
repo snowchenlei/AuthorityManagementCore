@@ -51,6 +51,6 @@ namespace Snow.AuthorityManagement.Core.Entities.Authorization
         public DateTime CreationTime { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
-        public ICollection<Permission> Permissions { get; set; }
+        public ICollection<AncPermission> Permissions { get; set; }
     }
 }

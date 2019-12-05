@@ -13,7 +13,7 @@ namespace Snow.AuthorityManagement.Core.Authorization.Roles
     /// <summary>
     /// 用户
     /// </summary>
-    public class Role : Entity, IHasModificationTime, IHasCreationTime
+    public class Role : Entity<int>, IHasModificationTime, IHasCreationTime
     {
         /// <summary>
         /// 角色名称
@@ -32,7 +32,6 @@ namespace Snow.AuthorityManagement.Core.Authorization.Roles
         public int Sort { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
-        public ICollection<Permission> Permissions { get; set; }
         public DateTime? LastModificationTime { get; set; }
         public DateTime CreationTime { get; set; }
     }

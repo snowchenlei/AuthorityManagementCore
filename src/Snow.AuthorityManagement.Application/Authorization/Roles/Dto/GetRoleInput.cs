@@ -1,5 +1,4 @@
 ﻿using Anc.Application.Services.Dto;
-using Anc.Domain.Model;
 using Snow.AuthorityManagement.Application.Dto;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
         /// </summary>
         public GetRoleInput()
         {
-            Sorting = "ID";
+            Sorting = "Id";
         }
 
         public string DisplayName { get; set; }

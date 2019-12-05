@@ -7,17 +7,16 @@ using Anc.Domain.Repositories;
 using Anc.EntityFrameworkCore.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Data;
-using Snow.AuthorityManagement.Repository;
 using Anc.Domain.Uow;
 using Anc.EntityFrameworkCore.Uow;
 using Autofac.Extras.DynamicProxy;
-using Anc.Runtime.Session;
 using Anc.Authorization;
 using Snow.AuthorityManagement.Repository.Authorization.Permissions.DomainService;
 using Anc.Application.Navigation;
 using Anc.DependencyInjection;
 using Anc.AspNetCore.Security.Claims;
 using Anc.Security.Claims;
+using Snow.AuthorityManagement.Repositories;
 
 namespace Snow.AuthorityManagement.Web.Configuration
 {
@@ -50,20 +49,22 @@ namespace Snow.AuthorityManagement.Web.Configuration
             //    .Where(t => t.Name.EndsWith("Repository"))
             //    .AsImplementedInterfaces()
             //    .InstancePerLifetimeScope();
-            builder.RegisterType<UnitOfWorkInterceptor>();
+
+            //builder.RegisterType<UnitOfWorkInterceptor>();
             Assembly[] assemblies = new Assembly[] { application, anc, ancAspCore, ancAspCoreMvc, ancAuthorization, ancCore, ancThreading, ancSecurit, ancEfCore, rep, core, mvc };
             var transientType = typeof(ITransientDependency);
             var singletonType = typeof(ISingletonDependency);
             builder.RegisterAssemblyTypes(assemblies)
                 .Where(m => transientType.IsAssignableFrom(m) && m != transientType)
                 .AsImplementedInterfaces()
-                .InstancePerLifetimeScope()
-                .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
+                .InstancePerLifetimeScope();
+            //.InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
             builder.RegisterAssemblyTypes(assemblies)
                .Where(m => singletonType.IsAssignableFrom(m) && m != singletonType)
                .AsImplementedInterfaces()
-               .SingleInstance()
-               .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
+               .SingleInstance();
+            //.InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
+
             //builder.RegisterAssemblyTypes(rep, core)
             //    .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
             //    .AsImplementedInterfaces()

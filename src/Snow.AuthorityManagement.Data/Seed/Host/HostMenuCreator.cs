@@ -49,7 +49,7 @@ namespace Snow.AuthorityManagement.Data.Seed.Host
                 {
                     Name = "用户管理",
                     PermissionName = PermissionNames.Pages_Administration_Users,
-                    ParentID = systemMenu.ID,
+                    ParentID = systemMenu.Id,
                     Route = "/User/Index",
                     Sort = 2,
                     CreationTime = now,
@@ -62,7 +62,7 @@ namespace Snow.AuthorityManagement.Data.Seed.Host
                 {
                     Name = "角色管理",
                     PermissionName = PermissionNames.Pages_Administration_Roles,
-                    ParentID = systemMenu.ID,
+                    ParentID = systemMenu.Id,
                     Route = "/Role/Index",
                     Sort = 5,
                     CreationTime = now,
@@ -75,7 +75,7 @@ namespace Snow.AuthorityManagement.Data.Seed.Host
                 {
                     Name = "菜单管理",
                     PermissionName = PermissionNames.Pages_Administration_Menus,
-                    ParentID = systemMenu.ID,
+                    ParentID = systemMenu.Id,
                     Route = "/Menu/Index",
                     Sort = 7,
                     CreationTime = now,

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Anc;
 using Anc.Application.Services.Dto;
-using Anc.Domain.Model;
+using Anc.Core.Anc;
 using Anc.Domain.Repositories;
-using Anc.UI;
 using AutoMapper;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Core.Authorization.Menus;
@@ -130,7 +130,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
             Menu menu = _mapper.Map<Menu>(input);
             menu.Parent = parentMenu;
             menu.LastModificationTime = menu.CreationTime;
-            menu.ID = await _menuRepository.InsertAndGetIdAsync(menu);
+            menu.Id = await _menuRepository.InsertAndGetIdAsync(menu);
             await _currentContext.SaveChangesAsync();
             return _mapper.Map<MenuListDto>(menu);
         }

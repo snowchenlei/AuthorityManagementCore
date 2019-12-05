@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 using Snow.AuthorityManagement.Data;
+using Snow.AuthorityManagement.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

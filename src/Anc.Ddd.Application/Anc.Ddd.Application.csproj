@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Anc\Application\Services\Dto\NameValueDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anc.Core\Anc.Core.csproj" />
+    <ProjectReference Include="..\Anc.Ddd.Domain\Anc.Ddd.Domain.csproj" />
+    <ProjectReference Include="..\Anc.Security.Claims\Anc.Securit.csproj" />
+  </ItemGroup>
+</Project>

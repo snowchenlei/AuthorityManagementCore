@@ -37,6 +37,7 @@
     <Compile Remove="Controllers\Authorization\PermissionController.cs" />
     <Compile Remove="Controllers\Authorization\RoleController.cs" />
     <Compile Remove="Startup\IStartupTask.cs" />
+    <Compile Remove="Startup\OnceTask\InitalPermissionTask.cs" />
   </ItemGroup>
 
   <ItemGroup>

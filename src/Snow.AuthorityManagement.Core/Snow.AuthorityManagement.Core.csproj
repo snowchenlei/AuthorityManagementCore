@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Authorization\Permissions\Permission.cs" />
     <Compile Remove="Enum\OrderType.cs" />
     <Compile Remove="Exception\AncAuthorizationException.cs" />
     <Compile Remove="Exception\AncInitializationException.cs" />
@@ -25,6 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Anc.Authorization\Anc.Authorization.csproj" />
-    <ProjectReference Include="..\Anc\Anc.csproj" />
+    <ProjectReference Include="..\Anc.Ddd.Application\Anc.Ddd.Application.csproj" />
   </ItemGroup>
 </Project>

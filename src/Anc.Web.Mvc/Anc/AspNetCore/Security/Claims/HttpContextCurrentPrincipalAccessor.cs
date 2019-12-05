@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
+using Anc.DependencyInjection;
 using Anc.Security.Claims.Anc.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
 namespace Anc.AspNetCore.Security.Claims
 {
-    //TODO:注入到此实现
-    public class HttpContextCurrentPrincipalAccessor : ThreadCurrentPrincipalAccessor
+    // TODO:子类无需注入实现
+    public class HttpContextCurrentPrincipalAccessor : ThreadCurrentPrincipalAccessor, ISingletonDependency
     {
         public override ClaimsPrincipal Principal => _httpContextAccessor.HttpContext?.User ?? base.Principal;
 

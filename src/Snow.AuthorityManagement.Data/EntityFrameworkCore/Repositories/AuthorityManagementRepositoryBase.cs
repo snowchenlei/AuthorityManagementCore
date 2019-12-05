@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace Snow.AuthorityManagement.Repository
+namespace Snow.AuthorityManagement.Repositories
 {
     public class AuthorityManagementRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepositoryBase<TEntity, TPrimaryKey>
          where TEntity : class, IEntity<TPrimaryKey>
@@ -25,7 +25,8 @@ namespace Snow.AuthorityManagement.Repository
 
     /// <summary>
     /// Base class for custom repositories of the application. This is a shortcut of <see
-    /// cref="AuthorityManagementRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="int"/> primary key.
+    /// cref="AuthorityManagementRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="int"/>
+    /// primary key.
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     public class AuthorityManagementRepositoryBase<TEntity> : AuthorityManagementRepositoryBase<TEntity, int>, ILambdaRepository<TEntity>

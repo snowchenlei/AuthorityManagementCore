@@ -7,11 +7,9 @@ namespace Anc.Authorization.Permissions
 {
     public interface IPermissionDefinitionManager
     {
-        [NotNull]
-        PermissionDefinition Get([NotNull] string name);
+        PermissionDefinition Get(string name);
 
-        [CanBeNull]
-        PermissionDefinition GetOrNull([NotNull] string name);
+        PermissionDefinition GetOrNull(string name);
 
         IReadOnlyList<PermissionDefinition> GetPermissions();
 

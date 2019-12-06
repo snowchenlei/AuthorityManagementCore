@@ -98,3 +98,6 @@
 /src/Microsoft.Extensions.Caching.Abstractions.Extension/bin/Debug/netcoreapp3.1
 /src/Microsoft.Extensions.Caching.Abstractions.Extension/obj
 /src/Anc.Ddd.Application/bin/Debug/netcoreapp3.0
+/src/Snow.Extensions.Json.Abstractions/obj
+/src/Snow.Extensions.Json.Newtonsoft/obj
+/src/Snow.Extensions.Json.SystemText/obj

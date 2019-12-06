@@ -9,7 +9,7 @@ namespace Anc.Authorization.Permissions
 {
     public class RolePermissionValueProvider : PermissionValueProvider
     {
-        public const string ProviderName = "R";
+        public const string ProviderName = AncContext.PermissionRoleProviderName;
 
         public override string Name => ProviderName;
 

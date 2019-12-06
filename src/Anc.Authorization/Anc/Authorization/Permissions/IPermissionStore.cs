@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Anc.Domain.Entities;
 
 namespace Anc.Authorization.Permissions
 {
@@ -12,5 +13,7 @@ namespace Anc.Authorization.Permissions
             string providerName,
             string providerKey
         );
+
+        Task<List<AncPermission>> GetAllPermissionsByUserIdAsync(string userName);
     }
 }

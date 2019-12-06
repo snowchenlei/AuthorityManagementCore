@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Anc;
 using Anc.Domain.Entities;
 using Anc.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions
 
         public Task<List<AncPermission>> GetPermissionsByRoleIdAsync(string roleName)
         {
-            return GetAll().Where(a => a.ProviderName == "Role" && a.ProviderKey == roleName).ToListAsync();
+            return GetListAsync(AncContext.PermissionRoleProviderName, roleName);
         }
     }
 }

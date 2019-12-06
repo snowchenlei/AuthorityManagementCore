@@ -8,7 +8,7 @@ namespace Anc.Authorization.Permissions
 {
     public class UserPermissionValueProvider : PermissionValueProvider
     {
-        public const string ProviderName = "U";
+        public const string ProviderName = AncContext.PermissionUserProviderName;
 
         public override string Name => ProviderName;
 

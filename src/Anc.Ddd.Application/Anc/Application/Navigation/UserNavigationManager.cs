@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Anc.Authorization;
-using Anc.Runtime.Session;
+using Anc.Domain.Entities;
 using Anc.Users;
 
 namespace Anc.Application.Navigation
 {
     public class UserNavigationManager : IUserNavigationManager
     {
-        private readonly IPermissionManagerBase _permissionService;
+        //private readonly IPermissionManagerBase _permissionService;
         private readonly INavigationProvider _navigationProvider;
+
         private readonly ICurrentUser _currentUser;
 
-        public UserNavigationManager(IPermissionManagerBase permissionService
-            , ICurrentUser currentUser
+        public UserNavigationManager(
+            //IPermissionManagerBase permissionService,
+            ICurrentUser currentUser
             , INavigationProvider navigationProvider)
         {
-            _permissionService = permissionService;
+            //_permissionService = permissionService;
             _navigationProvider = navigationProvider;
             _currentUser = currentUser;
         }
@@ -29,17 +30,17 @@ namespace Anc.Application.Navigation
             goto a;
             if (!_currentUser.Id.HasValue)
             {
-                throw new AncAuthorizationException("请登陆");
+                //throw new AncAuthorizationException("请登陆");
             }
             a:
-            var permissions = await _permissionService.GetAllPermissionsByUserIdAsync(1);
+            var permissions = new List<AncPermission>();//await _permissionService.GetAllPermissionsByUserIdAsync(1);
             MenuDefinition menuDefinition = await _navigationProvider.GetNavigationAsync();
             UserMenu userMenu = new UserMenu(menuDefinition);
             CheckPermission(permissions, menuDefinition.Items, userMenu.Items);
             return userMenu;
         }
 
-        public void CheckPermission(IEnumerable<IPermission> permissions, IList<MenuItemDefinition> menuDefinition, IList<UserMenuItem> menuItems)
+        public void CheckPermission(IEnumerable<AncPermission> permissions, IList<MenuItemDefinition> menuDefinition, IList<UserMenuItem> menuItems)
         {
             foreach (MenuItemDefinition menuItemDefinition in menuDefinition)
             {

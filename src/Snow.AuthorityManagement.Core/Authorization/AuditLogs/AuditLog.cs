@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Anc.Auditing;
 using Anc.Domain.Entities;
-using Anc.Extensions;
 using Anc.Runtime.Validation;
 
 namespace Snow.AuthorityManagement.Core.Authorization.AuditLogs

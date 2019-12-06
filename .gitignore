@@ -97,3 +97,4 @@
 /src/Anc.Ddd.Domain/obj
 /src/Microsoft.Extensions.Caching.Abstractions.Extension/bin/Debug/netcoreapp3.1
 /src/Microsoft.Extensions.Caching.Abstractions.Extension/obj
+/src/Anc.Ddd.Application/bin/Debug/netcoreapp3.0

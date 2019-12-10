@@ -28,35 +28,31 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             return View();
         }
 
-        [Authorize(PermissionNames.Pages_Administration_Roles_Query)]
-        public async Task<JsonResult> Load(GetRoleInput input)
-        {
-            var result = await _roleService.GetPagedAsync(input);
-            return Json(new
-            {
-                total = result.TotalCount,
-                rows = result.Items
-            });
-        }
-
         [HttpGet]
         [AjaxOnly]
         [Authorize(PermissionNames.Pages_Administration_Roles_Create)]
-        public ActionResult Create()
+        public async Task<ActionResult> CreateAsync()
         {
-            var viewModel = new CreateOrEditRoleModalViewModel();
+            string permissions = await _roleService.GetPermissionsAsync(null);
+            var viewModel = new CreateOrEditRoleModalViewModel()
+            {
+                Role = new RoleEditDto(),
+                Permission = permissions
+            };
             return PartialView("_CreateModal", viewModel);
         }
 
         [HttpGet]
         [AjaxOnly]
-        [Authorize(PermissionNames.Pages_Administration_Roles_Create)]
+        [Authorize(PermissionNames.Pages_Administration_Roles_Edit)]
         public async Task<ActionResult> Edit(int id)
         {
             var output = await _roleService.GetForEditAsync(id);
+            string permissions = await _roleService.GetPermissionsAsync(output.Name);
             var viewModel = new CreateOrEditRoleModalViewModel()
             {
-                Role = output
+                Role = output,
+                Permission = permissions
             };
             return PartialView("_EditModal", viewModel);
         }

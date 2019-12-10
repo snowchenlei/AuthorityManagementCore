@@ -42,17 +42,6 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             return View();
         }
 
-        [Authorize(PermissionNames.Pages_Administration_Users_Query)]
-        public async Task<JsonResult> Load(GetUsersInput input)
-        {
-            var result = await _userService.GetUserPagedAsync(input);
-            return Json(new
-            {
-                total = result.TotalCount,
-                rows = result.Items
-            });
-        }
-
         [HttpGet]
         [AjaxOnly]
         [ResponseCache(CacheProfileName = "Header")]
@@ -62,6 +51,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
             var roles = await _userService.GetUserRoleSelectAsync(null);
             CreateOrEditUserModalViewModel viewModel = new CreateOrEditUserModalViewModel
             {
+                User = new UserEditDto(),
                 Roles = roles
             };
             return PartialView("_CreateModal", viewModel);

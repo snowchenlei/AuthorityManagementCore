@@ -1,6 +1,7 @@
 ﻿using Anc.Application.Services.Dto;
 using Anc.Authorization;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Snow.AuthorityManagement.Application.Authorization.Roles;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
@@ -37,7 +38,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <returns></returns>
         [HttpGet(Name = "GetRolesPage")]
         //[HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<RoleListDto>))]
-        [AncAuthorize(PermissionNames.Pages_Administration_Roles_Query)]
+        [Authorize(PermissionNames.Pages_Administration_Roles_Query)]
         [ProducesResponseType(typeof(PagedResultDto<RoleListDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery]GetRoleInput input)
         {
@@ -59,10 +60,10 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [ProducesResponseType(typeof(GetRoleForEditOutput), 200)]
         [ProducesResponseType(304)]
         [ProducesResponseType(404)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Roles_Query)]
+        [Authorize(PermissionNames.Pages_Administration_Roles_Query)]
         public async Task<IActionResult> Get(int id)
         {
-            GetRoleForEditOutput result = await _roleService.GetForEditAsync(id);
+            RoleEditDto result = await _roleService.GetForEditAsync(id);
             return Ok(result);
         }
 
@@ -77,7 +78,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpPost(Name = "PostRole")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Roles_Create)]
+        [Authorize(PermissionNames.Pages_Administration_Roles_Create)]
         public async Task<IActionResult> Post([FromBody]CreateOrUpdateRole input)
         {
             var result = await _roleService.CreateAsync(input.Role, input.PermissionNames);
@@ -96,7 +97,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpPut("{id}", Name = "PutRole")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Roles_Edit)]
+        [Authorize(PermissionNames.Pages_Administration_Roles_Edit)]
         public async Task<IActionResult> Put(int id, [FromBody]CreateOrUpdateRole input)
         {
             input.Role.ID = id;
@@ -114,7 +115,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpDelete("{id}", Name = "DeleteRole")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Roles_Delete)]
+        [Authorize(PermissionNames.Pages_Administration_Roles_Delete)]
         public async Task<IActionResult> Delete(int id)
         {
             await _roleService.DeleteAsync(id);

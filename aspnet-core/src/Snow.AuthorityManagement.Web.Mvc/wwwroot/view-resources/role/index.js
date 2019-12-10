@@ -18,7 +18,7 @@ function queryParams(params) {
     window.operateEvents = {
         'click .edit': function (e, value, row, index) {
             e.preventDefault();
-            createOrEdit('修改角色：' + row.name, row.id);
+            edit('修改角色：' + row.name, row.id);
         },
         'click .remove': function (e, value, row, index) {
             bootbox.confirm({
@@ -70,7 +70,7 @@ function queryParams(params) {
             $('#btnAdd').remove();
         }
         $('#create').click(function () {
-            createOrEdit('添加新角色');
+            create('添加新角色');
         });
         //1、初始化表格
         table.init(url, columns);
@@ -82,7 +82,7 @@ function queryParams(params) {
 
     var dialog, l,
         url = '/api/roles/';
-    function createOrEdit(title, id) {
+    function create(title) {
         dialog = bootbox.dialog({
             title: title,
             message: '<p><i class="fa fa-spin fa-spinner"></i> 加载中... </p>',
@@ -99,11 +99,28 @@ function queryParams(params) {
                         if (result) {
                             l = Ladda.create(result.target);
                             l.start();
-                            if (id === undefined) {
-                                create();
-                            } else {
-                                edit(id);
+                            var $e = $("#modelForm");
+
+                            if (!check($e)) {
+                                return false;
                             }
+                            var para = getPara($e);
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                contentType: "application/json",
+                                data: para,
+                                success: function (result) {
+                                    l.stop();
+                                    toastr.success('添加成功');
+                                    refreshTable();
+                                    dialog.modal('hide');
+                                },
+                                error: function (result) {
+                                    toastr.error(result.responseText);
+                                    l.stop();
+                                }
+                            });
                             return false;
                         }
                     }
@@ -111,7 +128,58 @@ function queryParams(params) {
             }
         });
         dialog.init(function () {
-            $.get('/Role/CreateOrEdit', { id: id }, function (data) {
+            $.get('/Role/Create/', function (data) {
+                dialog.find('.bootbox-body').html(data);
+                dialog.find('input:not([type=hidden]):first').focus();
+            });
+        });
+    }
+    function edit(title, id) {
+        dialog = bootbox.dialog({
+            title: title,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> 加载中... </p>',
+            size: 'large',
+            buttons: {
+                cancel: {
+                    label: '取消',
+                    className: 'btn-danger'
+                },
+                confirm: {//ok、confirm会在加载完成后获取焦点
+                    label: '提交',
+                    className: 'btn-success',
+                    callback: function (result) {
+                        if (result) {
+                            l = Ladda.create(result.target);
+                            l.start();
+                            var $e = $("#modelForm");
+                            if (!check($e)) {
+                                return false;
+                            }
+                            var para = getPara($e);
+                            $.ajax({
+                                type: 'PUT',
+                                url: url + id,
+                                contentType: "application/json",
+                                data: para,
+                                success: function (result) {
+                                    l.stop();
+                                    toastr.success('修改成功');
+                                    refreshTable();
+                                    dialog.modal('hide');
+                                },
+                                error: function (result) {
+                                    toastr.error(result.responseText);
+                                    l.stop();
+                                }
+                            });
+                            return false;
+                        }
+                    }
+                }
+            }
+        });
+        dialog.init(function () {
+            $.get('/Role/Edit/' + id, function (data) {
                 dialog.find('.bootbox-body').html(data);
                 dialog.find('input:not([type=hidden]):first').focus();
             });
@@ -133,82 +201,6 @@ function queryParams(params) {
             permissionNames
         };
         return JSON.stringify(data);
-    }
-    function create() {
-        var $e = $("#modelForm");
-
-        if (!check($e)) {
-            return false;
-        }
-        var para = getPara($e);
-        $.ajax({
-            type: 'POST',
-            url: url,
-            contentType: "application/json",
-            data: para,
-            success: function (result) {
-                l.stop();
-                toastr.success('添加成功');
-                refreshTable();
-                dialog.modal('hide');
-            },
-            error: function (result) {
-                toastr.error(result.responseText);
-                l.stop();
-            }
-        });
-    }
-    function edit(id) {
-        var $e = $("#modelForm");
-        if (!check($e)) {
-            return false;
-        }
-        var para = getPara($e);
-        $.ajax({
-            type: 'PUT',
-            url: url + id,
-            contentType: "application/json",
-            data: para,
-            success: function (result) {
-                l.stop();
-                toastr.success('修改成功');
-                refreshTable();
-                dialog.modal('hide');
-            },
-            error: function (result) {
-                toastr.error(result.responseText);
-                l.stop();
-            }
-        });
-    }
-    function save() {
-        //手动验证
-        var $e = $("#modelForm");
-        if (!$e.valid()) {
-            l.stop();
-            return false;
-        }
-        //var s = $e.serializeArray();
-        var role = $e.serializeFormToObject();
-        $.ajax({
-            type: "POST",
-            url: "/Role/CreateOrEdit",
-            data: {
-                role
-            },
-            success: function (result) {
-                l.stop();
-                requestCallBack(result,
-                    function () {
-                        refreshTable();
-                    });
-                dialog.modal('hide');
-            },
-            error: function () {
-                l.stop();
-            }
-        });
-        return false;
     }
     function _findAssignedPermissions() {
         var checkAuth = [];

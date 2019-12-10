@@ -32,6 +32,13 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <returns></returns>
         Task<RoleEditDto> GetForEditAsync(int roleId);
 
+        /// <summary>
+        /// 获取权限
+        /// </summary>
+        /// <param name="roleName">角色名称</param>
+        /// <returns></returns>
+        Task<string> GetPermissionsAsync(string roleName);
+
         //Task<GetRoleForEditOutput> GetForEditAsync(int? roleId);
 
         /// <summary>

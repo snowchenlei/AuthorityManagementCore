@@ -24,6 +24,68 @@
             User响应Chche Key
             </summary>
         </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+            <param name="roleService"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
+            <summary>
+            分页获取
+            </summary>
+            <remarks>GET: api/role</remarks>
+            <param name="input">分页参数</param>
+            <response code="200">获取成功</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.Get(System.Int32)">
+            <summary>
+            根据Id获取
+            </summary>
+            <remarks>GET: api/role/{id}</remarks>
+            <param name="id">主键</param>
+            <response code="200">获取成功</response>
+            <response code="304">没有修改</response>
+            <response code="404">没有找到</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.Post(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.CreateOrUpdateRole)">
+            <summary>
+            创建
+            </summary>
+            <remarks>POST: api/role</remarks>
+            <param name="input">创建参数</param>
+            <response code="201">创建成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.Put(System.Int32,Snow.AuthorityManagement.Application.Authorization.Roles.Dto.CreateOrUpdateRole)">
+            <summary>
+            修改
+            </summary>
+            <remarks>PUT: api/role/5</remarks>
+            <param name="id">主键</param>
+            <param name="input">修改参数</param>
+            <response code="204">修改成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <remarks>DELETE: api/role/5</remarks>
+            <param name="id">主键</param>
+            <response code="204">删除成功</response>
+            <response code="404">没有找到</response>
+        </member>
         <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController">
             <summary>
             用户

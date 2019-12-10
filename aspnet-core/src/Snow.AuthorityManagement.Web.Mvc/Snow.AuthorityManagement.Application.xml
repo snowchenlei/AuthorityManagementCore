@@ -209,6 +209,13 @@
             <param name="roleId">角色编号</param>
             <returns></returns>
         </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.GetPermissionsAsync(System.String)">
+            <summary>
+            获取权限
+            </summary>
+            <param name="roleName">角色名称</param>
+            <returns></returns>
+        </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.CreateAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.RoleEditDto,System.Collections.Generic.List{System.String})">
             <summary>
             添加
@@ -264,6 +271,13 @@
             根据Id获取数据
             </summary>
             <param name="roleId">角色编号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.GetPermissionsAsync(System.String)">
+            <summary>
+            获取权限
+            </summary>
+            <param name="roleName">角色名称</param>
             <returns></returns>
         </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.GetForEditAsync(System.Nullable{System.Int32})">

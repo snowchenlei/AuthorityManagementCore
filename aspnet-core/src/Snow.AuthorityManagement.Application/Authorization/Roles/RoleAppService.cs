@@ -118,6 +118,27 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         }
 
         /// <summary>
+        /// 获取权限
+        /// </summary>
+        /// <param name="roleName">角色名称</param>
+        /// <returns></returns>
+        public async Task<string> GetPermissionsAsync(string roleName)
+        {
+            IEnumerable<AncPermission> permissions = null;
+            if (roleName != null)
+            {
+                permissions = await _permissionStore.GetPermissionsByRoleNamesAsync(roleName);
+            }
+            IReadOnlyList<PermissionDefinition> permissionDefinitions = _permissionDefinitionManager.GetPermissions();
+            ICollection<FlatPermissionDto> result = new List<FlatPermissionDto>();
+            foreach (PermissionDefinition permission in permissionDefinitions.Where(p => p.Parent == null))
+            {
+                result.Add(AddPermission(permission, permissions));
+            }
+            return Serialization.SerializeObjectCamel(result);
+        }
+
+        /// <summary>
         /// 根据Id获取数据
         /// </summary>
         /// <param name="roleId">角色编号</param>
@@ -184,6 +205,15 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             Role role = _mapper.Map<Role>(input);
             role.Id = await _roleRepository.InsertAndGetIdAsync(role);
             role.LastModificationTime = role.CreationTime;
+
+            #region 权限
+
+            List<AncPermission> oldPermissions = await _permissionRepository.GetPermissionsByRoleNameAsync(role.Name);
+            List<AncPermission> permissions = CreatePermissions(oldPermissions, role.Name, permissionNames);
+            await _permissionRepository.InsertAsync(permissions);
+
+            #endregion 权限
+
             return _mapper.Map<RoleListDto>(role);
         }
 
@@ -224,9 +254,10 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <summary>
         /// 构建权限实体
         /// </summary>
+        /// <param name="providerKey"></param>
         /// <param name="permissionNames">权限集合</param>
         /// <returns></returns>
-        private List<AncPermission> CreatePermissions(List<string> permissionNames)
+        private List<AncPermission> CreatePermissions(IEnumerable<AncPermission> permissions, string providerKey, IEnumerable<string> permissionNames)
         {
             if (permissionNames == null)
             {
@@ -237,11 +268,16 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
             DateTime now = DateTime.Now;
             foreach (string per in permissionNames)
             {
-                permissionsEntiy.Add(new AncPermission()
+                if (!permissions.Any(a => a.Name == per))
                 {
-                    CreationTime = now,
-                    Name = per
-                });
+                    permissionsEntiy.Add(new AncPermission()
+                    {
+                        ProviderName = AncConsts.PermissionRoleProviderName,
+                        ProviderKey = providerKey,
+                        CreationTime = now,
+                        Name = per
+                    });
+                }
             }
 
             return permissionsEntiy;

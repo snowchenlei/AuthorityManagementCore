@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>../Snow.AuthorityManagement.Web.Mvc/Snow.AuthorityManagement.Application.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Authorization\Permissions\PermissionAppService.cs" />
+    <Compile Remove="Dto\PagedAndSortedInputDto.cs" />
+    <Compile Remove="Dto\PagedResultDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="FluentValidation" Version="8.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anc.Ddd.Application\Anc.Ddd.Application.csproj" />
+    <ProjectReference Include="..\Snow.AuthorityManagement.Core\Snow.AuthorityManagement.Core.csproj" />
+    <ProjectReference Include="..\Snow.AuthorityManagement.Data\Snow.AuthorityManagement.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+</Project>

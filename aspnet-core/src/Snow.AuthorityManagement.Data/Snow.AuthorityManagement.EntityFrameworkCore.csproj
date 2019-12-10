@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Dapper\**" />
+    <EmbeddedResource Remove="Dapper\**" />
+    <None Remove="Dapper\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntity.cs" />
+    <Compile Remove="EntityFrameworkCore\Repositories\EfCoreRepositoryBaseOfTEntityAndTPrimaryKey.cs" />
+    <Compile Remove="Migrations\20191009014612_AddTableAuditLog.cs" />
+    <Compile Remove="Migrations\20191009014612_AddTableAuditLog.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anc.Dapper\Anc.Dapper.csproj" />
+    <ProjectReference Include="..\Anc.EntityFrameworkCore\Anc.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Snow.AuthorityManagement.Common\Snow.AuthorityManagement.Common.csproj" />
+    <ProjectReference Include="..\Snow.AuthorityManagement.Core\Snow.AuthorityManagement.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,1 @@
+﻿$.validator.unobtrusive.parse('form');

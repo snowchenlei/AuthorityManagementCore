@@ -12,7 +12,5 @@ namespace Anc.Authorization.Permissions
         PermissionDefinition GetOrNull(string name);
 
         IReadOnlyList<PermissionDefinition> GetPermissions();
-
-        IReadOnlyList<PermissionGroupDefinition> GetGroups();
     }
 }

@@ -7,13 +7,18 @@ namespace Anc.Authorization.Permissions
 {
     public interface IPermissionDefinitionContext
     {
-        //TODO: Add Get methods to find and modify a permission or group.
-        PermissionGroupDefinition GetGroupOrNull(string name);
+        PermissionDefinition GetPermissionOrNull(string name);
 
-        PermissionGroupDefinition AddGroup(
-            [NotNull] string name,
+        /// <summary>
+        /// Creates a new permission under this group.
+        /// </summary>
+        /// <param name="name">Unique name of the permission</param>
+        /// <param name="displayName">Display name of the permission</param>
+        /// <returns>New created permission</returns>
+        PermissionDefinition CreatePermission(
+            string name,
             string displayName = null);
 
-        void RemoveGroup(string name);
+        void RemovePermission(string name);
     }
 }

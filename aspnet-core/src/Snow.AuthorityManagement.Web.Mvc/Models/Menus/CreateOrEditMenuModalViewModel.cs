@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Mvc.Models.Menus
 {
-    public class CreateOrEditMenuModalViewModel : GetMenuForEditOutput
+    public class CreateOrEditMenuModalViewModel
     {
-        public bool IsEditMode
-        {
-            get { return Menu.ID.HasValue; }
-        }
+        public MenuEditDto Menu { get; set; }
 
         public List<SelectListItem> MenuList { get; set; }
     }

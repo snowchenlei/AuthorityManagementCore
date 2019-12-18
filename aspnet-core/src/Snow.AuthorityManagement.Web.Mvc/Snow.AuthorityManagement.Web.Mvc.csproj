@@ -33,10 +33,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\Authorization\MenuController.cs" />
     <Compile Remove="Controllers\Authorization\PermissionController.cs" />
     <Compile Remove="Startup\IStartupTask.cs" />
     <Compile Remove="Startup\OnceTask\InitalPermissionTask.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\view-resources\role\edit.min.js" />
+    <Content Remove="wwwroot\view-resources\role\index.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\view-resources\role\edit.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\view-resources\role\index.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +77,8 @@
     <None Include="wwwroot\lib\ladda\spin.min.js" />
     <None Include="wwwroot\lib\zTree.v3\css\awesomeStyle\awesome.less" />
     <None Include="wwwroot\lib\zTree.v3\css\awesomeStyle\fa.less" />
+    <None Include="wwwroot\view-resources\role\edit.min.js" />
+    <None Include="wwwroot\view-resources\role\index.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -119,6 +130,9 @@
     </Content>
     <Content Update="Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="wwwroot\view-resources\menu\edit.min.js">
+      <DependentUpon>edit.js</DependentUpon>
     </Content>
   </ItemGroup>
 

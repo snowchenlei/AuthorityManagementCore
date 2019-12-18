@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Anc.DependencyInjection;
 using Anc.Security.Claims;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Anc.Authorization.Permissions
 {
     public class PermissionChecker : IPermissionChecker, ITransientDependency
     {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IEnumerable<IPermissionValueProvider> _permissionValueProviders;
+
         protected IPermissionDefinitionManager PermissionDefinitionManager { get; }
         protected IPermissionValueProviderManager PermissionValueProviderManager { get; }
         private ICurrentPrincipalAccessor PrincipalAccessor { get; }
@@ -17,11 +22,15 @@ namespace Anc.Authorization.Permissions
         public PermissionChecker(ICurrentPrincipalAccessor principalAccessor
             , IPermissionDefinitionManager permissionDefinitionManager
             , IPermissionValueProviderManager permissionValueProviderManager
+            , IServiceProvider serviceProvider
+            , IEnumerable<IPermissionValueProvider> permissionValueProviders
             )
         {
             PrincipalAccessor = principalAccessor;
             PermissionDefinitionManager = permissionDefinitionManager;
             PermissionValueProviderManager = permissionValueProviderManager;
+            this._serviceProvider = serviceProvider;
+            _permissionValueProviders = permissionValueProviders;
         }
 
         public Task<bool> IsGrantedAsync([NotNull] string name)
@@ -38,32 +47,34 @@ namespace Anc.Authorization.Permissions
         public virtual async Task<bool> IsGrantedAsync(ClaimsPrincipal claimsPrincipal, string name)
         {
             Check.NotNull(name, nameof(name));
-            // TODO:检查权限
-            // 1、检查当前系统包含此权限
-            // 2、检查用户拥有此权限
-            //return true;
 
             PermissionDefinition permission = PermissionDefinitionManager.Get(name);
 
             var isGranted = false;
             var context = new PermissionValueCheckContext(permission, claimsPrincipal);
-            foreach (var provider in PermissionValueProviderManager.ValueProviders)
+
+            // TODO:单例类解析服务会导致EfCore线程问题。https://docs.microsoft.com/zh-cn/ef/core/miscellaneous/configuring-dbcontext#avoiding-dbcontext-threading-issues
+            // 为什么使用直接注入的_permissionValueProviders也是不行的 foreach (var provider in PermissionValueProviderManager.ValueProviders)
+            using (var scope = _serviceProvider.CreateScope())
             {
-                if (context.Permission.Providers.Any() &&
-                    !context.Permission.Providers.Contains(provider.Name))
+                foreach (var provider in scope.ServiceProvider.GetServices<IPermissionValueProvider>())
+                //foreach (var provider in _permissionValueProviders)
                 {
-                    continue;
-                }
+                    if (context.Permission.Providers.Any() &&
+                        !context.Permission.Providers.Contains(provider.Name))
+                    {
+                        continue;
+                    }
+                    var result = await provider.CheckAsync(context);
 
-                var result = await provider.CheckAsync(context);
-
-                if (result == PermissionGrantResult.Granted)
-                {
-                    isGranted = true;
-                }
-                else if (result == PermissionGrantResult.Prohibited)
-                {
-                    return false;
+                    if (result == PermissionGrantResult.Granted)
+                    {
+                        isGranted = true;
+                    }
+                    else if (result == PermissionGrantResult.Prohibited)
+                    {
+                        return false;
+                    }
                 }
             }
 

@@ -10,6 +10,9 @@ using Microsoft.Extensions.Options;
 
 namespace Anc.Authorization.Anc.Authorization
 {
+    /// <summary>
+    /// 授权Policy
+    /// </summary>
     public class AncAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider, IAncAuthorizationPolicyProvider, ITransientDependency
     {
         private readonly AuthorizationOptions _options;

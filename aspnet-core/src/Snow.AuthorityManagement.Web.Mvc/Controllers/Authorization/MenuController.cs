@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Anc.Authorization;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Snow.AuthorityManagement.Application.Authorization.Menus;
@@ -15,7 +16,7 @@ using Snow.AuthorityManagement.Web.Mvc.Models.Menus;
 
 namespace Snow.AuthorityManagement.Web.Mvc.Controllers.Authorization
 {
-    [AncAuthorize(PermissionNames.Pages_Administration_Menus)]
+    [Authorize(PermissionNames.Pages_Administration_Menus)]
     public class MenuController : BaseController
     {
         private readonly IMapper _mapper;
@@ -28,7 +29,7 @@ namespace Snow.AuthorityManagement.Web.Mvc.Controllers.Authorization
             _menuService = menuService;
         }
 
-        [AncAuthorize(PermissionNames.Pages_Administration_Menus)]
+        [Authorize(PermissionNames.Pages_Administration_Menus)]
         [ResponseCache(CacheProfileName = "Header")]
         public IActionResult Index()
         {
@@ -38,23 +39,33 @@ namespace Snow.AuthorityManagement.Web.Mvc.Controllers.Authorization
         [HttpGet]
         [AjaxOnly]
         [ResponseCache(CacheProfileName = "Header")]
-        [AncAuthorize(PermissionNames.Pages_Administration_Menus_Create, PermissionNames.Pages_Administration_Menus_Edit)]
-        public async Task<ActionResult> CreateOrEdit(int? menuId, int? parentId)
+        [Authorize(PermissionNames.Pages_Administration_Menus_Create)]
+        public async Task<ActionResult> Create(int? parentId)
         {
-            MenuEditDto output = new MenuEditDto()
-            {
-                ParentID = parentId
-            };
-            if (menuId.HasValue)
-            {
-                output = await _menuService.GetMenuForEditAsync(menuId.Value);
-            }
             var viewModel = new CreateOrEditMenuModalViewModel();
-            viewModel.Menu = output;
             List<MenuListDto> menus = await _menuService.GetAllMenuListAsync();
             List<SelectListItem> menuItems = _mapper.Map<List<SelectListItem>>(menus);
             viewModel.MenuList = menuItems;
-            return PartialView("_CreateOrEditModal", viewModel);
+            if (parentId.HasValue)
+            {
+                viewModel.Menu = new MenuEditDto() { ParentID = parentId };
+            }
+            return PartialView("_CreateModal", viewModel);
+        }
+
+        [HttpGet]
+        [AjaxOnly]
+        [ResponseCache(CacheProfileName = "Header")]
+        [Authorize(PermissionNames.Pages_Administration_Menus_Edit)]
+        public async Task<ActionResult> Edit(int menuId)
+        {
+            MenuEditDto output = await _menuService.GetMenuForEditAsync(menuId);
+            var viewModel = new CreateOrEditMenuModalViewModel();
+            List<MenuListDto> menus = await _menuService.GetAllMenuListAsync();
+            List<SelectListItem> menuItems = _mapper.Map<List<SelectListItem>>(menus);
+            viewModel.Menu = output;
+            viewModel.MenuList = menuItems;
+            return PartialView("_EditModal", viewModel);
         }
     }
 }

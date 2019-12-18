@@ -7,49 +7,33 @@ namespace Anc.Authorization.Anc.Authorization.Permissions
 {
     public class PermissionDefinitionContext : IPermissionDefinitionContext
     {
-        internal Dictionary<string, PermissionGroupDefinition> Groups { get; }
+        internal Dictionary<string, PermissionDefinition> PermissionDefinitions { get; }
 
         internal PermissionDefinitionContext()
         {
-            Groups = new Dictionary<string, PermissionGroupDefinition>();
+            PermissionDefinitions = new Dictionary<string, PermissionDefinition>();
         }
 
-        public virtual PermissionGroupDefinition AddGroup(
-            string name,
-            string displayName = null)
+        public PermissionDefinition GetPermissionOrNull(string name)
         {
-            Check.NotNull(name, nameof(name));
-
-            if (Groups.ContainsKey(name))
-            {
-                throw new AncException($"There is already an existing permission group with name: {name}");
-            }
-
-            return Groups[name] = new PermissionGroupDefinition(name, displayName);
+            return PermissionDefinitions.GetOrDefault(name);
         }
 
-        public virtual PermissionGroupDefinition GetGroupOrNull(string name)
+        public PermissionDefinition CreatePermission(string name, string displayName = null)
         {
-            Check.NotNull(name, nameof(name));
-
-            if (!Groups.ContainsKey(name))
+            if (PermissionDefinitions.ContainsKey(name))
             {
-                return null;
+                throw new AncException("There is already a permission with name: " + name);
             }
 
-            return Groups[name];
+            var permission = new PermissionDefinition(name, displayName);
+            PermissionDefinitions[permission.Name] = permission;
+            return permission;
         }
 
-        public virtual void RemoveGroup(string name)
+        public virtual void RemovePermission(string name)
         {
-            Check.NotNull(name, nameof(name));
-
-            if (!Groups.ContainsKey(name))
-            {
-                throw new AncException($"Not found permission group with name: {name}");
-            }
-
-            Groups.Remove(name);
+            PermissionDefinitions.Remove(name);
         }
     }
 }

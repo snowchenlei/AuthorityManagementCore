@@ -16,22 +16,25 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions
         {
         }
 
-        public async Task<bool> SetPermissionsByRoleId(Role role, List<AncPermission> newPermissions
-            , List<AncPermission> lostPermissions)
+        /// <summary>
+        /// 设置角色权限
+        /// </summary>
+        /// <param name="roleName">角色名称</param>
+        /// <param name="permissions">权限</param>
+        /// <returns></returns>
+        public async Task<bool> SetPermissionsByRoleNameAsync(string roleName, IEnumerable<AncPermission> permissions)
         {
-            foreach (var entity in lostPermissions)
-            {
-                Delete(entity);
-            }
-
-            foreach (var newPermission in newPermissions)
-            {
-                await InsertAsync(newPermission);
-            }
-
+            List<AncPermission> oldPermissions = await GetListAsync(AncConsts.PermissionRoleProviderName, roleName);
+            await DeleteAsync(oldPermissions);
+            await InsertAsync(permissions);
             return true;
         }
 
+        /// <summary>
+        /// 获取角色权限
+        /// </summary>
+        /// <param name="roleId">角色Id</param>
+        /// <returns></returns>
         public Task<List<AncPermission>> GetPermissionsByRoleNameAsync(string roleName)
         {
             return GetListAsync(AncConsts.PermissionRoleProviderName, roleName);

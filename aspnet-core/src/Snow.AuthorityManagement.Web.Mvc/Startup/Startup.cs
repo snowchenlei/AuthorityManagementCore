@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using Anc.Application.Services.Dto;
 using Anc.Authorization;
+using Anc.Authorization.Permissions;
 using Autofac;
 using AutoMapper;
 using CacheCow.Server.Core.Mvc;

@@ -18,7 +18,7 @@ function queryParams(params) {
             l = Ladda.create(e.target);
             l.start();
             e.preventDefault();
-            createOrEdit('修改菜单：' + row.name, row.id);
+            edit('修改菜单：' + row.name, row.id);
         },
         'click .remove': function (e, value, row, index) {
             l = Ladda.create(e.target);
@@ -60,15 +60,6 @@ function queryParams(params) {
         if (isGranted('Pages.Administration.Menus.Delete')) {
             htmlArr.push('<button type="button" class="btn btn-sm btn-danger remove" title="删除"><i class="fas fa-trash"></i></button>');
         }
-        htmlArr.push('<div class="btn-group" role="group">');
-        htmlArr.push('<button id="btnGroupDrop1" type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">');
-        htmlArr.push('Action');
-        htmlArr.push('</button>');
-        htmlArr.push('<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">');
-        htmlArr.push('<a class="dropdown-item" href="#">Dropdown link</a>');
-        htmlArr.push('<a class="dropdown-item" href="#">Dropdown link</a>');
-        htmlArr.push('</div>');
-        htmlArr.push('</div>');
         htmlArr.push('</div>');
         return htmlArr.join('');
     }
@@ -100,8 +91,8 @@ function queryParams(params) {
         async: {
             enable: true,
             url: "/api/menus?pageSize=1000&pageIndex=0",
-            autoParam: ["id", "name=n", "level=lv"],
-            otherParam: { "otherParam": "zTreeAsyncTest" },
+            //autoParam: ["id", "name=n", "level=lv"],
+            //otherParam: { "otherParam": "zTreeAsyncTest" },
             dataFilter: filter,
             type: "get"
         },
@@ -142,12 +133,25 @@ function queryParams(params) {
         $('#create').click(function () {
             l = Ladda.create(this);
             l.start();
-            createOrEdit('添加新菜单');
+            create('添加新菜单');
         });
     });
     var dialog, l,
         url = '/api/menus/';
-    function createOrEdit(title, id) {
+    function check($e) {
+        if (!$e.valid()) {
+            l.stop();
+            return false;
+        }
+        return true;
+    }
+    function getPara($e) {
+        var menu = $e.serializeFormToJson();
+        return JSON.stringify({
+            menu: menu
+        });
+    }
+    function create() {
         dialog = bootbox.dialog({
             title: title,
             message: '<p><i class="fa fa-spin fa-spinner"></i> 加载中... </p>',
@@ -164,11 +168,28 @@ function queryParams(params) {
                         if (result) {
                             l = Ladda.create(result.target);
                             l.start();
-                            if (id === undefined) {
-                                create();
-                            } else {
-                                edit(id);
+                            var $e = $("#modelForm");
+
+                            if (!check($e)) {
+                                return false;
                             }
+                            var para = getPara($e);
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                contentType: "application/json",
+                                data: para,
+                                success: function (result) {
+                                    l.stop();
+                                    toastr.success('添加成功');
+                                    refreshTable();
+                                    dialog.modal('hide');
+                                },
+                                error: function (result) {
+                                    toastr.error(result.responseText);
+                                    l.stop();
+                                }
+                            });
                             return false;
                         }
                     }
@@ -176,71 +197,63 @@ function queryParams(params) {
             }
         });
         dialog.init(function () {
-            $.get('/Menu/CreateOrEdit', { menuId: id, parentId: $('#parentId').val() }, function (data) {
+            $.get('/Menu/Create', { parentId: $('#parentId').val() }, function (data) {
                 dialog.find('.bootbox-body').html(data);
                 dialog.find('input:not([type=hidden]):first').focus();
                 l.stop();
             });
         });
     }
-    function check($e) {
-        if (!$e.valid()) {
-            l.stop();
-            return false;
-        }
-        return true;
-    }
-    function getPara($e) {
-        var menu = $e.serializeFormToJson();
-        return JSON.stringify({
-            menu: menu
-        });
-    }
-    function create() {
-        var $e = $("#modelForm");
-
-        if (!check($e)) {
-            return false;
-        }
-        var para = getPara($e);
-        $.ajax({
-            type: 'POST',
-            url: url,
-            contentType: "application/json",
-            data: para,
-            success: function (result) {
-                l.stop();
-                toastr.success('添加成功');
-                refreshTable();
-                dialog.modal('hide');
-            },
-            error: function (result) {
-                toastr.error(result.responseText);
-                l.stop();
+    function edit(title, id) {
+        dialog = bootbox.dialog({
+            title: title,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> 加载中... </p>',
+            size: 'large',
+            buttons: {
+                cancel: {
+                    label: '取消',
+                    className: 'btn-danger'
+                },
+                confirm: {//ok、confirm会在加载完成后获取焦点
+                    label: '提交',
+                    className: 'btn-success',
+                    callback: function (result) {
+                        if (result) {
+                            l = Ladda.create(result.target);
+                            l.start();
+                            var $e = $("#modelForm");
+                            if (!check($e)) {
+                                return false;
+                            }
+                            var para = getPara($e);
+                            $.ajax({
+                                type: 'PUT',
+                                url: url + id,
+                                contentType: "application/json",
+                                data: para,
+                                success: function (result) {
+                                    toastr.success('修改成功');
+                                    l.stop();
+                                    refreshTable();
+                                    dialog.modal('hide');
+                                },
+                                error: function (result) {
+                                    toastr.error(result.responseText);
+                                    l.stop();
+                                }
+                            });
+                            return false;
+                        }
+                    }
+                }
             }
         });
-    }
-    function edit(id) {
-        var $e = $("#modelForm");
-        if (!check($e)) {
-            return false;
-        }
-        var para = getPara($e);
-        $.ajax({
-            type: 'PUT',
-            url: url + id,
-            contentType: "application/json",
-            data: para,
-            success: function (result) {
-                toastr.success('修改成功');
+        dialog.init(function () {
+            $.get('/Menu/Edit', { menuId: id, parentId: $('#parentId').val() }, function (data) {
+                dialog.find('.bootbox-body').html(data);
+                dialog.find('input:not([type=hidden]):first').focus();
                 l.stop();
-                refreshTable();
-                dialog.modal('hide');
-            },
-            error: function (result) {
-                toastr.error(result.responseText);
-                l.stop();
-            }
+            });
         });
     }
 })();

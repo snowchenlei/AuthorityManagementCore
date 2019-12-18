@@ -174,6 +174,16 @@ namespace Anc.EntityFrameworkCore.Repositories
             return new Tuple<List<TEntity>, int>(result, totalCount);
         }
 
+        public List<TEntity> GetList(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Table.Where(predicate).ToList();
+        }
+
+        public Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Table.Where(predicate).ToListAsync();
+        }
+
         public List<TEntity> GetAllList()
         {
             return GetAll().ToList();
@@ -258,6 +268,18 @@ namespace Anc.EntityFrameworkCore.Repositories
         {
             AttachIfNot(entities);
             Table.RemoveRange(entities);
+        }
+
+        public void Delete(Expression<Func<TEntity, bool>> predicate)
+        {
+            List<TEntity> results = GetList(predicate);
+            Table.RemoveRange(results);
+        }
+
+        public async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            List<TEntity> results = await GetListAsync(predicate);
+            Table.RemoveRange(results);
         }
 
         public override TEntity Insert(TEntity entity)

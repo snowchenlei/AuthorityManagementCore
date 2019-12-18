@@ -11,6 +11,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus.Dto
         /// </summary>
         public GetMenuInput()
         {
+            Order = OrderType.DESC;
             Sorting = "Sort";
         }
 

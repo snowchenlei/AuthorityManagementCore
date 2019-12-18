@@ -13,7 +13,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
         /// </summary>
         public GetRoleInput()
         {
-            Sorting = "Id";
+            Sorting = "Sort";
+            Order = OrderType.DESC;
         }
 
         public string DisplayName { get; set; }

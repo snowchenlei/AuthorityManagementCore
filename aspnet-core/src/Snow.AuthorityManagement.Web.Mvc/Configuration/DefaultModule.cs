@@ -47,16 +47,22 @@ namespace Snow.AuthorityManagement.Web.Configuration
             Assembly[] assemblies = new Assembly[] { application, ancAspCoreMvc, entityFrameworkCore, ancAuthorization, ancCore, ancThreading, ancSecurit, ancAspCore, ancEfCore, rep, core, mvc };
             var transientType = typeof(ITransientDependency);
             var singletonType = typeof(ISingletonDependency);
+            //builder.RegisterAssemblyTypes(assemblies)
+            //    .Where(m => transientType.IsAssignableFrom(m) && m != transientType)
+            //    .InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(assemblies)
                 .Where(m => transientType.IsAssignableFrom(m) && m != transientType)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope()
-                .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
+            .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
+            //builder.RegisterAssemblyTypes(assemblies)
+            //    .Where(m => singletonType.IsAssignableFrom(m) && m != singletonType)
+            //    .SingleInstance();
             builder.RegisterAssemblyTypes(assemblies)
                 .Where(m => singletonType.IsAssignableFrom(m) && m != singletonType)
                 .AsImplementedInterfaces()
                 .SingleInstance()
-                .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
+            .InterceptedBy(typeof(UnitOfWorkInterceptor)).EnableClassInterceptors();
 
             //builder.RegisterAssemblyTypes(rep, core)
             //    .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
@@ -78,7 +84,7 @@ namespace Snow.AuthorityManagement.Web.Configuration
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(ILambdaRepository<,>));
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<>)).As(typeof(IRepository<>));
             builder.RegisterGeneric(typeof(AuthorityManagementRepositoryBase<,>)).As(typeof(IRepository<,>));
-            builder.RegisterType<EfCoreUnitOfWork<AuthorityManagementContext>>().As<IUnitOfWork>();
+            builder.RegisterType<EfCoreUnitOfWork<AuthorityManagementContext>>().As<IUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterType<UserNavigationManager>().As<IUserNavigationManager>();
             //builder.RegisterType<PermissionDefinitionContextBase>().As<IPermissionDefinitionContext>();
             //builder.RegisterType<PermissionRepository>().As<IPermissionRepository>();

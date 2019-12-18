@@ -8,17 +8,15 @@ namespace Snow.AuthorityManagement.Core
     {
         public override void Define(IPermissionDefinitionContext context)
         {
-            var pages = context.AddGroup(PermissionNames.Pages_Administration, "Pages_Administration");
+            var pages = context.GetPermissionOrNull(PermissionNames.Pages) ??
+                        context.CreatePermission(PermissionNames.Pages, "Pages");
 
-            //var pages = context.GetPermissionOrNull(PermissionNames.Pages) ??
-            //            context.CreatePermission(PermissionNames.Pages, "Pages");
-
-            //AncPermission administration = pages.Children.FirstOrDefault(p => p.Name == PermissionNames.Pages_Administration) ??
-            //                     pages.CreateChildPermission(PermissionNames.Pages_Administration, "Administration");
+            PermissionDefinition administration = pages.Children.FirstOrDefault(p => p.Name == PermissionNames.Pages_Administration) ??
+                                 pages.AddChild(PermissionNames.Pages_Administration, "Administration");
 
             #region 用户管理
 
-            PermissionDefinition userPermission = pages.AddPermission(PermissionNames.Pages_Administration_Users, "用户管理");
+            PermissionDefinition userPermission = administration.AddChild(PermissionNames.Pages_Administration_Users, "用户管理");
             userPermission.AddChild(PermissionNames.Pages_Administration_Users_Query, "查询");
             userPermission.AddChild(PermissionNames.Pages_Administration_Users_Create, "创建");
             userPermission.AddChild(PermissionNames.Pages_Administration_Users_Edit, "修改");
@@ -29,7 +27,7 @@ namespace Snow.AuthorityManagement.Core
 
             #region 角色管理
 
-            PermissionDefinition rolePermission = pages.AddPermission(PermissionNames.Pages_Administration_Roles, "角色管理");
+            PermissionDefinition rolePermission = administration.AddChild(PermissionNames.Pages_Administration_Roles, "角色管理");
             rolePermission.AddChild(PermissionNames.Pages_Administration_Roles_Query, "查询");
             rolePermission.AddChild(PermissionNames.Pages_Administration_Roles_Create, "创建");
             rolePermission.AddChild(PermissionNames.Pages_Administration_Roles_Edit, "修改");
@@ -40,7 +38,7 @@ namespace Snow.AuthorityManagement.Core
 
             #region 菜单管理
 
-            PermissionDefinition menuPermission = pages.AddPermission(PermissionNames.Pages_Administration_Menus, "菜单管理");
+            PermissionDefinition menuPermission = administration.AddChild(PermissionNames.Pages_Administration_Menus, "菜单管理");
             menuPermission.AddChild(PermissionNames.Pages_Administration_Menus_Query, "查询");
             menuPermission.AddChild(PermissionNames.Pages_Administration_Menus_Create, "创建");
             menuPermission.AddChild(PermissionNames.Pages_Administration_Menus_Edit, "修改");

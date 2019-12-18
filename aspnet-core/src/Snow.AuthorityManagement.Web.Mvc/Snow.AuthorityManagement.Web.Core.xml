@@ -24,6 +24,68 @@
             User响应Chche Key
             </summary>
         </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+            <param name="menuService"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
+            <summary>
+            分页获取
+            </summary>
+            <remarks>GET: api/menus</remarks>
+            <param name="input">分页参数</param>
+            <response code="200">获取成功</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.Get(System.Int32)">
+            <summary>
+            根据Id获取
+            </summary>
+            <remarks>GET: api/menus/{id}</remarks>
+            <param name="id">主键</param>
+            <response code="200">获取成功</response>
+            <response code="304">没有修改</response>
+            <response code="404">没有找到</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.Post(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.CreateOrUpdateMenu)">
+            <summary>
+            创建
+            </summary>
+            <remarks>POST: api/menus</remarks>
+            <param name="input">创建参数</param>
+            <response code="201">创建成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.Put(System.Int32,Snow.AuthorityManagement.Application.Authorization.Menus.Dto.CreateOrUpdateMenu)">
+            <summary>
+            修改
+            </summary>
+            <remarks>PUT: api/menus/{id}</remarks>
+            <param name="id">主键</param>
+            <param name="input">修改参数</param>
+            <response code="204">修改成功</response>
+            <response code="400">请求参数有误</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <remarks>DELETE: api/menus/{id}</remarks>
+            <param name="id">主键</param>
+            <response code="204">删除成功</response>
+            <response code="404">没有找到</response>
+        </member>
         <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController">
             <summary>
             角色

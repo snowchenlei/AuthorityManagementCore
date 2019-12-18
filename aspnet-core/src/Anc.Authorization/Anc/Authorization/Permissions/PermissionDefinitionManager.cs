@@ -12,8 +12,8 @@ namespace Anc.Authorization.Permissions
 {
     public class PermissionDefinitionManager : IPermissionDefinitionManager, ISingletonDependency
     {
-        protected IDictionary<string, PermissionGroupDefinition> PermissionGroupDefinitions => _lazyPermissionGroupDefinitions.Value;
-        private readonly Lazy<Dictionary<string, PermissionGroupDefinition>> _lazyPermissionGroupDefinitions;
+        protected IDictionary<string, PermissionDefinition> PermissionTreeDefinitions => _lazyPermissionTreeDefinitions.Value;
+        private readonly Lazy<Dictionary<string, PermissionDefinition>> _lazyPermissionTreeDefinitions;
 
         protected IDictionary<string, PermissionDefinition> PermissionDefinitions => _lazyPermissionDefinitions.Value;
         private readonly Lazy<Dictionary<string, PermissionDefinition>> _lazyPermissionDefinitions;
@@ -21,12 +21,15 @@ namespace Anc.Authorization.Permissions
         protected AncPermissionOptions Options { get; }
 
         private readonly IServiceProvider _serviceProvider;
+        private readonly IEnumerable<IPermissionDefinitionProvider> PermissionDefinitionProviders;
 
         public PermissionDefinitionManager(
             IOptions<AncPermissionOptions> options,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            IEnumerable<IPermissionDefinitionProvider> permissionDefinitionProviders)
         {
             _serviceProvider = serviceProvider;
+            PermissionDefinitionProviders = permissionDefinitionProviders;
             Options = options.Value;
 
             _lazyPermissionDefinitions = new Lazy<Dictionary<string, PermissionDefinition>>(
@@ -34,8 +37,8 @@ namespace Anc.Authorization.Permissions
                 isThreadSafe: true
             );
 
-            _lazyPermissionGroupDefinitions = new Lazy<Dictionary<string, PermissionGroupDefinition>>(
-                CreatePermissionGroupDefinitions,
+            _lazyPermissionTreeDefinitions = new Lazy<Dictionary<string, PermissionDefinition>>(
+                CreatePermissionTreeDefinitions,
                 isThreadSafe: true
             );
         }
@@ -55,8 +58,36 @@ namespace Anc.Authorization.Permissions
         public virtual PermissionDefinition GetOrNull(string name)
         {
             Check.NotNull(name, nameof(name));
+            if (PermissionDefinitions.GetOrDefault(name) != null)
+            {
+                return PermissionDefinitions.GetOrDefault(name);
+            }
+            foreach (KeyValuePair<string, PermissionDefinition> item in PermissionDefinitions)
+            {
+                GetPermissionDefinition(item.Value.Children, name);
+            }
 
             return PermissionDefinitions.GetOrDefault(name);
+        }
+
+        private PermissionDefinition GetPermissionDefinition(IEnumerable<PermissionDefinition> permissionDefinitions, string name)
+        {
+            foreach (PermissionDefinition item in permissionDefinitions)
+            {
+                if (item.Name == name)
+                {
+                    return item;
+                }
+                if (item.Children.Any(p => p.Name == name))
+                {
+                    return item.Children.First(p => p.Name == name);
+                }
+                else
+                {
+                    return GetPermissionDefinition(item.Children, name);
+                }
+            }
+            return null;
         }
 
         public virtual IReadOnlyList<PermissionDefinition> GetPermissions()
@@ -64,21 +95,13 @@ namespace Anc.Authorization.Permissions
             return PermissionDefinitions.Values.ToImmutableList();
         }
 
-        public IReadOnlyList<PermissionGroupDefinition> GetGroups()
-        {
-            return PermissionGroupDefinitions.Values.ToImmutableList();
-        }
-
         protected virtual Dictionary<string, PermissionDefinition> CreatePermissionDefinitions()
         {
             var permissions = new Dictionary<string, PermissionDefinition>();
 
-            foreach (var groupDefinition in PermissionGroupDefinitions.Values)
+            foreach (var treeDefinition in PermissionTreeDefinitions.Values)
             {
-                foreach (var permission in groupDefinition.Permissions)
-                {
-                    AddPermissionToDictionaryRecursively(permissions, permission);
-                }
+                AddPermissionToDictionaryRecursively(permissions, treeDefinition);
             }
 
             return permissions;
@@ -101,26 +124,16 @@ namespace Anc.Authorization.Permissions
             }
         }
 
-        protected virtual Dictionary<string, PermissionGroupDefinition> CreatePermissionGroupDefinitions()
+        protected virtual Dictionary<string, PermissionDefinition> CreatePermissionTreeDefinitions()
         {
             var context = new PermissionDefinitionContext();
 
-            using (var scope = _serviceProvider.CreateScope())
+            foreach (var provider in PermissionDefinitionProviders)
             {
-                // TODO:抽象
-                var providers = scope.ServiceProvider.GetServices<IPermissionDefinitionProvider>();
-                //var providers = Options
-                //    .DefinitionProviders
-                //    .Select(p => scope.ServiceProvider.GetRequiredService(p) as IPermissionDefinitionProvider)
-                //    .ToList();
-
-                foreach (var provider in providers)
-                {
-                    provider.Define(context);
-                }
+                provider.Define(context);
             }
 
-            return context.Groups;
+            return context.PermissionDefinitions;
         }
     }
 }

@@ -34,7 +34,6 @@ namespace Anc.Authorization.Permissions
                     return PermissionGrantResult.Granted;
                 }
             }
-
             return PermissionGrantResult.Undefined;
         }
     }

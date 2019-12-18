@@ -303,12 +303,13 @@
             <param name="permissionNames">权限</param>
             <returns>信息</returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.CreatePermissions(System.Collections.Generic.List{System.String})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.CreatePermissions(System.String,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             构建权限实体
             </summary>
-            <param name="permissionNames">权限集合</param>
-            <returns></returns>
+            <param name="providerKey">提供者标识</param>
+            <param name="permissionNames">权限名集合</param>
+            <returns>数据库实体集合</returns>
         </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.DeleteAsync(System.Int32)">
             <summary>

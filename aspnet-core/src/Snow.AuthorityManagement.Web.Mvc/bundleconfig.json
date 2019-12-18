@@ -1,4 +1,76 @@
 ﻿[
+  {
+    "outputFileName": "wwwroot/view-resources/home/index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/home/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/menu/index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/menu/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/menu/create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/menu/create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/menu/edit.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/menu/edit.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/user/index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/user/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/user/create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/user/create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/user/edit.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/user/edit.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/role/index.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/role/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/role/create.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/role/create.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/role/edit.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/role/edit.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/validator-form.min.js",
+    "inputFiles": [
+      "wwwroot/js/validator-form.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/timeBucket.min.js",
+    "inputFiles": [
+      "wwwroot/js/timeBucket.js"
+    ]
+  }
   //{
   //  "outputFileName": "wwwroot/js/bundle/jqueryValidate.min.js",
   //  "inputFiles": [

@@ -208,8 +208,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
 
             #region 权限
 
-            List<AncPermission> oldPermissions = await _permissionRepository.GetPermissionsByRoleNameAsync(role.Name);
-            List<AncPermission> permissions = CreatePermissions(oldPermissions, role.Name, permissionNames);
+            List<AncPermission> permissions = CreatePermissions(role.Name, permissionNames);
             await _permissionRepository.InsertAsync(permissions);
 
             #endregion 权限
@@ -238,13 +237,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
 
             #region 权限
 
-            List<AncPermission> permissions = CreatePermissions(permissionNames);
-            List<AncPermission> oldPermissions = await _permissionRepository.GetPermissionsByRoleNameAsync(role.Name);
-            List<AncPermission> newPermissions = permissions.Except(oldPermissions, new PermissionComparer()).ToList();
-            List<AncPermission> lostPermissions = oldPermissions
-                .Except(permissions, new PermissionComparer())
-                .ToList();
-            await _permissionRepository.SetPermissionsByRoleId(role, newPermissions, lostPermissions);
+            List<AncPermission> permissions = CreatePermissions(role.Name, permissionNames);
+            await _permissionRepository.SetPermissionsByRoleNameAsync(role.Name, permissions);
 
             #endregion 权限
 
@@ -254,33 +248,27 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// <summary>
         /// 构建权限实体
         /// </summary>
-        /// <param name="providerKey"></param>
-        /// <param name="permissionNames">权限集合</param>
-        /// <returns></returns>
-        private List<AncPermission> CreatePermissions(IEnumerable<AncPermission> permissions, string providerKey, IEnumerable<string> permissionNames)
+        /// <param name="providerKey">提供者标识</param>
+        /// <param name="permissionNames">权限名集合</param>
+        /// <returns>数据库实体集合</returns>
+        private List<AncPermission> CreatePermissions(string providerKey, IEnumerable<string> permissionNames)
         {
             if (permissionNames == null)
             {
                 throw new ArgumentNullException(nameof(permissionNames));
             }
 
-            List<AncPermission> permissionsEntiy = new List<AncPermission>();
+            List<AncPermission> permissionsEntities = new List<AncPermission>();
             DateTime now = DateTime.Now;
-            foreach (string per in permissionNames)
+            permissionsEntities.AddRange(permissionNames.Select(p => new AncPermission
             {
-                if (!permissions.Any(a => a.Name == per))
-                {
-                    permissionsEntiy.Add(new AncPermission()
-                    {
-                        ProviderName = AncConsts.PermissionRoleProviderName,
-                        ProviderKey = providerKey,
-                        CreationTime = now,
-                        Name = per
-                    });
-                }
-            }
+                ProviderName = AncConsts.PermissionRoleProviderName,
+                ProviderKey = providerKey,
+                CreationTime = now,
+                Name = p
+            }));
 
-            return permissionsEntiy;
+            return permissionsEntities;
         }
 
         /// <summary>

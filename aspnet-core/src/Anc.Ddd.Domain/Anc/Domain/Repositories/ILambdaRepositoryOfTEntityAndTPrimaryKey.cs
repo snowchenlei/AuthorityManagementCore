@@ -52,8 +52,16 @@ namespace Anc.Domain.Repositories
 
         Task<List<TEntity>> GetAllListAsync();
 
+        List<TEntity> GetList(Expression<Func<TEntity, bool>> predicate);
+
+        Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate);
+
         Tuple<List<TEntity>, int> GetPaged(int pageIndex, int pageSize, string wheres, object[] parameters, string orders);
 
         Task<Tuple<List<TEntity>, int>> GetPagedAsync(int pageIndex, int pageSize, string wheres, object[] parameters, string orders);
+
+        void Delete(Expression<Func<TEntity, bool>> predicate);
+
+        Task DeleteAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

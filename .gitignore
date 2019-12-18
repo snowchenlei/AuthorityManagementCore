@@ -140,3 +140,4 @@
 /aspnet-core/src/Snow.AuthorityManagement.Web.Mvc/bin/Debug/netcoreapp3.0
 /aspnet-core/src/Snow.AuthorityManagement.Web.Mvc/obj
 /aspnet-core/src/Snow.AuthorityManagement.Web.Mvc/appsettings.Development.json
+/aspnet-core/src/Snow.AuthorityManagement.Api/obj

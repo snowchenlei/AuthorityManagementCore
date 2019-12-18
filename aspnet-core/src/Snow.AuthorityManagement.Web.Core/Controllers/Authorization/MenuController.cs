@@ -2,6 +2,7 @@
 using Anc.Authorization;
 using AutoMapper;
 using CacheCow.Server.Core.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Snow.AuthorityManagement.Application.Authorization.Menus;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
@@ -41,7 +42,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <returns></returns>
         [HttpGet(Name = "GetMenusPage")]
         //[HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<MenuListDto>))]
-        [AncAuthorize(PermissionNames.Pages_Administration_Menus_Query)]
+        [Authorize(PermissionNames.Pages_Administration_Menus_Query)]
         [ProducesResponseType(typeof(PagedResultDto<MenuListDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery]GetMenuInput input)
         {
@@ -63,7 +64,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [ProducesResponseType(typeof(MenuEditDto), 200)]
         [ProducesResponseType(304)]
         [ProducesResponseType(404)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Menus_Query)]
+        [Authorize(PermissionNames.Pages_Administration_Menus_Query)]
         public async Task<IActionResult> Get(int id)
         {
             MenuEditDto result = await _menuService.GetMenuForEditAsync(id);
@@ -81,7 +82,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpPost(Name = "PostMenu")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Menus_Create)]
+        [Authorize(PermissionNames.Pages_Administration_Menus_Create)]
         public async Task<IActionResult> Post([FromBody]CreateOrUpdateMenu input)
         {
             var result = await _menuService.CreateMenuAsync(input.Menu);
@@ -100,7 +101,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpPut("{id}", Name = "PutMenu")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Menus_Edit)]
+        [Authorize(PermissionNames.Pages_Administration_Menus_Edit)]
         public async Task<IActionResult> Put(int id, [FromBody]CreateOrUpdateMenu input)
         {
             input.Menu.ID = id;
@@ -118,7 +119,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [HttpDelete("{id}", Name = "DeleteMenu")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        [AncAuthorize(PermissionNames.Pages_Administration_Menus_Delete)]
+        [Authorize(PermissionNames.Pages_Administration_Menus_Delete)]
         public async Task<IActionResult> Delete(int id)
         {
             await _menuService.DeleteMenuAsync(id);

@@ -13,12 +13,10 @@ namespace Snow.AuthorityManagement.Core.Authorization.Permissions
         /// <summary>
         /// 设置角色权限
         /// </summary>
-        /// <param name="role">角色</param>
-        /// <param name="newPermissions">新权限</param>
-        /// <param name="lostPermissions">旧权限</param>
+        /// <param name="roleName">角色名称</param>
+        /// <param name="permissions">权限</param>
         /// <returns></returns>
-        Task<bool> SetPermissionsByRoleId(Role role, List<AncPermission> newPermissions
-            , List<AncPermission> lostPermissions);
+        Task<bool> SetPermissionsByRoleNameAsync(string roleName, IEnumerable<AncPermission> permissions);
 
         /// <summary>
         /// 获取角色权限

@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <!-- 让Https页面支持Http请求 -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <environment include="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    @RenderBody()
+
+    <environment include="Development">
+        <!-- jquery -->
+        <script src="~/lib/jquery/jquery.js"></script>
+        <!-- jquery-validate -->
+        <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        @*
+            <script src="~/lib/jquery-validate/jquery.unobtrusive-ajax.min.js"></script>*@
+
+        <!-- bootstrap -->
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- ladda -->
+        <script src="~/lib/ladda/spin.min.js"></script>
+        <script src="~/lib/ladda/ladda.min.js"></script>
+
+        <!-- 弹框 -->
+        <script src="~/lib/toastr.js/toastr.min.js"></script>
+        <script src="~/lib/bootbox.js/bootbox.all.min.js"></script>
+        <script src="~/lib/bootbox.js/locales/zh_CN.js"></script>
+
+        <!-- 自定义 -->
+        @*<script src="~/js/jquery.formPopulate.js"></script>*@
+        <script src="~/js/anc.js"></script>
+        <script src="~/js/dataInit.js"></script>
+        <script src="~/js/common.js"></script>
+        <script src="~/js/frame-common.js"></script>
+        <script src="~/js/main.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <!-- jquery -->
+        <script src="~/lib/jquery/jquery.min.js"></script>
+        <!-- jquery-validate -->
+        <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        @*<script src="~/lib/jquery-validate/jquery.unobtrusive-ajax.min.js"></script>*@
+
+        <!-- bootstrap -->
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- ladda -->
+        <script src="~/lib/ladda/spin.min.js"></script>
+        <script src="~/lib/ladda/ladda.min.js"></script>
+
+        <!-- 弹框 -->
+        <script src="~/lib/toastr.js/toastr.min.js"></script>
+        <script src="~/lib/bootbox.js/bootbox.all.min.js"></script>
+        <script src="~/lib/bootbox.js/locales/zh_CN.js"></script>
+
+        <!-- 自定义 -->
+        @*<script src="~/js/jquery.formPopulate.js"></script>*@
+        <script src="~/js/anc.js"></script>
+        <script src="~/js/dataInit.js"></script>
+        <script src="~/js/common.js"></script>
+        <script src="~/js/frame-common.js"></script>
+        <script src="~/js/main.js"></script>
+    </environment>
+    @RenderSection("scripts", false)
+</body>
+</html>

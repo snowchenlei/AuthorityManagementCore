@@ -1,0 +1,44 @@
+﻿@model Snow.AuthorityManagement.Web.Views.Shared.Components.SideBarNav.SideBarNavViewModel
+@{
+    int index = 1;
+}
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    @foreach (var menuItem in Model.MainMenu.Items)
+    {
+        @if (menuItem.Items.IsNullOrEmpty())
+        {
+            <li class="nav-item">
+                <a href="@menuItem.Url" class="nav-link">
+                    <i class="nav-icon @menuItem.Icon"></i>
+                    <p>
+                        @menuItem.DisplayName
+                    </p>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item has-treeview menu-open">
+                <a href="javascript:void(0);" class="nav-link active">
+                    <i class="nav-icon @menuItem.Icon"></i>
+                    <p>
+                        @menuItem.DisplayName
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @foreach (var subMenuItem in menuItem.Items)
+                    {
+                        <li class="nav-item" data-id="@index" data-name="@subMenuItem.DisplayName" target="tab_@index">
+                            <a href="javascript:void(0);" data-href="@subMenuItem.Url" class="nav-link deepNav" data-name="@subMenuItem.Name" data-id="@subMenuItem.Target.Substring(subMenuItem.Target.IndexOf('_') + 1)" target="@subMenuItem.Target">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> @subMenuItem.DisplayName</p>
+                            </a>
+                        </li>
+                        index++;
+                    }
+                </ul>
+            </li>
+        }
+    }
+</ul>

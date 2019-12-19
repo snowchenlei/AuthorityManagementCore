@@ -1,0 +1,79 @@
+﻿body {
+    font-family: sans-serif;
+}
+
+#ace-settings-container {
+    margin-top: 50px;
+}
+
+.nav-bar {
+    padding-left: 20px;
+    /*float: left;*/
+    width: calc(100% - 30px);
+}
+
+.nav-dropdown {
+    width: 30px;
+    line-height: 35px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.nav-tabs > li > a {
+    margin-right: 2px;
+    padding: 7px;
+}
+
+    .nav-tabs > li > a:focus {
+        margin-right: 2px;
+    }
+
+.con-tabs > li {
+    width: 7.5em;
+}
+
+    .con-tabs > li > a {
+        position: relative;
+        padding-right: 28px;
+        overflow: hidden;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+        .con-tabs > li > a > i:hover {
+            color: #fff;
+            background-color: red;
+            border-radius: 50%;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+        }
+
+.wb-close-mini {
+    cursor: pointer;
+    position: absolute;
+    top: 9px;
+    right: 12px;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+    margin-top: 0px;
+    margin-right: 2px;
+    border-top: 1px solid rgb(197, 208, 220);
+}
+
+.nav-list > li a > .arrow {
+    display: block;
+    width: 14px !important;
+    height: 14px;
+    line-height: 14px;
+    text-shadow: none;
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    padding: 0;
+    text-align: center;
+}

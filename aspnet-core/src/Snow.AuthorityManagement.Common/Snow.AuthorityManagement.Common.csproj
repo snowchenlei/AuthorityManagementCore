@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Authorization\**" />
+    <Compile Remove="Caching\**" />
+    <Compile Remove="Castle\**" />
+    <Compile Remove="Http\Cookie\**" />
+    <Compile Remove="Logger\**" />
+    <Compile Remove="UAParser\**" />
+    <EmbeddedResource Remove="Authorization\**" />
+    <EmbeddedResource Remove="Caching\**" />
+    <EmbeddedResource Remove="Castle\**" />
+    <EmbeddedResource Remove="Http\Cookie\**" />
+    <EmbeddedResource Remove="Logger\**" />
+    <EmbeddedResource Remove="UAParser\**" />
+    <None Remove="Authorization\**" />
+    <None Remove="Caching\**" />
+    <None Remove="Castle\**" />
+    <None Remove="Http\Cookie\**" />
+    <None Remove="Logger\**" />
+    <None Remove="UAParser\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Conversion\JilFormatter.cs" />
+    <Compile Remove="Extensions\CollectionExtensions.cs" />
+    <Compile Remove="Extensions\DictionaryExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snow.AuthorityManagement.Core\Snow.AuthorityManagement.Core.csproj" />
+  </ItemGroup>
+</Project>

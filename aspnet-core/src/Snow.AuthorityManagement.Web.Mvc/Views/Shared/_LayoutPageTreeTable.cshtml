@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles
+{
+    <environment include="Development">
+        <link href="~/lib/zTree.v3/css/metroStyle/metroStyle.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/zTree.v3/css/metroStyle/metroStyle.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    @RenderSection("styles", required: false)
+}
+
+<div class="row">
+    <div class="col-2">
+        <ul id="navTree" class="ztree"></ul>
+    </div>
+    <div class="col-10">
+        @RenderBody()
+        <table id="tb-body" data-bind="bootstrapTable :$root" data-filter-control="true"></table>
+    </div>
+</div>
+@section scripts
+{
+    <environment include="Development">
+        <!--ztree-->
+        <script src="~/lib/zTree.v3/js/jquery.ztree.all.min.js" asp-append-version="true"></script>
+        <!-- bootstrap-table -->
+        @*
+            <script src="~/js/bundle/bootstrapTable.min.js"></script>*@
+        <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+        @*
+            <script src="~/lib/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>*@
+        <!-- 导出 -->
+        @*
+            <script src="~/js/bundle/bootstrapTableExport.min.js"></script>*@
+        @*
+            <script src="~/lib/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+            <script src="~/lib/tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js"></script>
+            <!-- Excel 2007+ XML Format -->
+            <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>
+            <!-- PDF -->
+            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
+            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+            <!-- PNG -->
+            <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script><!-- Excel 2007+ XML Format -->
+            <script src="~/lib/tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js"></script>*@
+        <!-- PDF -->
+        @*
+            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>*@
+        @*
+            <script src="~/lib/tableExport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>*@
+        <!-- PNG -->
+        @*
+            <script src="~/lib/tableExport.jquery.plugin/libs/html2canvas/html2canvas.min.js"></script>*@
+        @*
+            <script src="~/lib/tableExport.jquery.plugin/tableExport.min.js"></script>*@
+    </environment>
+    <environment exclude="Development">
+        <!--ztree-->
+        <script src="~/lib/zTree.v3/js/jquery.ztree.all.min.js" asp-append-version="true"></script>
+        <!-- bootstrap-table -->
+        <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
+        <script src="~/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    </environment>
+    <script type="text/javascript">
+         absoluteUrl = '@ViewBag.AbsoluteUrl';
+        title = '@ViewBag.Title';
+    </script>
+    @RenderSection("scripts", required: false)
+}

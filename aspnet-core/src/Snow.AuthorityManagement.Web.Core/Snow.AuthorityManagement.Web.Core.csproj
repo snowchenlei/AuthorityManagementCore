@@ -1,12 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>../Snow.AuthorityManagement.Web.Mvc/Snow.AuthorityManagement.Web.Core.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\ETag\Role\**" />
+    <EmbeddedResource Remove="Common\ETag\Role\**" />
+    <None Remove="Common\ETag\Role\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Configuration\DefaultModule.cs" />
@@ -19,6 +25,7 @@
     <ProjectReference Include="..\Anc.Authorization\Anc.Authorization.csproj" />
     <ProjectReference Include="..\Anc.Web.Mvc\Anc.AspNetCore.csproj" />
     <ProjectReference Include="..\Snow.AuthorityManagement.Application\Snow.AuthorityManagement.Application.csproj" />
+    <ProjectReference Include="..\Snow.AuthorityManagement.Common\Snow.AuthorityManagement.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CacheCow.Server.Core.Mvc" Version="2.4.4" />
+    <PackageReference Include="CacheCow.Server.Core.Mvc" Version="2.5.8" />
     <PackageReference Include="CacheManager.Core" Version="1.2.0" />
   </ItemGroup>
 </Project>

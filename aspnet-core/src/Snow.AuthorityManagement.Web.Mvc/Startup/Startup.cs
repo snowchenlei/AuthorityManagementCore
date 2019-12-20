@@ -30,7 +30,6 @@ using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
 using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.EntityFrameworkCore;
 using Snow.AuthorityManagement.Web.Configuration;
-using Snow.AuthorityManagement.Web.Core.Common.ETag.Role;
 using Snow.AuthorityManagement.Web.Core.Common.ETag.User;
 using Snow.AuthorityManagement.Web.Library;
 using Snow.AuthorityManagement.Web.Library.Middleware;
@@ -59,17 +58,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            #region CacheManager缓存
-
-            services.AddLogging(c => c.AddConsole().AddDebug().AddConfiguration(Configuration));
-            // using the new overload which adds a singleton of the configuration to services and the configure method to add logging
-            //services.AddCacheManagerConfiguration(Configuration, cfg => cfg.WithMicrosoftLogging(services));
-            services.AddCacheManagerConfiguration(Configuration);
-            // any other type will be this. Configurastion used will be the one defined by
-            // AddCacheManagerConfiguration earlier.
-            services.AddCacheManager();
-
-            #endregion CacheManager缓存
+            services.AddDistributedMemoryCache();
 
             #region 线程内唯一
 
@@ -229,8 +218,8 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddHttpCachingMvc();
             services.AddQueryProviderAndExtractorForViewModelMvc<GetUserForEditOutput, TimedETagQueryUserRepository, UserETagExtractor>(false);
             services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<UserListDto>, TimedETagQueryUserRepository, UserCollectionETagExtractor>(false);
-            services.AddQueryProviderAndExtractorForViewModelMvc<GetRoleForEditOutput, TimedETagQueryRoleRepository, RoleETagExtractor>(false);
-            services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<RoleListDto>, TimedETagQueryRoleRepository, RoleCollectionETagExtractor>(false);
+            //services.AddQueryProviderAndExtractorForViewModelMvc<GetRoleForEditOutput, TimedETagQueryRoleRepository, RoleETagExtractor>(false);
+            //services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<RoleListDto>, TimedETagQueryRoleRepository, RoleCollectionETagExtractor>(false);
         }
 
         private void AutoAddDefinitionProviders(IServiceCollection services)

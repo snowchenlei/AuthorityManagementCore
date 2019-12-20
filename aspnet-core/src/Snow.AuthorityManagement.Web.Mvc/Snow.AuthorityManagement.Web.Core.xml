@@ -153,13 +153,14 @@
             用户
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService,Microsoft.Extensions.Caching.Distributed.IDistributedCache)">
             <summary>
             构造
             </summary>
             <param name="mapper"></param>
             <param name="cacheManager"></param>
             <param name="userService"></param>
+            <param name="cache"></param>
         </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput)">
             <summary>
@@ -202,7 +203,7 @@
             <response code="400">请求参数有误</response>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.CacheLastModificationTime(System.Nullable{System.DateTime})">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.CacheLastModificationTimeAsync(System.Nullable{System.DateTime})">
             <summary>
             缓存最后修改时间
             </summary>

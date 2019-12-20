@@ -1,14 +1,8 @@
 ﻿using Anc.Application.Services.Dto;
 using CacheCow.Server;
-using CacheManager.Core;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
-using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core.Authorization.Roles.DomainService;
-using Snow.AuthorityManagement.Core.Authorization.Users.DomainService;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Core.Common.ETag.Role
 {

@@ -3,6 +3,8 @@ using CacheCow.Server;
 using CacheManager.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Core.Authorization.Roles.DomainService;
 using Snow.AuthorityManagement.Core.Authorization.Users.DomainService;
@@ -15,10 +17,10 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.Role
 {
     public class TimedETagQueryRoleRepository : ITimedETagQueryProvider<PagedResultDto<RoleListDto>>, ITimedETagQueryProvider<GetRoleForEditOutput>
     {
-        private readonly ICacheManager<DateTime?> _cache;
+        private readonly IDistributedCache _cache;
         private readonly IRoleManager _roleManager;
 
-        public TimedETagQueryRoleRepository(ICacheManager<DateTime?> cache
+        public TimedETagQueryRoleRepository(IDistributedCache cache
             , IRoleManager userManager)
         {
             _cache = cache;
@@ -30,7 +32,7 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.Role
             //throw new NotImplementedException();
         }
 
-        public Task<TimedEntityTagHeaderValue> QueryAsync(HttpContext context)
+        public async Task<TimedEntityTagHeaderValue> QueryAsync(HttpContext context)
         {
             int? id = null;
             var routeData = context.GetRouteData();
@@ -39,24 +41,24 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.Role
 
             if (id.HasValue)
             {
-                DateTime? time = _cache.Get(string.Format(AuthorityManagementConsts.RoleResponseCache, id));
-                if (time.HasValue)
+                string time = await _cache.GetStringAsync(string.Format(AuthorityManagementConsts.RoleResponseCache, id));
+                if (time != null)
                 {
-                    return Task.FromResult(new TimedEntityTagHeaderValue(new DateTimeOffset(time.Value).ToETagString()));
+                    return new TimedEntityTagHeaderValue(new DateTimeOffset(Convert.ToDateTime(time)).ToETagString());
                 }
                 else
                 {
-                    return Task.FromResult((TimedEntityTagHeaderValue)null);
+                    return null;
                 }
             }
             else // all cars
             {
-                DateTime? time = _cache.Get(AuthorityManagementConsts.RoleLastResponseCache);
+                string time = await _cache.GetStringAsync(AuthorityManagementConsts.RoleLastResponseCache);
                 if (time == null)
                 {
-                    return Task.FromResult((TimedEntityTagHeaderValue)null);
+                    return null;
                 }
-                return Task.FromResult(new TimedEntityTagHeaderValue(new DateTimeOffset(time.Value).ToETagString(_roleManager.GetCount())));
+                return new TimedEntityTagHeaderValue(new DateTimeOffset(Convert.ToDateTime(time)).ToETagString(_roleManager.GetCount()));
             }
         }
     }

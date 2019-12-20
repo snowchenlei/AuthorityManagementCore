@@ -1,11 +1,12 @@
 ﻿using Anc.Application.Services.Dto;
 using CacheCow.Server;
-using CacheManager.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Caching.Distributed;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core.Authorization.Roles.DomainService;
 using Snow.AuthorityManagement.Core.Authorization.Users.DomainService;
+using Snow.AuthorityManagement.Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,10 +16,10 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.User
 {
     public class TimedETagQueryUserRepository : ITimedETagQueryProvider<PagedResultDto<UserListDto>>, ITimedETagQueryProvider<GetUserForEditOutput>
     {
-        private readonly ICacheManager<DateTime?> _cache;
+        private readonly IDistributedCache _cache;
         private readonly IRoleManager _userManager;
 
-        public TimedETagQueryUserRepository(ICacheManager<DateTime?> cache
+        public TimedETagQueryUserRepository(IDistributedCache cache
             , IRoleManager userManager)
         {
             _cache = cache;
@@ -30,33 +31,35 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.User
             //throw new NotImplementedException();
         }
 
-        public Task<TimedEntityTagHeaderValue> QueryAsync(HttpContext context)
+        public async Task<TimedEntityTagHeaderValue> QueryAsync(HttpContext context)
         {
             int? id = null;
             var routeData = context.GetRouteData();
             if (routeData.Values.ContainsKey("id"))
+            {
                 id = Convert.ToInt32(routeData.Values["id"]);
+            }
 
             if (id.HasValue)
             {
-                DateTime? time = _cache.Get(string.Format(AuthorityManagementConsts.UserResponseCache, id));
-                if (time.HasValue)
+                string time = await _cache.GetStringAsync(string.Format(AuthorityManagementConsts.UserResponseCache, id));
+                if (time == null)
                 {
-                    return Task.FromResult(new TimedEntityTagHeaderValue(new DateTimeOffset(time.Value).ToETagString()));
+                    return new TimedEntityTagHeaderValue(new DateTimeOffset(Convert.ToDateTime(time)).ToETagString());
                 }
                 else
                 {
-                    return Task.FromResult((TimedEntityTagHeaderValue)null);
+                    return null;
                 }
             }
             else // all cars
             {
-                DateTime? time = _cache.Get(AuthorityManagementConsts.UserLastResponseCache);
+                string time = await _cache.GetStringAsync(AuthorityManagementConsts.UserLastResponseCache);
                 if (time == null)
                 {
-                    return Task.FromResult((TimedEntityTagHeaderValue)null);
+                    return null;
                 }
-                return Task.FromResult(new TimedEntityTagHeaderValue(new DateTimeOffset(time.Value).ToETagString(_userManager.GetCount())));
+                return new TimedEntityTagHeaderValue(new DateTimeOffset(Convert.ToDateTime(time)).ToETagString(_userManager.GetCount()));
             }
         }
     }

@@ -1,22 +1,18 @@
 ﻿using Anc.Application.Services.Dto;
 using CacheCow.Server;
-using CacheManager.Core;
+using Microsoft.Extensions.Caching.Distributed;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core.Authorization.Roles.DomainService;
-using Snow.AuthorityManagement.Core.Authorization.Users.DomainService;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Core.Common.ETag.User
 {
     public class UserCollectionETagExtractor : ITimedETagExtractor<PagedResultDto<UserListDto>>
     {
-        private readonly ICacheManager<DateTime?> _cache;
+        private readonly IDistributedCache _cache;
         private readonly IRoleManager _userManager;
 
-        public UserCollectionETagExtractor(ICacheManager<DateTime?> cache,
+        public UserCollectionETagExtractor(IDistributedCache cache,
           IRoleManager userManager)
         {
             _cache = cache;
@@ -27,11 +23,23 @@ namespace Snow.AuthorityManagement.Web.Core.Common.ETag.User
         {
             if (viewModel == null)
                 return null;
-            DateTime? time = _cache.Get(AuthorityManagementConsts.UserLastResponseCache);
-            if (time == null)
+            DateTime? time;
+            string temp = _cache.GetString(AuthorityManagementConsts.UserLastResponseCache);
+            if (temp == null)
             {
                 time = _userManager.GetLastModificationTime();
                 if (time == null)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                if (DateTime.TryParse(temp, out DateTime tempTime))
+                {
+                    time = tempTime;
+                }
+                else
                 {
                     return null;
                 }

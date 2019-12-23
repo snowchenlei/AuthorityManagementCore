@@ -1,6 +1,5 @@
 ﻿using Anc.Application.Services.Dto;
 using AutoMapper;
-using CacheCow.Server.Core.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -10,7 +9,6 @@ using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core;
 using System;
 using System.Threading.Tasks;
-using CacheManager.Core;
 
 namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
 {
@@ -49,7 +47,6 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="200">获取成功</response>
         /// <returns></returns>
         [HttpGet(Name = "GetUsersPage")]
-        [HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<UserListDto>))]
         [Authorize(PermissionNames.Pages_Administration_Users_Query)]
         [ProducesResponseType(typeof(PagedResultDto<UserListDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery]GetUsersInput input)
@@ -58,7 +55,10 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
             if (!await _cache.ExistsStringAsync(AuthorityManagementConsts.UserLastResponseCache))
             {
                 DateTime? lastModificationTime = await _userService.GetLastModificationTimeAsync();
-                await _cache.SetStringAsync(AuthorityManagementConsts.UserLastResponseCache, (await _userService.GetLastModificationTimeAsync()).ToString());
+                if (lastModificationTime.HasValue)
+                {
+                    await _cache.SetStringAsync(AuthorityManagementConsts.UserLastResponseCache, lastModificationTime.Value.ToString());
+                }
             }
             return Return<GetUsersInput, PagedResultDto<UserListDto>, UserListDto>(input, "GetUsersPage", result);
         }
@@ -73,8 +73,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="404">没有找到</response>
         /// <returns></returns>
         [HttpGet("{id}", Name = "GetUser")]
-        [HttpCacheFactory(0, ViewModelType = typeof(GetUserForEditOutput))]
-        [ProducesResponseType(typeof(GetUserForEditOutput), 200)]
+        [ProducesResponseType(typeof(UserEditDto), 200)]
         [ProducesResponseType(304)]
         [ProducesResponseType(404)]
         [Authorize(PermissionNames.Pages_Administration_Users_Query)]

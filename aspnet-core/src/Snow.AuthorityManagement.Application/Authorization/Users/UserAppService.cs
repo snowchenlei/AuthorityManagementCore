@@ -229,7 +229,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             User user = _mapper.Map<User>(input);
             user.CanUse = true;
             user.Password = _configuration["AppSetting:DefaultPassword"];
-            user.LastModificationTime = user.CreationTime;
+            user.LastModificationTime = user.CreationTime = DateTime.Now;
             user.Id = await _userRepository.InsertAndGetIdAsync(user);
 
             #endregion 用户

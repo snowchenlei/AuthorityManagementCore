@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.Loader;
-using Anc.Application.Services.Dto;
 using Anc.Authorization;
-using Anc.Authorization.Permissions;
 using Autofac;
 using AutoMapper;
-using CacheCow.Server.Core.Mvc;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -30,7 +27,6 @@ using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
 using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.EntityFrameworkCore;
 using Snow.AuthorityManagement.Web.Configuration;
-using Snow.AuthorityManagement.Web.Core.Common.ETag.User;
 using Snow.AuthorityManagement.Web.Library;
 using Snow.AuthorityManagement.Web.Library.Middleware;
 using Snow.AuthorityManagement.Web.Startup.OnceTask;
@@ -96,7 +92,6 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
             });
-            AddCacheCow(services);
 
             AutoAddDefinitionProviders(services);
         }
@@ -209,19 +204,6 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddTransient<IValidator<MenuEditDto>, MenuEditValidator>();
         }
 
-        /// <summary>
-        /// 注册缓存
-        /// </summary>
-        /// <param name="services"></param>
-        private void AddCacheCow(IServiceCollection services)
-        {
-            services.AddHttpCachingMvc();
-            services.AddQueryProviderAndExtractorForViewModelMvc<GetUserForEditOutput, TimedETagQueryUserRepository, UserETagExtractor>(false);
-            services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<UserListDto>, TimedETagQueryUserRepository, UserCollectionETagExtractor>(false);
-            //services.AddQueryProviderAndExtractorForViewModelMvc<GetRoleForEditOutput, TimedETagQueryRoleRepository, RoleETagExtractor>(false);
-            //services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<RoleListDto>, TimedETagQueryRoleRepository, RoleCollectionETagExtractor>(false);
-        }
-
         private void AutoAddDefinitionProviders(IServiceCollection services)
         {
             //services.OnRegistred(AuthorizationInterceptorRegistrar.RegisterIfNeeded);
@@ -309,7 +291,6 @@ namespace Snow.AuthorityManagement.Web.Startup
             app.UseSession();
             //app.UseCookiePolicy();//添加后会导致Session失效
             app.UseHttpsRedirection();
-            loggerFactory.AddLog4Net();
 
             app.UseEndpoints(routes =>
             {

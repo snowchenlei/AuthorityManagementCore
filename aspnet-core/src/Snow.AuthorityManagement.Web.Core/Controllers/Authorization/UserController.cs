@@ -2,8 +2,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Distributed;
-using Snow.AuthorityManagement.Common.Extensions;
 using Snow.AuthorityManagement.Application.Authorization.Users;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core;
@@ -19,9 +19,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
     [Authorize(PermissionNames.Pages_Administration_Users)]
     public class UserController : PageController
     {
-        // TODO:Api缓存隔离
         private readonly IUserAppService _userService;
-
         private readonly IDistributedCache _cache;
 
         /// <summary>
@@ -52,14 +50,6 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         public async Task<IActionResult> GetPaged([FromQuery]GetUsersInput input)
         {
             var result = await _userService.GetUserPagedAsync(input);
-            if (!await _cache.ExistsStringAsync(AuthorityManagementConsts.UserLastResponseCache))
-            {
-                DateTime? lastModificationTime = await _userService.GetLastModificationTimeAsync();
-                if (lastModificationTime.HasValue)
-                {
-                    await _cache.SetStringAsync(AuthorityManagementConsts.UserLastResponseCache, lastModificationTime.Value.ToString());
-                }
-            }
             return Return<GetUsersInput, PagedResultDto<UserListDto>, UserListDto>(input, "GetUsersPage", result);
         }
 
@@ -79,9 +69,8 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [Authorize(PermissionNames.Pages_Administration_Users_Query)]
         public async Task<IActionResult> Get(int id)
         {
-            UserEditDto user = await _userService.GetUserForEditAsync(id);
-            DateTime? lastModified = user.LastModificationTime;
-            await _cache.SetStringAsync(String.Format(AuthorityManagementConsts.UserResponseCache, id), lastModified.ToString());
+            UserEditDto user = await _cache.GetOrCreateAsync(String.Format(AuthorityManagementConsts.UserResponseCache, id),
+                async () => await _userService.GetUserForEditAsync(id));
             return Ok(user);
         }
 
@@ -100,7 +89,6 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         public async Task<IActionResult> Post([FromBody]CreateOrUpdateUser input)
         {
             UserListDto user = await _userService.CreateUserAsync(input.User, input.RoleIds);
-            await CacheLastModificationTimeAsync(user.LastModificationTime);
             return CreatedAtRoute("GetUser", new { id = user.ID }, user);
         }
 
@@ -120,26 +108,9 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         public async Task<IActionResult> Put(int id, [FromBody]CreateOrUpdateUser input)
         {
             input.User.ID = id;
-            UserListDto user = await _userService.EditUserAsync(input.User, input.RoleIds);
-            _cache.Remove(String.Format(AuthorityManagementConsts.UserResponseCache, id));
-            await CacheLastModificationTimeAsync(user.LastModificationTime);
+            await _userService.EditUserAsync(input.User, input.RoleIds);
+            await _cache.RemoveAsync(String.Format(AuthorityManagementConsts.UserResponseCache, id));
             return NoContent();
-        }
-
-        /// <summary>
-        /// 缓存最后修改时间
-        /// </summary>
-        /// <param name="lastModified"></param>
-        private async Task CacheLastModificationTimeAsync(DateTime? lastModified)
-        {
-            string cacheTime = await _cache.GetStringAsync(AuthorityManagementConsts.UserLastResponseCache);
-            if (cacheTime != null)
-            {
-                if (lastModified.HasValue && Convert.ToDateTime(cacheTime) < lastModified.Value)
-                {
-                    await _cache.SetStringAsync(AuthorityManagementConsts.UserLastResponseCache, lastModified.ToString());
-                }
-            }
         }
 
         /// <summary>
@@ -157,6 +128,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         {
             await _userService.DeleteUserAsync(id);
             _cache.Remove(String.Format(AuthorityManagementConsts.UserResponseCache, id));
+            await _cache.RemoveAsync(String.Format(AuthorityManagementConsts.UserResponseCache, id));
             return NoContent();
         }
     }

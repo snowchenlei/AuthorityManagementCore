@@ -69,6 +69,15 @@ namespace Snow.AuthorityManagement.Web.Startup
             #endregion 线程内唯一
 
             services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
+
+            services.AddAntiforgery(options =>
+            {
+                // Set Cookie properties using CookieBuilder properties.
+                options.FormFieldName = "AntiforgeryFieldname";
+                options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
+                options.SuppressXFrameOptionsHeader = false;
+            });
+
             AddAutoMapper(services);
             //禁用 dotnet core 2.1的formbody等模式自动校验和转换
             services.Configure<ApiBehaviorOptions>(options =>
@@ -105,6 +114,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                 //options.Filters.Add(typeof(CustomerExceptionAttribute));
                 //options.Filters.Add(typeof(AncAuthorizeFilter));
                 //options.Filters.Add(typeof(AncAuditActionFilter));
+                //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()); // XSRF/CSRF认证
                 options.Filters.Add(typeof(ModelStateInvalidFilter));// 自定义模型验证(ApiController无需此语句，可自动验证)
 
                 #region 输出缓存配置

@@ -3,9 +3,11 @@ using Anc.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Snow.AuthorityManagement.Application.Authorization.Roles;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Core;
+using System;
 using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
@@ -17,16 +19,20 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
     public class RoleController : PageController
     {
         private readonly IRoleAppService _roleService;
+        private readonly IDistributedCache _cache;
 
         /// <summary>
         /// 构造
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="roleService"></param>
+        /// <param name="cache"></param>
         public RoleController(IMapper mapper
-            , IRoleAppService roleService) : base(mapper)
+            , IRoleAppService roleService
+            , IDistributedCache cache) : base(mapper)
         {
             _roleService = roleService;
+            this._cache = cache;
         }
 
         /// <summary>
@@ -63,7 +69,8 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         [Authorize(PermissionNames.Pages_Administration_Roles_Query)]
         public async Task<IActionResult> Get(int id)
         {
-            RoleEditDto result = await _roleService.GetForEditAsync(id);
+            RoleEditDto result = await _cache.GetOrCreateAsync(String.Format(AuthorityManagementConsts.RoleResponseCache, id),
+                async () => await _roleService.GetForEditAsync(id));
             return Ok(result);
         }
 
@@ -102,6 +109,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         {
             input.Role.ID = id;
             await _roleService.EditAsync(input.Role, input.PermissionNames);
+            await _cache.RemoveAsync(String.Format(AuthorityManagementConsts.RoleResponseCache, id));
             return NoContent();
         }
 
@@ -119,6 +127,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         public async Task<IActionResult> Delete(int id)
         {
             await _roleService.DeleteAsync(id);
+            await _cache.RemoveAsync(String.Format(AuthorityManagementConsts.RoleResponseCache, id));
             return NoContent();
         }
     }

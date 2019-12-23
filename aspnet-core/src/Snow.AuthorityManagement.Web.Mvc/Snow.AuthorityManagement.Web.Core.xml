@@ -9,19 +9,9 @@
             User响应Chche Key
             </summary>
         </member>
-        <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.UserLastResponseCache">
-            <summary>
-            User响应Chche Key
-            </summary>
-        </member>
         <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.RoleResponseCache">
             <summary>
             Role响应Chche Key
-            </summary>
-        </member>
-        <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.RoleLastResponseCache">
-            <summary>
-            User响应Chche Key
             </summary>
         </member>
         <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController">
@@ -91,12 +81,13 @@
             角色
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService,Microsoft.Extensions.Caching.Distributed.IDistributedCache)">
             <summary>
             构造
             </summary>
             <param name="mapper"></param>
             <param name="roleService"></param>
+            <param name="cache"></param>
         </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
             <summary>
@@ -202,12 +193,6 @@
             <response code="204">修改成功</response>
             <response code="400">请求参数有误</response>
             <returns></returns>
-        </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.CacheLastModificationTimeAsync(System.Nullable{System.DateTime})">
-            <summary>
-            缓存最后修改时间
-            </summary>
-            <param name="lastModified"></param>
         </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.Delete(System.Int32)">
             <summary>

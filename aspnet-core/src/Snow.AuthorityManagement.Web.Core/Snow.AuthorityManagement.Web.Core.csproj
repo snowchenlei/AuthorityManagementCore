@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Remove="Configuration\DefaultModule.cs" />
     <Compile Remove="Controllers\Authorization\AuditLogController.cs" />
+    <Compile Remove="Controllers\SecurityController.cs" />
     <Compile Remove="Controllers\XsrfToken.cs" />
     <Compile Remove="Startup\NavigationProvider.cs" />
   </ItemGroup>

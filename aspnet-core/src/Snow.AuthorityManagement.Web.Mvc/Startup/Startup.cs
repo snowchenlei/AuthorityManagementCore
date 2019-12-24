@@ -54,8 +54,6 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDistributedMemoryCache();
-
             #region 线程内唯一
 
             //IServiceCollection services = new ServiceCollection();
@@ -69,15 +67,6 @@ namespace Snow.AuthorityManagement.Web.Startup
             #endregion 线程内唯一
 
             services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
-
-            services.AddAntiforgery(options =>
-            {
-                // Set Cookie properties using CookieBuilder properties.
-                options.FormFieldName = "AntiforgeryFieldname";
-                options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
-                options.SuppressXFrameOptionsHeader = false;
-            });
-
             AddAutoMapper(services);
             //禁用 dotnet core 2.1的formbody等模式自动校验和转换
             services.Configure<ApiBehaviorOptions>(options =>
@@ -299,7 +288,6 @@ namespace Snow.AuthorityManagement.Web.Startup
             app.UseAuthorization();
             //Session
             app.UseSession();
-            //app.UseCookiePolicy();//添加后会导致Session失效
             app.UseHttpsRedirection();
 
             app.UseEndpoints(routes =>

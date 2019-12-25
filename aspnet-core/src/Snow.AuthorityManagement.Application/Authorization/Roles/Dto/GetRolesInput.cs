@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Roles.Dto
 {
-    public class GetRoleInput : PagedAndSortedInputDto
+    public class GetRolesInput : PagedAndSortedInputDto
     {
         /// <summary>
         /// 构造
         /// </summary>
-        public GetRoleInput()
+        public GetRolesInput()
         {
             Sorting = "Sort";
             Order = OrderType.DESC;

@@ -46,6 +46,15 @@ namespace Snow.AuthorityManagement.Core
             menuPermission.AddChild(PermissionNames.Pages_Administration_Menus_BatchDelete, "批量删除");
 
             #endregion 菜单管理
+
+            #region 日志管理
+
+            PermissionDefinition logPermission = administration.AddChild(PermissionNames.Pages_Administration_Logs, "日志管理");
+            logPermission.AddChild(PermissionNames.Pages_Administration_Logs_Query, "查询");
+            logPermission.AddChild(PermissionNames.Pages_Administration_Logs_Delete, "删除");
+            logPermission.AddChild(PermissionNames.Pages_Administration_Logs_BatchDelete, "批量删除");
+
+            #endregion 日志管理
         }
     }
 }

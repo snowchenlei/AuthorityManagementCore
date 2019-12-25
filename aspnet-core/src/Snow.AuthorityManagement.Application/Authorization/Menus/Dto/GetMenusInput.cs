@@ -4,12 +4,12 @@ using Snow.AuthorityManagement.Application.Dto;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Menus.Dto
 {
-    public class GetMenuInput : PagedAndSortedInputDto
+    public class GetMenusInput : PagedAndSortedInputDto
     {
         /// <summary>
         /// 构造
         /// </summary>
-        public GetMenuInput()
+        public GetMenusInput()
         {
             Order = OrderType.DESC;
             Sorting = "Sort";

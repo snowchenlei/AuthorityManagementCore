@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog;
 using System;
+using Snow.AuthorityManagement.Core;
 
 namespace Snow.AuthorityManagement.Web
 {
@@ -22,11 +23,12 @@ namespace Snow.AuthorityManagement.Web
            .AddEnvironmentVariables()
            .Build();
 
-        private static string LogFilePath = Path.Combine("App_Data", "Logs", DateTime.Now.ToString("yyyyMM"));
+        private static string LogFilePath = Path.Combine("App_Data", "Logs");
 
         public static async Task<int> Main(string[] args)
         {
             // Serilog配置 https://github.com/serilog/serilog/wiki/Configuration-Basics
+            string sqlConnection = Configuration.GetConnectionString(AuthorityManagementConsts.ConnectionStringName);
             Log.Logger = new LoggerConfiguration()
                 // 最低日志级别
                 .MinimumLevel.Information()
@@ -39,7 +41,7 @@ namespace Snow.AuthorityManagement.Web
                     .Filter.ByIncludingOnly(p => p.Level.Equals(LogEventLevel.Information))
                     // 记录日志
                     .WriteTo.File(Path.Combine(LogFilePath, "info.log"), LogEventLevel.Information
-                        , rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true))
+                       , rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true))
                 // 到指定大小才写入日志
                 //.WriteTo.Async(a => a.File(Path.Combine(LogFilePath, "info.log"), LogEventLevel.Information
                 //    , rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)), 500)
@@ -47,13 +49,11 @@ namespace Snow.AuthorityManagement.Web
                     .Filter.ByIncludingOnly(p => p.Level.Equals(LogEventLevel.Error))
                     .WriteTo.Async(a => a.File(Path.Combine(LogFilePath, "error.log"), LogEventLevel.Error
                         , rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)))
+                // 所有日志都存到数据库，会自动建表
+                .WriteTo.MySQL(sqlConnection)
                 .CreateLogger();
             try
             {
-                Log.Information("Starting web host1");
-                Log.Information("Starting web host2");
-                Log.Information("Starting web host3");
-                Log.Error("error web host");
                 var host = CreateHostBuilder(args).Build();
 
                 await host.RunWithTasksAsync();

@@ -43,5 +43,14 @@ namespace Snow.AuthorityManagement.Core
         public const string Pages_Administration_Menus_BatchDelete = "Pages.Administration.Menus.BatchDelete";
 
         #endregion 菜单管理
+
+        #region 日志管理
+
+        public const string Pages_Administration_Logs = "Pages.Administration.Logs";
+        public const string Pages_Administration_Logs_Query = "Pages.Administration.Logs.Query";
+        public const string Pages_Administration_Logs_Delete = "Pages.Administration.Logs.Delete";
+        public const string Pages_Administration_Logs_BatchDelete = "Pages.Administration.Logs.BatchDelete";
+
+        #endregion 日志管理
     }
 }

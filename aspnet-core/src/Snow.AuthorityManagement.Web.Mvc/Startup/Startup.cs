@@ -201,6 +201,7 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddTransient<IValidator<RoleEditDto>, RoleEditValidator>();
             services.AddTransient<IValidator<CreateOrUpdateRole>, CreateOrUpdateRoleValidator>();
             services.AddTransient<IValidator<MenuEditDto>, MenuEditValidator>();
+            services.AddTransient<IValidator<CreateOrUpdateMenu>, CreateOrUpdateMenuValidator>();
         }
 
         private void AutoAddDefinitionProviders(IServiceCollection services)

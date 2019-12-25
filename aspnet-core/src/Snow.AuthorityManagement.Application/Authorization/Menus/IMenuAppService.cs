@@ -24,7 +24,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
         /// </summary>
         /// <param name="input">过滤条件</param>
         /// <returns></returns>
-        Task<PagedResultDto<MenuListDto>> GetPagedMenuAsync(GetMenuInput input);
+        Task<PagedResultDto<MenuListDto>> GetPagedMenuAsync(GetMenusInput input);
 
         /// <summary>
         /// 根据Id获取数据

@@ -50,7 +50,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Menus
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<PagedResultDto<MenuListDto>> GetPagedMenuAsync(GetMenuInput input)
+        public async Task<PagedResultDto<MenuListDto>> GetPagedMenuAsync(GetMenusInput input)
         {
             List<string> wheres = new List<string>();
             List<object> parameters = new List<object>();

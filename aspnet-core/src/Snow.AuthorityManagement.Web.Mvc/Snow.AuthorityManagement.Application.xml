@@ -4,51 +4,72 @@
         <name>Snow.AuthorityManagement.Application</name>
     </assembly>
     <members>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.AuditLogs.AuditLogAppService">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput">
+            <summary>
+            获取列表参数
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Logs.Dto.LogListDto">
+            <summary>
+            输出列表
+            </summary>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Logs.ILogAppService">
             <summary>
             审计日志
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.AuditLogs.AuditLogAppService.#ctor(AutoMapper.IMapper,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.AuditLogs.AuditLog,System.Int64})">
-            <summary>
-            构造
-            </summary>
-            <param name="mapper"></param>
-            <param name="auditLogRepository"></param>
-        </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.AuditLogs.AuditLogAppService.GetAuditLogPagedAsync(Snow.AuthorityManagement.Application.Authorization.AuditLogs.Dto.GetAuditLogsInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.ILogAppService.GetLogPagedAsync(Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput)">
             <summary>
             分页
             </summary>
             <param name="input">过滤条件</param>
             <returns></returns>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.AuditLogs.Dto.AuditLogListDto">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.ILogAppService.DeleteLogAsync(System.Int64)">
             <summary>
-            输出列表
+            删除日志
             </summary>
+            <param name="id">编号</param>
+            <returns></returns>
         </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.AuditLogs.Dto.GetAuditLogsInput">
-            <summary>
-            获取列表参数
-            </summary>
-        </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.AuditLogs.Dto.GetAuditLogsInput.#ctor">
-            <summary>
-            构造
-            </summary>
-        </member>
-        <member name="T:Snow.AuthorityManagement.Application.Authorization.AuditLogs.IAuditLogAppService">
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Logs.LogAppService">
             <summary>
             审计日志
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput.#ctor">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.LogAppService.#ctor(AutoMapper.IMapper,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.Logs.Log,System.Int64})">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+            <param name="logRepository"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.LogAppService.GetLogPagedAsync(Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput)">
+            <summary>
+            分页
+            </summary>
+            <param name="input">过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.LogAppService.DeleteLogAsync(System.Int64)">
+            <summary>
+            删除日志
+            </summary>
+            <param name="id">编号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenusInput.#ctor">
             <summary>
             构造
             </summary>
         </member>
-        <member name="P:Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput.Name">
+        <member name="P:Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenusInput.Name">
             <summary>
             菜单名称
             </summary>
@@ -64,7 +85,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.GetPagedMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.IMenuAppService.GetPagedMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenusInput)">
             <summary>
             分页
             </summary>
@@ -127,7 +148,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.GetPagedMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Menus.MenuAppService.GetPagedMenuAsync(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenusInput)">
             <summary>
             分页
             </summary>
@@ -179,7 +200,7 @@
             构造
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput.#ctor">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRolesInput.#ctor">
             <summary>
             构造
             </summary>
@@ -195,7 +216,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRolesInput)">
             <summary>
             分页
             </summary>
@@ -259,7 +280,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.RoleAppService.GetPagedAsync(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRolesInput)">
             <summary>
             分页
             </summary>

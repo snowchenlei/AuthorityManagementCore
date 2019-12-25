@@ -36,13 +36,12 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="200">获取成功</response>
         /// <returns></returns>
         [HttpGet(Name = "GetMenusPage")]
-        //[HttpCacheFactory(0, ViewModelType = typeof(PagedResultDto<MenuListDto>))]
         [Authorize(PermissionNames.Pages_Administration_Menus_Query)]
         [ProducesResponseType(typeof(PagedResultDto<MenuListDto>), 200)]
-        public async Task<IActionResult> GetPaged([FromQuery]GetMenuInput input)
+        public async Task<IActionResult> GetPaged([FromQuery]GetMenusInput input)
         {
             var result = await _menuService.GetPagedMenuAsync(input);
-            return Return<GetMenuInput, PagedResultDto<MenuListDto>, MenuListDto>(input, "GetUsersPage", result);
+            return Return<GetMenusInput, PagedResultDto<MenuListDto>, MenuListDto>(input, "GetUsersPage", result);
         }
 
         /// <summary>
@@ -55,7 +54,6 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <response code="404">没有找到</response>
         /// <returns></returns>
         [HttpGet("{id}", Name = "GetMenu")]
-        //[HttpCacheFactory(0, ViewModelType = typeof(MenuEditDto))]
         [ProducesResponseType(typeof(MenuEditDto), 200)]
         [ProducesResponseType(304)]
         [ProducesResponseType(404)]

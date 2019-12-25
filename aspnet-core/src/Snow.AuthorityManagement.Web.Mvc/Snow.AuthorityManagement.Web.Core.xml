@@ -14,6 +14,26 @@
             Role响应Chche Key
             </summary>
         </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController">
+            <summary>
+            日志
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Logs.ILogAppService)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput)">
+            <summary>
+            分页获取
+            </summary>
+            <remarks>GET: api/menus</remarks>
+            <param name="input">分页参数</param>
+            <response code="200">获取成功</response>
+            <returns></returns>
+        </member>
         <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController">
             <summary>
             菜单
@@ -26,7 +46,7 @@
             <param name="mapper"></param>
             <param name="menuService"></param>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenusInput)">
             <summary>
             分页获取
             </summary>
@@ -89,7 +109,7 @@
             <param name="roleService"></param>
             <param name="cache"></param>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRolesInput)">
             <summary>
             分页获取
             </summary>

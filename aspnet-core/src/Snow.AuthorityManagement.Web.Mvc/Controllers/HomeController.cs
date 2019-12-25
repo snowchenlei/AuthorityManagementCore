@@ -10,12 +10,20 @@ using System.Security.Claims;
 using System.Text;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace Snow.AuthorityManagement.Web.Controllers
 {
     [Authorize]
     public class HomeController : BaseController
     {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            this._logger = logger;
+        }
+
         // GET: Home
         public ActionResult Index()
         {
@@ -52,6 +60,18 @@ namespace Snow.AuthorityManagement.Web.Controllers
         public ActionResult Welcome()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public void LogInfo()
+        {
+            _logger.LogInformation("你好啊");
+        }
+
+        [AllowAnonymous]
+        public void LogError()
+        {
+            _logger.LogError("你好错啦");
         }
     }
 }

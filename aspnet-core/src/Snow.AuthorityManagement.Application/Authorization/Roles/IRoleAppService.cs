@@ -23,7 +23,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// </summary>
         /// <param name="input">过滤条件</param>
         /// <returns></returns>
-        Task<PagedResultDto<RoleListDto>> GetPagedAsync(GetRoleInput input);
+        Task<PagedResultDto<RoleListDto>> GetPagedAsync(GetRolesInput input);
 
         /// <summary>
         /// 根据Id获取数据

@@ -70,7 +70,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Roles
         /// </summary>
         /// <param name="input">过滤条件</param>
         /// <returns></returns>
-        public async Task<PagedResultDto<RoleListDto>> GetPagedAsync(GetRoleInput input)
+        public async Task<PagedResultDto<RoleListDto>> GetPagedAsync(GetRolesInput input)
         {
             List<string> wheres = new List<string>();
             List<object> parameters = new List<object>();

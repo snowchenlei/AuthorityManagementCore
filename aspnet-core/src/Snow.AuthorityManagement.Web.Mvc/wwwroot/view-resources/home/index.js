@@ -102,11 +102,11 @@ function getHeight() {
 function initData() {
     $.ajax({
         type: "get",
-        url: '/Permission/GetAllPermission',
+        url: 'api/permissions',
         success: function (result) {
             if (result.status === 200 && result.data) {
-                localStorage.removeItem('permissions');
-                localStorage.setItem('permissions', result.data);
+                sessionStorage.removeItem('permissions');
+                sessionStorage.setItem('permissions', result.data);
             }
         }, error: function () {
         }

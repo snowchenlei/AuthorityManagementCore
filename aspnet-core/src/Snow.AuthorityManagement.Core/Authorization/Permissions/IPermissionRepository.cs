@@ -24,5 +24,12 @@ namespace Snow.AuthorityManagement.Core.Authorization.Permissions
         /// <param name="roleId">角色Id</param>
         /// <returns></returns>
         Task<List<AncPermission>> GetPermissionsByRoleNameAsync(string roleName);
+
+        /// <summary>
+        /// 获取角色权限
+        /// </summary>
+        /// <param name="roleNames">角色名称集合</param>
+        /// <returns></returns>
+        Task<List<AncPermission>> GetListAsync(string[] roleNames);
     }
 }

@@ -44,7 +44,7 @@ function queryParams(params) {
         var htmlArr = [];
 
         htmlArr.push('<div class="btn-group" style="display: inline-block;" role="group" aria-label="...">');
-        if (isGranted('Pages.Administration.Loggers.Delete')) {
+        if (isGranted('Pages.Administration.Logs.Delete')) {
             htmlArr.push('<button type="button" class="btn btn-sm btn-danger remove" title="删除"><i class="fas fa-trash"></i></button>');
         }
         htmlArr.push('</div>');
@@ -70,7 +70,7 @@ function queryParams(params) {
         loadPanel();
         //4、时间初始化
         setDate($('#txt_search_addTime'), true, true);
-        $('#txt_sel_role').select2({
+        $('#txt_sel_level').select2({
             language: 'zh-CN',
             placeholder: '请选择',
             allowClear: true,

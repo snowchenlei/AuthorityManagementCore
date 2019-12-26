@@ -200,6 +200,18 @@
             构造
             </summary>
         </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Permissions.PermissionAppService">
+            <summary>
+            权限服务
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Permissions.PermissionAppService.GetUserPermissionsAsync(System.String[])">
+            <summary>
+            获取用户所有权限
+            </summary>
+            <param name="roleNames">角色名称集合</param>
+            <returns></returns>
+        </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRolesInput.#ctor">
             <summary>
             构造

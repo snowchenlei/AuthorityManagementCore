@@ -33,11 +33,21 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions
         /// <summary>
         /// 获取角色权限
         /// </summary>
-        /// <param name="roleId">角色Id</param>
+        /// <param name="roleName">角色名称</param>
         /// <returns></returns>
         public Task<List<AncPermission>> GetPermissionsByRoleNameAsync(string roleName)
         {
             return GetListAsync(AncConsts.PermissionRoleProviderName, roleName);
+        }
+
+        /// <summary>
+        /// 获取角色权限
+        /// </summary>
+        /// <param name="roleNames">角色名称集合</param>
+        /// <returns></returns>
+        public Task<List<AncPermission>> GetListAsync(string[] roleNames)
+        {
+            return GetListAsync(AncConsts.PermissionRoleProviderName, roleNames);
         }
     }
 }

@@ -62,8 +62,6 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
             // 这个功能先不启用
             return NotFound();
             await _logService.DeleteLogAsync(id);
-            _cache.Remove(String.Format(AuthorityManagementConsts.UserResponseCache, id));
-            await _cache.RemoveAsync(String.Format(AuthorityManagementConsts.UserResponseCache, id));
             return NoContent();
         }
     }

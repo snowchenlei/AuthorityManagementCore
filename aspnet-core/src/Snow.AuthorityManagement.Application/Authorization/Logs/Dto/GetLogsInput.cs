@@ -11,6 +11,16 @@ namespace Snow.AuthorityManagement.Application.Authorization.Logs.Dto
     public class GetLogsInput : PagedAndSortedInputDto
     {
         /// <summary>
+        /// 日志等级
+        /// </summary>
+        public string LogLevel { get; set; }
+
+        /// <summary>
+        /// 创建时间段
+        /// </summary>
+        public string Date { get; set; }
+
+        /// <summary>
         /// 构造
         /// </summary>
         public GetLogsInput()

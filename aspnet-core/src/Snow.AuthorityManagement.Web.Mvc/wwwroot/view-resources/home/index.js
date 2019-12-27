@@ -33,8 +33,7 @@
 //删除index页面输出缓存
 $('.remove-cache').click(function () {
     $.get('/api/cache', function (data) {
-        debugger
-        if (data.State == 1) {
+        if (data.State === 1) {
             toastr.success(data.Message);
         } else {
             toastr.error(data.Message);

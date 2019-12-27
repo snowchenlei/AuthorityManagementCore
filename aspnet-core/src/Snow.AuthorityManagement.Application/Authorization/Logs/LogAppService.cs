@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Anc;
 using Anc.Application.Services.Dto;
 using Anc.Domain.Repositories;
+using Anc.Domain.Uow;
 using AutoMapper;
 using Snow.AuthorityManagement.Application.Authorization.Logs.Dto;
 using Snow.AuthorityManagement.Core.Authorization.AuditLogs;
@@ -41,8 +42,28 @@ namespace Snow.AuthorityManagement.Application.Authorization.Logs
         {
             List<string> wheres = new List<string>();
             List<object> parameters = new List<object>();
+            int index = 0;
+            if (!String.IsNullOrEmpty(input.LogLevel))
+            {
+                wheres.Add($"Level=@{index++}");
+                parameters.Add(input.LogLevel);
+            }
+
+            if (!string.IsNullOrEmpty(input.Date))
+            {
+                DateTime[] date = Array.ConvertAll(input.Date
+                    .Split(new[] { '~' }, StringSplitOptions.RemoveEmptyEntries)
+                    , DateTime.Parse);
+                wheres.Add($"CreationTime > (@{index++}) AND CreationTime < (@{index++})");
+                parameters.Add(date[0]);
+                parameters.Add(date[1]);
+            }
+            if (!string.IsNullOrEmpty(input.Sorting))
+            {
+                input.Sorting = input.Sorting + (input.Order == OrderType.ASC ? " ASC" : " DESC");
+            }
             var result = await _logRepository
-                .GetPagedAsync(input.PageIndex, input.PageSize, "", parameters.ToArray(), input.Sorting);
+                .GetPagedAsync(input.PageIndex, input.PageSize, string.Join(" AND ", wheres), parameters.ToArray(), input.Sorting);
             return new PagedResultDto<LogListDto>()
             {
                 PageIndex = input.PageIndex,
@@ -57,9 +78,9 @@ namespace Snow.AuthorityManagement.Application.Authorization.Logs
         /// </summary>
         /// <param name="id">编号</param>
         /// <returns></returns>
+        [UnitOfWork]
         public async Task<bool> DeleteLogAsync(long id)
         {
-            // TODO:删除
             await _logRepository.DeleteAsync(id);
             return true;
         }

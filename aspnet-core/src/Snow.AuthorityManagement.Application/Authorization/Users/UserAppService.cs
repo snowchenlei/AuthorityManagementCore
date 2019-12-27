@@ -168,7 +168,8 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <summary>
         /// 登陆
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="userName">用户名</param>
+        /// <param name="password">密码</param>
         /// <returns></returns>
         public async Task<UserLoginOutput> LoginAsync(string userName, string password)
         {
@@ -301,11 +302,6 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             await _userRoleRepository.DeleteAsync(userRoles);
             await _userRepository.DeleteAsync(user);
             return true;
-        }
-
-        public Task<DateTime?> GetLastModificationTimeAsync()
-        {
-            return _userManager.GetLastModificationTimeAsync();
         }
     }
 }

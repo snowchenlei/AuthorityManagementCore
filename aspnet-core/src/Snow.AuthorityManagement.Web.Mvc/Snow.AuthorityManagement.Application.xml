@@ -9,6 +9,16 @@
             获取列表参数
             </summary>
         </member>
+        <member name="P:Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput.LogLevel">
+            <summary>
+            日志等级
+            </summary>
+        </member>
+        <member name="P:Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput.Date">
+            <summary>
+            创建时间段
+            </summary>
+        </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput.#ctor">
             <summary>
             构造

@@ -6,8 +6,7 @@ function queryParams(params) {
         pageIndex: params.offset / params.limit,  //页码
         sort: params.sort,
         order: params.order,
-        userName: $('#txt_search_userName').val(),
-        //roleID: $('#txt_sel_role option:checked').val(),
+        logLevel: $('#txt_sel_level option:checked').val(),
         date: $('#txt_search_addTime').val()
     };
 }
@@ -18,8 +17,8 @@ function queryParams(params) {
         'click .remove': function (e, value, row, index) {
             bootbox.confirm({
                 size: 'small',
-                title: '删除用户' + row.name,
-                message: '你确定要删除' + row.name + '吗？',
+                title: '删除日志',
+                message: '你确定要删除这条日志吗？',
                 callback: function (result) {
                     if (result) {
                         $.ajax({
@@ -54,12 +53,17 @@ function queryParams(params) {
         { checkbox: true },
         { title: '操作', formatter: actionFormater, events: operateEvents },
         { field: 'id', title: 'Id', visible: false },
-        { field: 'level', title: '等级' },
-        { field: 'message', title: '信息' },
-        { field: 'exception', title: '异常' },
-        { field: 'timestamp', title: '记录时间' }
+        { field: 'level', title: '等级', width: '10', widthUnit: '%' },
+        { field: 'message', title: '信息', width: '25', widthUnit: '%', formatter: textFormatter },
+        { field: 'exception', title: '异常', width: '30', widthUnit: '%', formatter: textFormatter },
+        { field: 'timestamp', title: '发生时间', width: '20', widthUnit: '%' }
     ];
-
+    //文本格式化
+    function textFormatter(value, row, index) {
+        if (value !== null) {
+            return '<a href="#" class="wi" onclick=showText(this) title=\'' + value + '\'>' + value + '</a>';
+        }
+    }
     $(function () {
         if (!isGranted('Pages.Administration.Loggers.Create')) {
             $('#btnAdd').remove();

@@ -53,7 +53,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// <param name="id">主键</param>
         /// <response code="204">删除成功</response>
         /// <response code="404">没有找到</response>
-        [HttpDelete("{id}", Name = "DeleteUser")]
+        [HttpDelete("{id}", Name = "DeleteLog")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [Authorize(PermissionNames.Pages_Administration_Users_Delete)]

@@ -29,10 +29,19 @@
             <summary>
             分页获取
             </summary>
-            <remarks>GET: api/menus</remarks>
+            <remarks>GET: api/logs</remarks>
             <param name="input">分页参数</param>
             <response code="200">获取成功</response>
             <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <remarks>DELETE: api/logs/5</remarks>
+            <param name="id">主键</param>
+            <response code="204">删除成功</response>
+            <response code="404">没有找到</response>
         </member>
         <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController">
             <summary>

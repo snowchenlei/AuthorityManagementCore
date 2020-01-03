@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 using Anc.Authorization;
+using AspNetCoreRateLimit;
 using Autofac;
 using AutoMapper;
 using FluentValidation;
@@ -9,12 +10,14 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
@@ -30,6 +33,7 @@ using Snow.AuthorityManagement.Web.Configuration;
 using Snow.AuthorityManagement.Web.Library;
 using Snow.AuthorityManagement.Web.Library.Middleware;
 using Snow.AuthorityManagement.Web.Startup.OnceTask;
+using StackExchange.Profiling.Storage;
 
 namespace Snow.AuthorityManagement.Web.Startup
 {
@@ -53,6 +57,8 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            // 需要在EF和MiniProfiler之前使用，否则会报错
+            services.AddMemoryCache();
 
             #region 线程内唯一
 
@@ -91,7 +97,43 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.Cookie.HttpOnly = true;
             });
 
+            services.AddHealthChecks()
+                .AddDbContextCheck<AuthorityManagementContext>();
+            AddRateLimit(services);
+#if DEBUG
+            AddMiniProfiler(services);
+#endif
             AutoAddDefinitionProviders(services);
+        }
+
+        private void AddMiniProfiler(IServiceCollection services)
+        {
+            services.AddMiniProfiler(options =>
+            {
+            }).AddEntityFramework();
+        }
+
+        private void AddRateLimit(IServiceCollection services)
+        {
+            // needed to load configuration from appsettings.json
+            services.AddOptions();
+
+            //load general configuration from appsettings.json
+            services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting"));
+
+            //load ip rules from appsettings.json
+            services.Configure<IpRateLimitPolicies>(Configuration.GetSection("IpRateLimitPolicies"));
+
+            // inject counter and rules stores
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+
+            // https://github.com/aspnet/Hosting/issues/793 the IHttpContextAccessor service is not
+            // registered by default. the clientId/clientIp resolvers use it.
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // configuration (resolvers, counter key builders)
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
         }
 
         private void AddMvc(IServiceCollection services)
@@ -281,6 +323,10 @@ namespace Snow.AuthorityManagement.Web.Startup
 
             app.UseCustomerExceptionHandler();
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
+            app.UseIpRateLimiting();
+#if DEBUG
+            app.UseMiniProfiler();
+#endif
             //使用静态文件
             app.UseStaticFiles();
             app.UseRouting();
@@ -293,6 +339,7 @@ namespace Snow.AuthorityManagement.Web.Startup
 
             app.UseEndpoints(routes =>
             {
+                routes.MapHealthChecks("/health");
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }

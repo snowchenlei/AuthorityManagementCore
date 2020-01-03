@@ -482,12 +482,6 @@
             <param name="id">编号</param>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.IUserAppService.GetLastModificationTimeAsync">
-            <summary>
-            获取最后修改时间
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.GetUserPagedAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.GetUsersInput)">
             <summary>
             分页
@@ -520,7 +514,8 @@
             <summary>
             登陆
             </summary>
-            <param name="input"></param>
+            <param name="userName">用户名</param>
+            <param name="password">密码</param>
             <returns></returns>
         </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Users.UserAppService.CreateOrEditUserAsync(Snow.AuthorityManagement.Application.Authorization.Users.Dto.CreateOrUpdateUser)">

@@ -11,6 +11,7 @@ using Serilog.Events;
 using Serilog;
 using System;
 using Snow.AuthorityManagement.Core;
+using System.Linq;
 
 namespace Snow.AuthorityManagement.Web
 {
@@ -33,9 +34,21 @@ namespace Snow.AuthorityManagement.Web
                 // 最低日志级别
                 .MinimumLevel.Information()
                 // 重写微软最低日志级别
+#if DEBUG
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Debug)
+#else
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+#endif
                 .Enrich.FromLogContext()
                 // TODO:过滤微软日志存单独文件
+#if DEBUG
+                .WriteTo.Logger(lg => lg
+                    // 过滤级别
+                    .Filter.ByIncludingOnly(p => p.Level.Equals(LogEventLevel.Debug))
+                    // 记录日志
+                    .WriteTo.File(Path.Combine(LogFilePath, "debug.log"), LogEventLevel.Debug
+                       , rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true))
+#endif
                 .WriteTo.Logger(lg => lg
                     // 过滤级别
                     .Filter.ByIncludingOnly(p => p.Level.Equals(LogEventLevel.Information))

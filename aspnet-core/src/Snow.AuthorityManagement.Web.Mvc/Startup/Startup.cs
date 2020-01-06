@@ -163,7 +163,6 @@ namespace Snow.AuthorityManagement.Web.Startup
 #else
                         Duration = 120,
 #endif
-
                         VaryByHeader = "User-Agent"
                     });
                 options.CacheProfiles.Add("Never",

@@ -61,17 +61,5 @@ namespace Snow.AuthorityManagement.Web.Controllers
         {
             return View();
         }
-
-        [AllowAnonymous]
-        public void LogInfo()
-        {
-            _logger.LogInformation("你好啊");
-        }
-
-        [AllowAnonymous]
-        public void LogError()
-        {
-            _logger.LogError("你好错啦");
-        }
     }
 }

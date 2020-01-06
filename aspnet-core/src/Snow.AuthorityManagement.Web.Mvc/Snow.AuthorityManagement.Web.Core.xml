@@ -246,6 +246,17 @@
             <response code="204">删除成功</response>
             <response code="404">没有找到</response>
         </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.ChartController">
+            <summary>
+            图表控制器
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.ChartController.GetLogInfoAsync">
+            <summary>
+            日志统计饼状图
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.PageController.CreateUri``1(``0,System.String,Snow.AuthorityManagement.Core.Model.PaginationResourceUriType,System.Int32)">
             <summary>
             创建分页地址

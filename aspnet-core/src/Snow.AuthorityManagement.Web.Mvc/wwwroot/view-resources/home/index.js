@@ -29,6 +29,14 @@
 //    hideMethod: "fadeOut" //消失时的动画方式
 //};
 
+document.addEventListener('visibilitychange', function () { //浏览器切换事件
+    if (document.visibilityState == 'hidden') { //状态判断
+        //normal_title=document.title;
+        document.title = '我在这里等你哦(●ˇ∀ˇ●)';
+    } else {
+        document.title = 'Snow CMS';
+    }
+});
 // #region 导航栏辅助
 //删除index页面输出缓存
 $('.remove-cache').click(function () {
@@ -66,6 +74,7 @@ $('.close-all').click(function () {
 $(function () {
     changeNav();
     initData();
+    ChangeIFrame();
 });
 
 $(window).resize(function () {

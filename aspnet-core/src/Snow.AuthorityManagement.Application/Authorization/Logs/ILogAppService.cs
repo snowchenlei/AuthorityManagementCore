@@ -21,6 +21,12 @@ namespace Snow.AuthorityManagement.Application.Authorization.Logs
         Task<PagedResultDto<LogListDto>> GetLogPagedAsync(GetLogsInput input);
 
         /// <summary>
+        /// 获取统计饼状图
+        /// </summary>
+        /// <returns></returns>
+        Task<Dictionary<string, int>> GetCountPieAsync();
+
+        /// <summary>
         /// 删除日志
         /// </summary>
         /// <param name="id">编号</param>

@@ -19,7 +19,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Logs
     public class LogAppService : ILogAppService
     {
         private readonly IMapper _mapper;
-        private readonly ILambdaRepository<Log, long> _logRepository;
+        private readonly ILogRepository _logRepository;
 
         /// <summary>
         /// 构造
@@ -27,7 +27,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Logs
         /// <param name="mapper"></param>
         /// <param name="logRepository"></param>
         public LogAppService(IMapper mapper
-            , ILambdaRepository<Log, long> logRepository)
+            , ILogRepository logRepository)
         {
             _mapper = mapper;
             _logRepository = logRepository;
@@ -71,6 +71,15 @@ namespace Snow.AuthorityManagement.Application.Authorization.Logs
                 Items = _mapper.Map<List<LogListDto>>(result.Item1),
                 TotalCount = result.Item2
             };
+        }
+
+        /// <summary>
+        /// 获取统计饼状图
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Dictionary<string, int>> GetCountPieAsync()
+        {
+            return await _logRepository.GetAllLevelAndCount();
         }
 
         /// <summary>

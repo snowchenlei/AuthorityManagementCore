@@ -41,6 +41,12 @@
             <param name="input">过滤条件</param>
             <returns></returns>
         </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.ILogAppService.GetCountPieAsync">
+            <summary>
+            获取统计饼状图
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.ILogAppService.DeleteLogAsync(System.Int64)">
             <summary>
             删除日志
@@ -53,7 +59,7 @@
             审计日志
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.LogAppService.#ctor(AutoMapper.IMapper,Anc.Domain.Repositories.ILambdaRepository{Snow.AuthorityManagement.Core.Authorization.Logs.Log,System.Int64})">
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.LogAppService.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Core.Authorization.Logs.ILogRepository)">
             <summary>
             构造
             </summary>
@@ -65,6 +71,12 @@
             分页
             </summary>
             <param name="input">过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.LogAppService.GetCountPieAsync">
+            <summary>
+            获取统计饼状图
+            </summary>
             <returns></returns>
         </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Logs.LogAppService.DeleteLogAsync(System.Int64)">

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Anc.Core\Anc.Core.csproj" />
+    <ProjectReference Include="..\Anc.Extensions\Anc.Extensions.csproj" />
     <ProjectReference Include="..\Anc.Threading\Anc.Threading.csproj" />
   </ItemGroup>
 </Project>

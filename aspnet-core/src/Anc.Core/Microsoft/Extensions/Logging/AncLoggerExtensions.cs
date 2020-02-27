@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Microsoft.Extensions.Logging
 {
-    public static class AbpLoggerExtensions
+    public static class AncLoggerExtensions
     {
         public static void LogWithLevel(this ILogger logger, LogLevel logLevel, string message)
         {

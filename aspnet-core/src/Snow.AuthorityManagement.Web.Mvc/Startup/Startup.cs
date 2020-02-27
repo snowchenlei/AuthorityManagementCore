@@ -60,8 +60,6 @@ namespace Snow.AuthorityManagement.Web.Startup
 
             services.AddDistributedMemoryCache();
 
-            #region 线程内唯一
-
             //IServiceCollection services = new ServiceCollection();
             services.AddEntityFrameworkMySql()
                 .AddDbContext<AuthorityManagementContext>(options =>
@@ -69,9 +67,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                 string sqlConnection = Configuration.GetConnectionString(AuthorityManagementConsts.ConnectionStringName);
                 options.UseMySql(sqlConnection);
             }, ServiceLifetime.Scoped);
-
-            #endregion 线程内唯一
-
+            
             services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
             AddAutoMapper(services);
             //禁用 dotnet core 2.1的formbody等模式自动校验和转换

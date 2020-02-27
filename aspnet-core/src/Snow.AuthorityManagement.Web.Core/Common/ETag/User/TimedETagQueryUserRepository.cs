@@ -5,11 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Caching.Distributed;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core.Authorization.Roles.DomainService;
-using Snow.AuthorityManagement.Core.Authorization.Users.DomainService;
-using Snow.AuthorityManagement.Common.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Snow.AuthorityManagement.Web.Core.Common.ETag.User

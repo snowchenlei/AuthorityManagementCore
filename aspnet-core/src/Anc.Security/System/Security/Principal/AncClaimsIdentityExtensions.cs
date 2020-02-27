@@ -9,13 +9,14 @@ using JetBrains.Annotations;
 
 namespace System.Security.Principal
 {
-    public static class AbpClaimsIdentityExtensions
+    public static class AncClaimsIdentityExtensions
     {
-        public static int? FindUserId([NotNull] this ClaimsPrincipal principal)
+        public static int? FindUserId(this ClaimsPrincipal principal)
         {
             Check.NotNull(principal, nameof(principal));
 
-            var userIdOrNull = principal.Claims?.FirstOrDefault(c => c.Type == AncClaimTypes.UserId);
+            var userIdOrNull = principal.FirstOrDefault(c => c.Type == AncClaimTypes.UserId);
+
             if (userIdOrNull == null || userIdOrNull.Value.IsNullOrWhiteSpace())
             {
                 return null;
@@ -30,7 +31,7 @@ namespace System.Security.Principal
 
             var claimsIdentity = identity as ClaimsIdentity;
 
-            var userIdOrNull = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == AncClaimTypes.UserId);
+            var userIdOrNull = claimsIdentity.FirstOrDefault(c => c.Type == AncClaimTypes.UserId);
             if (userIdOrNull == null || userIdOrNull.Value.IsNullOrWhiteSpace())
             {
                 return null;
@@ -43,7 +44,7 @@ namespace System.Security.Principal
         {
             Check.NotNull(principal, nameof(principal));
 
-            var tenantIdOrNull = principal.Claims?.FirstOrDefault(c => c.Type == AncClaimTypes.TenantId);
+            var tenantIdOrNull = principal.FirstOrDefault(c => c.Type == AncClaimTypes.TenantId);
             if (tenantIdOrNull == null || tenantIdOrNull.Value.IsNullOrWhiteSpace())
             {
                 return null;
@@ -58,7 +59,7 @@ namespace System.Security.Principal
 
             var claimsIdentity = identity as ClaimsIdentity;
 
-            var tenantIdOrNull = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == AncClaimTypes.TenantId);
+            var tenantIdOrNull = claimsIdentity.FirstOrDefault(c => c.Type == AncClaimTypes.TenantId);
             if (tenantIdOrNull == null || tenantIdOrNull.Value.IsNullOrWhiteSpace())
             {
                 return null;
@@ -71,7 +72,7 @@ namespace System.Security.Principal
         {
             Check.NotNull(principal, nameof(principal));
 
-            var clientIdOrNull = principal.Claims?.FirstOrDefault(c => c.Type == AncClaimTypes.ClientId);
+            var clientIdOrNull = principal.FirstOrDefault(c => c.Type == AncClaimTypes.ClientId);
             if (clientIdOrNull == null || clientIdOrNull.Value.IsNullOrWhiteSpace())
             {
                 return null;
@@ -86,7 +87,7 @@ namespace System.Security.Principal
 
             var claimsIdentity = identity as ClaimsIdentity;
 
-            var clientIdOrNull = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == AncClaimTypes.ClientId);
+            var clientIdOrNull = claimsIdentity.FirstOrDefault(c => c.Type == AncClaimTypes.ClientId);
             if (clientIdOrNull == null || clientIdOrNull.Value.IsNullOrWhiteSpace())
             {
                 return null;
@@ -114,7 +115,7 @@ namespace System.Security.Principal
 
             var claimsIdentity = identity as ClaimsIdentity;
 
-            var editionIdOrNull = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == AncClaimTypes.EditionId);
+            var editionIdOrNull = claimsIdentity.FirstOrDefault(c => c.Type == AncClaimTypes.EditionId);
             if (editionIdOrNull == null || editionIdOrNull.Value.IsNullOrWhiteSpace())
             {
                 return null;

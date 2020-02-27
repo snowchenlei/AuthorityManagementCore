@@ -6,5 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Anc.Core\Anc.Core.csproj" />
+    <ProjectReference Include="..\Anc.Extensions\Anc.Extensions.csproj" />
   </ItemGroup>
 </Project>

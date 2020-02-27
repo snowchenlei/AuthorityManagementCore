@@ -160,3 +160,5 @@
 /aspnet-core/src/Snow.AuthorityManagement.Repository/bin/Debug/netcoreapp3.1
 /aspnet-core/src/Snow.AuthorityManagement.Web.Core/bin/Debug/netcoreapp3.1
 /aspnet-core/src/Snow.AuthorityManagement.Web.Mvc/bin/Debug/netcoreapp3.1
+/aspnet-core/Anc.Extensions/bin/Debug/netcoreapp3.1
+/aspnet-core/Anc.Extensions/obj

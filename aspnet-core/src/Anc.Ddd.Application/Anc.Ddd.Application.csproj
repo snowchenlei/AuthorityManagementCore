@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Anc\Application\Services\Dto\NameValueDto.cs" />
+    <Compile Remove="Services\Dto\NameValueDto.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,13 +4,11 @@ using CacheCow.Server.Core.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using Snow.AuthorityManagement.Common.Extensions;
 using Snow.AuthorityManagement.Application.Authorization.Users;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Core;
 using System;
 using System.Threading.Tasks;
-using CacheManager.Core;
 
 namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
 {
@@ -30,7 +28,6 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// 构造
         /// </summary>
         /// <param name="mapper"></param>
-        /// <param name="cacheManager"></param>
         /// <param name="userService"></param>
         /// <param name="cache"></param>
         public UserController(IMapper mapper

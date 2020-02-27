@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Anc;
@@ -12,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Snow.AuthorityManagement.Application.Authorization.Users;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
-using Snow.AuthorityManagement.Common.Extensions;
 using Snow.AuthorityManagement.Web.Models.Account;
 
 namespace Snow.AuthorityManagement.Web.Controllers

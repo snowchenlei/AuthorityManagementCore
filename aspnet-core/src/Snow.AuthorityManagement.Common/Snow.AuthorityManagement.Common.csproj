@@ -9,18 +9,21 @@
     <Compile Remove="Authorization\**" />
     <Compile Remove="Caching\**" />
     <Compile Remove="Castle\**" />
+    <Compile Remove="Extensions\**" />
     <Compile Remove="Http\Cookie\**" />
     <Compile Remove="Logger\**" />
     <Compile Remove="UAParser\**" />
     <EmbeddedResource Remove="Authorization\**" />
     <EmbeddedResource Remove="Caching\**" />
     <EmbeddedResource Remove="Castle\**" />
+    <EmbeddedResource Remove="Extensions\**" />
     <EmbeddedResource Remove="Http\Cookie\**" />
     <EmbeddedResource Remove="Logger\**" />
     <EmbeddedResource Remove="UAParser\**" />
     <None Remove="Authorization\**" />
     <None Remove="Caching\**" />
     <None Remove="Castle\**" />
+    <None Remove="Extensions\**" />
     <None Remove="Http\Cookie\**" />
     <None Remove="Logger\**" />
     <None Remove="UAParser\**" />
@@ -28,8 +31,6 @@
 
   <ItemGroup>
     <Compile Remove="Conversion\JilFormatter.cs" />
-    <Compile Remove="Extensions\CollectionExtensions.cs" />
-    <Compile Remove="Extensions\DictionaryExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

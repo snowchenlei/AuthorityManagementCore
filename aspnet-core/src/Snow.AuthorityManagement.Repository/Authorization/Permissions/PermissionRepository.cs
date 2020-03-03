@@ -46,15 +46,5 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Permissions
             await InsertAsync(permissions);
             return true;
         }
-
-        /// <summary>
-        /// 获取角色权限
-        /// </summary>
-        /// <param name="roleId">角色Id</param>
-        /// <returns></returns>
-        public Task<List<AncPermission>> GetPermissionsByRoleNameAsync(string roleName)
-        {
-            return GetListAsync(AncConsts.PermissionRoleProviderName, roleName);
-        }
     }
 }

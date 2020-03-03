@@ -41,8 +41,7 @@ document.addEventListener('visibilitychange', function () { //浏览器切换事
 //删除index页面输出缓存
 $('.remove-cache').click(function () {
     $.get('/api/cache', function (data) {
-        debugger
-        if (data.State == 1) {
+        if (data.State === 1) {
             toastr.success(data.Message);
         } else {
             toastr.error(data.Message);
@@ -113,10 +112,8 @@ function initData() {
         type: "get",
         url: 'api/permissions',
         success: function (result) {
-            if (result.status === 200 && result.data) {
-                localStorage.removeItem('permissions');
-                localStorage.setItem('permissions', result.data);
-            }
+            localStorage.removeItem('permissions');
+            localStorage.setItem('permissions', result.data);
         }, error: function () {
         }
     });

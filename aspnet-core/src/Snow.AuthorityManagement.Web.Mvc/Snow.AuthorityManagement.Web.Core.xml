@@ -9,20 +9,39 @@
             User响应Chche Key
             </summary>
         </member>
-        <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.UserLastResponseCache">
-            <summary>
-            User响应Chche Key
-            </summary>
-        </member>
         <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.RoleResponseCache">
             <summary>
             Role响应Chche Key
             </summary>
         </member>
-        <member name="F:Snow.AuthorityManagement.Web.Core.AuthorityManagementConsts.RoleLastResponseCache">
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController">
             <summary>
-            User响应Chche Key
+            日志
             </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Logs.ILogAppService)">
+            <summary>
+            构造
+            </summary>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput)">
+            <summary>
+            分页获取
+            </summary>
+            <remarks>GET: api/logs</remarks>
+            <param name="input">分页参数</param>
+            <response code="200">获取成功</response>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <remarks>DELETE: api/logs/5</remarks>
+            <param name="id">主键</param>
+            <response code="204">删除成功</response>
+            <response code="404">没有找到</response>
         </member>
         <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController">
             <summary>
@@ -36,7 +55,7 @@
             <param name="mapper"></param>
             <param name="menuService"></param>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenuInput)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.MenuController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Menus.Dto.GetMenusInput)">
             <summary>
             分页获取
             </summary>
@@ -104,14 +123,15 @@
             角色
             </summary>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.#ctor(AutoMapper.IMapper,Snow.AuthorityManagement.Application.Authorization.Roles.IRoleAppService,Microsoft.Extensions.Caching.Distributed.IDistributedCache)">
             <summary>
             构造
             </summary>
             <param name="mapper"></param>
             <param name="roleService"></param>
+            <param name="cache"></param>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput)">
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRolesInput)">
             <summary>
             分页获取
             </summary>
@@ -215,12 +235,6 @@
             <response code="400">请求参数有误</response>
             <returns></returns>
         </member>
-        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.CacheLastModificationTimeAsync(System.Nullable{System.DateTime})">
-            <summary>
-            缓存最后修改时间
-            </summary>
-            <param name="lastModified"></param>
-        </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.UserController.Delete(System.Int32)">
             <summary>
             删除
@@ -229,6 +243,17 @@
             <param name="id">主键</param>
             <response code="204">删除成功</response>
             <response code="404">没有找到</response>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.ChartController">
+            <summary>
+            图表控制器
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.ChartController.GetLogInfoAsync">
+            <summary>
+            日志统计饼状图
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.PageController.CreateUri``1(``0,System.String,Snow.AuthorityManagement.Core.Model.PaginationResourceUriType,System.Int32)">
             <summary>

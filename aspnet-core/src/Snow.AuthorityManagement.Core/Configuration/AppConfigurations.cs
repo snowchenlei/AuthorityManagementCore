@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
-using Anc.Reflection.Extensions;
 using Microsoft.Extensions.Configuration;
 
 namespace Snow.AuthorityManagement.Core.Configuration

@@ -6,6 +6,7 @@ namespace Snow.AuthorityManagement.Core
 {
     public class AuthorityManagementPermissionDefinitionProvider : PermissionDefinitionProvider
     {
+
         public override void Define(IPermissionDefinitionContext context)
         {
             var pages = context.GetPermissionOrNull(PermissionNames.Pages) ??

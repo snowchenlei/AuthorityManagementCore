@@ -33,7 +33,6 @@
 //删除index页面输出缓存
 $('.remove-cache').click(function () {
     $.get('/api/cache', function (data) {
-        debugger
         if (data.State == 1) {
             toastr.success(data.Message);
         } else {
@@ -102,12 +101,10 @@ function getHeight() {
 function initData() {
     $.ajax({
         type: "get",
-        url: '/Permission/GetAllPermission',
+        url: 'api/permissions',
         success: function (result) {
-            if (result.status === 200 && result.data) {
-                localStorage.removeItem('permissions');
-                localStorage.setItem('permissions', result.data);
-            }
+            localStorage.removeItem('permissions');
+            localStorage.setItem('permissions', result);
         }, error: function () {
         }
     });

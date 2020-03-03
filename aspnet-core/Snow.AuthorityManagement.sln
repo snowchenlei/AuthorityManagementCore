@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc.Ddd.Domain", "src\Anc.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc.Ddd.Application", "src\Anc.Ddd.Application\Anc.Ddd.Application.csproj", "{4D648FC4-AD40-4950-A00F-2FA2793B929B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anc.Extensions", "src\Anc.Extensions\Anc.Extensions.csproj", "{E92181BF-F03A-4555-A83F-30B1A708E1CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anc.Extensions", "src\Anc.Extensions\Anc.Extensions.csproj", "{E92181BF-F03A-4555-A83F-30B1A708E1CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

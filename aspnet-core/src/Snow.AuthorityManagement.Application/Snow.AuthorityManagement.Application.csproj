@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Authorization\Permissions\PermissionAppService.cs" />
     <Compile Remove="Dto\PagedAndSortedInputDto.cs" />
     <Compile Remove="Dto\PagedResultDto.cs" />
   </ItemGroup>

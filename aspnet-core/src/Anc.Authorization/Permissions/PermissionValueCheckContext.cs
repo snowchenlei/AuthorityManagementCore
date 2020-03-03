@@ -11,15 +11,13 @@ namespace Anc.Authorization.Permissions
     /// </summary>
     public class PermissionValueCheckContext
     {
-        [NotNull]
         public PermissionDefinition Permission { get; }
 
-        [CanBeNull]
         public ClaimsPrincipal Principal { get; }
 
         public PermissionValueCheckContext(
-            [NotNull] PermissionDefinition permission,
-            [CanBeNull] ClaimsPrincipal principal)
+            PermissionDefinition permission,
+            ClaimsPrincipal principal)
         {
             Check.NotNull(permission, nameof(permission));
 

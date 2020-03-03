@@ -17,6 +17,8 @@ namespace Snow.AuthorityManagement.Web.Configuration
     {
         protected override void Load(ContainerBuilder builder)
         {
+            // TODO:自动依赖注入
+
             var application = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Application"));
             var mvc = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.Web.Mvc"));
             var entityFrameworkCore = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Snow.AuthorityManagement.EntityFrameworkCore"));

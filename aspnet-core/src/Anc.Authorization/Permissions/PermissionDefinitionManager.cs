@@ -18,19 +18,13 @@ namespace Anc.Authorization.Permissions
         protected IDictionary<string, PermissionDefinition> PermissionDefinitions => _lazyPermissionDefinitions.Value;
         private readonly Lazy<Dictionary<string, PermissionDefinition>> _lazyPermissionDefinitions;
 
-        protected AncPermissionOptions Options { get; }
 
-        private readonly IServiceProvider _serviceProvider;
-        private readonly IEnumerable<IPermissionDefinitionProvider> PermissionDefinitionProviders;
+        private readonly IEnumerable<IPermissionDefinitionProvider> _permissionDefinitionProviders;
 
         public PermissionDefinitionManager(
-            IOptions<AncPermissionOptions> options,
-            IServiceProvider serviceProvider,
             IEnumerable<IPermissionDefinitionProvider> permissionDefinitionProviders)
         {
-            _serviceProvider = serviceProvider;
-            PermissionDefinitionProviders = permissionDefinitionProviders;
-            Options = options.Value;
+            _permissionDefinitionProviders = permissionDefinitionProviders;
 
             _lazyPermissionDefinitions = new Lazy<Dictionary<string, PermissionDefinition>>(
                 CreatePermissionDefinitions,
@@ -55,10 +49,17 @@ namespace Anc.Authorization.Permissions
             return permission;
         }
 
+        /// <summary>
+        /// 获取或null
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public virtual PermissionDefinition GetOrNull(string name)
         {
             Check.NotNull(name, nameof(name));
-            if (PermissionDefinitions.GetOrDefault(name) != null)
+
+            PermissionDefinition result = PermissionDefinitions.GetOrDefault(name);
+            if (result != null)
             {
                 return PermissionDefinitions.GetOrDefault(name);
             }
@@ -70,6 +71,12 @@ namespace Anc.Authorization.Permissions
             return PermissionDefinitions.GetOrDefault(name);
         }
 
+        /// <summary>
+        /// 递归查找
+        /// </summary>
+        /// <param name="permissionDefinitions"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private PermissionDefinition GetPermissionDefinition(IEnumerable<PermissionDefinition> permissionDefinitions, string name)
         {
             foreach (PermissionDefinition item in permissionDefinitions)
@@ -128,7 +135,7 @@ namespace Anc.Authorization.Permissions
         {
             var context = new PermissionDefinitionContext();
 
-            foreach (var provider in PermissionDefinitionProviders)
+            foreach (var provider in _permissionDefinitionProviders)
             {
                 provider.Define(context);
             }

@@ -179,6 +179,37 @@
             构造
             </summary>
         </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Permissions.IPermissionAppService">
+            <summary>
+            权限应用服务
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Permissions.IPermissionAppService.GetUserPermissionsAsync(System.Int32)">
+            <summary>
+            获取用户所有权限
+            </summary>
+            <param name="userId">用户Id</param>
+            <returns></returns>
+        </member>
+        <member name="T:Snow.AuthorityManagement.Application.Authorization.Permissions.PermissionAppService">
+            <summary>
+            权限服务
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Permissions.PermissionAppService.GetUserPermissionsAsync(System.Int32)">
+            <summary>
+            获取用户所有权限
+            </summary>
+            <param name="userId">用户Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Application.Authorization.Permissions.PermissionAppService.GetRoleNamesByUserAsync(System.Int32)">
+            <summary>
+            获取用户角色名
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
         <member name="M:Snow.AuthorityManagement.Application.Authorization.Roles.Dto.GetRoleInput.#ctor">
             <summary>
             构造

@@ -13,24 +13,18 @@ namespace Anc.Authorization.Permissions
     public class PermissionChecker : IPermissionChecker, ITransientDependency
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IEnumerable<IPermissionValueProvider> _permissionValueProviders;
 
         protected IPermissionDefinitionManager PermissionDefinitionManager { get; }
-        protected IPermissionValueProviderManager PermissionValueProviderManager { get; }
         private ICurrentPrincipalAccessor PrincipalAccessor { get; }
 
         public PermissionChecker(ICurrentPrincipalAccessor principalAccessor
             , IPermissionDefinitionManager permissionDefinitionManager
-            , IPermissionValueProviderManager permissionValueProviderManager
             , IServiceProvider serviceProvider
-            , IEnumerable<IPermissionValueProvider> permissionValueProviders
             )
         {
             PrincipalAccessor = principalAccessor;
             PermissionDefinitionManager = permissionDefinitionManager;
-            PermissionValueProviderManager = permissionValueProviderManager;
-            this._serviceProvider = serviceProvider;
-            _permissionValueProviders = permissionValueProviders;
+            _serviceProvider = serviceProvider;
         }
 
         public Task<bool> IsGrantedAsync([NotNull] string name)
@@ -53,12 +47,9 @@ namespace Anc.Authorization.Permissions
             var isGranted = false;
             var context = new PermissionValueCheckContext(permission, claimsPrincipal);
 
-            // TODO:单例类解析服务会导致EfCore线程问题。https://docs.microsoft.com/zh-cn/ef/core/miscellaneous/configuring-dbcontext#avoiding-dbcontext-threading-issues
-            // 为什么使用直接注入的_permissionValueProviders也是不行的 foreach (var provider in PermissionValueProviderManager.ValueProviders)
             using (var scope = _serviceProvider.CreateScope())
             {
                 foreach (var provider in scope.ServiceProvider.GetServices<IPermissionValueProvider>())
-                //foreach (var provider in _permissionValueProviders)
                 {
                     if (context.Permission.Providers.Any() &&
                         !context.Permission.Providers.Contains(provider.Name))

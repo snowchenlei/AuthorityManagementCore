@@ -8,12 +8,16 @@ using Snow.AuthorityManagement.Core.Authorization.Permissions;
 
 namespace Snow.AuthorityManagement.Application.Authorization.Permissions
 {
+    /// <summary>
+    /// 权限应用服务
+    /// </summary>
     public interface IPermissionAppService : IApplicationService
     {
-        Task<bool> IsGrantedAsync(string permissionName, int userId);
-
-        Task<List<AncPermission>> GetAllPermissionsAsync(int userId);
-
-        Task<List<AncPermission>> GetPermissionsByRoleIdAsync(int roleId);
+        /// <summary>
+        /// 获取用户所有权限
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <returns></returns>
+        Task<List<AncPermission>> GetUserPermissionsAsync(int userId);
     }
 }

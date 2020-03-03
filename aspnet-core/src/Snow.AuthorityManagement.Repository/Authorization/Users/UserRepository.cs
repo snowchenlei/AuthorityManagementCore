@@ -20,6 +20,7 @@ namespace Snow.AuthorityManagement.Repository.Authorization.Users
             return FirstOrDefaultAsync(u => u.UserName == userName);
         }
 
+
         public Task<bool> IsExistsByUserNameAsync(string userName)
         {
             return ExistsAsync(a => a.UserName == userName);

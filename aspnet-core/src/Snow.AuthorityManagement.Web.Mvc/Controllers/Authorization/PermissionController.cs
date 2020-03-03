@@ -3,33 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Anc.Authorization;
-using Anc.Runtime.Session;
+using Anc.Users;
 using Microsoft.AspNetCore.Mvc;
 using Snow.AuthorityManagement.Application.Authorization.Permissions;
 using Snow.AuthorityManagement.Core;
-using Snow.AuthorityManagement.Core.Authorization.Permissions;
-using Snow.AuthorityManagement.Core.Exception;
 
 namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 {
     public class PermissionController : BaseController
     {
         private readonly IPermissionAppService _permissionService;
-        private readonly IAncSession _ancSession;
+        private readonly ICurrentUser _user;
 
-        public PermissionController(IPermissionAppService permissionService, IAncSession ancSession)
+        public PermissionController(IPermissionAppService permissionService, ICurrentUser user)
         {
             _permissionService = permissionService;
-            _ancSession = ancSession;
+            _user = user;
         }
 
         public async Task<JsonResult> IsGrantedAsync(string permissionName)
         {
-            if (!_ancSession.UserId.HasValue)
+            if (!_user.Id.HasValue)
             {
                 throw new AncAuthorizationException("请登陆");
             }
-            bool have = await _permissionService.IsGrantedAsync(permissionName, _ancSession.UserId.Value);
+            bool have = await _permissionService.IsGrantedAsync(permissionName, _user.GetId());
             return Json(new Result<bool>()
             {
                 Status = Status.Success,
@@ -39,7 +37,7 @@ namespace Snow.AuthorityManagement.Web.Controllers.Authorization
 
         public async Task<JsonResult> GetAllPermission()
         {
-            List<Permission> permissions = await _permissionService.GetAllPermissionsAsync(_ancSession.UserId.Value);
+            var permissions = await _permissionService.GetAllPermissionsAsync(_user.GetId());
             return Json(new Result<object>
             {
                 Status = Status.Success,

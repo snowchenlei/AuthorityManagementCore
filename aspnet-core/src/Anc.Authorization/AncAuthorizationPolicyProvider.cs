@@ -24,12 +24,21 @@ namespace Anc.Authorization
             IPermissionDefinitionManager permissionDefinitionManager)
             : base(options)
         {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
             _permissionDefinitionManager = permissionDefinitionManager;
             _options = options.Value;
         }
 
+        /// <summary>
+        /// 获取权限信息
+        /// </summary>
+        /// <param name="policyName"></param>
+        /// <returns></returns>
         public override async Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
-        {
+        { 
             var policy = await base.GetPolicyAsync(policyName);
             if (policy != null)
             {

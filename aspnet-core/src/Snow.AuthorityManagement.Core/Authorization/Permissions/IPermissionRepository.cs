@@ -11,6 +11,21 @@ namespace Snow.AuthorityManagement.Core.Authorization.Permissions
     public interface IPermissionRepository : IAncPermissionRepository
     {
         /// <summary>
+        /// 获取角色权限
+        /// </summary>
+        /// <param name="roleName">角色名称</param>
+        /// <returns></returns>
+        Task<List<AncPermission>> GetPermissionsByRoleNameAsync(string roleName);
+
+
+        /// <summary>
+        /// 获取用户权限
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <returns></returns>
+        Task<List<AncPermission>> GetPermissionsByUserIdAsync(string userId);
+
+        /// <summary>
         /// 设置角色权限
         /// </summary>
         /// <param name="roleName">角色名称</param>
@@ -18,11 +33,6 @@ namespace Snow.AuthorityManagement.Core.Authorization.Permissions
         /// <returns></returns>
         Task<bool> SetPermissionsByRoleNameAsync(string roleName, IEnumerable<AncPermission> permissions);
 
-        /// <summary>
-        /// 获取角色权限
-        /// </summary>
-        /// <param name="roleId">角色Id</param>
-        /// <returns></returns>
-        Task<List<AncPermission>> GetPermissionsByRoleNameAsync(string roleName);
+
     }
 }

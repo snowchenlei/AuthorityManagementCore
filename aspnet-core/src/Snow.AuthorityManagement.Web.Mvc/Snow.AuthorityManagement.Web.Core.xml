@@ -86,6 +86,19 @@
             <response code="204">删除成功</response>
             <response code="404">没有找到</response>
         </member>
+        <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.PermissionController">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.PermissionController.GetAll">
+            <summary>
+            分页获取
+            </summary>
+            <remarks>GET: api/menus</remarks>
+            <response code="200">获取成功</response>
+            <returns></returns>
+        </member>
         <member name="T:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.RoleController">
             <summary>
             角色

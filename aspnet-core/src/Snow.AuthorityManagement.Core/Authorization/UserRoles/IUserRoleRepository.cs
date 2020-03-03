@@ -9,5 +9,7 @@ namespace Snow.AuthorityManagement.Core.Authorization.UserRoles
     public interface IUserRoleRepository : IRepository<UserRole>
     {
         Task<List<UserRole>> GetUserRolesByUserIdAsync(int userId);
+
+        Task<List<string>> GetRoleNamesByUserIdAsync(int userId);
     }
 }

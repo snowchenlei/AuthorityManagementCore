@@ -20,5 +20,13 @@ namespace Snow.AuthorityManagement.Repository.Authorization.UserRoles
         {
             return GetAll().Where(a => a.UserID == userId).ToListAsync();
         }
+
+        public Task<List<string>> GetRoleNamesByUserIdAsync(int userId)
+        {
+            return GetAllIncluding(a=>a.Role)
+                .Where(a => a.UserID == userId)
+                .Select(r=>r.Role.Name)
+                .ToListAsync();
+        }
     }
 }

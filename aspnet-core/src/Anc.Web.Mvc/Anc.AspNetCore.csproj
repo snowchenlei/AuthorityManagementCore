@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Anc.Auditing\Anc.Auditing.csproj" />
+    <ProjectReference Include="..\Anc.Authorization\Anc.Authorization.csproj" />
     <ProjectReference Include="..\Anc.Security\Anc.Security.csproj" />
     <ProjectReference Include="..\Anc.Security\Anc.Security.csproj" />
   </ItemGroup>

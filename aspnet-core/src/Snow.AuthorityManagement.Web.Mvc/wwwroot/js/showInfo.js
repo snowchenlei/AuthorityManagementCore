@@ -20,8 +20,11 @@ function showText(e) {
     content += '<h4 class="modal-title" id="modelTitle">展示文本</h4>';
     content += '</div>';
     content += '<div class="modal-body form-horizontal"><pre><code id="json">' + val + '</code></pre></div>';
-    $('#modifyContent').html(content);
-    $('#modifyModal').modal();
+    var dialog = bootbox.dialog({
+        size: 'large',
+        title: '展示文本',
+        message: `<div class="modal-body form-horizontal"><pre><code id="json">${val}</code></pre></div>`
+    });
 }
 function showLocation(val) {
     $.get("/IP/Index", { ip: val }, function (data) {

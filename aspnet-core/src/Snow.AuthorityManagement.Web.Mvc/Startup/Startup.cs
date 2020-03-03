@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.Loader;
-using Anc.Application.Services.Dto;
 using Anc.Authorization;
-using Anc.Authorization.Permissions;
+using AspNetCoreRateLimit;
 using Autofac;
 using AutoMapper;
-using CacheCow.Server.Core.Mvc;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
@@ -30,10 +30,10 @@ using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
 using Snow.AuthorityManagement.Core;
 using Snow.AuthorityManagement.EntityFrameworkCore;
 using Snow.AuthorityManagement.Web.Configuration;
-using Snow.AuthorityManagement.Web.Core.Common.ETag.User;
 using Snow.AuthorityManagement.Web.Library;
 using Snow.AuthorityManagement.Web.Library.Middleware;
 using Snow.AuthorityManagement.Web.Startup.OnceTask;
+using StackExchange.Profiling.Storage;
 
 namespace Snow.AuthorityManagement.Web.Startup
 {
@@ -57,8 +57,8 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddDistributedMemoryCache();
+            // 需要在EF和MiniProfiler之前使用，否则会报错
+            services.AddMemoryCache();
 
             //IServiceCollection services = new ServiceCollection();
             services.AddEntityFrameworkMySql()
@@ -92,9 +92,44 @@ namespace Snow.AuthorityManagement.Web.Startup
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
             });
-            AddCacheCow(services);
 
+            services.AddHealthChecks()
+                .AddDbContextCheck<AuthorityManagementContext>();
+            AddRateLimit(services);
+#if DEBUG
+            AddMiniProfiler(services);
+#endif
             AutoAddDefinitionProviders(services);
+        }
+
+        private void AddMiniProfiler(IServiceCollection services)
+        {
+            services.AddMiniProfiler(options =>
+            {
+            }).AddEntityFramework();
+        }
+
+        private void AddRateLimit(IServiceCollection services)
+        {
+            // needed to load configuration from appsettings.json
+            services.AddOptions();
+
+            //load general configuration from appsettings.json
+            services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting"));
+
+            //load ip rules from appsettings.json
+            services.Configure<IpRateLimitPolicies>(Configuration.GetSection("IpRateLimitPolicies"));
+
+            // inject counter and rules stores
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+
+            // https://github.com/aspnet/Hosting/issues/793 the IHttpContextAccessor service is not
+            // registered by default. the clientId/clientIp resolvers use it.
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // configuration (resolvers, counter key builders)
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
         }
 
         private void AddMvc(IServiceCollection services)
@@ -106,6 +141,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                 //options.Filters.Add(typeof(CustomerExceptionAttribute));
                 //options.Filters.Add(typeof(AncAuthorizeFilter));
                 //options.Filters.Add(typeof(AncAuditActionFilter));
+                //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()); // XSRF/CSRF认证
                 options.Filters.Add(typeof(ModelStateInvalidFilter));// 自定义模型验证(ApiController无需此语句，可自动验证)
 
                 #region 输出缓存配置
@@ -123,7 +159,6 @@ namespace Snow.AuthorityManagement.Web.Startup
 #else
                         Duration = 120,
 #endif
-
                         VaryByHeader = "User-Agent"
                     });
                 options.CacheProfiles.Add("Never",
@@ -203,19 +238,7 @@ namespace Snow.AuthorityManagement.Web.Startup
             services.AddTransient<IValidator<RoleEditDto>, RoleEditValidator>();
             services.AddTransient<IValidator<CreateOrUpdateRole>, CreateOrUpdateRoleValidator>();
             services.AddTransient<IValidator<MenuEditDto>, MenuEditValidator>();
-        }
-
-        /// <summary>
-        /// 注册缓存
-        /// </summary>
-        /// <param name="services"></param>
-        private void AddCacheCow(IServiceCollection services)
-        {
-            services.AddHttpCachingMvc();
-            services.AddQueryProviderAndExtractorForViewModelMvc<GetUserForEditOutput, TimedETagQueryUserRepository, UserETagExtractor>(false);
-            services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<UserListDto>, TimedETagQueryUserRepository, UserCollectionETagExtractor>(false);
-            //services.AddQueryProviderAndExtractorForViewModelMvc<GetRoleForEditOutput, TimedETagQueryRoleRepository, RoleETagExtractor>(false);
-            //services.AddQueryProviderAndExtractorForViewModelMvc<PagedResultDto<RoleListDto>, TimedETagQueryRoleRepository, RoleCollectionETagExtractor>(false);
+            services.AddTransient<IValidator<CreateOrUpdateMenu>, CreateOrUpdateMenuValidator>();
         }
 
         private void AutoAddDefinitionProviders(IServiceCollection services)
@@ -295,6 +318,10 @@ namespace Snow.AuthorityManagement.Web.Startup
 
             app.UseCustomerExceptionHandler();
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
+            app.UseIpRateLimiting();
+#if DEBUG
+            app.UseMiniProfiler();
+#endif
             //使用静态文件
             app.UseStaticFiles();
             app.UseRouting();
@@ -303,12 +330,11 @@ namespace Snow.AuthorityManagement.Web.Startup
             app.UseAuthorization();
             //Session
             app.UseSession();
-            //app.UseCookiePolicy();//添加后会导致Session失效
             app.UseHttpsRedirection();
-            loggerFactory.AddLog4Net();
 
             app.UseEndpoints(routes =>
             {
+                routes.MapHealthChecks("/health");
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }

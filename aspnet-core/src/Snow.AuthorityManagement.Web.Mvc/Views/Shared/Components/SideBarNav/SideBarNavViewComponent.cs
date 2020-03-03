@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Anc.Application.Navigation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Snow.AuthorityManagement.Web.Views.Shared.Components.SideBarNav
 {
@@ -8,7 +9,8 @@ namespace Snow.AuthorityManagement.Web.Views.Shared.Components.SideBarNav
     {
         private readonly IUserNavigationManager _userNavigationManager;
 
-        public SideBarNavViewComponent(IUserNavigationManager userNavigationManager)
+        public SideBarNavViewComponent(
+             IUserNavigationManager userNavigationManager)
         {
             _userNavigationManager = userNavigationManager;
         }

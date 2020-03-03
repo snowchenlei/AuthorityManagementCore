@@ -9,14 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Common\ETag\Role\**" />
-    <EmbeddedResource Remove="Common\ETag\Role\**" />
-    <None Remove="Common\ETag\Role\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Configuration\DefaultModule.cs" />
-    <Compile Remove="Controllers\Authorization\AuditLogController.cs" />
+    <Compile Remove="Controllers\SecurityController.cs" />
     <Compile Remove="Controllers\XsrfToken.cs" />
     <Compile Remove="Startup\NavigationProvider.cs" />
   </ItemGroup>
@@ -29,11 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\" />
     <Folder Include="Configuration\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CacheCow.Server.Core.Mvc" Version="2.5.8" />
-    <PackageReference Include="CacheManager.Core" Version="1.2.0" />
   </ItemGroup>
 </Project>

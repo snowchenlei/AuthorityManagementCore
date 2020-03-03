@@ -24,6 +24,7 @@
     @RenderBody()
 
     <environment include="Development">
+        <mini-profiler />
         <!-- jquery -->
         <script src="~/lib/jquery/jquery.js"></script>
         <!-- jquery-validate -->
@@ -78,6 +79,9 @@
         <script src="~/js/frame-common.js"></script>
         <script src="~/js/main.js"></script>
     </environment>
+    <script type="text/javascript">
+        title = '@ViewBag.Title';
+    </script>
     @RenderSection("scripts", false)
 </body>
 </html>

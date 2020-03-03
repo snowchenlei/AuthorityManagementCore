@@ -4,6 +4,8 @@ using Snow.AuthorityManagement.Application.Authorization.Menus.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Menus.Validators;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Validators;
+using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
+using Snow.AuthorityManagement.Application.Authorization.Roles.Validators;
 
 namespace Snow.AuthorityManagement.Web.Core.Startup
 {
@@ -16,8 +18,11 @@ namespace Snow.AuthorityManagement.Web.Core.Startup
         public static void AddFluentValidation(this IServiceCollection services)
         {
             services.AddTransient<IValidator<UserEditDto>, UserEditValidator>();
-            services.AddTransient<IValidator<MenuEditDto>, MenuEditValidator>();
             services.AddTransient<IValidator<CreateOrUpdateUser>, CreateOrUpdateUserValidator>();
+            services.AddTransient<IValidator<RoleEditDto>, RoleEditValidator>();
+            services.AddTransient<IValidator<CreateOrUpdateRole>, CreateOrUpdateRoleValidator>();
+            services.AddTransient<IValidator<MenuEditDto>, MenuEditValidator>();
+            services.AddTransient<IValidator<CreateOrUpdateMenu>, CreateOrUpdateMenuValidator>();
         }
     }
 }

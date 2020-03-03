@@ -1,6 +1,7 @@
 ﻿using Anc.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Snow.AuthorityManagement.Core.Authorization.AuditLogs;
+using Snow.AuthorityManagement.Core.Authorization.Logs;
 using Snow.AuthorityManagement.Core.Authorization.Menus;
 using Snow.AuthorityManagement.Core.Authorization.Permissions;
 using Snow.AuthorityManagement.Core.Authorization.Roles;
@@ -23,6 +24,7 @@ namespace Snow.AuthorityManagement.EntityFrameworkCore
         public virtual DbSet<AncPermission> Permission { get; set; }
 
         public virtual DbSet<AuditLog> AuditLog { get; set; }
+        public DbSet<Log> Log { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +38,10 @@ namespace Snow.AuthorityManagement.EntityFrameworkCore
             //https://docs.microsoft.com/zh-cn/ef/core/modeling/relationships#other-relationship-patterns
             //modelBuilder.Entity<UserRole>()
             //    .HasKey(t => new { t.UserID, t.RoleID });
-
+            modelBuilder.Entity<Log>()
+                .ToTable("Logs")
+                .Property(l => l.CreationTime)
+                .HasColumnName("_ts");
             modelBuilder.Entity<AncPermission>()
                 .ToTable("Permission");
             modelBuilder.Entity<UserRole>()

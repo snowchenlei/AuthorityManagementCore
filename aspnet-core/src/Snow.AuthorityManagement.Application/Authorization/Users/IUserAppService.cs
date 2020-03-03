@@ -80,11 +80,5 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
         /// <param name="id">编号</param>
         /// <returns></returns>
         Task<bool> DeleteUserAsync(int id);
-
-        /// <summary>
-        /// 获取最后修改时间
-        /// </summary>
-        /// <returns></returns>
-        Task<DateTime?> GetLastModificationTimeAsync();
     }
 }

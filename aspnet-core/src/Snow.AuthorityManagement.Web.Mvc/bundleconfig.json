@@ -70,6 +70,12 @@
     "inputFiles": [
       "wwwroot/js/timeBucket.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/showInfo.min.js",
+    "inputFiles": [
+      "wwwroot/js/showInfo.js"
+    ]
   }
   //{
   //  "outputFileName": "wwwroot/js/bundle/jqueryValidate.min.js",

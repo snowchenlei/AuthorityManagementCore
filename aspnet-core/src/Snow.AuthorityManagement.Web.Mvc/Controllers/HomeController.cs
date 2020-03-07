@@ -34,6 +34,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
             //Type type = assembly.GetType("Snow.AuthorityManagement.Data.AuthorityManagementContext");
             //PropertyInfo[] modelTypes = type.GetProperties().Where(p => p.GetMethod.IsVirtual).ToArray();
             ViewBag.Name = HttpContext.User.Claims.SingleOrDefault(t => t.Type == ClaimTypes.Name)?.Value;
+            ViewBag.Title = "Snow Cms";
             return View();
         }
 

@@ -112,8 +112,8 @@ function initData() {
         type: "get",
         url: 'api/permissions',
         success: function (result) {
-            localStorage.removeItem('permissions');
-            localStorage.setItem('permissions', result.data);
+            sessionStorage.removeItem('permissions');
+            sessionStorage.setItem('permissions', result);
         }, error: function () {
         }
     });

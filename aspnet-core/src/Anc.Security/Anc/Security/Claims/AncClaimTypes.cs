@@ -12,9 +12,14 @@ namespace Anc.Security.Claims
     public static class AncClaimTypes
     {
         /// <summary>
+        /// Default: "username"
+        /// </summary>
+        public static string UserName { get; set; } = "username";
+
+        /// <summary>
         /// Default: <see cref="ClaimTypes.Name"/>
         /// </summary>
-        public static string UserName { get; set; } = ClaimTypes.Name;
+        public static string Name { get; set; } = ClaimTypes.Name;
 
         /// <summary>
         /// Default: <see cref="ClaimTypes.NameIdentifier"/>

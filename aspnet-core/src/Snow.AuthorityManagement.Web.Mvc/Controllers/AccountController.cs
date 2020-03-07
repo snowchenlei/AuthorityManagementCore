@@ -53,6 +53,7 @@ namespace Snow.AuthorityManagement.Web.Controllers
             var claims = new List<Claim>
             {
                 new Claim(AncClaimTypes.UserId, output.ID.ToString()),
+                new Claim(AncClaimTypes.Name, output.Name),
                 new Claim(AncClaimTypes.UserName, output.UserName)
             };
             foreach (string roleName in output.RoleNames)

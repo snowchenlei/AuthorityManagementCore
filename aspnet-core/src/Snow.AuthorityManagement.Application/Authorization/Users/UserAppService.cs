@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Anc;
 using Anc.Application.Services.Dto;
@@ -10,6 +11,7 @@ using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Snow.AuthorityManagement.Application.Authorization.Roles.Dto;
 using Snow.AuthorityManagement.Application.Authorization.Users.Dto;
+using Snow.AuthorityManagement.Common;
 using Snow.AuthorityManagement.Common.Encryption;
 using Snow.AuthorityManagement.Core.Authorization.Roles;
 using Snow.AuthorityManagement.Core.Authorization.UserRoles;
@@ -176,7 +178,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             User user = await _userRepository.GetUserByUserNameAsync(userName) ??
                         throw new UserFriendlyException("用户名和密码不匹配");
 
-            if (user.Password != Md5Encryption.Encrypt(password))
+            if (user.Password != Md5Encryption.Encrypt(password + user.Salt))
             {
                 throw new UserFriendlyException("用户名和密码不匹配");
             }
@@ -185,8 +187,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
             {
                 throw new UserFriendlyException("当前账号不可用，请联系管理员");
             }
-            int[] roleIds = (await _userRoleRepository.GetAllEnumerableAsync()).Where(ur => ur.UserID == user.Id).Select(r => r.RoleID).ToArray();
-            string[] roleNames = (await _roleRepository.GetAllEnumerableAsync()).Where(a => roleIds.Contains(a.Id)).Select(r => r.Name).ToArray();
+            string[] roleNames = await _userRoleRepository.GetRoleNamesByUserIdAsync(user.Id);
             UserLoginOutput userLogin = _mapper.Map<UserLoginOutput>(user);
             userLogin.RoleNames = roleNames;
             return userLogin;
@@ -229,10 +230,11 @@ namespace Snow.AuthorityManagement.Application.Authorization.Users
 
             User user = _mapper.Map<User>(input);
             user.CanUse = true;
-            user.Password = _configuration["AppSetting:DefaultPassword"];
+            string salt = StringHelper.GetRandomString(6);
+            user.Password = Md5Encryption.Encrypt(_configuration["AppSetting:DefaultPassword"] + salt);
+            user.Salt = salt;
             user.LastModificationTime = user.CreationTime = DateTime.Now;
             user.Id = await _userRepository.InsertAndGetIdAsync(user);
-
             #endregion 用户
 
             await SetUserRoleAsync(user.Id, roleIds);

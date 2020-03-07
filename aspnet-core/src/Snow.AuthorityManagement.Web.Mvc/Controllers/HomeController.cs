@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Web;
+using Anc.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 

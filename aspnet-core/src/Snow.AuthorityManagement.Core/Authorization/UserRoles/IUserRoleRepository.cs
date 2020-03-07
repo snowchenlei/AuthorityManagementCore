@@ -10,6 +10,6 @@ namespace Snow.AuthorityManagement.Core.Authorization.UserRoles
     {
         Task<List<UserRole>> GetUserRolesByUserIdAsync(int userId);
 
-        Task<List<string>> GetRoleNamesByUserIdAsync(int userId);
+        Task<string[]> GetRoleNamesByUserIdAsync(int userId);
     }
 }

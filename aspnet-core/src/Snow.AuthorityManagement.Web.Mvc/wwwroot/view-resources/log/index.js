@@ -56,7 +56,7 @@ function queryParams(params) {
         { field: 'level', title: '等级', width: '10', widthUnit: '%' },
         { field: 'message', title: '信息', width: '25', widthUnit: '%', formatter: textFormatter },
         { field: 'exception', title: '异常', width: '30', widthUnit: '%', formatter: textFormatter },
-        { field: 'timestamp', title: '发生时间', width: '20', widthUnit: '%' }
+        { field: 'timestamp', title: '发生时间', width: '20', widthUnit: '%', sortable: true }
     ];
     //文本格式化
     function textFormatter(value, row, index) {

@@ -14,7 +14,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "nativeDebugging": true
+      "nativeDebugging": false
     },
     "Cl.AuthorityManagement.Web": {
       "commandName": "Project",

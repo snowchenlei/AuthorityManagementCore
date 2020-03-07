@@ -39,6 +39,15 @@ namespace Snow.AuthorityManagement.Core.Entities.Authorization
         public string Password { get; set; }
 
         /// <summary>
+        /// 盐
+        /// </summary>
+        [Required]
+        [StringLength(20)]
+        [Description("盐")]
+        public string Salt { get; set; }
+
+
+        /// <summary>
         /// 手机号
         /// </summary>
         [StringLength(11, MinimumLength = 11)]

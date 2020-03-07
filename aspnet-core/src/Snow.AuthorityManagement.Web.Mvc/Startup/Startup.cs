@@ -97,7 +97,7 @@ namespace Snow.AuthorityManagement.Web.Startup
                 .AddDbContextCheck<AuthorityManagementContext>();
             AddRateLimit(services);
 #if DEBUG
-            AddMiniProfiler(services);
+            //AddMiniProfiler(services);
 #endif
             AutoAddDefinitionProviders(services);
         }

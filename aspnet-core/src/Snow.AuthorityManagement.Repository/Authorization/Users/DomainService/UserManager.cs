@@ -5,16 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Snow.AuthorityManagement.Core.Authorization.UserRoles;
 
 namespace Snow.AuthorityManagement.Repository.Authorization.Users.DomainService
 {
     public class UserManager : AuthorityManagementDomainServiceBase, IUserManager
     {
+        private readonly IUserRoleRepository _userRoleRepository;
         private readonly ILambdaRepository<User> _userRepository;
 
-        public UserManager(ILambdaRepository<User> userRepository)
+        public UserManager(ILambdaRepository<User> userRepository, IUserRoleRepository userRoleRepository)
         {
             _userRepository = userRepository;
+            _userRoleRepository = userRoleRepository;
         }
 
         public int GetCount()

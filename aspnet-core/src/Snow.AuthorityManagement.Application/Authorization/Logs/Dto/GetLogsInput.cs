@@ -26,6 +26,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Logs.Dto
         public GetLogsInput()
         {
             Sorting = "ID";
+            Order = OrderType.DESC;
         }
     }
 }

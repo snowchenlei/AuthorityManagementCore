@@ -33,7 +33,7 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
         /// <returns></returns>
         public async Task<List<AncPermission>> GetUserPermissionsAsync(int userId)
         {
-            List<string> roleNames = await GetRoleNamesByUserAsync(userId);
+            string[] roleNames = await GetRoleNamesByUserAsync(userId);
             List<AncPermission> permissions = new List<AncPermission>();
             foreach (string name in roleNames)
             {
@@ -48,9 +48,9 @@ namespace Snow.AuthorityManagement.Application.Authorization.Permissions
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        private async Task<List<string>> GetRoleNamesByUserAsync(int userId)
+        private async Task<string[]> GetRoleNamesByUserAsync(int userId)
         {
-            List<string> userNames = await _userRoleRepository.GetRoleNamesByUserIdAsync(userId);
+            string[] userNames = await _userRoleRepository.GetRoleNamesByUserIdAsync(userId);
             return userNames;
         }
     }

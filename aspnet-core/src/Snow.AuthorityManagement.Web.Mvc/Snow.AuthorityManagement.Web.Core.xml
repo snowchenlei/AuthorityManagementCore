@@ -24,6 +24,7 @@
             构造
             </summary>
             <param name="mapper"></param>
+            <param name="logService"></param>
         </member>
         <member name="M:Snow.AuthorityManagement.Web.Core.Controllers.Authorization.LogController.GetPaged(Snow.AuthorityManagement.Application.Authorization.Logs.Dto.GetLogsInput)">
             <summary>

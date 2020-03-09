@@ -24,6 +24,7 @@ namespace Snow.AuthorityManagement.Web.Core.Controllers.Authorization
         /// 构造
         /// </summary>
         /// <param name="mapper"></param>
+        /// <param name="logService"></param>
         public LogController(IMapper mapper,
             ILogAppService logService) : base(mapper)
         {

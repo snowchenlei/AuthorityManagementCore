@@ -29,7 +29,7 @@ namespace Snow.AuthorityManagement.Web
         public static async Task<int> Main(string[] args)
         {
             // Serilog配置 https://github.com/serilog/serilog/wiki/Configuration-Basics
-            //string sqlConnection = Configuration.GetConnectionString(AuthorityManagementConsts.ConnectionStringName);
+            string sqlConnection = Configuration.GetConnectionString(AuthorityManagementConsts.ConnectionStringName);
             Log.Logger = new LoggerConfiguration()
                 // 最低日志级别
                 .MinimumLevel.Information()
@@ -63,7 +63,7 @@ namespace Snow.AuthorityManagement.Web
                     .WriteTo.Async(a => a.File(Path.Combine(LogFilePath, "error.log"), LogEventLevel.Error
                         , rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)))
                 // 所有日志都存到数据库，会自动建表
-                //.WriteTo.MySQL(sqlConnection)
+                .WriteTo.MySQL(sqlConnection)
                 .CreateLogger();
             try
             {
